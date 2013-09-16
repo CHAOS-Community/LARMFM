@@ -1,0 +1,31 @@
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span3">
+            <div class="well sidebar-nav">
+                <div data-bind="html: title"></div>
+                <div style="padding: 18px 18px 18px 18px;">
+                    <!--ko compose: 'viewmodels/searchpanel' -->
+                    <!--/ko-->
+                    <!--ko compose: 'viewmodels/folderlist' -->
+                    <!--/ko-->
+                </div>
+            </div>
+        </div>
+        <div class="span9">
+            <div>
+                <h1>Search</h1>
+            </div>
+            <div>
+                <p>
+                    User email: <span data-bind="html: userEmail"></span>
+                </p>
+                <p>
+                <h3>Search Results</h3>
+                    <div data-bind="foreach: items">
+                        <div data-bind="compose: 'objects/objectitem.html'"></div>
+                    </div>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

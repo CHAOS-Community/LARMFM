@@ -1,0 +1,8 @@
+<div data-bind="event: {mouseover: mouseevent, mouseout: mouseevent}" class="folderitem">
+    <div data-bind="attr: {style:style}">
+        <a data-bind="attr: { href: hash }, html: title"></a>
+    </div>
+</div>
+<div data-bind="foreach: children, visible: isexpanded">
+    <div data-bind="compose: 'folders/folderitem.html'"></div>
+</div>

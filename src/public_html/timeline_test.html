@@ -1,0 +1,96 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+        <script type="text/javascript" src="lib/timeline/timeline.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="lib/timeline/timeline.css">
+
+        <script type="text/javascript">
+        //google.load("visualization", "1");
+
+    
+            var data = undefined;
+            var timeline = undefined;
+
+            //google.setOnLoadCallback(drawVisualization);
+            
+            function inittimeline() {
+                //alert("inittimeline2");
+                
+                google.load("visualization","1", {"callback":drawVisualization});
+    
+        }
+
+            function onTimeChange(event) {
+                
+                return;
+                document.getElementById("customTime").innerHTML = "Custom Time: " + event.time;
+
+                // adjust the end date of the event in the data table
+                var start = data.getValue(0, 0);
+                if (event.time > start) {
+                    data.setValue(0, 1, new Date(event.time));
+                    var now = new Date();
+                    if (event.time < now) {
+                        data.setValue(0, 2, "Dynamic Event (past)");
+                    }
+                    else if (event.time > now) {
+                        data.setValue(0, 2, "Dynamic Event (future)");
+                    }
+                    else {
+                        data.setValue(0, 2, "Dynamic Event (now)");
+                    }
+                    timeline.redraw();
+                }
+            }
+
+            function drawVisualization() {
+
+                //window.alert("draw2");
+
+                // Create and populate a data table.
+                data = new google.visualization.DataTable();
+                data.addColumn('datetime', 'start');
+                data.addColumn('datetime', 'end');
+                data.addColumn('string', 'content');
+//                data.addRows([[
+//                        new Date((new Date()).getTime() - 60 * 1000),
+//                        new Date(),
+//                        'Dynamic event']]);
+
+                // specify options
+//                var options = {
+//                    'showCustomTime': true
+//                };
+
+                // Instantiate our timeline object.
+                timeline = new links.Timeline(document.getElementById('mytimeline'));
+
+                // Add event listeners
+                google.visualization.events.addListener(timeline, 'timechange', onTimeChange);
+
+                // Draw our timeline with the created data and options
+                timeline.draw(data, options);
+
+                // set a custom range from -2 minute to +3 minutes current time
+                var start = new Date((new Date()).getTime() - 2 * 60 * 1000);
+                var end = new Date((new Date()).getTime() + 3 * 60 * 1000);
+                timeline.setVisibleChartRange(start, end);
+            }
+
+        </script>
+    </head>
+    <body onload="inittimeline();">
+        <div id="customTime">&nbsp;</div>
+        <p></p>
+        <div id="mytimeline"></div>
+
+    </body>
+</html>
