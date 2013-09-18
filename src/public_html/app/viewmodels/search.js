@@ -14,6 +14,33 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state','factory/object'
         return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
     
+    function searchReceived(response)
+    {
+        //app.showMessage(response.Result.TotalCount + "");
+        items.removeAll();
+        for(var i = 0; i < response.Result.Count; i++)
+        {
+            var r = response.Result.Results[i];
+
+            // TODO: Settings.Search.metadataSchemaGuid
+            var mdsguid = brand.getSearchMetadataSchemaGuid(r);
+            for (var j = 0; j < r.MetadataXmls.length; j++)
+            {
+                if (r.MetadataXmls[j].MetadataSchemaGuid == mdsguid)
+                {
+                    var xml = r.Metadatas[j].MetadataXML;
+                    var oi = new objfac.ObjectItem();
+                    //brand.initObjectItem(oi, 0, r.ObjectGUID, xmlman.parseXml(xml));
+                    var x = xmlman.parseXml(xml);
+                    oi.title = $(x).find("Title").text();
+                    oi.hash = '#!object/id='+r.GUID;
+                    items.push(oi);
+                }
+            }
+        }
+    }
+    
+    /*
     function searchReceived(data)
     {
         //console.log("---SEARCH RESULT:")
@@ -47,7 +74,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state','factory/object'
         //console.log(items);
 
     }
-    
+    */
     return {
         items: items,
         name: name,
@@ -78,7 +105,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state','factory/object'
 
                 // function(callback, query, sort, accessPointGUID, pageIndex, pageSize, includeMetadata, includeFiles, includeObjectRelations, includeAccessPoints)
                 //portal.client.Object_Get(searchReceived,ss,null,null,0,20,true,false,false,false);
-                CHAOS.Portal.Client.View.Get(Settings.Search.viewName,s,"",0,20).WithCallback(searchReceived);
+                CHAOS.Portal.Client.View.Get(Settings.Search.viewName,s,"","",0,20).WithCallback(searchReceived);
             }       
         },
          // http://durandaljs.com/documentation/Hooking-Lifecycle-Callbacks/       
