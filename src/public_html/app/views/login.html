@@ -1,0 +1,22 @@
+<h2>Login</h2>
+<form class="form-horizontal" data-bind="submit: Login">
+	<div class="control-group" data-bind="css: { error: InvalidCredentials }">
+		<label class="control-label" for="Email">Email:</label>
+		<div class="controls">
+			<input id="Email" type="email" data-bind="value: Email, enable: CanEdit" placeholder="name@domain.com" required/>
+			<span class="help-inline" data-bind="visible: InvalidCredentials">Supplied credentials are invalid</span>
+		</div>
+	</div>
+	<div class="control-group" data-bind="css: { error: InvalidCredentials }">
+		<label class="control-label" for="Password">Password:</label>
+		<div class="controls">
+			<input id="Password" type="password" data-bind="value: Password, enable: CanEdit" required/>
+			<span class="help-inline" data-bind="visible: InvalidCredentials">Supplied credentials are invalid</span>
+		</div>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<input type="submit" class="btn" value="Login" data-bind="enable: CanEdit"/>
+		</div>
+	</div>
+</form>

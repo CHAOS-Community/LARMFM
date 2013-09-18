@@ -4,7 +4,8 @@ Settings.brandName = "larm";
 Settings.brandModule = "brand/larm";
 
 //Settings.servicePath = "http://api.test.chaos-systems.com";
-Settings.servicePath = "http://api.chaos-systems.com";
+//Settings.servicePath = "http://api.chaos-systems.com";
+Settings.servicePath = "http://api.larm.fm";
 Settings.clientGUID = "3D652FD1-33FA-40F7-A440-A942A1317F99";
 
 Settings.anonymousUsername = "thfl@dr.dk";
@@ -13,7 +14,7 @@ Settings.anonymousPassword = "1234";
 Settings.username = "thfl@dr.dk";
 Settings.password = "1234";
 
-Settings.startPath = "search";
+Settings.startPath = "!search";
 Settings.publicPaths = ['AppLoader', 'Login'];
 
 Settings.Search = {

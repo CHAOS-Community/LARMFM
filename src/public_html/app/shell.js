@@ -4,13 +4,17 @@ define(['plugins/router'], function (router) {
         activate: function () {
             return router.map([
                 { route: ['', '!search', '!search/:param'], moduleId: 'viewmodels/search', title: 'Search', nav: true },
-                { route: '!object/:param', moduleId: 'viewmodels/object', title: 'Object', nav: false }
+                { route: '!object/:param', moduleId: 'viewmodels/object', title: 'Object', nav: false },
+                { route: 'login', moduleId: 'viewmodels/login', title: 'Login', nav: false }
             ]).buildNavigationModel()
               .mapUnknownRoutes('hello/index', 'not-found')
               .activate();
 
               //.mapUnknownRoutes('hello/index', 'not-found')
 
+        },
+        loginbtnclick: function(){
+            router.navigate('login');
         }
     };
 });
