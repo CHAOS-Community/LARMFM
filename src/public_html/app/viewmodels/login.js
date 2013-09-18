@@ -57,7 +57,7 @@ define(['plugins/router','mods/portal','mods/state','knockout'], function (route
                 }
             }
         },
-        viewAttached: function () {
+        attached: function () {
             $("#Email").focus();
         }
 

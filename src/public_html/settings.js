@@ -8,6 +8,8 @@ Settings.brandModule = "brand/larm";
 Settings.servicePath = "http://api.larm.fm";
 Settings.clientGUID = "3D652FD1-33FA-40F7-A440-A942A1317F99";
 
+Settings.accessPointGuid = "00000000-0000-0000-0000-000007000000";
+
 Settings.anonymousUsername = "thfl@dr.dk";
 Settings.anonymousPassword = "1234";
 
@@ -18,7 +20,7 @@ Settings.startPath = "!search";
 Settings.publicPaths = ['AppLoader', 'Login'];
 
 Settings.Search = {
-    viewName: "glomexprogram",
+    viewName: "Search",
     objectTypes: [
         {
             id: 0,

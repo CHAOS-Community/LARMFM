@@ -12,14 +12,20 @@ define(['knockout','mods/portal'], function (ko, portal) {
     FolderItem.prototype = function () {
 
         var childfolderReceived = function (response) {
+            if (response.Error != null) {
+                return;
+            }
 
-            console.log('----------------------------------');
-            console.log(response.MCM());
-            console.log('----------------------------------');
+            //for (var i = 0; i < response.Result.Count; i++) {
+            //    var data = response.Result.Results[i];
+            //    var fi = new FolderItem();
+            //    fi.init(data, this.level() + 1);
+            //    this.children.push(fi);
+            //}
 
             setTimeout($.proxy(function () {
-                for (var i = 0; i < response.MCM().Results().length; i++) {
-                    var data = response.MCM().Results()[i];
+                for (var i = 0; i < response.Result.Count; i++) {
+                    var data = response.Result.Results[i];
                     var fi = new FolderItem();
                     fi.init(data, this.level() + 1);
                     this.children.push(fi);
@@ -35,9 +41,7 @@ define(['knockout','mods/portal'], function (ko, portal) {
 
             this.style("margin: 0px 0px 0px " + (20 * tlevel) + "px");
 
-            // TODO: Figure out how to send "this" context to the callback.    
-            //// Folder_Get: function(callback, id, folderTypeID, parentID)
-            // portal.client.Folder_Get(childfolderReceived,null,null,data.ID);
+            CHAOS.Portal.Client.Folder.Get(null, null, data.ID).WithCallback(childfolderReceived, this);
         }
 
         var mouseevent = function (data, event) {

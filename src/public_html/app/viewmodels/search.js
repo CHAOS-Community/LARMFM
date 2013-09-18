@@ -63,21 +63,22 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state','factory/object'
 
                 //(view, query, sort, pageIndex, pageSize, serviceCaller)
                 var s = getParameterByName('s', param);
-                var ss = "";
-                var ilen = Settings.Search.indexes.length;
-                for (var i = 0; i < ilen; i++)
-                {
-                    var idx = Settings.Search.indexes[i];
-                    ss += "(" + idx.key + ":(" + s + "*))";
-                    if (i + 1 < ilen)
-                        ss += " OR ";
-                }
-
-                if (ss.length > 0)
-                    ss = "(" + ss + ")";
+//                var ss = "";
+//                var ilen = Settings.Search.indexes.length;
+//                for (var i = 0; i < ilen; i++)
+//                {
+//                    var idx = Settings.Search.indexes[i];
+//                    ss += "(" + idx.key + ":(" + s + "*))";
+//                    if (i + 1 < ilen)
+//                        ss += " OR ";
+//                }
+//
+//                if (ss.length > 0)
+//                    ss = "(" + ss + ")";
 
                 // function(callback, query, sort, accessPointGUID, pageIndex, pageSize, includeMetadata, includeFiles, includeObjectRelations, includeAccessPoints)
-                portal.client.Object_Get(searchReceived,ss,null,null,0,20,true,false,false,false);
+                //portal.client.Object_Get(searchReceived,ss,null,null,0,20,true,false,false,false);
+                CHAOS.Portal.Client.View.Get(Settings.Search.viewName,s,"",0,20).WithCallback(searchReceived);
             }       
         },
          // http://durandaljs.com/documentation/Hooking-Lifecycle-Callbacks/       

@@ -2,12 +2,17 @@ define(['durandal/app', 'mods/portal', 'mods/state', 'factory/folder', 'knockout
     function (app, portal, state, ffac, ko) {
 
     var items = ko.observableArray();
-    function folderReceived(response) {
+   function folderReceived(response) {
+
+        if (response.Error != null)
+        {
+            return;
+        }
 
         setTimeout($.proxy(function () {
-        for (var i = 0; i < response.MCM().Results().length; i++)
+        for (var i = 0; i < response.Result.Count; i++)
         {
-            var data = response.MCM().Results()[i];
+            var data = response.Result.Results[i];
             var fi = new ffac.FolderItem();
             fi.init(data,0);
             items.push(fi);
@@ -20,7 +25,8 @@ define(['durandal/app', 'mods/portal', 'mods/state', 'factory/folder', 'knockout
         items: items,
         attached: function () {
             //Folder_Get: function(callback, id, folderTypeID, parentID)
-            portal.client.Folder_Get(folderReceived,null,null,null);            
+            //portal.client.Folder_Get(folderReceived,null,null,null);            
+            CHAOS.Portal.Client.Folder.Get().WithCallback(folderReceived);
         }
     };
 });
