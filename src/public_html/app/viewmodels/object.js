@@ -28,20 +28,21 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
             // Getting data from API.
             function queryReceived(data)
             {
-                var r = data.MCM().Results()[0];
+                var r = data.Body.Results[0];
                 // TODO: Settings.Search.metadataSchemaGuid
                 var mdsguid = state.searchMetadataSchemaGuids[0]; //brand.getSearchMetadataSchemaGuid(r);
                 for (var j = 0; j < r.Metadatas.length; j++)
                 {
-                    if (r.Metadatas[j].MetadataSchemaGUID == mdsguid)
+                    if (r.Metadatas[j].MetadataSchemaGuid == mdsguid)
                     {
-                        var xml = r.Metadatas[j].MetadataXML;
+                        var xml = r.Metadatas[j].MetadataXml;
                         var x = xmlman.parseXml(xml);
                         title($(x).find("Title").text());
                         channel($(x).find("PublicationChannel").text());
                         publication($(x).find("PublicationDateTime").text());
                         abstract($(x).find("Abstract").text());
                         description($(x).find("Description").text());
+
                     }
                 }
 
@@ -250,10 +251,23 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 activate: function(param) {
                     if (param !== undefined) {
                         var id = getParameterByName('id', param);
-                        var query = "GUID:" + id;
+                        //var query = "GUID:" + id;
 
                         // function(callback, query, sort, accessPointGUID, pageIndex, pageSize, includeMetadata, includeFiles, includeObjectRelations, includeAccessPoints)
-                        portal.client.Object_Get(queryReceived, query, null, null, 0, 1, true, true, true, false);
+                        
+                        //Object.Get = function (
+                        //objectGuids, accessPointGuid, includeMetadata, includeFiles, 
+                        //includeObjectRelations, includeFolders, includeAccessPoints, 
+                        //pageSize, pageIndex, serviceCaller
+                        //)
+                        var objguids = [];
+                        objguids.push(id);
+                        CHAOS.Portal.Client.Object.Get(
+                            objguids,Settings.accessPointGuid,true,true,
+                            true,false,false,
+                            1,0,null).WithCallback(queryReceived);
+                        
+                        //(queryReceived, query, null, null, 0, 1, true, true, true, false);
 
                     }
                 },
