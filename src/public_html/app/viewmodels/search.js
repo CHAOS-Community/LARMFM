@@ -16,27 +16,14 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state','factory/object'
     
     function searchReceived(response)
     {
-        //app.showMessage(response.Result.TotalCount + "");
         items.removeAll();
-        for(var i = 0; i < response.Result.Count; i++)
+        for(var i = 0; i < response.Body.Count; i++)
         {
-            var r = response.Result.Results[i];
-
-            // TODO: Settings.Search.metadataSchemaGuid
-            var mdsguid = brand.getSearchMetadataSchemaGuid(r);
-            for (var j = 0; j < r.MetadataXmls.length; j++)
-            {
-                if (r.MetadataXmls[j].MetadataSchemaGuid == mdsguid)
-                {
-                    var xml = r.Metadatas[j].MetadataXML;
-                    var oi = new objfac.ObjectItem();
-                    //brand.initObjectItem(oi, 0, r.ObjectGUID, xmlman.parseXml(xml));
-                    var x = xmlman.parseXml(xml);
-                    oi.title = $(x).find("Title").text();
-                    oi.hash = '#!object/id='+r.GUID;
-                    items.push(oi);
-                }
-            }
+            var r = response.Body.Results[i];
+            var oi = new objfac.ObjectItem();
+            oi.title = r.Title;
+            oi.hash = '#!object/id='+r.Id;
+            items.push(oi);
         }
     }
     
