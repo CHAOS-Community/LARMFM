@@ -6,6 +6,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
             var publication = ko.observable();
             var abstract = ko.observable();
             var description = ko.observable();
+            var newdescription = ko.observable();
 
             var dataready = false;
             var viewready = false;
@@ -25,6 +26,8 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
             var timeline = undefined;
             var onTimeChangeActive = false;
 
+            var obj = {};    
+
             // Getting data from API.
             function queryReceived(data)
             {
@@ -35,8 +38,11 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 {
                     if (r.Metadatas[j].MetadataSchemaGuid == mdsguid)
                     {
+                        obj.metadataSchemaGuid = mdsguid;
                         var xml = r.Metadatas[j].MetadataXml;
                         var x = xmlman.parseXml(xml);
+                        obj.metadata = x;
+                        
                         title($(x).find("Title").text());
                         channel($(x).find("PublicationChannel").text());
                         publication($(x).find("PublicationDateTime").text());
@@ -246,11 +252,13 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 publication: publication,
                 abstract: abstract,
                 description: description,
+                newdescription: newdescription,
                 playerposition: playerposition,
                 playerdebug: playerdebug,
                 activate: function(param) {
                     if (param !== undefined) {
                         var id = getParameterByName('id', param);
+                        obj.id = id;
                         //var query = "GUID:" + id;
 
                         // function(callback, query, sort, accessPointGUID, pageIndex, pageSize, includeMetadata, includeFiles, includeObjectRelations, includeAccessPoints)
@@ -262,6 +270,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                         //)
                         var objguids = [];
                         objguids.push(id);
+                        
                         CHAOS.Portal.Client.Object.Get(
                             objguids,Settings.accessPointGuid,true,true,
                             true,false,false,
@@ -281,7 +290,33 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 },
                 pause: function() {
                     jwplayer().play(false);
+                },
+                
+                // Metadata.Set = function (
+                // objectGUID, metadataSchemaGUID, languageCode, 
+                // revisionID, metadataXML, serviceCaller)
+                saveMetadata: function(){
+//                    $(obj.metadata).find("Description").text(newdescription());
+//                    var str = (new XMLSerializer()).serializeToString(obj.metadata);
+                
+               var x2js = new X2JS();
+               var jsondata = x2js.xml_str2json( obj.metadata );
+               jsondata["Larm.Program"].Description = newdescription();
+               var xmldata = x2js.json2xml_str(jsondata);
+               
+               CHAOS.Portal.Client.Metadata.Set(
+                   obj.id,obj.metadataSchemaGuid,"da",
+                    1,xmldata,null);
+               
+               //alert(xmldata);     
+//                var        xmlDoc = $.parseXML( xml ), $xml = $( xmlDoc ), $d = $xml.find( "Description" );
+//                $( "#someElement" ).append( $d.text() );
+//                $d.text( "XML Title" );
+//                $( "#anotherElement" ).append( $d.text() );
+//                    alert(str);
+
                 }
+                
             };
         });
 
