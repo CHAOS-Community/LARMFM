@@ -34,6 +34,18 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 var r = data.Body.Results[0];
                 // TODO: Settings.Search.metadataSchemaGuid
                 var mdsguid = state.searchMetadataSchemaGuids[0]; //brand.getSearchMetadataSchemaGuid(r);
+                
+                if(r == undefined)
+                {
+                    app.showMessage("The data is not available for this object.", "Data missing", ["OK", "Cancel"]);
+                    return;
+                }                
+                if(r.Metadatas == undefined)
+                {
+                    app.showMessage("The metadata is not available for this object.", "Metadata missing", ["OK", "Cancel"]);
+                    return;
+                }
+                
                 for (var j = 0; j < r.Metadatas.length; j++)
                 {
                     if (r.Metadatas[j].MetadataSchemaGuid == mdsguid)
