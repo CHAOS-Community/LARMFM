@@ -12,7 +12,10 @@ function (ko, objfac) {
             var r = response.Body.Results[i];
             var oi = new objfac.ObjectItem();
             oi.title = "Title : " + r.Title;
-            oi.hash = '#!object/id='+r.Id;
+            if(r.Type == "Radio")
+                oi.hash = '#!object/id='+r.Id;
+            else
+                oi.hash = r.Url;
             items.push(oi);
         }
     }
