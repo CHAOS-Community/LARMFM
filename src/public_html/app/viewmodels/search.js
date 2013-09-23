@@ -1,3 +1,4 @@
+// Search View
 define(['durandal/app', 'knockout', 'mods/search', 'mods/state'], 
 function (app, ko, search, state) {
         
@@ -5,6 +6,7 @@ function (app, ko, search, state) {
         
     return {
         items: search.items,
+        pagingitems: search.pagingitems,
         name: name,
         userEmail: "thfl@dr.dk",
         title: "Search Panel",
@@ -20,6 +22,9 @@ function (app, ko, search, state) {
          // http://durandaljs.com/documentation/Hooking-Lifecycle-Callbacks/       
         compositionComplete: function () {
             $("#SearchField").focus();
+        },
+        pagingclick: function(){
+
         }        
     };
 });
