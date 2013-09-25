@@ -23,8 +23,10 @@ function (app, ko, search, state) {
         compositionComplete: function () {
             $("#SearchField").focus();
         },
-        pagingclick: function(){
-
+        pagingclick: function(data){
+            console.log("----------");
+            console.log(data);
+            console.log("----------");
         }        
     };
 });
