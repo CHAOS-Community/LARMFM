@@ -304,29 +304,20 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                     jwplayer().play(false);
                 },
                 
-                // Metadata.Set = function (
-                // objectGUID, metadataSchemaGUID, languageCode, 
-                // revisionID, metadataXML, serviceCaller)
                 saveMetadata: function(){
-//                    $(obj.metadata).find("Description").text(newdescription());
-//                    var str = (new XMLSerializer()).serializeToString(obj.metadata);
-                
+                                   
                var x2js = new X2JS();
                var jsondata = x2js.xml_str2json( obj.metadata );
                jsondata["Larm.Program"].Description = newdescription();
                var xmldata = x2js.json2xml_str(jsondata);
-               
+
+                // Metadata.Set = function (
+                // objectGUID, metadataSchemaGUID, languageCode, 
+                // revisionID, metadataXML, serviceCaller)
                CHAOS.Portal.Client.Metadata.Set(
                    obj.id,obj.metadataSchemaGuid,"da",
                     1,xmldata,null);
                
-               //alert(xmldata);     
-//                var        xmlDoc = $.parseXML( xml ), $xml = $( xmlDoc ), $d = $xml.find( "Description" );
-//                $( "#someElement" ).append( $d.text() );
-//                $d.text( "XML Title" );
-//                $( "#anotherElement" ).append( $d.text() );
-//                    alert(str);
-
                 }
                 
             };

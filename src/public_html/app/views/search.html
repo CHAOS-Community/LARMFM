@@ -19,13 +19,22 @@
                 <p>
                     User email: <span data-bind="html: userEmail"></span>
                 </p>
+               
+                <div class="pagination">
+                    <ul>
+                        <!-- ko foreach: pagingitems -->
+                        <li data-bind="attr:{class:cssclass}"><a href="#" data-bind="html: text, click: $parent.pagingclick"></a></li>
+                        <!-- /ko -->
+                    </ul>
+                </div>              
                 <p>
                 <h3>Search Results</h3>
-                    <div data-bind="foreach: items">
-                        <div data-bind="compose: 'objects/objectitem.html'"></div>
-                    </div>
+                <div data-bind="foreach: items">
+                    <div data-bind="compose: 'objects/objectitem.html'"></div>
+                </div>
                 </p>
             </div>
         </div>
     </div>
 </div>
+<!--<li><a href="#" data-bind="text: $data, click: pagingclick }"></a></li>-->
