@@ -10,6 +10,7 @@ define(['durandal/app', 'knockout', 'mods/search', 'mods/state'],
                 name: name,
                 userEmail: "thfl@dr.dk",
                 title: "Search Panel",
+                search: search,
                 activate: function(param) {
 
                     if (param != undefined)

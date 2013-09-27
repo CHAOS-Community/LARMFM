@@ -11,10 +11,11 @@ define(['knockout', 'factory/object'],
             var noofpages = 0;
             var freetext = ko.observable("");
             var items = ko.observableArray([]);
+            var isSearching = ko.observable(false);
 
             function searchReceived(response)
             {
-                console.log(response);
+                isSearching(false);
                 items.removeAll();
                 for (var i = 0; i < response.Body.Count; i++)
                 {
@@ -82,11 +83,14 @@ define(['knockout', 'factory/object'],
                 freetext: freetext,
                 nextPageGroup: nextPageGroup,
                 prevPageGroup: prevPageGroup,
+                isSearching: isSearching,
                 search: function() {
 
                     if (pageindex() < 0)
                         pageindex(0);
 
+                    items.removeAll();
+                    isSearching(true);
                     CHAOS.Portal.Client.View.Get(Settings.Search.viewName, freetext(), "", "", pageindex(), pagesize()).WithCallback(searchReceived);
                 }
             };
