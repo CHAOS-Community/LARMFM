@@ -4,8 +4,6 @@
             <div class="well sidebar-nav">
                 <div data-bind="html: title"></div>
                 <div style="padding: 18px 18px 18px 18px;">
-                    <!--ko compose: 'viewmodels/searchpanel' -->
-                    <!--/ko-->
                     <!--ko compose: 'viewmodels/folderlist' -->
                     <!--/ko-->
                 </div>
@@ -20,7 +18,7 @@
                     User email: <span data-bind="html: userEmail"></span>
                 </p>
                
-                <div class="pagination">
+                <div class="pagination pagination-small">
                     <ul>
                         <!-- ko foreach: pagingitems -->
                         <li data-bind="css: { disabled: isdisabled, active: isactive }"><a href="#" data-bind="html: text, click: $parent.pagingclick"></a></li>
