@@ -45,14 +45,39 @@ function (system, app, viewLocator, portal, state) {
         var ot = Settings.Search.objectTypes[i];
         state.searchMetadataSchemaGuids[ot.id] = ot.metadataSchemaGuid;
     }
+    
+//    ko.bindingHandlers.loc = {
+//    init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+//        // This will be called when the binding is first applied to an element
+//        // Set up any initial state, event handlers, etc. here
+//        alert("Test");
+//    },
+//    update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+//        // This will be called once when the binding is first applied to an element,
+//        // and again whenever the associated observable changes value.
+//        // Update the DOM element based on the supplied values here.
+//        alert("Test2");
+//    }
+//    };
         
     app.start().then(function () {
         //Replace 'viewmodels' in the moduleId with 'views' to locate the view.
         //Look for partial views in a 'views' folder in the root.
         viewLocator.useConvention();
 
+          var option = {
+              lng: 'en-US',
+              fallbackLang: 'en',
+              ns: { namespaces: ['app'], defaultNs: 'app' },
+              resGetPath: 'locales/__lng__/__ns__.json'
+          };
+
+          i18n.init(option, function () {
         //Show the app by setting the root view model for our application.
-        app.setRoot('shell');
+                  app.setRoot('shell');
+          });
+
+
         });
     }
     

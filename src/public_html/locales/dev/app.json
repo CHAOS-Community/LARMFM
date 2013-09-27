@@ -1,0 +1,6 @@
+﻿{
+    "localizeMe":"i18next Localization (dev)",
+	"start": {
+		"scpoedString":"dev-scoped string here"
+	}
+}
