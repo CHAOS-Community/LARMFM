@@ -23,7 +23,6 @@
                 <div class="pagination">
                     <ul>
                         <!-- ko foreach: pagingitems -->
-                        <!--<li data-bind="attr:{class:cssclass}"><a href="#" data-bind="html: text, click: $parent.pagingclick"></a></li>-->
                         <li data-bind="css: { disabled: isdisabled, active: isactive }"><a href="#" data-bind="html: text, click: $parent.pagingclick"></a></li>
                         <!-- /ko -->
                     </ul>
