@@ -27,10 +27,13 @@ define(['durandal/app', 'knockout', 'mods/search', 'mods/state'],
                 },
                 pagingclick: function(data) {
 
+                    if(data.isdisabled || data.isactive)
+                        return;
+                    
                     if (data.index == -1)
-                        search.prevPageGroup();
+                        search.prevPage();
                     else if (data.index == 9999)
-                        search.nextPageGroup();
+                        search.nextPage();
                     else
                         search.pageindex(data.index);
 

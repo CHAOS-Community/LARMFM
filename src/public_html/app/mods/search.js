@@ -38,32 +38,23 @@ define(['knockout', 'factory/object'],
             function updatePaging() {
                 pagingitems.removeAll();
 
-//var backcls = "";
-//if(pageindex()==0)
-//  backcls = "disabled";        
-//pagingitems.push({text:"&laquo;", index:-1, cssclass:backcls});
-
-                if (pageindex() >= pageindexshown())
-                    pagingitems.push({text: "&laquo;", index: -1, cssclass: ""});
+                pagingitems.push({text: "&laquo;", index: -1, isactive: false, isdisabled: (pageindex()==0)});
 
                 var pirange = pageindexrange(pageindex());
 
                 for (var i = pirange[0]; i < pirange[1]; i++) {
-                    pagingitems.push({text: "" + (i + 1), index: i, cssclass: (i == pageindex() ? "active" : "")});
+                    pagingitems.push({text: "" + (i + 1), index: i, isactive: (i == pageindex()), isdisabled: false});
                 }
 
-                var nextpagegroup =   pageindexrange(pageindex() + pageindexshown() + 1);
-                if(nextpagegroup[0] < nextpagegroup[1])
-                    pagingitems.push({text: "&raquo;", index: 9999, cssclass: ""});
-
+                pagingitems.push({text: "&raquo;", index: 9999, isactive: false, isdisabled: (pageindex()+1>=noofpages)});
             }
 
-            function nextPageGroup() {
-                pageindex(pageindexrange(pageindex() + pageindexshown() + 1)[0]);
+            function nextPage() {
+                pageindex(pageindex()+1);
             }
 
-            function prevPageGroup() {
-                pageindex(pageindexrange(pageindex() - pageindexshown())[0]);
+            function prevPage() {
+                pageindex(pageindex()-1);
             }
 
             function pageindexrange(index) {
@@ -81,8 +72,8 @@ define(['knockout', 'factory/object'],
                 pagesize: pagesize,
                 pageindexshown: pageindexshown,
                 freetext: freetext,
-                nextPageGroup: nextPageGroup,
-                prevPageGroup: prevPageGroup,
+                nextPage: nextPage,
+                prevPage: prevPage,
                 isSearching: isSearching,
                 search: function() {
 
