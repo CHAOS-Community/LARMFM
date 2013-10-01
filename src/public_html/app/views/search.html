@@ -1,11 +1,9 @@
 <div class="container-fluid">
-    <div class="row-fluid">
+    <div class="row">
         <div class="span3">
-            <div class="well sidebar-nav">
-                <div data-bind="html: title"></div>
-                <div style="padding: 18px 18px 18px 18px;">
-                    <!--ko compose: 'viewmodels/searchpanel' -->
-                    <!--/ko-->
+            <div class="sidebar-nav">
+                <div style="margin-top: 12px;" data-bind="html: title"></div>
+                <div>
                     <!--ko compose: 'viewmodels/folderlist' -->
                     <!--/ko-->
                 </div>
@@ -13,24 +11,27 @@
         </div>
         <div class="span9">
             <div>
-                <h1>Search</h1>
-            </div>
-            <div>
-                <p>
-                    User email: <span data-bind="html: userEmail"></span>
-                </p>
-               
-                <div class="pagination">
+<!--                <div>
+                   <fieldset>
+                        <legend data-i18n="app:displayName"></legend>
+                        <label data-i18n="app:localizeMe"></label><br />
+                        <label data-i18n="app:start.scpoedString"></label>
+                    </fieldset>
+                </div>-->
+                <div class="pagination pagination-small pull-right">
                     <ul>
                         <!-- ko foreach: pagingitems -->
-                        <li data-bind="attr:{class:cssclass}"><a href="#" data-bind="html: text, click: $parent.pagingclick"></a></li>
+                        <li data-bind="css: { disabled: isdisabled, active: isactive }"><a href="#" data-bind="html: text, click: $parent.pagingclick"></a></li>
                         <!-- /ko -->
                     </ul>
-                </div>              
+                </div>
+                <div class="row" style="clear: both; margin:0"><div class="span9" style="margin:0"><hr style="margin:0" /></div></div>
                 <p>
-                <h3>Search Results</h3>
                 <div data-bind="foreach: items">
                     <div data-bind="compose: 'objects/objectitem.html'"></div>
+                </div>
+                <div class="loader" data-bind="css: { active: search.isSearching }">
+                    <i class="icon-spinner icon-2x icon-spin"></i>
                 </div>
                 </p>
             </div>
