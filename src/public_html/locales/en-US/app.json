@@ -1,0 +1,7 @@
+﻿{
+    "localizeMe":"i18next Localization (en-US)",
+	"displayName": "Localized with i18next",
+	"start": {
+		"scpoedString":"enUS-scoped string here"
+	}
+}
