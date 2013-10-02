@@ -1,6 +1,6 @@
 define(function() {
 
-    function getSolrDateStr(date) {
+    function getSolrDateStr(date) {        
         var ds = date.getFullYear() + "-" +
                 getDigit2(date.getMonth()+1) + "-" +
                 getDigit2(date.getDate()) + "T" +
@@ -24,6 +24,14 @@ define(function() {
         return ("00" + num).slice(-3);
     }
 
+    function getDateFromQueryDateStr(yyyymmdd){
+        var d = Date.parse(yyyymmdd);
+        if(isNaN(d))
+            return null;
+   
+        return new Date(d);
+    }
+
     function getParamByName(name, str) {
         name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -36,6 +44,7 @@ define(function() {
         getSolrDateStr: getSolrDateStr,
         getQueryDateStr: getQueryDateStr,
         getDigit2: getDigit2,
-        getDigit3: getDigit3
+        getDigit3: getDigit3,
+        getDateFromQueryDateStr: getDateFromQueryDateStr
     };
 });

@@ -1,16 +1,20 @@
 define(['durandal/app', 'plugins/router', 'knockout', 'mods/search'],
         function(app, router, ko, searchmod) {
 
-            var searchtext = ko.observable("");
-            var cansearch = ko.observable(true);
+            var items = ko.observableArray([]);
+            
+            function search(){
+                
+                items.removeAll();
+                items.push({title: "1920'erne", count: 10});
+            }
 
             return {
-                cansearch: cansearch,
-                searchtext: searchtext,
-                search: function() {
-                    router.navigate('!search/s=' + searchtext() + '&date=now');
-                },
+                items: items,
                 daterangeclick1: function() {
+            
+                    search();
+            
                     // yyyy,mm,dd : mm = 0-11
                     searchmod.datebegin(new Date(1930, 0, 1));
                     searchmod.dateend(null);
