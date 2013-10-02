@@ -1,6 +1,6 @@
 // Search Module
-define(['knockout', 'factory/object'],
-        function(ko, objfac) {
+define(['knockout', 'factory/object', 'plugins/router'],
+        function(ko, objfac, router) {
 
             // Paging
             var pagesize = ko.observable(20);
@@ -9,7 +9,13 @@ define(['knockout', 'factory/object'],
             var pageindexshown = ko.observable(4);
             var totalcount = 0;
             var noofpages = 0;
+            
+            // Search Fields
             var freetext = ko.observable("");
+            var datebegin = ko.observable(null);
+            var dateend = ko.observable(null);
+            
+            // Search Result
             var items = ko.observableArray([]);
             var isSearching = ko.observable(false);
 
@@ -65,6 +71,23 @@ define(['knockout', 'factory/object'],
                 return[b, e];
             }
 
+            function navigate(){
+                router.navigate('!search/s=' + freetext() + '');
+            }
+
+            function createfilter(){
+                var filter = "";
+                
+                //filter = "Type:Radio";
+                
+                return filter;
+            }
+
+            function createsort(){
+                
+                return "PubStartDate+asc";
+            }
+
             return {
                 items: items,
                 pagingitems: pagingitems,
@@ -72,9 +95,12 @@ define(['knockout', 'factory/object'],
                 pagesize: pagesize,
                 pageindexshown: pageindexshown,
                 freetext: freetext,
+                datebegin: datebegin,
+                dateend: dateend,
                 nextPage: nextPage,
                 prevPage: prevPage,
                 isSearching: isSearching,
+                navigate: navigate,
                 search: function() {
 
                     if (pageindex() < 0)
@@ -82,7 +108,7 @@ define(['knockout', 'factory/object'],
 
                     items.removeAll();
                     isSearching(true);
-                    CHAOS.Portal.Client.View.Get(Settings.Search.viewName, freetext(), "", "", pageindex(), pagesize()).WithCallback(searchReceived);
+                    CHAOS.Portal.Client.View.Get(Settings.Search.viewName, freetext(), createsort(), createfilter(), pageindex(), pagesize()).WithCallback(searchReceived);
                 }
             };
         });
