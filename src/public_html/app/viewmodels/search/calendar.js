@@ -1,16 +1,14 @@
 define(['durandal/app', 'plugins/router', 'knockout', 'mods/search'],
         function(app, router, ko, searchmod) {
-
-            var items = ko.observableArray([]);
-            
+           
             function search(){
                 
-                items.removeAll();
-                items.push({title: "1920'erne", count: 10});
+                
+
             }
 
             return {
-                items: items,
+                items: searchmod.calendaritems,
                 daterangeclick1: function() {
             
                     search();
