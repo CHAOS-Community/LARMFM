@@ -32,6 +32,14 @@ define(function() {
         return new Date(d);
     }
 
+    function getSolrFilterFromDateRangeStr(solrfield, yyyymmdd1,yyyymmdd2){
+        var d1 = getDateFromQueryDateStr(yyyymmdd1);
+        var d2 = getDateFromQueryDateStr(yyyymmdd2);
+        var ds1 = getSolrDateStr(d1);
+        var ds2 = getSolrDateStr(d2);
+        return solrfield + ":[" + ds1 + " TO " + ds2 + "]";
+    }
+
     function getParamByName(name, str) {
         name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -45,6 +53,7 @@ define(function() {
         getQueryDateStr: getQueryDateStr,
         getDigit2: getDigit2,
         getDigit3: getDigit3,
-        getDateFromQueryDateStr: getDateFromQueryDateStr
+        getDateFromQueryDateStr: getDateFromQueryDateStr,
+        getSolrFilterFromDateRangeStr: getSolrFilterFromDateRangeStr
     };
 });

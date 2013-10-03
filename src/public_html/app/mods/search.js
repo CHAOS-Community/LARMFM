@@ -1,7 +1,7 @@
 // Search Module
 define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/format', 'mods/searchcalendar'],
         function(ko, objfac, router, state, format, searchcalendar) {
-
+            
             // Paging
             var pagesize = ko.observable(20);
             var pageindex = ko.observable(0);
@@ -88,6 +88,12 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 router.navigate(s);
             }
 
+            function navigatetodaterangestr(datestr1, datestr2){
+                datebegin(format.getDateFromQueryDateStr(datestr1));
+                dateend(format.getDateFromQueryDateStr(datestr2));
+                navigate();
+            }
+
             function createfilter() {
                 return createfilterfordates();
             }
@@ -121,7 +127,8 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
             }
 
             function updatecalendar() {
-                searchcalendar.update(freetext(),"",datebegin(),dateend());
+               searchcalendar.search = this;
+               searchcalendar.update(freetext(),"",datebegin(),dateend(), navigatetodaterangestr);
             }
 
             return {

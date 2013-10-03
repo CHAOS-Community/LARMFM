@@ -1,56 +1,44 @@
-define(['knockout','factory/calendar'], function(ko, calfac) {
+define(['knockout', 'factory/calendar', 'mods/format'], function(ko, calfac, format) {
 
     var items = ko.observableArray([]);
     var freetext = "";
-    var filter = "";
-    
-    function update(pfreetext, pfilter, pdatebegin, pdateend) {
+    var filterwithoutdates = "";
+    var search = null;
+
+    function update(pfreetext, pfilterwithoutdates, pdatebegin, pdateend, searchmethod) {
         freetext = pfreetext;
-        filter = pfilter;
-        
-        if(pdatebegin==null||pdateend==null){
+        filterwithoutdates = pfilterwithoutdates;
+        search = searchmethod;
+
+        if (pdatebegin == null || pdateend == null) {
             //Decades
             dodecades();
         }
-        
+
     }
 
-    function dodecades(){
+    function dodecades() {
         items.removeAll();
-        
-        var item = new calfac.CalendarItem();
-        item.title = "1980'erne";
-        item.count = 11;
-        item.seq = 1;
-        items.push(item);
-        item.load();
-        
-        var item2 = new calfac.CalendarItem();
-        item2.title = "1990'erne";
-        item2.count = 22;
-        item2.seq = 2;
-        items.push(item2);
-        item2.load();
-        
-    }
 
-    function createfilter() {
-        return filter;
-    }
+        var yearb = 1920;
+        var yeare = (new Date().getFullYear()) / 10 * 10;
 
-    function call() {
-        CHAOS.Portal.Client.View.Get(Settings.Search.viewName, freetext, "", createfilter(), 0, 0).WithCallback(received);
-    }
-    function received(r)
-    {
-        items.removeAll();
-        //for (var i = 0; i < r.Body.Count; i++)
+        for (var i = yearb; i < yeare; i += 10) {
+            var item = new calfac.CalendarItem();
+            item.search = search;
+            item.title(i + "'erne");
+            item.datebegin(i + "-01-01");
+            item.dateend(i + "-12-31");
+            items.push(item);
+            item.load(freetext, filterwithoutdates);
+        }
     }
 
     return {
         freetext: freetext,
         items: items,
-        update: update
+        update: update,
+        search: search
     };
 });
 
