@@ -106,16 +106,16 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 if (datebegin() != null && dateend() == null) {
                     // [1995-12-31T23:59:59.999Z TO *]
                     //Substract 1 millisecond from date before converting to string.
-                    filter += "PubStartDate:[" + format.getSolrDateStr(new Date(datebegin() - 1)) + " TO *]";
+                    filter += "PubStartDate:[" + format.getSolrDateStr(new Date(datebegin()),-1) + " TO *]";
                 } else if (datebegin() == null && dateend() != null) {
                     // [* TO 2007-03-06T00:00:00Z]
                     //Add 1 millisecond from date before converting to string.
-                    filter += "PubStartDate:[* TO " + format.getSolrDateStr(new Date(dateend() + 1)) + "]";
+                    filter += "PubStartDate:[* TO " + format.getSolrDateStr(new Date(dateend()),1) + "]";
                     //filter += "PubStartDate:[1900-01-01T00:00:00.000Z TO " + format.getSolrDateStr(new Date(dateend())) + "]";
                 } else if (datebegin() != null && dateend() != null) {
                     // [1995-12-31T23:59:59.999Z TO 2007-03-06T00:00:00Z]
                     //Substract and add 1 millisecond from/to dates before converting to string.
-                    filter += "PubStartDate:[" + format.getSolrDateStr(new Date(datebegin() - 1)) + " TO " + format.getSolrDateStr(new Date(dateend() + 1)) + "]";
+                    filter += "PubStartDate:[" + format.getSolrDateStr(new Date(datebegin()),-1) + " TO " + format.getSolrDateStr(new Date(dateend()),1) + "]";
                 }
 
                 return filter;

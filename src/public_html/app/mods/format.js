@@ -25,16 +25,39 @@ define(function() {
         }());
     }
 
-    function getSolrDateStr(date) {
+    function getSolrDateStr(date, offset) {
+
+        if (offset == undefined) {
+            var ds = date.getFullYear() + "-" +
+                    getDigit2(date.getMonth() + 1) + "-" +
+                    getDigit2(date.getDate()) + "T" +
+                    getDigit2(date.getHours()) + ":" +
+                    getDigit2(date.getMinutes()) + ":" +
+                    getDigit2(date.getSeconds()) + "." +
+                    getDigit3(date.getMilliseconds()) + "Z";
+            return ds;
+        }
+        else if (offset === 1) {
+            var ds = date.getFullYear() + "-" +
+                    getDigit2(date.getMonth() + 1) + "-" +
+                    getDigit2(date.getDate()) + "T00:00:00.001Z";
+            return ds;
+
+        }
+        else if (offset === -1) {
+            var d = date;
+            d.setDate(d.getDate() - 1);
+            var ds = d.getFullYear() + "-" +
+                    getDigit2(d.getMonth() + 1) + "-" +
+                    getDigit2(d.getDate()) + "T23:59:59.999Z";
+            return ds;
+        }
+
         var ds = date.getFullYear() + "-" +
                 getDigit2(date.getMonth() + 1) + "-" +
-                getDigit2(date.getDate()) + "T" +
-                getDigit2(date.getHours()) + ":" +
-                getDigit2(date.getMinutes()) + ":" +
-                getDigit2(date.getSeconds()) + "." +
-                getDigit3(date.getMilliseconds()) + "Z";
-        console.log(ds);
+                getDigit2(date.getDate()) + "T00:00:00.000Z";
         return ds;
+
     }
 
     function getQueryDateStr(date) {
@@ -61,8 +84,8 @@ define(function() {
     function getSolrFilterFromDateRangeStr(solrfield, yyyymmdd1, yyyymmdd2) {
         var d1 = getDateFromQueryDateStr(yyyymmdd1);
         var d2 = getDateFromQueryDateStr(yyyymmdd2);
-        var ds1 = getSolrDateStr(d1);
-        var ds2 = getSolrDateStr(d2);
+        var ds1 = getSolrDateStr(d1,-1);
+        var ds2 = getSolrDateStr(d2,1);
         return solrfield + ":[" + ds1 + " TO " + ds2 + "]";
     }
 
