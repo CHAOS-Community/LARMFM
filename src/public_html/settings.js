@@ -20,6 +20,11 @@ Settings.startPath = "!search";
 Settings.publicPaths = ['AppLoader', 'Login'];
 
 Settings.Search = {
+    UIViews:
+            {
+                //searchResult: searchresults
+                searchResult: "quicksearchresults"
+            },
     viewName: "Search",
     objectTypes: [
         {

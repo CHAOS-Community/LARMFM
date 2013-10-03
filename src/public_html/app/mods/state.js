@@ -11,13 +11,6 @@ define(function () {
 
     var searchMetadataSchemaGuids = [];
 
-    function getParamByName(name, str) {
-        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-            results = regex.exec("?"+str);
-        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-    }
-
     return {
         userGuid: userGuid,
         userEmail: userEmail,
@@ -25,10 +18,7 @@ define(function () {
         hasSession: hasSession,
         isAuthenticated: isAuthenticated,
         searchMetadataSchemaGuids: searchMetadataSchemaGuids,
-        lastRedirectedFromURL: lastRedirectedFromURL,
-        
-        getParamByName: getParamByName
-
+        lastRedirectedFromURL: lastRedirectedFromURL
         
     };
 });

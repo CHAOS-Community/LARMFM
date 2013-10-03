@@ -4,6 +4,7 @@ define(['knockout'],function (ko) {
         //this.eqCtl = document.getElementById(eq);
         this.title = ko.observable();
         this.hash = ko.observable();
+        this.date = ko.observable();
     };
 
     ObjectItem.prototype = function () {

@@ -1,14 +1,16 @@
-define(['durandal/app', 'plugins/router', 'knockout'], 
-function (app, router, ko) {
+define(['durandal/app', 'plugins/router', 'knockout', 'mods/search'], 
+function (app, router, ko, searchmod) {
 
-    var searchtext = ko.observable("");
+    //var searchtext = ko.observable("");
     var cansearch = ko.observable(true);
 
     return {
         cansearch: cansearch,
-        searchtext: searchtext,
+        searchtext: searchmod.freetext,
         search: function () {
-            router.navigate('!search/s=' + searchtext() + '&date=now');
+            //searchmod.freetext(searchtext());
+            searchmod.navigate();
+            //router.navigate('!search/s=' + searchtext() + '&date=now');
         }
     };
 

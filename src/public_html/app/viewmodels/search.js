@@ -12,13 +12,8 @@ define(['durandal/app', 'knockout', 'mods/search', 'mods/state'],
                 title: "Calendar",
                 search: search,
                 activate: function(param) {
-
-                    if (param != undefined)
-                    {
-                        var s = state.getParamByName('s', param);
-                        search.pageindex(0);
-                        search.freetext(s);
-                        search.search();
+                    if (param != undefined){
+                        search.search(param);
                     }
                 },
                 // http://durandaljs.com/documentation/Hooking-Lifecycle-Callbacks/       
