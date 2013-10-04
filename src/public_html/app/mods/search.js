@@ -30,7 +30,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 {
                     var r = response.Body.Results[i];
                     var oi = new objfac.ObjectItem();
-                    oi.title = "Title : " + r.Title;
+                    oi.title = "" + r.Title;
                     if (r.Type == "Radio")
                         oi.hash = '#!object/id=' + r.Id;
                     else
