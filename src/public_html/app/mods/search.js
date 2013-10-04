@@ -19,6 +19,8 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
             var items = ko.observableArray([]);
             var isSearching = ko.observable(false);
 
+            updatecalendar();
+
             function searchReceived(response)
             {
                 isSearching(false);
@@ -145,6 +147,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 isSearching: isSearching,
                 navigate: navigate,
                 calendaritems: searchcalendar.items,
+                breadcrumbitems: searchcalendar.breadcrumbitems,
                 updatecalendar: updatecalendar,
                 search: function(param) {
 

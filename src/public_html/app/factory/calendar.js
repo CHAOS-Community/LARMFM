@@ -9,6 +9,7 @@ define(['knockout','mods/format'], function(ko, format) {
         this.datebegin = ko.observable("");
         this.dateend = ko.observable("");
         this.search = null;
+        this.isactive = ko.observable(false);
     };
 
     CalendarItem.prototype = function() {
@@ -36,7 +37,7 @@ define(['knockout','mods/format'], function(ko, format) {
         };
 
         var click = function(context) {
-            context.search(context.datebegin(),context.dateend());
+            context.search(context);
         };
 
         return {
