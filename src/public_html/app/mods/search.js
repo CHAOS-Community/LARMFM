@@ -1,7 +1,7 @@
 // Search Module
 define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/format', 'mods/searchcalendar'],
         function(ko, objfac, router, state, format, searchcalendar) {
-
+            
             // Paging
             var pagesize = ko.observable(20);
             var pageindex = ko.observable(0);
@@ -18,6 +18,9 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
             // Search Result
             var items = ko.observableArray([]);
             var isSearching = ko.observable(false);
+            var resulttext = ko.observable("");
+
+            updatecalendar();
 
             function searchReceived(response)
             {
@@ -27,7 +30,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 {
                     var r = response.Body.Results[i];
                     var oi = new objfac.ObjectItem();
-                    oi.title = "Title : " + r.Title;
+                    oi.title = "" + r.Title;
                     if (r.Type == "Radio")
                         oi.hash = '#!object/id=' + r.Id;
                     else
@@ -39,6 +42,13 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
 
                 totalcount = response.Body.TotalCount;
                 noofpages = Math.ceil(totalcount / pagesize());
+                
+                if(totalcount == 0)
+                    resulttext("Ingen resultater");
+                else if (totalcount == 1)
+                    resulttext("1 resultat");
+                else
+                    resulttext(totalcount + " resultater")
 
                 updatePaging();
             }
@@ -88,6 +98,12 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 router.navigate(s);
             }
 
+            function navigatetodaterangestr(datestr1, datestr2){
+                datebegin(format.getDateFromQueryDateStr(datestr1));
+                dateend(format.getDateFromQueryDateStr(datestr2));
+                navigate();
+            }
+
             function createfilter() {
                 return createfilterfordates();
             }
@@ -100,16 +116,16 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 if (datebegin() != null && dateend() == null) {
                     // [1995-12-31T23:59:59.999Z TO *]
                     //Substract 1 millisecond from date before converting to string.
-                    filter += "PubStartDate:[" + format.getSolrDateStr(new Date(datebegin() - 1)) + " TO *]";
+                    filter += "PubStartDate:[" + format.getSolrDateStr(new Date(datebegin()),-1) + " TO *]";
                 } else if (datebegin() == null && dateend() != null) {
                     // [* TO 2007-03-06T00:00:00Z]
                     //Add 1 millisecond from date before converting to string.
-                    filter += "PubStartDate:[* TO " + format.getSolrDateStr(new Date(dateend() + 1)) + "]";
+                    filter += "PubStartDate:[* TO " + format.getSolrDateStr(new Date(dateend()),1) + "]";
                     //filter += "PubStartDate:[1900-01-01T00:00:00.000Z TO " + format.getSolrDateStr(new Date(dateend())) + "]";
                 } else if (datebegin() != null && dateend() != null) {
                     // [1995-12-31T23:59:59.999Z TO 2007-03-06T00:00:00Z]
                     //Substract and add 1 millisecond from/to dates before converting to string.
-                    filter += "PubStartDate:[" + format.getSolrDateStr(new Date(datebegin() - 1)) + " TO " + format.getSolrDateStr(new Date(dateend() + 1)) + "]";
+                    filter += "PubStartDate:[" + format.getSolrDateStr(new Date(datebegin()),-1) + " TO " + format.getSolrDateStr(new Date(dateend()),1) + "]";
                 }
 
                 return filter;
@@ -121,11 +137,13 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
             }
 
             function updatecalendar() {
-                searchcalendar.update(freetext(),"",datebegin(),dateend());
+               searchcalendar.search = this;
+               searchcalendar.update(freetext(),"",datebegin(),dateend(), navigatetodaterangestr);
             }
 
             return {
                 items: items,
+                resulttext: resulttext,
                 pagingitems: pagingitems,
                 pageindex: pageindex,
                 pagesize: pagesize,
@@ -138,6 +156,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 isSearching: isSearching,
                 navigate: navigate,
                 calendaritems: searchcalendar.items,
+                breadcrumbitems: searchcalendar.breadcrumbitems,
                 updatecalendar: updatecalendar,
                 search: function(param) {
 
@@ -161,6 +180,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
 
                     items.removeAll();
                     isSearching(true);
+                    resulttext("Søger...");
                     CHAOS.Portal.Client.View.Get(Settings.Search.viewName, freetext(), createsort(), createfilter(), pageindex(), pagesize()).WithCallback(searchReceived);
                 
                     updatecalendar();

@@ -1,11 +1,29 @@
 <div>Calendar control</div>
-<button class="btn" data-bind="click:daterangeclick1">1930+</button>
-<button class="btn" data-bind="click:daterangeclick2">+1930</button>
-<button class="btn" data-bind="click:daterangeclick3">1930-02 - 1930-08</button>
-<div></div>
+
+<div>
+    <ul class="breadcrumb" style="margin-bottom: 5px;">
+        <!-- ko foreach: breadcrumbitems -->
+        <li data-bind="css:{active:isactive}">  
+            <!-- ko if: (isactive) -->
+            <span data-bind="text:title"></span>
+            <!-- /ko -->      
+            <!-- ko ifnot: (isactive) -->
+            <a data-bind="text:title, click: click">o</a>
+            <!-- /ko -->              
+            <!-- ko if: ($index() !== ($parent.breadcrumbitems().length - 1)) -->
+            <span class="divider">/</span>
+            <!-- /ko -->      
+        </li>
+        <!-- /ko -->
+    </ul>
+</div>
 
 <div data-bind="foreach: items">
-    <div data-bind="html: title"></div>
-    <div data-bind="html: count"></div>
-    
+    <a class="btn" data-bind="click: click">
+        <div data-bind="html: title"></div>
+        <div>
+            <div data-bind="html: count"></div>
+            <span class="loader" data-bind="css: { active: busy }"><i class="icon-spinner icon-spin"></i></span>
+        </div>
+    </a>
 </div>
