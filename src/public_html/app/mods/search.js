@@ -18,6 +18,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
             // Search Result
             var items = ko.observableArray([]);
             var isSearching = ko.observable(false);
+            var resulttext = ko.observable("");
 
             updatecalendar();
 
@@ -41,6 +42,13 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
 
                 totalcount = response.Body.TotalCount;
                 noofpages = Math.ceil(totalcount / pagesize());
+                
+                if(totalcount == 0)
+                    resulttext("Ingen resultater");
+                else if (totalcount == 1)
+                    resulttext("1 resultat");
+                else
+                    resulttext(totalcount + " resultater")
 
                 updatePaging();
             }
@@ -135,6 +143,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
 
             return {
                 items: items,
+                resulttext: resulttext,
                 pagingitems: pagingitems,
                 pageindex: pageindex,
                 pagesize: pagesize,
@@ -171,6 +180,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
 
                     items.removeAll();
                     isSearching(true);
+                    resulttext("Søger...");
                     CHAOS.Portal.Client.View.Get(Settings.Search.viewName, freetext(), createsort(), createfilter(), pageindex(), pagesize()).WithCallback(searchReceived);
                 
                     updatecalendar();
