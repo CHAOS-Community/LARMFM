@@ -20,7 +20,8 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
             var isSearching = ko.observable(false);
             var resulttext = ko.observable("");
 
-            updatecalendar();
+            dosearch();
+            //updatecalendar();
 
             function searchReceived(response)
             {
@@ -152,26 +153,8 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                searchcalendar.update(freetext(),"",datebegin(),dateend(), navigatetodaterangestr);
             }
 
-            return {
-                items: items,
-                resulttext: resulttext,
-                pagingitems: pagingitems,
-                pageindex: pageindex,
-                pagesize: pagesize,
-                pageindexshown: pageindexshown,
-                freetext: freetext,
-                datebegin: datebegin,
-                dateend: dateend,
-                nextPage: nextPage,
-                prevPage: prevPage,
-                isSearching: isSearching,
-                navigate: navigate,
-                calendaritems: searchcalendar.items,
-                breadcrumbitems: searchcalendar.breadcrumbitems,
-                updatecalendar: updatecalendar,
-                search: function(param) {
-
-                    if (param != undefined) {
+            function dosearch(param){
+                if (param != undefined) {
                         // New search. Reset page index.
                         pageindex(0);
 
@@ -196,7 +179,26 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                     CHAOS.Portal.Client.View.Get(Settings.Search.viewName, freetext(), createsort(), flter, pageindex(), pagesize()).WithCallback(searchReceived);
                 
                     updatecalendar();
-                }
+            }
+
+            return {
+                items: items,
+                resulttext: resulttext,
+                pagingitems: pagingitems,
+                pageindex: pageindex,
+                pagesize: pagesize,
+                pageindexshown: pageindexshown,
+                freetext: freetext,
+                datebegin: datebegin,
+                dateend: dateend,
+                nextPage: nextPage,
+                prevPage: prevPage,
+                isSearching: isSearching,
+                navigate: navigate,
+                calendaritems: searchcalendar.items,
+                breadcrumbitems: searchcalendar.breadcrumbitems,
+                updatecalendar: updatecalendar,
+                search: dosearch
             };
         });
 
