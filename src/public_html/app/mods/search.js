@@ -113,7 +113,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                     if(flter == "")
                         return Settings.Search.filter;
                     else
-                        return flter + "&" + Settings.Search.filter;
+                        return flter + " AND " + Settings.Search.filter;
                 }
                                 
                 return flter;
@@ -150,7 +150,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
             function updatecalendar() {
                searchcalendar.search = this;
                var flter = Settings.Search.filter;
-               searchcalendar.update(freetext(),"",datebegin(),dateend(), navigatetodaterangestr);
+               searchcalendar.update(freetext(),flter,datebegin(),dateend(), navigatetodaterangestr);
             }
 
             function dosearch(param){
