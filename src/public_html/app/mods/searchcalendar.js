@@ -153,10 +153,11 @@ define(['knockout', 'factory/calendar', 'mods/format'], function(ko, calfac, for
         }
         
         /// Stop breadcrumb at day
-        if(breadcrumbitems().length === 4)
+        if(breadcrumbitems().length === 5)
             breadcrumbitems.pop();
         
-        breadcrumbitems.push(getCalItem(item.title(),item.datebegin(),item.dateend(),true));
+        if(breadcrumbitems().length < 4)
+            breadcrumbitems.push(getCalItem(item.title(),item.datebegin(),item.dateend(),true));
         
         search(item.datebegin(),item.dateend());
     }
