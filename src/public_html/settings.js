@@ -20,6 +20,7 @@ Settings.startPath = "!search";
 Settings.publicPaths = ['AppLoader', 'Login'];
 
 Settings.Search = {
+    filter: "Type:Schedule",
     UIViews:
             {
                 //searchResult: searchresults

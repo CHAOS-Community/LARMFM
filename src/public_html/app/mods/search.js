@@ -105,7 +105,17 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
             }
 
             function createfilter() {
-                return createfilterfordates();
+                var flter = createfilterfordates();
+                
+                if(Settings.Search.filter != ""){
+                    
+                    if(flter == "")
+                        return Settings.Search.filter;
+                    else
+                        return flter + "&" + Settings.Search.filter;
+                }
+                                
+                return flter;
             }
 
             function createfilterfordates() {
@@ -138,6 +148,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
 
             function updatecalendar() {
                searchcalendar.search = this;
+               var flter = Settings.Search.filter;
                searchcalendar.update(freetext(),"",datebegin(),dateend(), navigatetodaterangestr);
             }
 
@@ -181,7 +192,8 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                     items.removeAll();
                     isSearching(true);
                     resulttext("Søger...");
-                    CHAOS.Portal.Client.View.Get(Settings.Search.viewName, freetext(), createsort(), createfilter(), pageindex(), pagesize()).WithCallback(searchReceived);
+                    var flter = createfilter();
+                    CHAOS.Portal.Client.View.Get(Settings.Search.viewName, freetext(), createsort(), flter, pageindex(), pagesize()).WithCallback(searchReceived);
                 
                     updatecalendar();
                 }
