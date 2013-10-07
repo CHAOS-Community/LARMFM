@@ -103,7 +103,7 @@ define(['knockout', 'factory/calendar', 'mods/format'], function(ko, calfac, for
         
         var lastDay = new Date(y, m+1, 0);
         
-        for (var d = 1; d < lastDay.getDate(); d++) {
+        for (var d = 1; d <= lastDay.getDate(); d++) {
             var item = new calfac.CalendarItem();
             item.search = itemclick;
             item.issmall(true);
