@@ -10,6 +10,7 @@ define(['knockout','mods/format'], function(ko, format) {
         this.dateend = ko.observable("");
         this.search = null;
         this.isactive = ko.observable(false);
+        this.issmall = ko.observable(false);
     };
 
     CalendarItem.prototype = function() {

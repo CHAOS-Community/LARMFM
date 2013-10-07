@@ -79,6 +79,8 @@ define(['knockout', 'factory/calendar', 'mods/format'], function(ko, calfac, for
         }
     }
 
+    var monthnames =["","Januar","Februar","Marts","April","Maj","Juni","Juli","August","September","Oktober","November","December"];
+
     function domonths(y) {
 
         items.removeAll();
@@ -86,7 +88,7 @@ define(['knockout', 'factory/calendar', 'mods/format'], function(ko, calfac, for
         for (var m = 1; m < 13; m++) {
             var item = new calfac.CalendarItem();
             item.search = itemclick;
-            item.title(format.getDigit2(m) + "-" + y);
+            item.title(monthnames[m]);
             item.datebegin(y + "-" + format.getDigit2(m) + "-01");
             var lastDay = new Date(y, m, 0);
             item.dateend(y + "-" + format.getDigit2(m) + "-" + format.getDigit2(lastDay.getDate()));
@@ -104,7 +106,8 @@ define(['knockout', 'factory/calendar', 'mods/format'], function(ko, calfac, for
         for (var d = 1; d < lastDay.getDate(); d++) {
             var item = new calfac.CalendarItem();
             item.search = itemclick;
-            item.title(format.getDigit2(d) + "-" + format.getDigit2(m+1) + "-" + y);
+            item.issmall(true);
+            item.title(d + ".");
             item.datebegin(y + "-" + format.getDigit2(m+1) + "-" + format.getDigit2(d));
             item.dateend(y + "-" + format.getDigit2(m+1) + "-" + format.getDigit2(d));
             items.push(item);
