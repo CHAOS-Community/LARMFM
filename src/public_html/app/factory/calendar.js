@@ -10,13 +10,15 @@ define(['knockout','mods/format'], function(ko, format) {
         this.dateend = ko.observable("");
         this.search = null;
         this.isactive = ko.observable(false);
+        this.issmall = ko.observable(false);
     };
 
     CalendarItem.prototype = function() {
 
         var load = function(freetext, filter) {
             this.busy(true);
-            CHAOS.Portal.Client.View.Get(Settings.Search.viewName, freetext, "", createfilter(this, filter), 0, 0).WithCallback(received, this);
+            var flter = createfilter(this, filter);
+            CHAOS.Portal.Client.View.Get(Settings.Search.viewName, freetext, "", flter , 0, 0).WithCallback(received, this);
         };
 
         var createfilter = function(self, f) {
@@ -24,7 +26,7 @@ define(['knockout','mods/format'], function(ko, format) {
             var filter = format.getSolrFilterFromDateRangeStr("PubStartDate", self.datebegin(), self.dateend());
             
             if (f != "")
-                return f + "&" + filter;
+                return f + " AND " + filter;
 
             return filter;
         };

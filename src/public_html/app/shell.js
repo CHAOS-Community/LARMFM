@@ -3,7 +3,7 @@ define(['plugins/router'], function (router) {
         router: router,
         activate: function () {
             return router.map([
-                { route: ['', '!search', '!search/:param'], moduleId: 'viewmodels/search', title: 'Search', nav: true },
+                { route: ['', '!search', '!search/:param'], moduleId: Settings.Search.UIViews.search, title: 'Search', nav: true },
                 { route: '!object/:param', moduleId: 'viewmodels/object', title: 'Object', nav: false },
                 { route: 'login', moduleId: 'viewmodels/login', title: 'Login', nav: false }
             ]).buildNavigationModel()
