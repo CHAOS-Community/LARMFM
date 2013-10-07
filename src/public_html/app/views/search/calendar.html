@@ -1,5 +1,3 @@
-<div>Calendar control</div>
-
 <div>
     <ul class="breadcrumb" style="margin-bottom: 5px;">
         <!-- ko foreach: breadcrumbitems -->
@@ -19,11 +17,11 @@
 </div>
 
 <div data-bind="foreach: items">
-    <a class="btn" data-bind="click: click">
-        <div data-bind="html: title"></div>
-        <div>
-            <div data-bind="html: count"></div>
-            <span class="loader" data-bind="css: { active: busy }"><i class="icon-spinner icon-spin"></i></span>
-        </div>
+    <a class="btn calitem" data-bind="click: click, css: {calitemsmall: issmall}">
+        <span class='pull-left calitemtitle' data-bind="html: title"></span>
+        <span>
+            <span class='badge badge-info pull-right calitembatch' data-bind="text: count"></span>
+            <span class="loader pull-right calitemloader" data-bind="css: { active: busy }"><i class="icon-spinner icon-spin"></i></span>
+        </span>
     </a>
 </div>
