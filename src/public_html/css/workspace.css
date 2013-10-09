@@ -26,3 +26,18 @@
     margin:4px 4px 0px 0px;
 }
 
+.wsresulthits{
+    font-weight: bold;
+    margin: 30px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;    
+}
+
+.wspagination{
+    margin: 20px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.wspaginationbottom{
+    margin: 0px 0px 40px 0px;
+    padding: 0px 0px 0px 0px;
+}
