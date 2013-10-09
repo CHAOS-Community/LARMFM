@@ -5,6 +5,8 @@ define(['knockout'],function (ko) {
         this.title = ko.observable();
         this.hash = ko.observable();
         this.date = ko.observable();
+        this.datepretty = ko.observable();
+        this.type = ko.observable();
     };
 
     ObjectItem.prototype = function () {

@@ -28,13 +28,27 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 {
                     var r = response.Body.Results[i];
                     var oi = new objfac.ObjectItem();
-                    oi.title = "" + r.Title;
-                    if (r.Type == "Radio")
-                        oi.hash = '#!object/id=' + r.Id;
-                    else
-                        oi.hash = r.Url;
-                    if (r.PubStartDate.length >= 4 && r.PubStartDate.substring(0, 4) != "1900")
-                        oi.date = "(" + r.PubStartDate + ")";
+                    oi.title("" + r.Title);
+                    if (r.Type == "Radio"){
+                        oi.hash('#!object/id=' + r.Id);
+                        oi.type("radioudsendelse");
+                    }
+                    else{
+                        
+                        if(r.Type=="Schedule")
+                            oi.type("programoversigt");
+                        else
+                            oi.type("rettelse til programoversigt");
+                        
+                        oi.hash(r.Url);
+                    }
+                    
+                    var d = r.PubStartDate;
+                    if (d.length >= 4 && d.substring(0, 4) != "1900")
+                        oi.date("" + d + "");
+                        
+                    oi.datepretty(d.substring(8,10)+"-" + d.substring(5,7) + "-" + d.substring(0,4))
+                    
                     items.push(oi);
                 }
 
