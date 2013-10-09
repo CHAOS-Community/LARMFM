@@ -134,7 +134,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 var filter = "";
 
                 //filter = "Type:Radio";
-
+                
                 if (datebegin() != null && dateend() == null) {
                     // [1995-12-31T23:59:59.999Z TO *]
                     //Substract 1 millisecond from date before converting to string.
