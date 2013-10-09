@@ -20,9 +20,6 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
             var isSearching = ko.observable(false);
             var resulttext = ko.observable("");
 
-            dosearch();
-            //updatecalendar();
-
             function searchReceived(response)
             {
                 isSearching(false);

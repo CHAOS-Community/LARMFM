@@ -16,6 +16,9 @@ define(['durandal/app', 'knockout', 'mods/search', 'mods/state'],
                     if (param != undefined){
                         search.search(param);
                     }
+                    else{
+                        search.search("");
+                    }
                 },
                 // http://durandaljs.com/documentation/Hooking-Lifecycle-Callbacks/       
                 compositionComplete: function() {
