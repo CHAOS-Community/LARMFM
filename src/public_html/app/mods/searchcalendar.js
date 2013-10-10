@@ -157,32 +157,6 @@ define(['knockout', 'factory/calendar', 'mods/format'], function(ko, calfac, for
     }
 
     function itemclick(item) {
-
-        /*
-         var idx = -1;
-         // Set all items to isactive false and find item index.
-         for (var i = 0; i < breadcrumbitems().length; i++) {
-         breadcrumbitems()[i].isactive(false);
-         if (breadcrumbitems()[i] === item)
-         idx = i;
-         }
-         
-         /// Remove item and above items from list.
-         if (idx > -1) {
-         var il = breadcrumbitems().length - idx;
-         for (var i = 0; i < il; i++) {
-         breadcrumbitems.pop();
-         }
-         }
-         
-         /// Stop breadcrumb at day
-         if (breadcrumbitems().length === 5)
-         breadcrumbitems.pop();
-         
-         if (breadcrumbitems().length < 4)
-         breadcrumbitems.push(getCalItem(item.title(), item.datebegin(), item.dateend(), true));
-         */
-
         generateBreadcrumb(item.datebegin(), item.dateend());
         search(item.datebegin(), item.dateend());
     }
@@ -211,10 +185,16 @@ define(['knockout', 'factory/calendar', 'mods/format'], function(ko, calfac, for
                 breadcrumbitems.push(yearitem);
 
                 if (m1 == m2) {
-                    var d1 = ds1.substring(8, 10);
-                    var d2 = ds2.substring(8, 10);
+//                    var d1 = ds1.substring(8, 10);
+//                    var d2 = ds2.substring(8, 10);
                     var monthitem = getCalItem_month(parseInt(m1),parseInt(y1));
                     breadcrumbitems.push(monthitem);
+                    
+                    // Set current search day to active:
+                    for(var i = 0; i < items().length; i++){
+                        var item = items()[i];
+                           item.isactive(item.datebegin()==ds1 && ds1==ds2);
+                    }
                 }
             }
         }
