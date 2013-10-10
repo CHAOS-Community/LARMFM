@@ -225,6 +225,12 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
             function updatecalendar() {
                 searchcalendar.search = this;
                 var flter = Settings.Search.filter;
+                var objtypefilter = createobjecttypefilter();
+                if(objtypefilter != ""){
+                    if(flter != "")
+                        flter += " AND ";
+                    flter += objtypefilter;
+                }
                 searchcalendar.update(freetext(), flter, datebegin(), dateend(), navigatetodaterangestr);
             }
 
