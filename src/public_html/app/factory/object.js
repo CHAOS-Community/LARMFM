@@ -21,7 +21,7 @@ define(['knockout'], function(ko) {
             item.isselected(!item.isselected());
         };
 
-        var rowclick = function(item) {
+        var rowclick = function(item, event) {
             item.isselected(!item.isselected());
         };
 
@@ -30,7 +30,7 @@ define(['knockout'], function(ko) {
             if (window.getSelection)
                 window.getSelection().removeAllRanges();
             else if (document.selection)
-                document.selection.empty()
+                document.selection.empty();
 
             event.cancelBubble = true;
             if (event.stopPropagation)
@@ -39,11 +39,17 @@ define(['knockout'], function(ko) {
             window.open(item.hash());
         };
 
+        var tdclick = function(item, event){
+//            event.bubbles = false;
+//            event.originalEvent.cancelBubble = true;
+        };
+
         return {
             rowclick: rowclick,
             rowdblclick: rowdblclick,
             titleclick: titleclick,
-            checkclick: checkclick
+            checkclick: checkclick,
+            tdclick: tdclick
         };
 
     }();
