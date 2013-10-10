@@ -1,4 +1,7 @@
-<tr>
-    <td><a target="_blank" data-bind="attr: { href: hash }, html: title"></a></td>
-    <td><span data-bind="html: date"></span></td>
+<tr data-bind='css:{info: isselected}'>
+<!--<tr data-bind='click: rowclick, css:{info: isselected}, event: { dblclick: rowdblclick }'>-->
+    <td><label style="display: block"><input type="checkbox" data-bind="checked: isselected" /></label></td>
+    <td data-bind='click: rowclick'><span data-bind="html: datepretty"></span></td>
+    <td data-bind='click: rowclick'><a target="_blank" data-bind="attr: { href: hash }, html: title, click: titleclick, clickBubble: false"></a></td>
+    <td data-bind='click: rowclick'><span data-bind="html: type"></span></td>
 </tr>

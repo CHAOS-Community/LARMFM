@@ -13,10 +13,10 @@ define(['durandal/app', 'knockout', 'mods/search', 'mods/state'],
                 title: "Calendar",
                 search: search,
                 activate: function(param) {
-                    if (param != undefined){
+                    if (param != undefined) {
                         search.search(param);
                     }
-                    else{
+                    else {
                         search.search("");
                     }
                 },
@@ -26,9 +26,9 @@ define(['durandal/app', 'knockout', 'mods/search', 'mods/state'],
                 },
                 pagingclick: function(data) {
 
-                    if(data.isdisabled || data.isactive)
+                    if (data.isdisabled || data.isactive)
                         return;
-                    
+
                     if (data.index == -1)
                         search.prevPage();
                     else if (data.index == 9999)
@@ -37,7 +37,8 @@ define(['durandal/app', 'knockout', 'mods/search', 'mods/state'],
                         search.pageindex(data.index);
 
                     search.search();
-                }
+                },
+                        objtpfilteritems: search.objtpfilteritems
 
 
             };
