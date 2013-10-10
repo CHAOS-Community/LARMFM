@@ -138,7 +138,7 @@ define(['knockout', 'factory/calendar', 'mods/format'], function(ko, calfac, for
     }
 
     function addBreadcrumbDecades(active) {
-        breadcrumbitems.push(getCalItem("Årtier", null, null, active));
+        breadcrumbitems.push(getCalItem("Alle", null, null, active));
     }
 
     function addBreadcrumbDecade(title, db, de, active) {
