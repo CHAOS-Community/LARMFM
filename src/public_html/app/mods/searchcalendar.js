@@ -36,11 +36,14 @@ define(['knockout', 'factory/calendar', 'mods/format'], function(ko, calfac, for
                 any = true;
                 dodays(d1.getFullYear(), d1.getMonth());
             }
+
+            generateBreadcrumb(format.getQueryDateStr(pdatebegin), format.getQueryDateStr(pdateend));
         }
 
         if (!any) {
             dodecades();
         }
+
     }
 
     function dodecades() {
@@ -52,14 +55,19 @@ define(['knockout', 'factory/calendar', 'mods/format'], function(ko, calfac, for
         var yeare = (new Date().getFullYear()) / 10 * 10;
 
         for (var i = yearb; i < yeare; i += 10) {
-            var item = new calfac.CalendarItem();
-            item.search = itemclick;
-            item.title(i + "'erne");
-            item.datebegin(i + "-01-01");
-            item.dateend(i + 9 + "-12-31");
+            var item = getCalItem_decade(i);
             items.push(item);
             item.load(freetext, filterwithoutdates);
         }
+    }
+
+    function getCalItem_decade(decade) {
+        var item = new calfac.CalendarItem();
+        item.search = itemclick;
+        item.title(decade + "'erne");
+        item.datebegin(decade + "-01-01");
+        item.dateend(decade + 9 + "-12-31");
+        return item;
     }
 
     function doyears(year) {
@@ -73,14 +81,19 @@ define(['knockout', 'factory/calendar', 'mods/format'], function(ko, calfac, for
             yeare = yearnow;
 
         for (var i = yearb; i <= yeare; i++) {
-            var item = new calfac.CalendarItem();
-            item.search = itemclick;
-            item.title(i);
-            item.datebegin(i + "-01-01");
-            item.dateend(i + "-12-31");
+            var item = getCalItem_year(i);
             items.push(item);
             item.load(freetext, filterwithoutdates);
         }
+    }
+
+    function getCalItem_year(year) {
+        var item = new calfac.CalendarItem();
+        item.search = itemclick;
+        item.title(year);
+        item.datebegin(year + "-01-01");
+        item.dateend(year + "-12-31");
+        return item;
     }
 
     var monthnames = ["", "Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli", "August", "September", "Oktober", "November", "December"];
@@ -90,15 +103,20 @@ define(['knockout', 'factory/calendar', 'mods/format'], function(ko, calfac, for
         items.removeAll();
 
         for (var m = 1; m < 13; m++) {
-            var item = new calfac.CalendarItem();
-            item.search = itemclick;
-            item.title(monthnames[m]);
-            item.datebegin(y + "-" + format.getDigit2(m) + "-01");
-            var lastDay = new Date(y, m, 0);
-            item.dateend(y + "-" + format.getDigit2(m) + "-" + format.getDigit2(lastDay.getDate()));
+            var item = getCalItem_month(m, y);
             items.push(item);
             item.load(freetext, filterwithoutdates);
         }
+    }
+
+    function getCalItem_month(month, year) {
+        var item = new calfac.CalendarItem();
+        item.search = itemclick;
+        item.title(monthnames[month]);
+        item.datebegin(year + "-" + format.getDigit2(month) + "-01");
+        var lastDay = new Date(year, month, 0);
+        item.dateend(year + "-" + format.getDigit2(month) + "-" + format.getDigit2(lastDay.getDate()));
+        return item;
     }
 
     function dodays(y, m) {
@@ -139,31 +157,52 @@ define(['knockout', 'factory/calendar', 'mods/format'], function(ko, calfac, for
     }
 
     function itemclick(item) {
+        generateBreadcrumb(item.datebegin(), item.dateend());
+        search(item.datebegin(), item.dateend());
+    }
 
-        var idx = -1;
-        // Set all items to isactive false and find item index.
-        for (var i = 0; i < breadcrumbitems().length; i++) {
-            breadcrumbitems()[i].isactive(false);
-            if (breadcrumbitems()[i] === item)
-                idx = i;
-        }
+    function generateBreadcrumb(ds1, ds2) {
+        breadcrumbitems.removeAll();
+        addBreadcrumbDecades(true);
 
-        /// Remove item and above items from list.
-        if (idx > -1) {
-            var il = breadcrumbitems().length - idx;
-            for (var i = 0; i < il; i++) {
-                breadcrumbitems.pop();
+        if (ds1 == null || ds1 == "" || ds2 == null || ds2 == "")
+            return;
+
+        var y1 = ds1.substring(0, 4);
+        var y2 = ds2.substring(0, 4);
+
+        var yyy1 = y1.substring(0, 3);
+        var yyy2 = y2.substring(0, 3);
+
+        if (yyy1 == yyy2) {
+            var decadeitem = getCalItem_decade(yyy1 + "0");
+            breadcrumbitems.push(decadeitem);
+            if (y1 == y2) {
+                var m1 = ds1.substring(5, 7);
+                var m2 = ds2.substring(5, 7);
+
+                var yearitem = getCalItem_year(parseInt(y1));
+                breadcrumbitems.push(yearitem);
+
+                if (m1 == m2) {
+//                    var d1 = ds1.substring(8, 10);
+//                    var d2 = ds2.substring(8, 10);
+                    var monthitem = getCalItem_month(parseInt(m1),parseInt(y1));
+                    breadcrumbitems.push(monthitem);
+                    
+                    // Set current search day to active:
+                    for(var i = 0; i < items().length; i++){
+                        var item = items()[i];
+                           item.isactive(item.datebegin()==ds1 && ds1==ds2);
+                    }
+                }
             }
         }
 
-        /// Stop breadcrumb at day
-        if (breadcrumbitems().length === 5)
-            breadcrumbitems.pop();
-
-        if (breadcrumbitems().length < 4)
-            breadcrumbitems.push(getCalItem(item.title(), item.datebegin(), item.dateend(), true));
-
-        search(item.datebegin(), item.dateend());
+        var bclen = breadcrumbitems().length;
+        for (var i = 0; i < bclen; i++) {
+            breadcrumbitems()[i].isactive((i + 1 == bclen));
+        }
     }
 
     return {
