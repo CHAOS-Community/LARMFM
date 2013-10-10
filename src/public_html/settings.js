@@ -20,10 +20,12 @@ Settings.startPath = "!search";
 Settings.publicPaths = ['AppLoader', 'Login'];
 
 Settings.Search = {
-    filter: "(Type:Schedule OR Type:ScheduleNote)",
+    //filter: "(Type:Schedule OR Type:ScheduleNote)",
+    filter: "",
     UIViews:
             {
-                search: "viewmodels/search_sendeplan",
+                search: "viewmodels/search",
+                //search: "viewmodels/search_sendeplan",
                 //searchResult: searchresults
                 searchResult: "quicksearchresults"
             },

@@ -29,26 +29,26 @@
                 </div>
                 <div class="pull-left wsresulthits" data-bind="text:resulttext"></div>
                 <div class="row" style="clear: both; margin:0"><div class="span9" style="margin:0"><hr style="margin:0" /></div></div>
-                <p>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Dato (ældst først)</th>
-                            <th>Hent til din computer</th>
-                            <th>Type</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- ko foreach: items -->
-                        <!-- ko compose: 'objects/objectitem_sendeplan.html' -->
-                        <!-- /ko -->
-                        <!-- /ko -->
-                    </tbody>
-                </table>
-                <div class="loader" data-bind="css: { active: search.isSearching }">
-                    <i class="icon-spinner icon-2x icon-spin"></i>
+                <div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Dato (ældst først)</th>
+                                <th>Hent til din computer</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- ko foreach: items -->
+                            <!-- ko compose: 'objects/objectitem_sendeplan.html' -->
+                            <!-- /ko -->
+                            <!-- /ko -->
+                        </tbody>
+                    </table>
+                    <div class="loader" data-bind="css: { active: search.isSearching }">
+                        <i class="icon-spinner icon-2x icon-spin"></i>
+                    </div>
                 </div>
-                </p>
                 <div class="pagination pagination-small pull-right wspaginationbottom">
                     <ul>
                         <!-- ko foreach: pagingitems -->

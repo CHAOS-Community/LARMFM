@@ -20,38 +20,37 @@
                                         <label data-i18n="app:start.scpoedString"></label>
                                     </fieldset>
                                 </div>-->
-                <div class="pagination pagination-small pull-right">
+                <div class="pagination pagination-small pull-right wspagination">
                     <ul>
                         <!-- ko foreach: pagingitems -->
                         <li data-bind="css: { disabled: isdisabled, active: isactive }"><a href="#" data-bind="html: text, click: $parent.pagingclick"></a></li>
                         <!-- /ko -->
                     </ul>
                 </div>
-                <div class="pull-left" style="margin-bottom: 0px; margin-top:42px;" data-bind="text:resulttext"></div>
+                <div class="pull-left wsresulthits" data-bind="text:resulttext"></div>
                 <div class="row" style="clear: both; margin:0"><div class="span9" style="margin:0"><hr style="margin:0" /></div></div>
-                <p>
-                <table class="table table-striped">
-                                  <thead>
-                <tr>
-                  <th>Titel</th>
-                  <th>Dato</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- ko foreach: items -->
-                    <!-- ko compose: 'objects/objectitem.html' -->
-                    <!-- /ko -->
-                <!-- /ko -->
-                </tbody>
-                </table>
-<!--                <div data-bind="foreach: items">
-                    <div data-bind="compose: 'objects/objectitem.html'"></div>
-                </div>-->
-                <div class="loader" data-bind="css: { active: search.isSearching }">
-                    <i class="icon-spinner icon-2x icon-spin"></i>
+                <div>
+                    <table id='searchresulttable' class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Vælg</th>
+                                <th>Dato (ældst først)</th>
+                                <th>Hent til din computer</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- ko foreach: items -->
+                            <!-- ko compose: 'objects/objectitem.html' -->
+                            <!-- /ko -->
+                            <!-- /ko -->
+                        </tbody>
+                    </table>
+                    <div class="loader" data-bind="css: { active: search.isSearching }">
+                        <i class="icon-spinner icon-2x icon-spin"></i>
+                    </div>
                 </div>
-                </p>
-                                <div class="pagination pagination-small pull-right">
+                <div class="pagination pagination-small pull-right wspaginationbottom">
                     <ul>
                         <!-- ko foreach: pagingitems -->
                         <li data-bind="css: { disabled: isdisabled, active: isactive }"><a href="#" data-bind="html: text, click: $parent.pagingclick"></a></li>
