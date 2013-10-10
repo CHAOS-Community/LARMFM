@@ -20,7 +20,7 @@
     <a class="btn calitem" data-bind="click: click, css: {calitemsmall: issmall}">
         <span class='pull-left calitemtitle' data-bind="html: title"></span>
         <span>
-            <span class='badge badge-info pull-right calitembatch' data-bind="text: count"></span>
+            <span class='badge pull-right calitembatch' data-bind="text: count, css: {'badge-info': isactive}"></span>
             <span class="loader pull-right calitemloader" data-bind="css: { active: busy }"><i class="icon-spinner icon-spin"></i></span>
         </span>
     </a>
