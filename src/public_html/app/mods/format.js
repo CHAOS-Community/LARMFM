@@ -74,7 +74,10 @@ define(function() {
 
     function getDateFromQueryDateStr(yyyymmdd) {
         
-        // Gives NaN in IE8: var d = Date.parse(yyyymmdd);
+        // Had to change date parse. Gives NaN in IE8: var d = Date.parse(yyyymmdd);
+
+        if(yyyymmdd==null)
+            return null;
         
         var y = parseInt(yyyymmdd.substring(0,4));
         var m = parseInt(yyyymmdd.substring(5,7));
