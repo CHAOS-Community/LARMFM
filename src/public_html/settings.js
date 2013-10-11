@@ -23,6 +23,7 @@ Settings.Search = {
     //filter: "(Type:Schedule OR Type:ScheduleNote)",
     filter: "",
     sortitems: [
+        { title: "sorter...", id: "", value: "PubStartDate+asc" },
         { title: "Sendetidspunkt (ældst først)", id: "1", value: "PubStartDate+asc" },
         { title: "Sendetidspunkt (nyeste først)", id: "2", value: "PubStartDate+desc" },
         { title: "Titel (a til z)", id: "3", value: "Title+asc" },

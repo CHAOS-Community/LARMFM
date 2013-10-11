@@ -86,6 +86,9 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
             }
 
             function createsort() {
+                if(sortvalue()=="")
+                    return Settings.Search.sortitems[0].value;
+                
                 return sortdic[sortvalue()];
             }
 
@@ -245,9 +248,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                     objtpfilteritems()[0].isactive(!otfactive);
 
                     var order = format.getParamByName('o', param);
-                    if (order == "")
-                        sortvalue(Settings.Search.sortitems[0].id);
-                    else {
+                    if (order != ""){
                         sortvalue(order);
                     }
                 }
