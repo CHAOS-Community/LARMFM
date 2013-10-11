@@ -6,6 +6,8 @@ define(['knockout'], function(ko) {
         this.hash = ko.observable();
         this.date = ko.observable();
         this.datepretty = ko.observable();
+        this.datetimepretty = ko.observable();
+        this.duration = ko.observable();
         this.type = ko.observable();
         this.isselected = ko.observable(false);
     };

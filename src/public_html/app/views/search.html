@@ -16,18 +16,21 @@
                 <div class='btn-toolbar' class="pull-left">
                     <div class='btn-group pull-left'>
                         <!-- ko foreach: objtpfilteritems -->
-                        <a class="btn" data-bind="css:{'btn-primary':isactive},text: title, click: click"></a>
+                        <a class="btn" data-bind="css:{'btn-primary':isactive}, click: click">
+                            <span class='pull-left' data-bind="html: title"></span>
+                            <span class='badge pull-right wsobjecttypebatch' data-bind="text: count, css: {'badge-info': isactive}"></span>
+                        </a>
                         <!-- /ko -->
                     </div>
                 </div>
-                <div class="pull-right">
-                    <select data-bind="options: sortitems,
-                    optionsText: 'title',
-                    optionsValue: 'id',
-                    value: sortvalue,
-                    event:{ change: sortchanged}"></select>
-                </div>
                 <span class="clearfix"></span>
+                <div class="pull-right wssorting">
+                    <select data-bind="options: sortitems,
+                            optionsText: 'title',
+                            optionsValue: 'id',
+                            value: sortvalue,
+                            event:{ change: sortchanged}"></select>
+                </div>
                 <div class="pagination pagination-small pull-right wspagination">
                     <ul>
                         <!-- ko foreach: pagingitems -->
@@ -42,9 +45,12 @@
                         <thead>
                             <tr>
                                 <th>Vælg</th>
-                                <th>Dato (ældst først)</th>
-                                <th>Hent til din computer</th>
                                 <th>Type</th>
+                                <th>Titel</th>
+                                <th>Dato</th>
+                                <th>Varighed</th>
+                                <th>Kanal</th>
+                                <th>Brugerindhold</th>
                             </tr>
                         </thead>
                         <tbody>
