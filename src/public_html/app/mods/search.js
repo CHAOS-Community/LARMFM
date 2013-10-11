@@ -72,6 +72,19 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
 
                 return "";
             }
+
+            function getobjecttypecount() {
+                var flter = Settings.Search.filter;
+                var datefilter = createfilterfordates();
+                if (datefilter != "") {
+                    if (flter != "")
+                        flter += " AND ";
+                    flter += datefilter;
+                }
+                for(var i = 0; i < objtpfilteritems().length; i++){
+                    objtpfilteritems()[i].load(freetext(),flter);
+                }
+            }
             // =================================
 
             // === Sort functionality ===
@@ -86,9 +99,9 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
             }
 
             function createsort() {
-                if(sortvalue()=="")
+                if (sortvalue() == "")
                     return Settings.Search.sortitems[0].value;
-                
+
                 return sortdic[sortvalue()];
             }
 
@@ -248,7 +261,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                     objtpfilteritems()[0].isactive(!otfactive);
 
                     var order = format.getParamByName('o', param);
-                    if (order != ""){
+                    if (order != "") {
                         sortvalue(order);
                     }
                 }
@@ -263,6 +276,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 CHAOS.Portal.Client.View.Get(Settings.Search.viewName, freetext(), createsort(), flter, pageindex(), pagesize()).WithCallback(searchReceived);
 
                 updatecalendar();
+                getobjecttypecount();
             }
 
             function searchReceived(response)
