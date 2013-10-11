@@ -40,7 +40,7 @@ define(function() {
         else if (offset === 1) {
             var ds = date.getFullYear() + "-" +
                     getDigit2(date.getMonth() + 1) + "-" +
-                    getDigit2(date.getDate()) + "T00:00:00.001Z";
+                    getDigit2(date.getDate()+1) + "T00:00:00.001Z";
             return ds;
 
         }
