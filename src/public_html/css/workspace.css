@@ -33,11 +33,24 @@
 }
 
 .wspagination{
-    margin: 20px 0px 0px 0px;
+    margin: 23px 10px 0px 0px;
     padding: 0px 0px 0px 0px;
 }
 
 .wspaginationbottom{
-    margin: 0px 0px 40px 0px;
+    margin: -40px 0px 40px 0px;
     padding: 0px 0px 0px 0px;
+}
+
+.wssorting{
+    margin: 20px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.wssmallfont{
+    font-size: 11px;
+}
+
+.wsobjecttypebatch{
+    margin:2px 0px 0px 7px;
 }
