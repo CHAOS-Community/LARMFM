@@ -81,8 +81,8 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                         flter += " AND ";
                     flter += datefilter;
                 }
-                for(var i = 0; i < objtpfilteritems().length; i++){
-                    objtpfilteritems()[i].load(freetext(),flter);
+                for (var i = 0; i < objtpfilteritems().length; i++) {
+                    objtpfilteritems()[i].load(freetext(), flter);
                 }
             }
             // =================================
@@ -303,10 +303,22 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                     }
 
                     var d = r.PubStartDate;
-                    if (d.length >= 4 && d.substring(0, 4) != "1900")
-                        oi.date("" + d + "");
 
-                    oi.datepretty(d.substring(8, 10) + "-" + d.substring(5, 7) + "-" + d.substring(0, 4))
+                    if (d.length < 4 || d.substring(0, 4) == "1900" || d.substring(0, 4) == "0101") {
+                        oi.datetimepretty("ukendt dato");
+                    }
+                    else {
+                        if (d.length >= 4 && d.substring(0, 4) != "1900")
+                            oi.date("" + d + "");
+
+                        oi.datepretty(d.substring(8, 10) + "-" + d.substring(5, 7) + "-" + d.substring(0, 4))
+                        oi.datetimepretty(oi.datepretty() + " kl. " + d.substring(11, 13) + ":" + d.substring(14, 16));
+
+                        var d1 = format.getDateFromSolrDateString(r.PubStartDate);
+                        var d2 = format.getDateFromSolrDateString(r.PubEndDate);
+                        if (d1 != null && d2 != null)
+                            oi.duration(Math.round((d2 - d1) / 1000 / 60) + " min.");
+                    }
 
                     items.push(oi);
                 }

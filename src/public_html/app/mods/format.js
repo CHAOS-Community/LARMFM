@@ -90,6 +90,24 @@ define(function() {
         return date;
     }
 
+    function getDateFromSolrDateString(ds){
+        if(ds==null)
+            return null;
+        
+        var y = parseInt(ds.substring(0,4));
+        var m = parseInt(ds.substring(5,7));
+        var d = parseInt(ds.substring(8,10));
+        var h = parseInt(ds.substring(11,13));
+        var mi = parseInt(ds.substring(14,16));
+        var s = parseInt(ds.substring(17,19));
+        
+        if (isNaN(d)||isNaN(m)||isNaN(y)||isNaN(h)||isNaN(mi)||isNaN(s))
+            return null;
+
+        var date = new Date(y,m-1,d,h,mi,s);
+        return date;        
+    }
+
     function getSolrFilterFromDateRangeStr(solrfield, yyyymmdd1, yyyymmdd2) {
         var d1 = getDateFromQueryDateStr(yyyymmdd1);
         var d2 = getDateFromQueryDateStr(yyyymmdd2);
@@ -112,6 +130,7 @@ define(function() {
         getDigit2: getDigit2,
         getDigit3: getDigit3,
         getDateFromQueryDateStr: getDateFromQueryDateStr,
-        getSolrFilterFromDateRangeStr: getSolrFilterFromDateRangeStr
+        getSolrFilterFromDateRangeStr: getSolrFilterFromDateRangeStr,
+        getDateFromSolrDateString: getDateFromSolrDateString
     };
 });
