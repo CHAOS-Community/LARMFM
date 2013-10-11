@@ -1,7 +1,7 @@
 define(['knockout','mods/format'], function(ko, format) {
 
     var FilterItem = function() {
-
+        this.fid = ko.observable("");
         this.title = ko.observable("");
         this.count = ko.observable("");
         this.isactive = ko.observable(false);

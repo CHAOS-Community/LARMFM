@@ -38,8 +38,9 @@ define(['durandal/app', 'knockout', 'mods/search', 'mods/state'],
 
                     search.search();
                 },
-                        objtpfilteritems: search.objtpfilteritems
-
-
+                objtpfilteritems: search.objtpfilteritems,
+                sortitems: search.sortitems,
+                sortvalue: search.sortvalue,
+                sortchanged: search.sortchanged
             };
         });
