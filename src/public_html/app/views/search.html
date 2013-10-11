@@ -13,20 +13,21 @@
         </div>
         <div class="span9">
             <div>
-                <div class='btn-toolbar'>
-                    <div class='btn-group'>
+                <div class='btn-toolbar' class="pull-left">
+                    <div class='btn-group pull-left'>
                         <!-- ko foreach: objtpfilteritems -->
                         <a class="btn" data-bind="css:{'btn-primary':isactive},text: title, click: click"></a>
                         <!-- /ko -->
                     </div>
                 </div>
-                <!--                <div>
-                                   <fieldset>
-                                        <legend data-i18n="app:displayName"></legend>
-                                        <label data-i18n="app:localizeMe"></label><br />
-                                        <label data-i18n="app:start.scpoedString"></label>
-                                    </fieldset>
-                                </div>-->
+                <div class="pull-right">
+                    <select data-bind="options: sortitems,
+                    optionsText: 'title',
+                    optionsValue: 'id',
+                    value: sortvalue,
+                    event:{ change: sortchanged}"></select>
+                </div>
+                <span class="clearfix"></span>
                 <div class="pagination pagination-small pull-right wspagination">
                     <ul>
                         <!-- ko foreach: pagingitems -->

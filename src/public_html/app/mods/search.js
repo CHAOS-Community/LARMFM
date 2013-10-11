@@ -17,12 +17,17 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
             // ObjectType filter items
             var objtpfilteritems = ko.observableArray([]);
 
+            var sortitems = ko.observableArray([]);
+            var sortdic = [];
+            var sortvalue = ko.observable("");
+
             // Search Result
             var items = ko.observableArray([]);
             var isSearching = ko.observable(false);
             var resulttext = ko.observable("");
 
             buildObjectTypeFilter();
+            buildSortItems();
 
             function buildObjectTypeFilter() {
                 objtpfilteritems.removeAll();
@@ -31,6 +36,16 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 createObjectTypeFilterItem("Radio", "Radio");
                 createObjectTypeFilterItem("Programoversigter", "Schedule");
                 createObjectTypeFilterItem("Rettelser til programoversigter", "ScheduleNote");
+            }
+            
+            function buildSortItems(){
+                sortitems.removeAll();
+                sortdic = [];
+                for(var i = 0; i < Settings.Search.sortitems.length; i++){
+                    var item = Settings.Search.sortitems[i]                           
+                    sortitems.push({title:item.title,id:item.id,value:item.value});
+                    sortdic[item.id] = item.value;
+                }
             }
 
             function createObjectTypeFilterItem(title, key) {
@@ -148,6 +163,9 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 if (otfilter != "")
                     s += '&otf=' + otfilter;
 
+                if(sortvalue()!=""){
+                    s += '&o=' + sortvalue();
+                }    
 
                 router.navigate(s);
             }
@@ -218,8 +236,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
             }
 
             function createsort() {
-
-                return "PubStartDate+asc";
+                return sortdic[sortvalue()];
             }
 
             function updatecalendar() {
@@ -258,7 +275,13 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                         }
                     }
                     objtpfilteritems()[0].isactive(!otfactive);
-
+                    
+                    var order = format.getParamByName('o', param);
+                    if(order == "")
+                        sortvalue(Settings.Search.sortitems[0].id);
+                    else{
+                        sortvalue(order);                        
+                    }
                 }
 
                 if (pageindex() < 0)
@@ -271,6 +294,10 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 CHAOS.Portal.Client.View.Get(Settings.Search.viewName, freetext(), createsort(), flter, pageindex(), pagesize()).WithCallback(searchReceived);
 
                 updatecalendar();
+            }
+
+            function sortchanged(){
+                navigate();
             }
 
             return {
@@ -291,7 +318,10 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 breadcrumbitems: searchcalendar.breadcrumbitems,
                 updatecalendar: updatecalendar,
                 search: dosearch,
-                objtpfilteritems: objtpfilteritems
+                objtpfilteritems: objtpfilteritems,
+                sortitems: sortitems,
+                sortvalue: sortvalue,
+                sortchanged: sortchanged
             };
         });
 
