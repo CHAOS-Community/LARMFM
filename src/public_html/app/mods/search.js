@@ -29,6 +29,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
             buildObjectTypeFilter();
             buildSortItems();
 
+            // === ObjectType functionality ===
             function buildObjectTypeFilter() {
                 objtpfilteritems.removeAll();
                 for (var i = 0; i < Settings.Search.objecttypefilter.length; i++) {
@@ -37,17 +38,6 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                     fall.isactive(i == 0);
                 }
             }
-
-            function buildSortItems() {
-                sortitems.removeAll();
-                sortdic = [];
-                for (var i = 0; i < Settings.Search.sortitems.length; i++) {
-                    var item = Settings.Search.sortitems[i]
-                    sortitems.push({title: item.title, id: item.id, value: item.value});
-                    sortdic[item.id] = item.value;
-                }
-            }
-
             function createObjectTypeFilterItem(fid, title, key) {
                 var f1 = new filfac.FilterItem();
                 f1.search = navigate;
@@ -66,51 +56,45 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 }
             }
 
-            function searchReceived(response)
-            {
-                isSearching(false);
-                items.removeAll();
-                for (var i = 0; i < response.Body.Count; i++)
-                {
-                    var r = response.Body.Results[i];
-                    var oi = new objfac.ObjectItem();
-                    oi.title("" + r.Title);
-                    if (r.Type == "Radio") {
-                        oi.hash('#!object/id=' + r.Id);
-                        oi.type("radio");
+            function createobjecttypefilter() {
+                var filter = "";
+                for (var i = 1; i < objtpfilteritems().length; i++) {
+                    var item = objtpfilteritems()[i];
+                    if (item.isactive()) {
+                        if (filter != "")
+                            filter += " OR "
+                        filter += "Type:" + item.key();
                     }
-                    else {
-
-                        if (r.Type == "Schedule")
-                            oi.type("programoversigt");
-                        else
-                            oi.type("rettelse til programoversigt");
-
-                        oi.hash(r.Url);
-                    }
-
-                    var d = r.PubStartDate;
-                    if (d.length >= 4 && d.substring(0, 4) != "1900")
-                        oi.date("" + d + "");
-
-                    oi.datepretty(d.substring(8, 10) + "-" + d.substring(5, 7) + "-" + d.substring(0, 4))
-
-                    items.push(oi);
                 }
 
-                totalcount = response.Body.TotalCount;
-                noofpages = Math.ceil(totalcount / pagesize());
+                if (filter != "")
+                    return "(" + filter + ")";
 
-                if (totalcount == 0)
-                    resulttext("Ingen resultater");
-                else if (totalcount == 1)
-                    resulttext("1 resultat");
-                else
-                    resulttext(totalcount + " resultater")
+                return "";
+            }
+            // =================================
 
-                updatePaging();
+            // === Sort functionality ===
+            function buildSortItems() {
+                sortitems.removeAll();
+                sortdic = [];
+                for (var i = 0; i < Settings.Search.sortitems.length; i++) {
+                    var item = Settings.Search.sortitems[i]
+                    sortitems.push({title: item.title, id: item.id, value: item.value});
+                    sortdic[item.id] = item.value;
+                }
             }
 
+            function createsort() {
+                return sortdic[sortvalue()];
+            }
+
+            function sortchanged() {
+                navigate();
+            }
+            // =========================
+
+            // === Paging functionality ===
             function updatePaging() {
                 pagingitems.removeAll();
 
@@ -140,7 +124,52 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                     e = noofpages;
                 return[b, e];
             }
+            // ===============================================            
 
+            // === Calendar and date functionality ===
+            function createfilterfordates() {
+                var filter = "";
+
+                //filter = "Type:Radio";
+
+                if (datebegin() != null && dateend() == null) {
+                    // [1995-12-31T23:59:59.999Z TO *]
+                    //Substract 1 millisecond from date before converting to string.
+                    filter += "PubStartDate:[" + format.getSolrDateStr(new Date(datebegin()), -1) + " TO *]";
+                } else if (datebegin() == null && dateend() != null) {
+                    // [* TO 2007-03-06T00:00:00Z]
+                    //Add 1 millisecond from date before converting to string.
+                    filter += "PubStartDate:[* TO " + format.getSolrDateStr(new Date(dateend()), 1) + "]";
+                    //filter += "PubStartDate:[1900-01-01T00:00:00.000Z TO " + format.getSolrDateStr(new Date(dateend())) + "]";
+                } else if (datebegin() != null && dateend() != null) {
+                    // [1995-12-31T23:59:59.999Z TO 2007-03-06T00:00:00Z]
+                    //Substract and add 1 millisecond from/to dates before converting to string.
+                    filter += "PubStartDate:[" + format.getSolrDateStr(new Date(datebegin()), -1) + " TO " + format.getSolrDateStr(new Date(dateend()), 1) + "]";
+                }
+
+                return filter;
+            }
+
+            function updatecalendar() {
+                searchcalendar.search = this;
+                var flter = Settings.Search.filter;
+                var objtypefilter = createobjecttypefilter();
+                if (objtypefilter != "") {
+                    if (flter != "")
+                        flter += " AND ";
+                    flter += objtypefilter;
+                }
+                searchcalendar.update(freetext(), flter, datebegin(), dateend(), navigatetodaterangestr);
+            }
+
+            function navigatetodaterangestr(datestr1, datestr2) {
+                datebegin(format.getDateFromQueryDateStr(datestr1));
+                dateend(format.getDateFromQueryDateStr(datestr2));
+                navigate();
+            }
+            // ==================================================
+
+            // === Navigate and search functionality ===
             function navigate() {
                 var s = '!search/s=' + freetext();
 
@@ -171,12 +200,6 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 router.navigate(s);
             }
 
-            function navigatetodaterangestr(datestr1, datestr2) {
-                datebegin(format.getDateFromQueryDateStr(datestr1));
-                dateend(format.getDateFromQueryDateStr(datestr2));
-                navigate();
-            }
-
             function createfilter() {
                 var flter = createfilterfordates();
 
@@ -194,62 +217,6 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 }
 
                 return flter;
-            }
-
-            function createobjecttypefilter() {
-                var filter = "";
-                for (var i = 1; i < objtpfilteritems().length; i++) {
-                    var item = objtpfilteritems()[i];
-                    if (item.isactive()) {
-                        if (filter != "")
-                            filter += " OR "
-                        filter += "Type:" + item.key();
-                    }
-                }
-
-                if (filter != "")
-                    return "(" + filter + ")";
-
-                return "";
-            }
-
-            function createfilterfordates() {
-                var filter = "";
-
-                //filter = "Type:Radio";
-
-                if (datebegin() != null && dateend() == null) {
-                    // [1995-12-31T23:59:59.999Z TO *]
-                    //Substract 1 millisecond from date before converting to string.
-                    filter += "PubStartDate:[" + format.getSolrDateStr(new Date(datebegin()), -1) + " TO *]";
-                } else if (datebegin() == null && dateend() != null) {
-                    // [* TO 2007-03-06T00:00:00Z]
-                    //Add 1 millisecond from date before converting to string.
-                    filter += "PubStartDate:[* TO " + format.getSolrDateStr(new Date(dateend()), 1) + "]";
-                    //filter += "PubStartDate:[1900-01-01T00:00:00.000Z TO " + format.getSolrDateStr(new Date(dateend())) + "]";
-                } else if (datebegin() != null && dateend() != null) {
-                    // [1995-12-31T23:59:59.999Z TO 2007-03-06T00:00:00Z]
-                    //Substract and add 1 millisecond from/to dates before converting to string.
-                    filter += "PubStartDate:[" + format.getSolrDateStr(new Date(datebegin()), -1) + " TO " + format.getSolrDateStr(new Date(dateend()), 1) + "]";
-                }
-
-                return filter;
-            }
-
-            function createsort() {
-                return sortdic[sortvalue()];
-            }
-
-            function updatecalendar() {
-                searchcalendar.search = this;
-                var flter = Settings.Search.filter;
-                var objtypefilter = createobjecttypefilter();
-                if (objtypefilter != "") {
-                    if (flter != "")
-                        flter += " AND ";
-                    flter += objtypefilter;
-                }
-                searchcalendar.update(freetext(), flter, datebegin(), dateend(), navigatetodaterangestr);
             }
 
             function dosearch(param) {
@@ -297,9 +264,51 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 updatecalendar();
             }
 
-            function sortchanged() {
-                navigate();
+            function searchReceived(response)
+            {
+                isSearching(false);
+                items.removeAll();
+                for (var i = 0; i < response.Body.Count; i++)
+                {
+                    var r = response.Body.Results[i];
+                    var oi = new objfac.ObjectItem();
+                    oi.title("" + r.Title);
+                    if (r.Type == "Radio") {
+                        oi.hash('#!object/id=' + r.Id);
+                        oi.type("radio");
+                    }
+                    else {
+
+                        if (r.Type == "Schedule")
+                            oi.type("programoversigt");
+                        else
+                            oi.type("rettelse til programoversigt");
+
+                        oi.hash(r.Url);
+                    }
+
+                    var d = r.PubStartDate;
+                    if (d.length >= 4 && d.substring(0, 4) != "1900")
+                        oi.date("" + d + "");
+
+                    oi.datepretty(d.substring(8, 10) + "-" + d.substring(5, 7) + "-" + d.substring(0, 4))
+
+                    items.push(oi);
+                }
+
+                totalcount = response.Body.TotalCount;
+                noofpages = Math.ceil(totalcount / pagesize());
+
+                if (totalcount == 0)
+                    resulttext("Ingen resultater");
+                else if (totalcount == 1)
+                    resulttext("1 resultat");
+                else
+                    resulttext(totalcount + " resultater")
+
+                updatePaging();
             }
+            // =======================================================
 
             return {
                 items: items,
