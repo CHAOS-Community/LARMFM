@@ -31,6 +31,12 @@ Settings.Search = {
         { title: "LARM OCR Parsing (mindst først)", id: "6", value: "OCR-Report_float+asc" },
         { title: "LARM OCR Parsing (højest først)", id: "7", value: "OCR-Report_float+desc" }
     ],
+    objecttypefilter: [
+        { fid: "0", title: "Alt", value: "" },
+        { fid: "1", title: "Radio", value: "Radio" },
+        { fid: "2", title: "Programoversigter", value: "Schedule" },
+        { fid: "3", title: "Rettelser til programoversigter", value: "ScheduleNote" }
+    ],        
             UIViews:
             {
                 search: "viewmodels/search",

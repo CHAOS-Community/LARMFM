@@ -31,27 +31,28 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
 
             function buildObjectTypeFilter() {
                 objtpfilteritems.removeAll();
-                var fall = createObjectTypeFilterItem("Alt", "");
-                fall.isactive(true);
-                createObjectTypeFilterItem("Radio", "Radio");
-                createObjectTypeFilterItem("Programoversigter", "Schedule");
-                createObjectTypeFilterItem("Rettelser til programoversigter", "ScheduleNote");
+                for (var i = 0; i < Settings.Search.objecttypefilter.length; i++) {
+                    var item = Settings.Search.objecttypefilter[i];
+                    var fall = createObjectTypeFilterItem(item.fid, item.title, item.value);
+                    fall.isactive(i == 0);
+                }
             }
-            
-            function buildSortItems(){
+
+            function buildSortItems() {
                 sortitems.removeAll();
                 sortdic = [];
-                for(var i = 0; i < Settings.Search.sortitems.length; i++){
-                    var item = Settings.Search.sortitems[i]                           
-                    sortitems.push({title:item.title,id:item.id,value:item.value});
+                for (var i = 0; i < Settings.Search.sortitems.length; i++) {
+                    var item = Settings.Search.sortitems[i]
+                    sortitems.push({title: item.title, id: item.id, value: item.value});
                     sortdic[item.id] = item.value;
                 }
             }
 
-            function createObjectTypeFilterItem(title, key) {
+            function createObjectTypeFilterItem(fid, title, key) {
                 var f1 = new filfac.FilterItem();
                 f1.search = navigate;
                 f1.reset = resetObjectTypeFilter;
+                f1.fid(fid);
                 f1.title(title);
                 f1.isactive(false);
                 f1.key(key);
@@ -157,15 +158,15 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                     if (item.isactive()) {
                         if (otfilter != "")
                             otfilter += ","
-                        otfilter += item.key();
+                        otfilter += item.fid();
                     }
                 }
                 if (otfilter != "")
                     s += '&otf=' + otfilter;
 
-                if(sortvalue()!=""){
+                if (sortvalue() != "") {
                     s += '&o=' + sortvalue();
-                }    
+                }
 
                 router.navigate(s);
             }
@@ -243,8 +244,8 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 searchcalendar.search = this;
                 var flter = Settings.Search.filter;
                 var objtypefilter = createobjecttypefilter();
-                if(objtypefilter != ""){
-                    if(flter != "")
+                if (objtypefilter != "") {
+                    if (flter != "")
                         flter += " AND ";
                     flter += objtypefilter;
                 }
@@ -265,22 +266,22 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                     var de = format.getParamByName('de', param);
                     dateend(format.getDateFromQueryDateStr(de));
 
-                    var otf = format.getParamByName('otf', param) + ",";
+                    var otf = "," + format.getParamByName('otf', param) + ",";
                     var otfactive = false;
                     for (var i = 1; i < objtpfilteritems().length; i++) {
                         var item = objtpfilteritems()[i];
-                        item.isactive(otf.indexOf(item.key() + ",") > -1);
+                        item.isactive(otf.indexOf("," + item.fid() + ",") > -1);
                         if (item.isactive()) {
                             otfactive = true;
                         }
                     }
                     objtpfilteritems()[0].isactive(!otfactive);
-                    
+
                     var order = format.getParamByName('o', param);
-                    if(order == "")
+                    if (order == "")
                         sortvalue(Settings.Search.sortitems[0].id);
-                    else{
-                        sortvalue(order);                        
+                    else {
+                        sortvalue(order);
                     }
                 }
 
@@ -296,7 +297,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 updatecalendar();
             }
 
-            function sortchanged(){
+            function sortchanged() {
                 navigate();
             }
 
