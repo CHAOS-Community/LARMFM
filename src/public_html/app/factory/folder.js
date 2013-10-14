@@ -24,8 +24,8 @@ define(['knockout','mods/portal'], function (ko, portal) {
             //}
 
             setTimeout($.proxy(function () {
-                for (var i = 0; i < response.Result.Count; i++) {
-                    var data = response.Result.Results[i];
+                for (var i = 0; i < response.Body.Count; i++) {
+                    var data = response.Body.Results[i];
                     var fi = new FolderItem();
                     fi.init(data, this.level() + 1);
                     this.children.push(fi);

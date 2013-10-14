@@ -2,6 +2,25 @@ define(['durandal/app', 'mods/portal', 'mods/state', 'factory/folder', 'knockout
     function (app, portal, state, ffac, ko) {
 
     var items = ko.observableArray();
+    var authsub = null;
+
+    if(state.isAuthenticated()){
+        loadfolders();
+    }
+    else{
+        authsub = state.isAuthenticated.subscribe(function(val){
+           if(val===true){
+               loadfolders();
+               authsub.dispose();
+           } 
+        });
+    }
+        
+        
+    function loadfolders(){
+            CHAOS.Portal.Client.Folder.Get().WithCallback(folderReceived);        
+    }
+    
    function folderReceived(response) {
 
         if (response.Error != null)
@@ -10,9 +29,9 @@ define(['durandal/app', 'mods/portal', 'mods/state', 'factory/folder', 'knockout
         }
 
         setTimeout($.proxy(function () {
-        for (var i = 0; i < response.Result.Count; i++)
+        for (var i = 0; i < response.Body.Count; i++)
         {
-            var data = response.Result.Results[i];
+            var data = response.Body.Results[i];
             var fi = new ffac.FolderItem();
             fi.init(data,0);
             items.push(fi);
@@ -23,10 +42,8 @@ define(['durandal/app', 'mods/portal', 'mods/state', 'factory/folder', 'knockout
     return {
         title: 'Folders',
         items: items,
+        userEmail: state.userEmail,
         attached: function () {
-            //Folder_Get: function(callback, id, folderTypeID, parentID)
-            //portal.client.Folder_Get(folderReceived,null,null,null);            
-            CHAOS.Portal.Client.Folder.Get().WithCallback(folderReceived);
         }
     };
 });

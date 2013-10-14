@@ -9,7 +9,6 @@ define(['durandal/app', 'knockout', 'mods/search', 'mods/state'],
                 pagingitems: search.pagingitems,
                 resulttext: search.resulttext,
                 name: name,
-                userEmail: "thfl@dr.dk",
                 title: "Calendar",
                 search: search,
                 activate: function(param) {
