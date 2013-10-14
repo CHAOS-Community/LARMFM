@@ -1,6 +1,8 @@
 <div data-bind="event: {mouseover: mouseevent, mouseout: mouseevent}" class="folderitem">
     <div data-bind="attr: {style:style}">
-        <a data-bind="attr: { href: hash }, html: title"></a>
+        <a data-bind="visible:isexpanded, click: toggleexpand"><i class="icon-folder-open"></i></a>
+        <a data-bind="visible:(!isexpanded()), click: toggleexpand"><i class="icon-folder-close"></i></a>
+        <a data-bind="attr: { href: hash}, text: title"></a>
     </div>
 </div>
 <div data-bind="foreach: children, visible: isexpanded">
