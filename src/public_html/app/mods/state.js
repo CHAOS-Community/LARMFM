@@ -1,13 +1,13 @@
-define(function () {
+define(['knockout'], function (ko) {
     
-    var userGuid;
-    var userEmail;
-    var userPermissions = 0;
+    var userGuid = ko.observable();
+    var userEmail = ko.observable();
+    var userPermissions = ko.observable(0);
 
-    var hasSession = false;
-    var isAuthenticated = false;
+    var hasSession = ko.observable(false);
+    var isAuthenticated = ko.observable(false);
 
-    var lastRedirectedFromURL;
+    var lastRedirectedFromURL = ko.observable();
 
     var searchMetadataSchemaGuids = [];
 

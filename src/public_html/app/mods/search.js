@@ -235,7 +235,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 return flter;
             }
 
-            function dosearch(param) {
+            function dosearchcore(param) {
                 if (param != undefined) {
                     // New search. Reset page index.
                     pageindex(0);
@@ -275,8 +275,19 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 var flter = createfilter();
                 CHAOS.Portal.Client.View.Get(Settings.Search.viewName, freetext(), createsort(), flter, pageindex(), pagesize()).WithCallback(searchReceived);
 
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 100);
+            }
+
+            function dosearch(param){
+                dosearchcore(param);
                 updatecalendar();
                 getobjecttypecount();
+            }
+
+            function dosearchpaging(){
+                dosearchcore();                
             }
 
             function searchReceived(response)
@@ -355,6 +366,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 breadcrumbitems: searchcalendar.breadcrumbitems,
                 updatecalendar: updatecalendar,
                 search: dosearch,
+                searchpaging: dosearchpaging,
                 objtpfilteritems: objtpfilteritems,
                 sortitems: sortitems,
                 sortvalue: sortvalue,
