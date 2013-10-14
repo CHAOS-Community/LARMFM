@@ -12,9 +12,6 @@ define(['plugins/router'], function (router) {
 
               //.mapUnknownRoutes('hello/index', 'not-found')
 
-        },
-        loginbtnclick: function(){
-            router.navigate('login');
         }
     };
 });

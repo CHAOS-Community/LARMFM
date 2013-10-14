@@ -13,12 +13,12 @@ define(['plugins/router','mods/portal','mods/state','knockout'], function (route
             return;
         }
         else {
-            state.isAuthenticated = true;
-            state.userGuid = response.Body.Results[0].Guid;
-            state.userEmail = response.Body.Results[0].Email;
-            state.userPermissions = response.Body.Results[0].SystemPermissions;
-            if (state.lastRedirectedFromURL != null) {
-                router.navigate(state.lastRedirectedFromURL);
+            state.userGuid(response.Body.Results[0].Guid);
+            state.userEmail(response.Body.Results[0].Email);
+            state.userPermissions(response.Body.Results[0].SystemPermissions);
+            state.isAuthenticated(true);
+            if (state.lastRedirectedFromURL() != null) {
+                router.navigate(state.lastRedirectedFromURL());
             } else {
                 router.navigate('' + Settings.startPath);
             }
