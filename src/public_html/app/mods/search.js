@@ -275,6 +275,10 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 var flter = createfilter();
                 CHAOS.Portal.Client.View.Get(Settings.Search.viewName, freetext(), createsort(), flter, pageindex(), pagesize()).WithCallback(searchReceived);
 
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 100);
+
                 updatecalendar();
                 getobjecttypecount();
             }
