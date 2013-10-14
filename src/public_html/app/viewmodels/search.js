@@ -35,7 +35,7 @@ define(['durandal/app', 'knockout', 'mods/search', 'mods/state'],
                     else
                         search.pageindex(data.index);
 
-                    search.search();
+                    search.searchpaging();
                 },
                 objtpfilteritems: search.objtpfilteritems,
                 sortitems: search.sortitems,
