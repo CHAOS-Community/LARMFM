@@ -373,7 +373,8 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 objtpfilteritems: objtpfilteritems,
                 sortitems: sortitems,
                 sortvalue: sortvalue,
-                sortchanged: sortchanged
+                sortchanged: sortchanged,
+                objectsselectcount: objectselector.count
             };
         });
 

@@ -1,33 +1,48 @@
-define(['knockout'], function (ko) {
-    
+define(['knockout'], function(ko) {
+
     var items = [];
+    var count = ko.observable(0);
 
-    function clear(){
+    function clear() {
         items = [];
+        count(0);
     }
 
-    function add(itemid){
-        items[itemid] = 1;
-    }
-    
-    function remove(itemid){
-        if(contains(itemid)){
-            var index = items.indexOf(itemid);
-            if(index > -1){
-                items.splice(index,1);
-            }
+    function add(itemid) {
+        var i = indexof(itemid);
+        if (i == -1) {
+            items.push(itemid);
+            count(items.length);
         }
+    }
+
+    function remove(itemid) {
+        var i = indexof(itemid);
+        if (i > -1) {
+            items.splice(i, 1);
+            count(items.length);
+        }
+    }
+
+    function indexof(itemid) {
+        for (var i = 0; i < items.length; i++) {
+            if (items[i] == itemid)
+                return i;
+        }
+        return -1;
     }
     
     function contains(itemid){
-        return itemid in items;
+        return indexof(itemid) > -1;
     }
 
     return {
         clear: clear,
         add: add,
         remove: remove,
-        contains: contains
+        indexof: indexof,
+        contains: contains,
+        count: count
     };
 });
 

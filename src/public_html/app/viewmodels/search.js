@@ -40,6 +40,7 @@ define(['durandal/app', 'knockout', 'mods/search', 'mods/state'],
                 objtpfilteritems: search.objtpfilteritems,
                 sortitems: search.sortitems,
                 sortvalue: search.sortvalue,
-                sortchanged: search.sortchanged
+                sortchanged: search.sortchanged,
+                objectsselectcount: search.objectsselectcount
             };
         });
