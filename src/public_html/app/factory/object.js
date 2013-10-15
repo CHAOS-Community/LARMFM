@@ -1,7 +1,7 @@
-define(['knockout'], function(ko) {
+define(['knockout', 'mods/objectselector'], function(ko, objectselector) {
 
     var ObjectItem = function() {
-        //this.eqCtl = document.getElementById(eq);
+        this.id = ko.observable("");
         this.title = ko.observable();
         this.hash = ko.observable();
         this.date = ko.observable();
@@ -10,6 +10,16 @@ define(['knockout'], function(ko) {
         this.duration = ko.observable();
         this.type = ko.observable();
         this.isselected = ko.observable(false);
+        
+        this.isselected.subscribe(function(val){
+           if (this.id() != "") {
+                if (val)
+                    objectselector.add(this.id());
+                else
+                    objectselector.remove(this.id());
+            } 
+        }, this);
+        
     };
 
     ObjectItem.prototype = function() {
@@ -17,10 +27,10 @@ define(['knockout'], function(ko) {
         var titleclick = function(item) {
             window.open(item.hash());
         };
-        
+
         var checkclick = function(item) {
             item.isselected(!item.isselected());
-            item.isselected(!item.isselected());
+            item.isselected(!item.isselected());            
         };
 
         var rowclick = function(item, event) {
@@ -41,7 +51,7 @@ define(['knockout'], function(ko) {
             window.open(item.hash());
         };
 
-        var tdclick = function(item, event){
+        var tdclick = function(item, event) {
 //            event.bubbles = false;
 //            event.originalEvent.cancelBubble = true;
         };

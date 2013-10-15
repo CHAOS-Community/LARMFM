@@ -1,6 +1,6 @@
 // Search Module
-define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/format', 'mods/searchcalendar', 'factory/filter'],
-        function(ko, objfac, router, state, format, searchcalendar, filfac) {
+define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/format', 'mods/searchcalendar', 'factory/filter', 'mods/objectselector'],
+        function(ko, objfac, router, state, format, searchcalendar, filfac, objectselector) {
 
             // Paging
             var pagesize = ko.observable(20);
@@ -239,6 +239,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 if (param != undefined) {
                     // New search. Reset page index.
                     pageindex(0);
+                    objectselector.clear();
 
                     var s = format.getParamByName('s', param);
                     freetext(s.toLowerCase());
@@ -298,6 +299,8 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 {
                     var r = response.Body.Results[i];
                     var oi = new objfac.ObjectItem();
+                    oi.id(r.Id);
+                    oi.isselected(objectselector.contains(oi.id()));
                     oi.title("" + r.Title);
                     if (r.Type == "Radio") {
                         oi.hash('#!object/id=' + r.Id);
