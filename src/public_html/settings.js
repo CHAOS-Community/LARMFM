@@ -1,5 +1,7 @@
 ﻿var Settings = Settings || {};
 
+Settings.title = "Sendeplanen";
+
 Settings.brandName = "larm";
 Settings.brandModule = "brand/larm";
 
@@ -13,15 +15,15 @@ Settings.accessPointGuid = "00000000-0000-0000-0000-000007000000";
 Settings.anonymousUsername = "thfl@dr.dk";
 Settings.anonymousPassword = "1234";
 
-Settings.username = "thfl@dr.dk";
-Settings.password = "1234";
+Settings.username = "";
+Settings.password = "";
 
 Settings.startPath = "!search";
 Settings.publicPaths = ['AppLoader', 'Login'];
 
 Settings.Search = {
-    //filter: "(Type:Schedule OR Type:ScheduleNote)",
-    filter: "",
+    filter: "(Type:Schedule OR Type:ScheduleNote)",
+    //filter: "",
     sortitems: [
         { title: "sorter...", id: "", value: "PubStartDate+asc" },
         { title: "Sendetidspunkt (ældst først)", id: "1", value: "PubStartDate+asc" },
@@ -40,8 +42,9 @@ Settings.Search = {
     ],        
             UIViews:
             {
-                search: "viewmodels/search",
-                //search: "viewmodels/search_sendeplan",
+                //search: "viewmodels/search",
+                search: "viewmodels/search_sendeplan",
+                
                 //searchResult: searchresults
                 searchResult: "quicksearchresults"
             },

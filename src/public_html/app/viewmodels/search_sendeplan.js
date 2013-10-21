@@ -9,14 +9,13 @@ define(['durandal/app', 'knockout', 'mods/search', 'mods/state'],
                 pagingitems: search.pagingitems,
                 resulttext: search.resulttext,
                 name: name,
-                userEmail: "thfl@dr.dk",
                 title: "Calendar",
                 search: search,
                 activate: function(param) {
-                    if (param != undefined){
+                    if (param != undefined) {
                         search.search(param);
                     }
-                    else{
+                    else {
                         search.search("");
                     }
                 },
@@ -36,7 +35,7 @@ define(['durandal/app', 'knockout', 'mods/search', 'mods/state'],
                     else
                         search.pageindex(data.index);
 
-                    search.search();
+                    search.searchpaging();
                 }
 
 
