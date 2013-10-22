@@ -1,5 +1,8 @@
 ﻿var Settings = Settings || {};
 
+Settings.title = "LARM.fm";
+//Settings.title = "Sendeplanen";
+
 Settings.brandName = "larm";
 Settings.brandModule = "brand/larm";
 
@@ -13,8 +16,8 @@ Settings.accessPointGuid = "00000000-0000-0000-0000-000007000000";
 Settings.anonymousUsername = "thfl@dr.dk";
 Settings.anonymousPassword = "1234";
 
-Settings.username = "thfl@dr.dk";
-Settings.password = "1234";
+Settings.username = "";
+Settings.password = "";
 
 Settings.startPath = "!search";
 Settings.publicPaths = ['AppLoader', 'Login'];
@@ -42,6 +45,7 @@ Settings.Search = {
             {
                 search: "viewmodels/search",
                 //search: "viewmodels/search_sendeplan",
+                
                 //searchResult: searchresults
                 searchResult: "quicksearchresults"
             },
