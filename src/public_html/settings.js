@@ -1,6 +1,7 @@
 ﻿var Settings = Settings || {};
 
-Settings.title = "Sendeplanen";
+Settings.title = "LARM.fm";
+//Settings.title = "Sendeplanen";
 
 Settings.brandName = "larm";
 Settings.brandModule = "brand/larm";
@@ -22,8 +23,8 @@ Settings.startPath = "!search";
 Settings.publicPaths = ['AppLoader', 'Login'];
 
 Settings.Search = {
-    filter: "(Type:Schedule OR Type:ScheduleNote)",
-    //filter: "",
+    //filter: "(Type:Schedule OR Type:ScheduleNote)",
+    filter: "",
     sortitems: [
         { title: "sorter...", id: "", value: "PubStartDate+asc" },
         { title: "Sendetidspunkt (ældst først)", id: "1", value: "PubStartDate+asc" },
@@ -42,8 +43,8 @@ Settings.Search = {
     ],        
             UIViews:
             {
-                //search: "viewmodels/search",
-                search: "viewmodels/search_sendeplan",
+                search: "viewmodels/search",
+                //search: "viewmodels/search_sendeplan",
                 
                 //searchResult: searchresults
                 searchResult: "quicksearchresults"
