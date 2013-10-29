@@ -242,7 +242,8 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                     objectselector.clear();
 
                     var s = format.getParamByName('s', param);
-                    freetext(s.toLowerCase());
+                    //freetext(s.toLowerCase());
+                    freetext(s);
 
                     var d = format.getParamByName('d', param);
                     datebegin(format.getDateFromQueryDateStr(d));
