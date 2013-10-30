@@ -76,22 +76,32 @@ $('#form1').jsonForm(
                 Publisher: { title: "Publisher", type: "string" },
                 Subjects: {
                     title: "Subjects",
-                    type: "array",
-                    items: {
-                        title: "Subject",
-                        type: "string"
+                    type: "object",
+                    properties: {
+                        Subject: {
+                            type: "array",
+                            items: {
+                                title: "Subject",
+                                type: "string"
+                            }
+                        }
                     }
                 },
                 Contributors: {
                     title: "Contributors",
-                    type: "array",
-                    items: {
-                        title: "Contributor",
-                        type: "object",
-                        properties: {
-                            Name: {title:"Name", type:"string"},
-                            RoleName: { title: "RoleName", type: "string" },
-                            RoleID: { title: "RoleID", type: "string" },
+                    type: "object",
+                    properties: {
+                        Contributor: {
+                            type: "array",
+                            items: {
+                                title: "Contributor",
+                                type: "object",
+                                properties: {
+                                    Name: { title: "Name", type: "string" },
+                                    RoleName: { title: "RoleName", type: "string" },
+                                    RoleID: { title: "RoleID", type: "string" },
+                                }
+                            }
                         }
                     }
                 }
