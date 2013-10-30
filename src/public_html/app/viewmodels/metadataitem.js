@@ -5,9 +5,12 @@ define(['plugins/router', 'mods/xmlmanager', 'mods/metadataschema'], function(ro
 
     return {
         router: router,
+        savemetadata: function(){
+
+        },
         compositionComplete: function() {
             console.log("=========================== compositionComplete.");
-            var xsd = xmlman.parseXml(jsonschemaDATA.ModuleResults[0].Results[0].SchemaXML);
+            var xsd = xmlman.parseXml(jsonschemaDATA.ModuleResults[0].Results[1].SchemaXML);
             var jsonschema = metadataschema.getschema(xsd);
             
             var sd1 = {};
@@ -23,40 +26,122 @@ define(['plugins/router', 'mods/xmlmanager', 'mods/metadataschema'], function(ro
             friend['properties'] = friendprop;
             // ---
             schema['Larm_FileInfos'] = { "type": "array", "items": friend };
-//            schema['name'] = {type:'string',title:'Myname',required:true};
-//            schema['age'] = {type:'number',title:'Myage'};
-//            schema['description'] = {type:'string',title:'Mydescription'};
+            //            schema['name'] = {type:'string',title:'Myname',required:true};
+            //            schema['age'] = {type:'number',title:'Myage'};
+            //            schema['description'] = {type:'string',title:'Mydescription'};
 
             console.log("=== JSON ============================");
             console.log(sd1);
 
-//            var sd2 = {
-//                schema: {
-//                    name: {
-//                        type: 'string',
-//                        title: 'Name',
-//                        required: true
-//                    },
-//                    age: {
-//                        type: 'number',
-//                        title: 'Age'
-//                    }
-//                }};
+            //            var sd2 = {
+            //                schema: {
+            //                    name: {
+            //                        type: 'string',
+            //                        title: 'Name',
+            //                        required: true
+            //                    },
+            //                    age: {
+            //                        type: 'number',
+            //                        title: 'Age'
+            //                    }
+            //                }};
             
-//            console.log(sd2);
-//
-//            
-//            var sd3 = {
-//                schema: {
-//                    name: {
-//                        type: 'string',
-//                        title: 'Name',
-//                        required: true
-//                    }
-//                }};
+            //            console.log(sd2);
+            //
+            //            
+            //            var sd3 = {
+            //                schema: {
+            //                    name: {
+            //                        type: 'string',
+            //                        title: 'Name',
+            //                        required: true
+            //                    }
+            //                }};
             
-            $('#form1').jsonForm(sd1);
+            //$('#form1').jsonForm(sd1);
+
+$('#form1').jsonForm(
+{
+    "schema": {
+        "Larm_Program": {
+            title: "Larm.Program",
+            type: "object",
+            properties: {
+                PublicationDateTime: { title: "PublicationDateTime", type: "string" },
+                PublicationEndDateTime: { title: "PublicationEndDateTime", type: "string" },
+                PublicationChannel: { title: "PublicationChannel", type: "string" },
+                Title: { title: "Title", type: "string" },
+                Abstract: { title: "Abstract", type: "string" },
+                Description: { title: "Description", type: "string" },
+                Publisher: { title: "Publisher", type: "string" },
+                Subjects: {
+                    title: "Subjects",
+                    type: "array",
+                    items: {
+                        title: "Subject",
+                        type: "string"
+                    }
+                },
+                Contributors: {
+                    title: "Contributors",
+                    type: "array",
+                    items: {
+                        title: "Contributor",
+                        type: "object",
+                        properties: {
+                            Name: {title:"Name", type:"string"},
+                            RoleName: { title: "RoleName", type: "string" },
+                            RoleID: { title: "RoleID", type: "string" },
+                        }
+                    }
+                }
+            }
+        }
+    },
+    onSubmit: function(errors, values) {
+    if (errors) {
+        $('#res').html('<p>I beg your pardon?</p>');
+    }
+    else {
+        var x2js = new X2JS();
+        // Convert json to xml
+        var xmldata = x2js.json2xml_str(values);
+        $('#xmlres').val(xmldata);
+        //$('#res').html('<pre>' + xmldata + '</pre>');
+    }
+}
+}
+);
+            return;
+
             
+            $('#form1').jsonForm(
+                {
+                    "schema": {
+                        "friends": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "title": "Friend",
+                                "properties": {
+                                    "nick": {
+                                        "type": "string",
+                                        "title": "Nickname"
+                                    },
+                                    "animals": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "title": "Animal name"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                    );
+
             return;
             $('#form1').jsonForm({
                 schema: {

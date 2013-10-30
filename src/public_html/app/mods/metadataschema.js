@@ -2,35 +2,60 @@ define(['mods/xmlmanager'], function (xmlman) {
     
     function getschema(xsd){
         var x2js = new X2JS();
-        var dat = {};
-        var schema = dat["schema"] = {};
-        var jd = x2js.xml_str2json(xsd);
-        console.log("#####################");
-        xs_schema = jd['schema'];
-        parseele(schema,xs_schema['element']);
-        console.log("#####################");
-        return dat;
+        var jsonschema = {};
+        var schema = jsonschema["schema"] = {};
+
+        // Convert string xsd to json
+        var xsdjsondata = x2js.xml_str2json(xsd);
+        var xs_schema = xsdjsondata['schema'];
+
+        // Assume the next element af <xs:schema> is a <xs_element>
+        parseElement(schema, xs_schema['element']);
+
+        return jsonschema;
     }
 
-    function parseele(ptr, ele){
-        if(ele === undefined)
+    function parseElement(ptr, ele){
+
+        // Bail out if the element does not exists.
+        if (ele === undefined)
             return;
         
-        if(ele["complexType"]!==undefined)
-        {
-            parsecomplexele(ptr,ele);
-            return;
+        // Is it a normal element or a complexType?
+        if (ele._type !== undefined) {
+            // Normal element
         }
-        
-        console.log("--- Element");
-        console.log(ele);
+        else {
+            // ComplexType
+            parsecomplexele(ptr, ele);
+        }
     }
 
-    function parsecomplexele(prt,ele){
+    function parsecomplexele(ptr,ele){
         var complexType = ele["complexType"];
         var sequence = complexType["sequence"];
-        console.log("--- Sequence");
-        console.log(sequence);
+        var element = sequence["element"];
+
+        return;
+        // bounds?
+        var properties = {};
+        ptr[getElementName(ele)] = {
+            "type": "array", "items": {
+                "type": "object",
+                "title": getElementName(element),
+                "properties": properties
+            }
+        };
+
+        // Loop through all the elements in this sequence
+
+        //parseElement(properties,)
+    }
+
+    function getElementName(ele)
+    {
+        var n = ele._name;
+        return n.replace(".", "_");
     }
 
     return {
