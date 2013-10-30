@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E31B8301-318A-4611-A1DC-7853CC3D8E72}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LARMFM_IDE</RootNamespace>
+    <AssemblyName>LARMFM_IDE</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="app\widgets\Readme.md" />
+    <Content Include="favicon.ico" />
+    <Content Include="index.html" />
+    <Content Include="jsonform_test.html" />
+    <Content Include="lib\font-awesome\css\font\fontawesome-webfont.eot" />
+    <Content Include="lib\font-awesome\css\font\fontawesome-webfont.ttf" />
+    <Content Include="lib\font-awesome\css\font\fontawesome-webfont.woff" />
+    <Content Include="lib\font-awesome\css\font\FontAwesome.otf" />
+    <Content Include="lib\jquery\jquery-1.9.1.min.map" />
+    <Content Include="lib\jquery\jquery.min.map" />
+    <Content Include="locales\dev\app.json" />
+    <Content Include="locales\en-US\app.json" />
+    <Content Include="locales\en\app.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="app\factory\calendar.js" />
+    <Content Include="app\factory\filter.js" />
+    <Content Include="app\factory\folder.js" />
+    <Content Include="app\factory\object.js" />
+    <Content Include="app\main.js" />
+    <Content Include="app\mods\format.js" />
+    <Content Include="app\mods\metadataschema.js" />
+    <Content Include="app\mods\objectselector.js" />
+    <Content Include="app\mods\portal.js" />
+    <Content Include="app\mods\portal_v4.js" />
+    <Content Include="app\mods\search.js" />
+    <Content Include="app\mods\searchcalendar.js" />
+    <Content Include="app\mods\state.js" />
+    <Content Include="app\mods\xmlmanager.js" />
+    <Content Include="app\shell.html" />
+    <Content Include="app\shell.js" />
+    <Content Include="app\viewmodels\folderlist.js" />
+    <Content Include="app\viewmodels\login.js" />
+    <Content Include="app\viewmodels\metadataitem.js" />
+    <Content Include="app\viewmodels\object.js" />
+    <Content Include="app\viewmodels\search.js" />
+    <Content Include="app\viewmodels\searchpanel.js" />
+    <Content Include="app\viewmodels\search\calendar.js" />
+    <Content Include="app\viewmodels\search\searchbox.js" />
+    <Content Include="app\viewmodels\search_org.js" />
+    <Content Include="app\viewmodels\search_sendeplan.js" />
+    <Content Include="app\viewmodels\topbar.js" />
+    <Content Include="app\viewmodels\___flickr.js" />
+    <Content Include="app\viewmodels\___shell.js" />
+    <Content Include="app\viewmodels\___welcome.js" />
+    <Content Include="app\views\folderlist.html" />
+    <Content Include="app\views\folders\folderitem.html" />
+    <Content Include="app\views\login.html" />
+    <Content Include="app\views\metadataitem.html" />
+    <Content Include="app\views\object.html" />
+    <Content Include="app\views\objects\objectitem.html" />
+    <Content Include="app\views\objects\objectitem_sendeplan.html" />
+    <Content Include="app\views\search.html" />
+    <Content Include="app\views\searchpanel.html" />
+    <Content Include="app\views\search\calendar.html" />
+    <Content Include="app\views\search\searchbox.html" />
+    <Content Include="app\views\search_org.html" />
+    <Content Include="app\views\search_sendeplan.html" />
+    <Content Include="app\views\topbar.html" />
+    <Content Include="app\views\___detail.html" />
+    <Content Include="app\views\___flickr.html" />
+    <Content Include="app\views\___shell.html" />
+    <Content Include="app\views\___welcome.html" />
+    <Content Include="app\widgets\expander\view.html" />
+    <Content Include="app\widgets\expander\viewmodel.js" />
+    <Content Include="app\widgets\index.html" />
+    <Content Include="app\widgets\index.js" />
+    <Content Include="app\widgets\project.html" />
+    <Content Include="app\widgets\project.js" />
+    <Content Include="css\ie10mobile.css" />
+    <Content Include="css\starterkit.css" />
+    <Content Include="css\workspace.css" />
+    <Content Include="lib\bootstrap\css\bootstrap-responsive.css" />
+    <Content Include="lib\bootstrap\css\bootstrap-responsive.min.css" />
+    <Content Include="lib\bootstrap\css\bootstrap.css" />
+    <Content Include="lib\bootstrap\css\bootstrap.min.css" />
+    <Content Include="lib\bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="lib\bootstrap\img\glyphicons-halflings.png" />
+    <Content Include="lib\bootstrap\js\bootstrap.js" />
+    <Content Include="lib\bootstrap\js\bootstrap.min.js" />
+    <Content Include="lib\chaos\CHAOS.Portal.Client.PortalClient.js" />
+    <Content Include="lib\chaos\PortalClient.js" />
+    <Content Include="lib\chaos\PortalClient.min.js" />
+    <Content Include="lib\durandal\css\durandal.css" />
+    <Content Include="lib\durandal\images\icon.png" />
+    <Content Include="lib\durandal\images\ios-startup-image-landscape.png" />
+    <Content Include="lib\durandal\images\ios-startup-image-portrait.png" />
+    <Content Include="lib\durandal\js\activator.js" />
+    <Content Include="lib\durandal\js\app.js" />
+    <Content Include="lib\durandal\js\binder.js" />
+    <Content Include="lib\durandal\js\composition.js" />
+    <Content Include="lib\durandal\js\events.js" />
+    <Content Include="lib\durandal\js\plugins\dialog.js" />
+    <Content Include="lib\durandal\js\plugins\history.js" />
+    <Content Include="lib\durandal\js\plugins\http.js" />
+    <Content Include="lib\durandal\js\plugins\observable.js" />
+    <Content Include="lib\durandal\js\plugins\router.js" />
+    <Content Include="lib\durandal\js\plugins\serializer.js" />
+    <Content Include="lib\durandal\js\plugins\widget.js" />
+    <Content Include="lib\durandal\js\system.js" />
+    <Content Include="lib\durandal\js\transitions\entrance.js" />
+    <Content Include="lib\durandal\js\viewEngine.js" />
+    <Content Include="lib\durandal\js\viewLocator.js" />
+    <Content Include="lib\font-awesome\css\font-awesome-ie7.css" />
+    <Content Include="lib\font-awesome\css\font-awesome-ie7.min.css" />
+    <Content Include="lib\font-awesome\css\font-awesome.css" />
+    <Content Include="lib\font-awesome\css\font-awesome.min.css" />
+    <Content Include="lib\font-awesome\css\font\fontawesome-webfont.svg" />
+    <Content Include="lib\i18next\i18next-1.6.0.js" />
+    <Content Include="lib\i18next\i18next-1.6.0.min.js" />
+    <None Include="lib\jquery\jquery-1.9.1.intellisense.js" />
+    <Content Include="lib\jquery\jquery-1.9.1.js" />
+    <Content Include="lib\jquery\jquery-1.9.1.min.js" />
+    <Content Include="lib\jsonform\jsonform.js" />
+    <Content Include="lib\jsonform\jsv.js" />
+    <Content Include="lib\jsonform\underscore.js" />
+    <Content Include="lib\jwplayer\jwplayer.flash.swf" />
+    <Content Include="lib\jwplayer\jwplayer.html5.js" />
+    <Content Include="lib\jwplayer\jwplayer.js" />
+    <Content Include="lib\jwplayer\README.html" />
+    <Content Include="lib\knockout\knockout-2.3.0.debug.js" />
+    <Content Include="lib\knockout\knockout-2.3.0.js" />
+    <Content Include="lib\require\almond-custom.js" />
+    <Content Include="lib\require\r.js" />
+    <Content Include="lib\require\require.js" />
+    <Content Include="lib\require\text.js" />
+    <Content Include="lib\timeline\timeline-locales.js" />
+    <Content Include="lib\timeline\timeline-min.js" />
+    <Content Include="lib\timeline\timeline-theme.css" />
+    <Content Include="lib\timeline\timeline.css" />
+    <Content Include="lib\timeline\timeline.js" />
+    <Content Include="lib\x2js\xml2json.js" />
+    <Content Include="lib\x2js\xml2json.min.js" />
+    <Content Include="settings.js" />
+    <Content Include="timeline_test.html" />
+    <Content Include="web.config" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>3254</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:3254/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
