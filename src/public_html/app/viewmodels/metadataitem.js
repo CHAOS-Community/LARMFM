@@ -104,6 +104,46 @@ $('#form1').jsonForm(
                             }
                         }
                     }
+                },
+                Creators: {
+                    title: "Creators",
+                    type: "object",
+                    properties: {
+                        Contributor: {
+                            type: "array",
+                            items: {
+                                title: "Contributor",
+                                type: "object",
+                                properties: {
+                                    Name: { title: "Name", type: "string" },
+                                    RoleName: { title: "RoleName", type: "string" },
+                                    RoleID: { title: "RoleID", type: "string" },
+                                }
+                            }
+                        }
+                    }
+                },
+                Locations: {
+                    title: "Locations",
+                    type: "object",
+                    properties: {
+                        Name: {
+                            type: "array",
+                            items: {
+                                title: "Name",
+                                type: "string"
+                            }
+                        }
+                    }
+                },
+                Identifiers: {
+                    title: "Identifiers",
+                    type: "object",
+                    properties: {
+                        DR_ProductionNumber: { title: "DR.ProductionNumber", type: "string" },
+                        DR_ArchiveNumber: { title: "DR.ArchiveNumber", type: "string" },
+                        SB_DomsID: { title: "SB.DomsID", type: "string" }
+                    }
                 }
             }
         }
