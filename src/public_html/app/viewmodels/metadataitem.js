@@ -13,6 +13,10 @@ define(['plugins/router', 'mods/xmlmanager', 'mods/metadataschema'], function(ro
             var xsd = xmlman.parseXml(jsonschemaDATA.ModuleResults[0].Results[1].SchemaXML);
             var jsonschema = metadataschema.getschema(xsd);
             
+            $('#form1').jsonForm(jsonschema);
+
+            return;
+
             var sd1 = {};
             var schema = sd1['schema'] = {};
             // Friend
@@ -58,7 +62,9 @@ define(['plugins/router', 'mods/xmlmanager', 'mods/metadataschema'], function(ro
             //                    }
             //                }};
             
-            //$('#form1').jsonForm(sd1);
+            $('#form1').jsonForm(sd1);
+
+            return;
 
 $('#form1').jsonForm(
 {

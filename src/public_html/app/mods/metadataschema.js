@@ -24,9 +24,16 @@ define(['mods/xmlmanager'], function (xmlman) {
         // Is it a normal element or a complexType?
         if (ele._type !== undefined) {
             // Normal element
+            if (ele._maxOccurs !== undefined) {
+                var itemsptr = itemsptr = createArray(ptr, ele);
+                itemsptr["title"] = ele._name;
+                itemsptr["type"] = getElementType(ele);
+            }
+            else
+                ptr[getElementName(ele)] = { title: ele._name, type: getElementType(ele) };
         }
         else {
-            // ComplexType
+            // ComplexType (object)
             parsecomplexele(ptr, ele);
         }
     }
@@ -35,6 +42,34 @@ define(['mods/xmlmanager'], function (xmlman) {
         var complexType = ele["complexType"];
         var sequence = complexType["sequence"];
         var element = sequence["element"];
+
+        var itemsptr = {};
+        // Is it an array or object?
+        if (ele._maxOccurs !== undefined) {
+            // Array
+            itemsptr = createArray(ptr, ele);
+            itemsptr["title"] = ele._name;
+            itemsptr["type"] = "object";
+            var props = {};
+            itemsptr["properties"] = props;
+            itemsptr = props;
+        }
+        else {
+            // Create object
+            ptr[getElementName(ele)] = {
+                title: ele._name, type: "object", properties: itemsptr
+            };
+        }
+
+        // Only one element or array of elements?
+        if (ele.complexType.sequence.element.length === undefined) {
+            parseElement(itemsptr, ele.complexType.sequence.element);
+        }
+        else {
+            var els = ele.complexType.sequence.element;
+            for(var i = 0; i < els.length; i++)
+                parseElement(itemsptr, els[i]);
+        }
 
         return;
         // bounds?
@@ -56,6 +91,17 @@ define(['mods/xmlmanager'], function (xmlman) {
     {
         var n = ele._name;
         return n.replace(".", "_");
+    }
+
+    function getElementType(ele) {
+        return "string";
+    }
+
+    function createArray(ptr, ele) {
+        var itemsptr = {};
+        // fx _maxOccurs = "unbounded", _minOccurs = "0"
+        ptr[getElementName(ele)] = { type: "array", items: itemsptr };
+        return itemsptr;
     }
 
     return {
