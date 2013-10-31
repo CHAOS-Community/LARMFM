@@ -84,8 +84,17 @@ define(['mods/xmlmanager'], function (xmlman) {
 
     function createArray(ptr, ele) {
         var itemsptr = {};
+        var p = ptr[getElementName(ele)] = { type: "array", items: itemsptr };
+
         // fx _maxOccurs = "unbounded", _minOccurs = "0"
-        ptr[getElementName(ele)] = { type: "array", items: itemsptr };
+        if (ele._minOccurs !== undefined)
+            p["minItems"] = parseInt(ele._minOccurs);
+        if (ele._maxOccurs !== undefined) {
+            if (ele._maxOccurs != "unbounded") {
+                p["maxItems"] = parseInt(ele._maxOccurs);
+            }
+        }
+
         return itemsptr;
     }
 
