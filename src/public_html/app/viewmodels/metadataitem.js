@@ -13,6 +13,14 @@ define(['plugins/router', 'mods/xmlmanager', 'mods/metadataschema'], function(ro
             var xsd = xmlman.parseXml(jsonschemaDATA.ModuleResults[0].Results[1].SchemaXML);
             var jsonschema = metadataschema.getschema(xsd);
             
+            var x2js = new X2JS();
+            var xmldata = xmlman.parseXml(jsondataDATA.ModuleResults[0].Results[0].Metadatas[3].MetadataXML);
+            // TODO: only replace . inside tags.
+            xmldata = xmldata.replace(/\./g, '_');
+
+            var jsdata = x2js.xml_str2json(xmldata);
+            jsonschema["value"] = jsdata;
+
             jsonschema["onSubmit"] = function (errors, values) {
                 if (errors) {
                     $('#res').html('<p>I beg your pardon?</p>');
