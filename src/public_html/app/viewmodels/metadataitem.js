@@ -13,6 +13,18 @@ define(['plugins/router', 'mods/xmlmanager', 'mods/metadataschema'], function(ro
             var xsd = xmlman.parseXml(jsonschemaDATA.ModuleResults[0].Results[1].SchemaXML);
             var jsonschema = metadataschema.getschema(xsd);
             
+            jsonschema["onSubmit"] = function (errors, values) {
+                if (errors) {
+                    $('#res').html('<p>I beg your pardon?</p>');
+                }
+                else {
+                    var x2js = new X2JS();
+                    // Convert json to xml
+                    var xmldata = x2js.json2xml_str(values);
+                    $('#xmlres').val(xmldata);
+                }
+            };
+
             $('#form1').jsonForm(jsonschema);
 
             return;
