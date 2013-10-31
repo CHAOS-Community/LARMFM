@@ -70,21 +70,6 @@ define(['mods/xmlmanager'], function (xmlman) {
             for(var i = 0; i < els.length; i++)
                 parseElement(itemsptr, els[i]);
         }
-
-        return;
-        // bounds?
-        var properties = {};
-        ptr[getElementName(ele)] = {
-            "type": "array", "items": {
-                "type": "object",
-                "title": getElementName(element),
-                "properties": properties
-            }
-        };
-
-        // Loop through all the elements in this sequence
-
-        //parseElement(properties,)
     }
 
     function getElementName(ele)
