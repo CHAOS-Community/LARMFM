@@ -1,5 +1,6 @@
-    <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
             <div class="row">
                 <div class="span3">
                     <a class="brand" data-bind="attr: { href: router.navigationModel()[0].hash }">
@@ -7,28 +8,19 @@
                         <span data-bind="text: Settings.title"></span>
                     </a>
                 </div>
-
-                <!--            <ul class="nav" data-bind="foreach: router.navigationModel">
-                                <li data-bind="css: { active: isActive }">
-                                    <a data-bind="attr: { href: hash }, html: title"></a>
-                                </li>
-                            </ul>-->
-
                 <div class="span7">
                     <!--ko compose: 'viewmodels/search/searchbox' -->
-                    <!--/ko-->
+                    <!--/ko-->                    
                 </div>
-
                 <div class="span2">
-                        <ul class="nav pull-right">
-                            <li class="divider-vertical"></li>
-                            <li><a href="#" data-bind="click:loginbtnclick">Login</a></li>
-                        </ul>
+                    <div class="nav loader pull-right" style="margin-top:5px;" data-bind="css: { active: router.isNavigating }">
+                        <i class="icon-spinner icon-2x icon-spin"></i>
+                    </div>                    
+                    <ul class="nav pull-right">
+                        <li class="divider-vertical"></li>
+                        <li><a href="#" data-bind="click:loginbtnclick">Login</a></li>
+                    </ul>
                 </div>
-<!--                                        <div class="loader pull-right" data-bind="css: { active: router.isNavigating }">
-                            <i class="icon-spinner icon-2x icon-spin"></i>
-                        </div>-->
-
             </div>
         </div>
     </div>
