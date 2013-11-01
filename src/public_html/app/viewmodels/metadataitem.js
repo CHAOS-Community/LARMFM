@@ -41,6 +41,9 @@ define(['plugins/router', 'mods/xmlmanager', 'mods/metadataschema'], function(ro
                     var x2js = new X2JS();
                     // Convert json to xml
                     var xmldata = x2js.json2xml_str(values);
+                    // Only replace _ with . inside tags.
+                    xmldata = xmldata.replace(/([<]+[/a-zA-Z]*)(_)([/a-zA-Z]*[>]+)/gi, '$1.$3');
+
                     $('#xmlres').val(xmldata);
                 }
             };
