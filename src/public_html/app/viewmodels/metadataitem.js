@@ -49,16 +49,18 @@ define(['plugins/router', 'mods/xmlmanager', 'mods/metadataschema'], function (r
                         if (schema.hasOwnProperty(schemakey)) {
                             var props = schema[schemakey].properties;
                             var vals = values[schemakey];
+                            metadata[schemakey] = {};
+                            var md = metadata[schemakey];
                             for (var key in props) {
                                 if (vals.hasOwnProperty(key)) {
-                                    metadata[key] = vals[key];
+                                    md[key] = vals[key];
                                 }
                                 else {
                                     if (props[key].type == "object") {
-                                        metadata[key] = [];
+                                        md[key] = [];
                                     }
                                     else {
-                                        metadata[key] = "";
+                                        md[key] = "";
                                     }
                                 }
                             }
