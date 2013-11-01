@@ -67,6 +67,7 @@
     <Content Include="lib\font-awesome\css\font\FontAwesome.otf" />
     <Content Include="lib\jquery\jquery-1.9.1.min.map" />
     <Content Include="lib\jquery\jquery.min.map" />
+    <Content Include="lib\jsonform\jsonform.js" />
     <Content Include="locales\dev\app.json" />
     <Content Include="locales\en-US\app.json" />
     <Content Include="locales\en\app.json" />
@@ -170,7 +171,7 @@
     <None Include="lib\jquery\jquery-1.9.1.intellisense.js" />
     <Content Include="lib\jquery\jquery-1.9.1.js" />
     <Content Include="lib\jquery\jquery-1.9.1.min.js" />
-    <Content Include="lib\jsonform\jsonform.js" />
+    <Content Include="lib\jsonform\jsonform_larm.js" />
     <Content Include="lib\jsonform\jsv.js" />
     <Content Include="lib\jsonform\underscore.js" />
     <Content Include="lib\jwplayer\jwplayer.flash.swf" />
