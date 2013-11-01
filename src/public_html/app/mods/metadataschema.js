@@ -74,8 +74,8 @@ define(['mods/xmlmanager'], function (xmlman) {
 
     function getElementName(ele)
     {
-        var n = ele._name;
-        return n.replace(".", "_");
+        var n = ele._name.replace(/\./gi, "_");
+        return n;
     }
 
     function getElementType(ele) {

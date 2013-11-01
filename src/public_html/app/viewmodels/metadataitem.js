@@ -10,16 +10,26 @@ define(['plugins/router', 'mods/xmlmanager', 'mods/metadataschema'], function(ro
         },
         compositionComplete: function () {
 
-            var xsd = xmlman.parseXml(jsonschemaDATA.ModuleResults[0].Results[1].SchemaXML);
+            var index = 0;
+            var metadataschemaguid = jsonschemaDATA.ModuleResults[0].Results[index].GUID;
+            var xsd = xmlman.parseXml(jsonschemaDATA.ModuleResults[0].Results[index].SchemaXML);
             var jsonschema = metadataschema.getschema(xsd);
             
             var x2js = new X2JS();
-            var xmldata = xmlman.parseXml(jsondataDATA.ModuleResults[0].Results[0].Metadatas[3].MetadataXML);
-            // Only replace . with _ inside tags.
-            xmldata = xmldata.replace(/([<]+[/a-zA-Z]*)(\.)([/a-zA-Z]*[>]+)/gi, '$1_$3');
+            var xmldata = null;
+            var metadatas = jsondataDATA.ModuleResults[0].Results[0].Metadatas;
+            for (var i = 0; i < metadatas.length; i++) {
+                if (metadatas[i].MetadataSchemaGUID == metadataschemaguid) {
+                    xmldata = metadatas[i].MetadataXML;
+                }
+            }
 
-            var jsdata = x2js.xml_str2json(xmldata);
-            jsonschema["value"] = jsdata;
+            if (xmldata != null) {
+                // Only replace . with _ inside tags.
+                xmldata = xmldata.replace(/([<]+[/a-zA-Z]*)(\.)([/a-zA-Z]*[>]+)/gi, '$1_$3');
+                var jsdata = x2js.xml_str2json(xmldata);
+                jsonschema["value"] = jsdata;
+            }
 
             jsonschema["onSubmit"] = function (errors, values) {
                 if (errors) {
