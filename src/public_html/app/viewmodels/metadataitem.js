@@ -15,8 +15,8 @@ define(['plugins/router', 'mods/xmlmanager', 'mods/metadataschema'], function(ro
             
             var x2js = new X2JS();
             var xmldata = xmlman.parseXml(jsondataDATA.ModuleResults[0].Results[0].Metadatas[3].MetadataXML);
-            // TODO: only replace . inside tags.
-            xmldata = xmldata.replace(/\./g, '_');
+            // Only replace . with _ inside tags.
+            xmldata = xmldata.replace(/([<]+[/a-zA-Z]*)(\.)([/a-zA-Z]*[>]+)/gi, '$1_$3');
 
             var jsdata = x2js.xml_str2json(xmldata);
             jsonschema["value"] = jsdata;
