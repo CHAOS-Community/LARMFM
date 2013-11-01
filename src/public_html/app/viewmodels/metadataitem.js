@@ -10,12 +10,12 @@ define(['plugins/router', 'mods/xmlmanager', 'mods/metadataschema'], function(ro
         },
         compositionComplete: function () {
 
-            var index = 0;
+            var index = 1;
             var metadataschemaguid = jsonschemaDATA.ModuleResults[0].Results[index].GUID;
             var xsd = xmlman.parseXml(jsonschemaDATA.ModuleResults[0].Results[index].SchemaXML);
-            var jsonschema = metadataschema.getschema(xsd);
+            var arraypaths = [];
+            var jsonschema = metadataschema.getschema(xsd, arraypaths);
             
-            var x2js = new X2JS();
             var xmldata = null;
             var metadatas = jsondataDATA.ModuleResults[0].Results[0].Metadatas;
             for (var i = 0; i < metadatas.length; i++) {
@@ -27,6 +27,8 @@ define(['plugins/router', 'mods/xmlmanager', 'mods/metadataschema'], function(ro
             if (xmldata != null) {
                 // Only replace . with _ inside tags.
                 xmldata = xmldata.replace(/([<]+[/a-zA-Z]*)(\.)([/a-zA-Z]*[>]+)/gi, '$1_$3');
+
+                var x2js = new X2JS({ arrayAccessFormPaths: arraypaths });
                 var jsdata = x2js.xml_str2json(xmldata);
                 jsonschema["value"] = jsdata;
             }
