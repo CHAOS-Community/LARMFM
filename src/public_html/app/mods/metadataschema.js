@@ -78,6 +78,11 @@ define(['mods/xmlmanager'], function (xmlman) {
     }
 
     function getElementType(ele) {
+        var pf = ele.__prefix + ":";
+
+        if (ele._type == pf + "dateTime")
+            return "datetime";
+
         return "string";
     }
 

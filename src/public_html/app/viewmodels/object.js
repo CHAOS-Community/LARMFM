@@ -1,5 +1,5 @@
-define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object', 'mods/xmlmanager'],
-        function(app, ko, portal, state, objfac, xmlman) {
+define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object', 'mods/xmlmanager', 'mods/jsonformfields'],
+        function(app, ko, portal, state, objfac, xmlman, jsonformfields) {
 
             var title = ko.observable();
             var channel = ko.observable();

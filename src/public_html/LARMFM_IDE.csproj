@@ -57,6 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\mods\jsonformfields.js" />
     <Content Include="app\widgets\Readme.md" />
     <Content Include="favicon.ico" />
     <Content Include="index.html" />
