@@ -81,7 +81,7 @@ define(['mods/xmlmanager'], function (xmlman) {
         var pf = ele.__prefix + ":";
 
         if (ele._type == pf + "dateTime")
-            return "datetime";
+            return "wsdatetime";
 
         return "string";
     }

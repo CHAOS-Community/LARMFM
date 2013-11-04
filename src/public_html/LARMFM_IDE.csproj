@@ -67,6 +67,7 @@
     <Content Include="lib\font-awesome\css\font\fontawesome-webfont.woff" />
     <Content Include="lib\font-awesome\css\font\FontAwesome.otf" />
     <Content Include="lib\jquery\jquery-1.9.1.min.map" />
+    <Content Include="lib\jquery\jquery.maskedinput.min.js" />
     <Content Include="lib\jquery\jquery.min.map" />
     <Content Include="lib\jsonform\jsonform.js" />
     <Content Include="locales\dev\app.json" />

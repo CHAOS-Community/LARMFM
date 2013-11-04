@@ -7,6 +7,21 @@
     };
 
     JSONForm.fieldTypes['wsdatetime'] = {
+        template: '<input type="<%=id%>" ' +
+          '<%= (fieldHtmlClass ? "class=\'" + fieldHtmlClass + "\' " : "") %>' +
+          'name="<%= node.name %>" value="<%= escape(value) %>" id="<%= id %>"' +
+            '/>',
+        fieldtemplate: true,
+        inputfield: true,
+        onBeforeRender: function (data, node) {
+            $(node.el).val("");
+        },
+        onInsert: function (evt, node) {
+            $(node.el).mask("99-99-9999 99:99:99");
+        }
+    };
+
+    JSONForm.fieldTypes['wsdatetime2'] = {
         'template': '<input type="range" ' +
           '<%= (fieldHtmlClass ? "class=\'" + fieldHtmlClass + "\' " : "") %>' +
           'name="<%= node.name %>" value="<%= escape(value) %>" id="<%= id %>"' +
