@@ -94,10 +94,10 @@ define(['mods/xmlmanager'], function (xmlman) {
 
         // fx _maxOccurs = "unbounded", _minOccurs = "0"
         if (ele._minOccurs !== undefined)
-            p["minItems"] = parseInt(ele._minOccurs);
+            p["minItems"] = parseInt(ele._minOccurs,10);
         if (ele._maxOccurs !== undefined) {
             if (ele._maxOccurs != "unbounded") {
-                p["maxItems"] = parseInt(ele._maxOccurs);
+                p["maxItems"] = parseInt(ele._maxOccurs,10);
             }
         }
 
