@@ -83,7 +83,7 @@ define(['mods/xmlmanager'], function (xmlman) {
         if (ele._type == pf + "dateTime")
             return "wsdatetime";
 
-        return "string";
+        return "wsstring";
     }
 
     function createArray(ptr, ele, arraypaths, parent) {

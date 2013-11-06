@@ -38,7 +38,6 @@ define(['plugins/router', 'mods/xmlmanager', 'mods/metadataschema'], function (r
                     $('#res').html('<p>I beg your pardon?</p>');
                 }
                 else {
-
                     var metadata = {};
 
                     // Fetch schema for the metadata
@@ -75,7 +74,6 @@ define(['plugins/router', 'mods/xmlmanager', 'mods/metadataschema'], function (r
             };
 
             $('#form1').jsonForm(jsonschema);
-
         }
     };
 });

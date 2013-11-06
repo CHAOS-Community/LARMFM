@@ -1,67 +1,56 @@
 ﻿define(function () {
 
-    JSONForm.fieldTypes['wsstring'] = {
-        template: '<%=node.value%>',
-        fieldtemplate: true,
-        inputfield: true
-    };
-
-    JSONForm.fieldTypes['wsdatetime'] = {
-        template: '<input type="<%=id%>" ' +
+    JSONForm.fieldTypes['wsstringline'] = {
+        template: '<input type="text" style="width:90%;" ' +
           '<%= (fieldHtmlClass ? "class=\'" + fieldHtmlClass + "\' " : "") %>' +
           'name="<%= node.name %>" value="<%= escape(value) %>" id="<%= id %>"' +
             '/>',
         fieldtemplate: true,
         inputfield: true,
         onBeforeRender: function (data, node) {
-            $(node.el).val("");
         },
         onInsert: function (evt, node) {
-            $(node.el).mask("99-99-9999 99:99:99");
         }
     };
 
-    JSONForm.fieldTypes['wsdatetime2'] = {
-        'template': '<input type="range" ' +
+    JSONForm.fieldTypes['wsstring'] = {
+        template: '<textarea style="width:90%;height:28px;" ' +
+  '<%= (fieldHtmlClass ? "class=\'" + fieldHtmlClass + "\' " : "") %>' +
+  'name="<%= node.name %>" value="<%= escape(value) %>" id="<%= id %>"' +
+    '></textarea>',
+        fieldtemplate: true,
+        inputfield: true,
+        onInsert: function (evt, node) {
+            var selector = "#" + node.id.replace(/\./g, "\\.");
+
+            var $element = $(selector).get(0);
+            if ($element !== undefined) {
+                $element.addEventListener('keyup', function () {
+                    this.style.overflow = 'hidden';
+                    var hgt = this.clientHeight;
+                    if (hgt < this.scrollHeight) {
+                        this.style.height = (this.scrollHeight + 32) + 'px';
+                    }
+                }, false);
+            }
+        }
+    };
+
+    JSONForm.fieldTypes['wsdatetime'] = {
+        template: '<input type="text" ' +
           '<%= (fieldHtmlClass ? "class=\'" + fieldHtmlClass + "\' " : "") %>' +
           'name="<%= node.name %>" value="<%= escape(value) %>" id="<%= id %>"' +
-          '<%= (node.disabled? " disabled" : "")%>' +
-          ' min=<%= range.min %>' +
-          ' max=<%= range.max %>' +
-          ' step=<%= range.step %>' +
-          '<%= (node.schemaElement && node.schemaElement.required ? " required=\'required\'" : "") %>' +
-          ' />',
-        'fieldtemplate': true,
-        'inputfield': true,
-        'onBeforeRender': function (data, node) {
-            data.range = {
-                min: 1,
-                max: 100,
-                step: 1
-            };
-            if (!node || !node.schemaElement) return;
-            if (node.formElement && node.formElement.step) {
-                data.range.step = node.formElement.step;
-            }
-            if (typeof node.schemaElement.minimum !== 'undefined') {
-                if (node.schemaElement.exclusiveMinimum) {
-                    data.range.min = node.schemaElement.minimum + data.range.step;
-                }
-                else {
-                    data.range.min = node.schemaElement.minimum;
-                }
-            }
-            if (typeof node.schemaElement.maximum !== 'undefined') {
-                if (node.schemaElement.exclusiveMaximum) {
-                    data.range.max = node.schemaElement.maximum + data.range.step;
-                }
-                else {
-                    data.range.max = node.schemaElement.maximum;
-                }
-            }
+            '/>',
+        fieldtemplate: true,
+        inputfield: true,
+        onBeforeRender: function (data, node) {
+        },
+        onInsert: function (evt, node) {
+            //2007-11-21T23:08:00
+            var selector = "#" + node.id.replace(/\./g, "\\.");
+            $(selector).mask("9999-99-99T99:99:99");
         }
     };
-
 
     return {
     };
