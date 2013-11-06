@@ -14,7 +14,7 @@ define(['plugins/router', 'mods/xmlmanager', 'mods/metadataschema'], function (r
             var metadataschemaguid = jsonschemaDATA.ModuleResults[0].Results[index].GUID;
             var xsd = xmlman.parseXml(jsonschemaDATA.ModuleResults[0].Results[index].SchemaXML);
             var arraypaths = [];
-            var jsonschema = metadataschema.getschema(xsd, arraypaths);
+            var jsonschema = metadataschema.xmlschematojsonschema(xsd, arraypaths);
 
             var xmldata = null;
             var metadatas = jsondataDATA.ModuleResults[0].Results[0].Metadatas;

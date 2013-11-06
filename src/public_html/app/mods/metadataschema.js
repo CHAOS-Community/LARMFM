@@ -1,6 +1,10 @@
 define(['mods/xmlmanager'], function (xmlman) {
     
-    function getschema(xsd, arraypaths) {
+    function loadxmlschemas() {
+
+    }
+
+    function xmlschematojsonschema(xsd, arraypaths) {
         var x2js = new X2JS();
         var jsonschema = {};
         var schema = jsonschema["schema"] = {};
@@ -105,7 +109,8 @@ define(['mods/xmlmanager'], function (xmlman) {
     }
 
     return {
-        getschema : getschema
+        loadxmlschemas: loadxmlschemas,
+        xmlschematojsonschema: xmlschematojsonschema
     };
 });
 
