@@ -10,6 +10,8 @@ define(['plugins/router', 'mods/xmlmanager', 'mods/metadataschema'], function (r
         },
         compositionComplete: function () {
 
+            metadataschema.loadxmlschemas();
+
             var index = 1;
             var metadataschemaguid = jsonschemaDATA.ModuleResults[0].Results[index].GUID;
             var xsd = xmlman.parseXml(jsonschemaDATA.ModuleResults[0].Results[index].SchemaXML);

@@ -1,7 +1,13 @@
 define(['mods/xmlmanager'], function (xmlman) {
     
     function loadxmlschemas() {
+        CHAOS.Portal.Client.MetadataSchema.Get().WithCallback(xmlSchemasReceived);
+    }
 
+    function xmlSchemasReceived(response) {
+        for (var i = 0; i < response.Body.Count; i++) {
+            var r = response.Body.Results[i];
+        }
     }
 
     function xmlschematojsonschema(xsd, arraypaths) {
