@@ -24,6 +24,20 @@ define(['mods/xmlmanager'], function (xmlman) {
 
     // ========================================================================
 
+    function getMetadataSchemaByGuid(guid) {
+        var ms = Settings.MetadataSchemas;
+        for (var i = 0; i < ms.length; i++) {
+            if (ms[i].guid == guid) {
+                return ms[i];
+            }
+        }
+        return null;
+    }
+
+    // ========================================================================
+
+    // ========================================================================
+
     function xmlschematojsonschema(xsd, arraypaths) {
         var x2js = new X2JS();
         var jsonschema = {};
@@ -138,6 +152,8 @@ define(['mods/xmlmanager'], function (xmlman) {
 
     return {
         loadxmlschemas: loadxmlschemas,
+        setupMetadataSchemas: setupMetadataSchemas,
+        getMetadataSchemaByGuid: getMetadataSchemaByGuid,
         xmlschematojsonschema: xmlschematojsonschema
     };
 });

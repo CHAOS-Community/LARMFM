@@ -11,12 +11,14 @@ define(['plugins/router', 'mods/xmlmanager', 'mods/metadataschema'], function (r
         compositionComplete: function () {
 
             metadataschema.loadxmlschemas();
-
-            var index = 1;
-            var metadataschemaguid = jsonschemaDATA.ModuleResults[0].Results[index].GUID;
-            var xsd = xmlman.parseXml(jsonschemaDATA.ModuleResults[0].Results[index].SchemaXML);
-            var arraypaths = [];
-            var jsonschema = metadataschema.xmlschematojsonschema(xsd, arraypaths);
+            var metadataschemaguid = '00000000-0000-0000-0000-0000df820000';
+            var schema = metadataschema.getMetadataSchemaByGuid(metadataschemaguid);
+            if (schema == null)
+                return;
+            var jsonschema = schema.schemajson;
+            var arraypaths = schema.arraypaths;
+            jsonschema["value"] = null;
+            jsonschema["onSubmit"] = null;
 
             var xmldata = null;
             var metadatas = jsondataDATA.ModuleResults[0].Results[0].Metadatas;
