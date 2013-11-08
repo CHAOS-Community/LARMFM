@@ -1,6 +1,7 @@
 define(['mods/xmlmanager'], function (xmlman) {
     
     function loadxmlschemas() {
+        setupMetadataSchemas();
         CHAOS.Portal.Client.MetadataSchema.Get().WithCallback(xmlSchemasReceived);
     }
 
@@ -9,6 +10,19 @@ define(['mods/xmlmanager'], function (xmlman) {
             var r = response.Body.Results[i];
         }
     }
+
+    // ========================================================================
+
+    function setupMetadataSchemas() {
+        var ms = Settings.MetadataSchemas;
+        for (var i = 0; i < ms.length; i++) {
+            if (ms[i].schemajson === null) {
+                ms[i].schemajson = xmlschematojsonschema(ms[i].schemaxml, ms[i].arraypaths);
+            }
+        }
+    }
+
+    // ========================================================================
 
     function xmlschematojsonschema(xsd, arraypaths) {
         var x2js = new X2JS();
@@ -71,11 +85,19 @@ define(['mods/xmlmanager'], function (xmlman) {
         }
 
         // Only one element or array of elements?
-        if (ele.complexType.sequence.element.length === undefined) {
-            parseElement(itemsptr, ele.complexType.sequence.element, arraypaths, parent);
+        var seqelm = null;
+        if (ele.complexType.sequence !== undefined)
+            seqelm = ele.complexType.sequence.element;
+        else if (ele.complexType.complexContent.extension.sequence !== undefined)
+            seqelm = ele.complexType.complexContent.extension.sequence.element;
+        else
+            return;
+
+        if (seqelm.length === undefined) {
+            parseElement(itemsptr, seqelm, arraypaths, parent);
         }
         else {
-            var els = ele.complexType.sequence.element;
+            var els = seqelm;
             for(var i = 0; i < els.length; i++)
                 parseElement(itemsptr, els[i], arraypaths, parent);
         }
