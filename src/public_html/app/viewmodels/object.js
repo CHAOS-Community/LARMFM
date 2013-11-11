@@ -1,5 +1,5 @@
-define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object', 'mods/xmlmanager', 'mods/jsonformfields'],
-        function(app, ko, portal, state, objfac, xmlman, jsonformfields) {
+define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object', 'mods/xmlmanager', 'mods/jsonformfields','factory/metadata'],
+        function(app, ko, portal, state, objfac, xmlman, jsonformfields, metadatafac) {
 
             var title = ko.observable();
             var channel = ko.observable();
@@ -25,6 +25,9 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
             var data = undefined;
             var timeline = undefined;
             var onTimeChangeActive = false;
+
+            var metadataEditor = ko.observable();
+            var metadataEditors = ko.observableArray();
 
             var obj = {};    
 
@@ -85,6 +88,22 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                     initplayer();
 
                 inittimeline();
+
+                // Init metadataEditor
+                //<!--ko compose: 'viewmodels/metadataitem' --><!--/ko-->
+                //var metadataitem = require(["viewmodels/metadataitem"]);
+                var editor = new metadatafac.MetadataEditor();
+                editor.seteditor("test");
+                metadataEditors.push(editor)
+
+                var ged = new metadatafac.MetadataEditor();
+                ged.seteditor("generic", obj.metadataSchemaGuid, obj.metadata);
+                metadataEditors.push(ged)
+
+
+                //metadataEditor("viewmodels/metadataitem");
+                //metadataEditor(metadataitem());
+                    
             }
 
             function initplayer()
@@ -267,6 +286,8 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 newdescription: newdescription,
                 playerposition: playerposition,
                 playerdebug: playerdebug,
+                metadataEditor: metadataEditor,
+                metadataEditors: metadataEditors,
                 activate: function(param) {
                     if (param !== undefined) {
                         var id = getParameterByName('id', param);

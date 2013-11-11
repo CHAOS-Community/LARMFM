@@ -9,6 +9,11 @@
 <div>Player debug: <span data-bind="html: playerdebug"></span></div>
 <button type="button" class="btn" data-bind="click: play">Play</button>
 <button type="button" class="btn" data-bind="click: pause">Pause</button>
+<hr/>
+<div data-bind="foreach: metadataEditors">
+    <div data-bind="compose: editor"></div>
+</div>
+<hr/>
 <div>Date: <span data-bind="html: publication"></span></div>
 <div>Channel: <span data-bind="html: channel"></span></div>
 <div>Abstract <span data-bind="html: abstract"></span></div>
@@ -20,5 +25,5 @@
         <button type="button" class="btn" data-bind="click: saveMetadata">OK</button>
 
 <div>
-<!--ko compose: 'viewmodels/metadataitem' --><!--/ko-->
+
 </div>

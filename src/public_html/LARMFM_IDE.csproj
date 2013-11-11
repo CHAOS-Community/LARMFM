@@ -57,7 +57,11 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\factory\metadata.js" />
     <Content Include="app\mods\jsonformfields.js" />
+    <Content Include="app\views\editors\generic.html" />
+    <Content Include="app\viewmodels\editors\generic.js" />
+    <Content Include="app\views\editors\test.html" />
     <Content Include="app\widgets\Readme.md" />
     <Content Include="favicon.ico" />
     <Content Include="index.html" />
