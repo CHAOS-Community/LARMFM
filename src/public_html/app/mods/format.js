@@ -79,9 +79,9 @@ define(function() {
         if(yyyymmdd==null)
             return null;
         
-        var y = parseInt(yyyymmdd.substring(0,4));
-        var m = parseInt(yyyymmdd.substring(5,7));
-        var d = parseInt(yyyymmdd.substring(8,10));
+        var y = parseInt(yyyymmdd.substring(0,4),10);
+        var m = parseInt(yyyymmdd.substring(5,7),10);
+        var d = parseInt(yyyymmdd.substring(8,10),10);
         
         if (isNaN(d)||isNaN(m)||isNaN(y))
             return null;
@@ -94,12 +94,12 @@ define(function() {
         if(ds==null)
             return null;
         
-        var y = parseInt(ds.substring(0,4));
-        var m = parseInt(ds.substring(5,7));
-        var d = parseInt(ds.substring(8,10));
-        var h = parseInt(ds.substring(11,13));
-        var mi = parseInt(ds.substring(14,16));
-        var s = parseInt(ds.substring(17,19));
+        var y = parseInt(ds.substring(0, 4), 10);
+        var m = parseInt(ds.substring(5, 7), 10);
+        var d = parseInt(ds.substring(8, 10), 10);
+        var h = parseInt(ds.substring(11, 13), 10);
+        var mi = parseInt(ds.substring(14, 16), 10);
+        var s = parseInt(ds.substring(17, 19), 10);
         
         if (isNaN(d)||isNaN(m)||isNaN(y)||isNaN(h)||isNaN(mi)||isNaN(s))
             return null;

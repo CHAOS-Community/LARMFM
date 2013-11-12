@@ -10,11 +10,15 @@ define(['plugins/router', 'mods/xmlmanager', 'mods/metadataschema'], function (r
         },
         compositionComplete: function () {
 
-            var index = 1;
-            var metadataschemaguid = jsonschemaDATA.ModuleResults[0].Results[index].GUID;
-            var xsd = xmlman.parseXml(jsonschemaDATA.ModuleResults[0].Results[index].SchemaXML);
-            var arraypaths = [];
-            var jsonschema = metadataschema.getschema(xsd, arraypaths);
+            metadataschema.loadxmlschemas();
+            var metadataschemaguid = '00000000-0000-0000-0000-0000df820000';
+            var schema = metadataschema.getMetadataSchemaByGuid(metadataschemaguid);
+            if (schema == null)
+                return;
+            var jsonschema = schema.schemajson;
+            var arraypaths = schema.arraypaths;
+            jsonschema["value"] = null;
+            jsonschema["onSubmit"] = null;
 
             var xmldata = null;
             var metadatas = jsondataDATA.ModuleResults[0].Results[0].Metadatas;
@@ -38,7 +42,6 @@ define(['plugins/router', 'mods/xmlmanager', 'mods/metadataschema'], function (r
                     $('#res').html('<p>I beg your pardon?</p>');
                 }
                 else {
-
                     var metadata = {};
 
                     // Fetch schema for the metadata
@@ -75,7 +78,6 @@ define(['plugins/router', 'mods/xmlmanager', 'mods/metadataschema'], function (r
             };
 
             $('#form1').jsonForm(jsonschema);
-
         }
     };
 });

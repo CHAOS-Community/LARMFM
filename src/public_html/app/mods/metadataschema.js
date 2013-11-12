@@ -1,6 +1,44 @@
 define(['mods/xmlmanager'], function (xmlman) {
     
-    function getschema(xsd, arraypaths) {
+    function loadxmlschemas() {
+        setupMetadataSchemas();
+        CHAOS.Portal.Client.MetadataSchema.Get().WithCallback(xmlSchemasReceived);
+    }
+
+    function xmlSchemasReceived(response) {
+        for (var i = 0; i < response.Body.Count; i++) {
+            var r = response.Body.Results[i];
+        }
+    }
+
+    // ========================================================================
+
+    function setupMetadataSchemas() {
+        var ms = Settings.MetadataSchemas;
+        for (var i = 0; i < ms.length; i++) {
+            if (ms[i].schemajson === null) {
+                ms[i].schemajson = xmlschematojsonschema(ms[i].schemaxml, ms[i].arraypaths);
+            }
+        }
+    }
+
+    // ========================================================================
+
+    function getMetadataSchemaByGuid(guid) {
+        var ms = Settings.MetadataSchemas;
+        for (var i = 0; i < ms.length; i++) {
+            if (ms[i].guid == guid) {
+                return ms[i];
+            }
+        }
+        return null;
+    }
+
+    // ========================================================================
+
+    // ========================================================================
+
+    function xmlschematojsonschema(xsd, arraypaths) {
         var x2js = new X2JS();
         var jsonschema = {};
         var schema = jsonschema["schema"] = {};
@@ -61,11 +99,19 @@ define(['mods/xmlmanager'], function (xmlman) {
         }
 
         // Only one element or array of elements?
-        if (ele.complexType.sequence.element.length === undefined) {
-            parseElement(itemsptr, ele.complexType.sequence.element, arraypaths, parent);
+        var seqelm = null;
+        if (ele.complexType.sequence !== undefined)
+            seqelm = ele.complexType.sequence.element;
+        else if (ele.complexType.complexContent.extension.sequence !== undefined)
+            seqelm = ele.complexType.complexContent.extension.sequence.element;
+        else
+            return;
+
+        if (seqelm.length === undefined) {
+            parseElement(itemsptr, seqelm, arraypaths, parent);
         }
         else {
-            var els = ele.complexType.sequence.element;
+            var els = seqelm;
             for(var i = 0; i < els.length; i++)
                 parseElement(itemsptr, els[i], arraypaths, parent);
         }
@@ -78,7 +124,12 @@ define(['mods/xmlmanager'], function (xmlman) {
     }
 
     function getElementType(ele) {
-        return "string";
+        var pf = ele.__prefix + ":";
+
+        if (ele._type == pf + "dateTime")
+            return "wsdatetime";
+
+        return "wsstring";
     }
 
     function createArray(ptr, ele, arraypaths, parent) {
@@ -89,10 +140,10 @@ define(['mods/xmlmanager'], function (xmlman) {
 
         // fx _maxOccurs = "unbounded", _minOccurs = "0"
         if (ele._minOccurs !== undefined)
-            p["minItems"] = parseInt(ele._minOccurs);
+            p["minItems"] = parseInt(ele._minOccurs,10);
         if (ele._maxOccurs !== undefined) {
             if (ele._maxOccurs != "unbounded") {
-                p["maxItems"] = parseInt(ele._maxOccurs);
+                p["maxItems"] = parseInt(ele._maxOccurs,10);
             }
         }
 
@@ -100,7 +151,10 @@ define(['mods/xmlmanager'], function (xmlman) {
     }
 
     return {
-        getschema : getschema
+        loadxmlschemas: loadxmlschemas,
+        setupMetadataSchemas: setupMetadataSchemas,
+        getMetadataSchemaByGuid: getMetadataSchemaByGuid,
+        xmlschematojsonschema: xmlschematojsonschema
     };
 });
 

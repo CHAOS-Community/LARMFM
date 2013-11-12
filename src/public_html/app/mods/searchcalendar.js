@@ -181,13 +181,13 @@ define(['knockout', 'factory/calendar', 'mods/format'], function(ko, calfac, for
                 var m1 = ds1.substring(5, 7);
                 var m2 = ds2.substring(5, 7);
 
-                var yearitem = getCalItem_year(parseInt(y1));
+                var yearitem = getCalItem_year(parseInt(y1,10));
                 breadcrumbitems.push(yearitem);
 
                 if (m1 == m2) {
 //                    var d1 = ds1.substring(8, 10);
 //                    var d2 = ds2.substring(8, 10);
-                    var monthitem = getCalItem_month(parseInt(m1),parseInt(y1));
+                    var monthitem = getCalItem_month(parseInt(m1,10),parseInt(y1,10));
                     breadcrumbitems.push(monthitem);
                     
                     // Set current search day to active:

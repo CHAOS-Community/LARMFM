@@ -57,6 +57,11 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\factory\metadata.js" />
+    <Content Include="app\mods\jsonformfields.js" />
+    <Content Include="app\views\editors\generic.html" />
+    <Content Include="app\viewmodels\editors\generic.js" />
+    <Content Include="app\views\editors\test.html" />
     <Content Include="app\widgets\Readme.md" />
     <Content Include="favicon.ico" />
     <Content Include="index.html" />
@@ -66,6 +71,7 @@
     <Content Include="lib\font-awesome\css\font\fontawesome-webfont.woff" />
     <Content Include="lib\font-awesome\css\font\FontAwesome.otf" />
     <Content Include="lib\jquery\jquery-1.9.1.min.map" />
+    <Content Include="lib\jquery\jquery.maskedinput.min.js" />
     <Content Include="lib\jquery\jquery.min.map" />
     <Content Include="lib\jsonform\jsonform.js" />
     <Content Include="locales\dev\app.json" />
