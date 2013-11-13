@@ -94,10 +94,13 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 //var metadataitem = require(["viewmodels/metadataitem"]);
                 var editor = new metadatafac.MetadataEditor();
                 editor.seteditor("test");
+                editor.show();
                 metadataEditors.push(editor)
 
                 var ged = new metadatafac.MetadataEditor();
-                ged.seteditor("generic", obj.metadataSchemaGuid, obj.metadata);
+                ged.seteditor("generic");
+                ged.setmetadata(obj.metadataSchemaGuid, obj.metadata);
+                ged.show();
                 metadataEditors.push(ged)
 
 
