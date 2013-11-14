@@ -61,6 +61,8 @@
     <Content Include="app\mods\jsonformfields.js" />
     <Content Include="app\views\editors\generic.html" />
     <Content Include="app\views\editors\generic.js" />
+    <Content Include="app\views\editors\larmprogram.html" />
+    <Content Include="app\views\editors\larmprogram.js" />
     <Content Include="app\views\editors\test.html" />
     <Content Include="app\widgets\Readme.md" />
     <Content Include="favicon.ico" />

@@ -52,6 +52,10 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 var ed1 = new metadatafac.MetadataEditor();
                 ed1.seteditor("test.html", { key: "Test key." });
                 metadataEditors.push(ed1)
+                
+                var larmprogrameditor = new metadatafac.MetadataEditor();
+                larmprogrameditor.seteditor("larmprogram", r.Metadatas);
+                metadataEditors.push(larmprogrameditor);
 
                 for (var j = 0; j < r.Metadatas.length; j++)
                 {
