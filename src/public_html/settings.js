@@ -63,62 +63,6 @@ Settings.Search = {
     ]
 };
 
-// id: corresponds to querystring mid. For example mid=default
-// You can also provide a metadataschemaguid as mid.
-// In that case "id: ''" is used.
-/*
-Settings.Metadata = [
-    {
-        id: 'default',
-        isdefault: true,
-        viewer: 'generic',
-        editor: 'generic',
-        schemas: [
-        {
-            guid: '17d59e41-13fb-469a-a138-bb691f13f2ba',
-            name: 'LARM.Metadata',
-            jsonkey: 'm0',
-            editable: false
-        },
-        {
-            guid: '00000000-0000-0000-0000-0000df820000',
-            name: 'Larm.Program',
-            jsonkey: 'm1',
-            editable: true
-        }
-        ]
-    },
-    {
-        id: 'fileinfo',
-        isdefault: false,
-        viewer: 'generic',
-        editor: 'generic',
-        schemas: [
-        {
-            guid: '00000000-0000-0000-0000-0000dd820000',
-            name: 'Larm.FileInfos',
-            jsonkey: 'm0',
-            editable: true
-        }
-        ]
-    },
-    {
-        id: '',
-        isdefault: false,
-        viewer: 'generic',
-        editor: 'generic',
-        schemas: [
-            {
-                guid: '{Querystring mid}',
-                name: '',
-                jsonkey: 'm0',
-                editable: true
-            }
-        ]
-    }
-];
-*/
-
 Settings.MetadataSchemas = [
     {
         guid: '00000000-0000-0000-0000-0000dd820000',
