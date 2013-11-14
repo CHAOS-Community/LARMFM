@@ -3,11 +3,20 @@
     var data;
     function init() {
 
-        var jsonschema = data.schema();
+        var guid = data.guid;
+        var xml = data.xml;
+
+        metadataschema.loadxmlschemas();
+
+        var schema = metadataschema.getMetadataSchemaByGuid(guid);
+        if (schema == null)
+            return;
+
+        var jsonschema = schema.schemajson;
         jsonschema["value"] = null;
         jsonschema["onSubmit"] = null;
 
-        jsonschema["value"] = data.metadata();
+        jsonschema["value"] = xmlman.toJson(schema.arraypaths, xml);
         jsonschema["onSubmit"] = function (errors, values) {
             if (errors) {
                 $('#res').html('<p>There is an error in the xml.</p>');
@@ -54,7 +63,7 @@
 
     return {
         compositionComplete: function (child, parent, settings) {
-            data = settings.bindingContext.$data;
+            data = settings.bindingContext.$data.data;
             init();
         }
     };

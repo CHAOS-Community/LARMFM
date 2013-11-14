@@ -2,62 +2,22 @@
 
     var MetadataEditor = function () {
         this.editor = ko.observable();
-        this.metadataSchemaGuid = ko.observable();
-        this.metadata = ko.observable();
-        this.schema = ko.observable();
-        this.metadatas = [];
-        this.editorname = "";
+        this.data = null;
     };
 
     MetadataEditor.prototype = function () {
 
-        var seteditor = function (name) {
-
-            this.editorname = name;
-        }
-
-        var setmetadata = function (metadataSchemaGuid, metadataxml) {
-
-            metadataschema.loadxmlschemas();
-
-            var lschema = metadataschema.getMetadataSchemaByGuid(metadataSchemaGuid);
-            if (lschema == null)
-                return;
-
-            var jsonschema = lschema.schemajson;
-            var arraypaths = lschema.arraypaths;
-            jsonschema["value"] = null;
-            jsonschema["onSubmit"] = null;
-
-            var xmldata = metadataxml;
-            // Replace . with _ inside tags (inside < and >).
-            xmldata = xmldata.replace(/([<]+[/a-zA-Z]*)(\.)([/a-zA-Z]*[>]+)/gi, '$1_$3');
-
-            var x2js = new X2JS({ arrayAccessFormPaths: arraypaths });
-            var jsdata = x2js.xml_str2json(xmldata);
-
-            if (this.metadata() === undefined) {
-                this.metadataSchemaGuid(metadataSchemaGuid);
-                this.metadata(jsdata);
-                this.schema(lschema.schemajson);
-            }
-
-            this.metadatas.push({ schema: lschema.schemajson, schemaguid: metadataSchemaGuid, data: jsdata });
-        }
-
-        var show = function () {
-            if (this.editorname == "generic") {
-                this.editor("viewmodels/editors/generic");
-            }
-            else {
-                this.editor("editors/" + this.editorname + ".html");
+        var seteditor = function (editorname, data) {
+            this.data = data;
+            if (editorname.indexOf('.html', editorname.length - 5) !== -1) {
+                this.editor("editors/" + editorname);
+            } else {
+                this.editor("views/editors/" + editorname);
             }
         }
 
         return {
-            seteditor: seteditor,
-            setmetadata: setmetadata,
-            show: show
+            seteditor: seteditor
         };
     }();
 

@@ -49,6 +49,10 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                     return;
                 }
                 
+                var ed1 = new metadatafac.MetadataEditor();
+                ed1.seteditor("test.html", { key: "Test key." });
+                metadataEditors.push(ed1)
+
                 for (var j = 0; j < r.Metadatas.length; j++)
                 {
                     if (r.Metadatas[j].MetadataSchemaGuid == mdsguid)
@@ -89,23 +93,9 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
 
                 inittimeline();
 
-                // Init metadataEditor
-                //<!--ko compose: 'viewmodels/metadataitem' --><!--/ko-->
-                //var metadataitem = require(["viewmodels/metadataitem"]);
-                var editor = new metadatafac.MetadataEditor();
-                editor.seteditor("test");
-                editor.show();
-                metadataEditors.push(editor)
-
-                var ged = new metadatafac.MetadataEditor();
-                ged.seteditor("generic");
-                ged.setmetadata(obj.metadataSchemaGuid, obj.metadata);
-                ged.show();
-                metadataEditors.push(ged)
-
-
-                //metadataEditor("viewmodels/metadataitem");
-                //metadataEditor(metadataitem());
+                var ed2 = new metadatafac.MetadataEditor();
+                ed2.seteditor("generic", { guid: obj.metadataSchemaGuid, xml: obj.metadata });
+                metadataEditors.push(ed2)
                     
             }
 
