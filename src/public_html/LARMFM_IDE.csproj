@@ -176,6 +176,7 @@
     <Content Include="lib\font-awesome\css\font\fontawesome-webfont.svg" />
     <Content Include="lib\i18next\i18next-1.6.0.js" />
     <Content Include="lib\i18next\i18next-1.6.0.min.js" />
+    <Content Include="lib\durandal\images\Thumbs.db" />
     <None Include="lib\jquery\jquery-1.9.1.intellisense.js" />
     <Content Include="lib\jquery\jquery-1.9.1.js" />
     <Content Include="lib\jquery\jquery-1.9.1.min.js" />
