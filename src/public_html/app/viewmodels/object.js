@@ -57,6 +57,15 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 larmprogrameditor.seteditor("larmprogram", r.Metadatas);
                 metadataEditors.push(larmprogrameditor);
 
+                //var larmprogrameditor = ko.observable(new metadatafac.MetadataEditor());
+                //larmprogrameditor().seteditor("larmprogram", r.Metadatas);
+                //metadataEditors.push(larmprogrameditor);
+
+                //var larmprogrameditor2 = new metadatafac.MetadataEditor();
+                //larmprogrameditor2.seteditor("larmprogram", r.Metadatas);
+                //metadataEditor(larmprogrameditor2);
+
+
                 for (var j = 0; j < r.Metadatas.length; j++)
                 {
                     if (r.Metadatas[j].MetadataSchemaGuid == mdsguid)

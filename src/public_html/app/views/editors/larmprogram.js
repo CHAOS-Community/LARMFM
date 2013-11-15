@@ -43,6 +43,7 @@
             // settings.bindingContext.$data represents an
             // instance of MetadataEditor under factory.
             data = settings.bindingContext.$data.data;
+            //settings.bindingContext.$data = this;
             if(data !== undefined)
                 init();
         },

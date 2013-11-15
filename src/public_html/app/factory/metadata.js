@@ -13,16 +13,16 @@
                 this.editor("editors/" + editorname);
             } else {
                 //ViewModel
-                //this.editor("views/editors/" + editorname);
+                this.editor("views/editors/" + editorname);
                 //this.editor("viewmodels/editors/" + editorname);
-                var self = this;
-                system.acquire("views/editors/" + editorname).done(function (modelCtor) {
-                    v = "editors/" + editorname + ".html";
+                //var self = this;
+                //system.acquire("views/editors/" + editorname).done(function (modelCtor) {
+                //    v = "editors/" + editorname + ".html";
                     //vm = new modelCtor();
                     //vm = modelCtor;
                     //self.editor({ view: v, model: vm });
-                    self.editor({ view: v });
-                });
+                 //   self.editor({ view: v });
+                //});
             }
         }
 
