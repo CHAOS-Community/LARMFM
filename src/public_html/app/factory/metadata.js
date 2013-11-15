@@ -13,11 +13,16 @@
                 this.editor("editors/" + editorname);
             } else {
                 this.editor("views/editors/" + editorname);
+                //this.editor("viewmodels/editors/" + editorname);
             }
         }
 
         return {
-            seteditor: seteditor
+            seteditor: seteditor,
+            clack: function (data) {
+                var i = 0;
+
+            }
         };
     }();
 

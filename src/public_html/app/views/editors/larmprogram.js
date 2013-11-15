@@ -3,6 +3,7 @@
     var data;
     var m0;
     var m1;
+    var test2 = ko.observable("Lynge");
 
     function handlexml(d) {
         var xml = xmlman.parseXml(d.MetadataXml);
@@ -30,11 +31,23 @@
     return {
         m0: m0,
         m1: m1,
+        test: "Thomas",
+        test2: test2,
+        activate: function (d){
+            var i = 0;
+        },
+        attached: function (d) {
+            var i = 0;
+        },
         compositionComplete: function (child, parent, settings) {
             // settings.bindingContext.$data represents an
             // instance of MetadataEditor under factory.
             data = settings.bindingContext.$data.data;
             init();
+        },
+        clack: function (data) {
+            var i = 0;
+
         }
     };
 });
