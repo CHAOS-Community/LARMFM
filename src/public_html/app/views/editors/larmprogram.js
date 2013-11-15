@@ -43,7 +43,8 @@
             // settings.bindingContext.$data represents an
             // instance of MetadataEditor under factory.
             data = settings.bindingContext.$data.data;
-            init();
+            if(data !== undefined)
+                init();
         },
         clack: function (data) {
             var i = 0;
