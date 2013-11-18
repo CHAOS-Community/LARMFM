@@ -1,0 +1,14 @@
+<h1 data-bind="html: title"></h1>
+<br/>
+<div>
+    <!--ko compose:'viewmodels/editors/editor1'--><!--/ko-->
+</div>
+<br />
+<div>
+    <!--ko compose:'viewmodels/larmprogram'--><!--/ko-->
+</div>
+<hr />
+<div>
+    <div data-bind="compose: 'viewmodels/editors/larmprogram'"></div>
+</div>
+<pre data-bind="text: JSON.stringify(ko.toJS($data), null, 2)"></pre>

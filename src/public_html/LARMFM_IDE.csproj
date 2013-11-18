@@ -59,11 +59,15 @@
   <ItemGroup>
     <Content Include="app\factory\metadata.js" />
     <Content Include="app\mods\jsonformfields.js" />
+    <Content Include="app\views\editors\editor1.js" />
+    <Content Include="app\viewmodels\object.js" />
+    <Content Include="app\views\editors\editor1.html" />
     <Content Include="app\views\editors\generic.html" />
     <Content Include="app\views\editors\generic.js" />
     <Content Include="app\views\editors\larmprogram.html" />
     <Content Include="app\views\editors\larmprogram.js" />
     <Content Include="app\views\editors\test.html" />
+    <Content Include="app\views\object.html" />
     <Content Include="app\widgets\Readme.md" />
     <Content Include="favicon.ico" />
     <Content Include="index.html" />
@@ -100,7 +104,7 @@
     <Content Include="app\viewmodels\folderlist.js" />
     <Content Include="app\viewmodels\login.js" />
     <Content Include="app\viewmodels\metadataitem.js" />
-    <Content Include="app\viewmodels\object.js" />
+    <Content Include="app\viewmodels\object_test.js" />
     <Content Include="app\viewmodels\search.js" />
     <Content Include="app\viewmodels\searchpanel.js" />
     <Content Include="app\viewmodels\search\calendar.js" />
@@ -115,7 +119,7 @@
     <Content Include="app\views\folders\folderitem.html" />
     <Content Include="app\views\login.html" />
     <Content Include="app\views\metadataitem.html" />
-    <Content Include="app\views\object.html" />
+    <Content Include="app\views\object_test.html" />
     <Content Include="app\views\objects\objectitem.html" />
     <Content Include="app\views\objects\objectitem_sendeplan.html" />
     <Content Include="app\views\search.html" />
@@ -213,6 +217,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

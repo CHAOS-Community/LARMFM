@@ -17,8 +17,8 @@
     }
 });
 
-define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'mods/portal', 'mods/state'],
-        function(system, app, viewLocator, portal, state) {
+define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'mods/portal', 'mods/state', 'knockout'],
+        function(system, app, viewLocator, portal, state, ko) {
             //>>excludeStart("build", true);
             system.debug(true);
             //>>excludeEnd("build");
@@ -33,6 +33,16 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'mods/portal'
                     kinds: ['expander']
                 }
             });
+
+            // Knockout
+            //ko.bindingHandlers.wstext = {
+            //    init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+            //        var i = 0;
+            //    },
+            //    update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+            //        var i = 0;
+            //    }
+            //};
 
             // TODO: Setup the chaos portal client and login with anonymous before
             // proceeding.
