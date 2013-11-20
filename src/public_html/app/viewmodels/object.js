@@ -29,6 +29,32 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
             var metadataEditor = ko.observable();
             var metadataEditors = ko.observableArray();
 
+            app.on('metadata:edit').then(function (editorvm) {
+                if (editorvm.data === undefined)
+                    return;
+
+                for (var i = 0; i < metadataEditors().length; i++) {
+                    
+                    var md = metadataEditors()[i];
+
+                    if (md.data == editorvm.data) {
+                        var j = 0;
+                    }
+                }
+                
+                //var vm = editorvm;
+                //$(".editor").each(function (index) {
+                //    var vm2 = vm;
+                //    var data = ko.dataFor(this);
+                //    if (data.data.id !== undefined && vm.id !== undefined) {
+                //        if (data.data.id == vm.id()) {
+                //            // Found
+                //        }
+                //    }
+                //});
+
+            });
+
             var obj = {};    
 
             // Getting data from API.
@@ -54,7 +80,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 metadataEditors.push(ed1)
                 
                 var larmprogrameditor = new metadatafac.MetadataEditor();
-                larmprogrameditor.seteditor("larmprogram", r.Metadatas);
+                larmprogrameditor.seteditor("larmprogram", { metadata: r.Metadatas });
                 metadataEditors.push(larmprogrameditor);
 
                 //var larmprogrameditor = ko.observable(new metadatafac.MetadataEditor());
@@ -345,14 +371,6 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                    obj.id,obj.metadataSchemaGuid,"da",
                     1,xmldata,null);
                
-                },
-
-                entereditmode: function (editor) {
-                    $(".editor").each(function (data) {
-                        var i = 0;
-
-                        var dat = ko.dataFor(this);
-                    });
                 }
                 
             };
