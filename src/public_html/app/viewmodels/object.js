@@ -345,6 +345,14 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                    obj.id,obj.metadataSchemaGuid,"da",
                     1,xmldata,null);
                
+                },
+
+                entereditmode: function (editor) {
+                    $(".editor").each(function (data) {
+                        var i = 0;
+
+                        var dat = ko.dataFor(this);
+                    });
                 }
                 
             };

@@ -66,6 +66,8 @@
     <Content Include="app\views\editors\generic.js" />
     <Content Include="app\views\editors\larmprogram.html" />
     <Content Include="app\views\editors\larmprogram.js" />
+    <Content Include="app\views\editors\larmprogramedit.html" />
+    <Content Include="app\views\editors\larmprogramedit.js" />
     <Content Include="app\views\editors\test.html" />
     <Content Include="app\views\object.html" />
     <Content Include="app\widgets\Readme.md" />

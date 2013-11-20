@@ -3,7 +3,6 @@
     var mdtitle = ko.observable("");
 
     var data;
-    var parentcontext;
     var m0;
     var m1;
     var test2 = ko.observable("");
@@ -24,7 +23,7 @@
         for (var i = 0; i < data.length; i++) {
             if (data[i].MetadataSchemaGuid == '17d59e41-13fb-469a-a138-bb691f13f2ba') {
                 m0 = handlexml(data[i]);
-                
+
             }
             else if (data[i].MetadataSchemaGuid == '00000000-0000-0000-0000-0000df820000') {
                 m1 = handlexml(data[i]);
@@ -39,7 +38,7 @@
         m1: m1,
         test: "",
         test2: test2,
-        activate: function (d){
+        activate: function (d) {
             var i = 0;
         },
         attached: function (d) {
@@ -49,14 +48,12 @@
             // settings.bindingContext.$data represents an
             // instance of MetadataEditor under factory.
             data = settings.bindingContext.$data.data;
-            parentcontext = settings.bindingContext.$parentContext;
             //settings.bindingContext.$data = this;
-            if(data !== undefined)
+            if (data !== undefined)
                 init();
         },
         clack: function (data) {
             var i = 0;
-            parentcontext.$data.entereditmode(this);
 
         }
     };
