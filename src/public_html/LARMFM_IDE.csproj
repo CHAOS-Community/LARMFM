@@ -66,6 +66,8 @@
     <Content Include="app\views\metadata\editor2.js" />
     <Content Include="app\views\metadata\generic.html" />
     <Content Include="app\views\metadata\generic.js" />
+    <Content Include="app\views\metadata\larmprogram_org.js" />
+    <Content Include="app\views\metadata\larmprogram_org.html" />
     <Content Include="app\views\metadata\larmprogram.html" />
     <Content Include="app\views\metadata\larmprogram.js" />
     <Content Include="app\views\metadata\larmprogramedit.html" />
