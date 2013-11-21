@@ -27,15 +27,15 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
             var onTimeChangeActive = false;
 
             var metadataEditor = ko.observable();
-            var metadataEditors = ko.observableArray();
+            var metadataViews = ko.observableArray();
 
             app.on('metadata:edit').then(function (editorvm) {
                 if (editorvm.data === undefined)
                     return;
 
-                for (var i = 0; i < metadataEditors().length; i++) {
+                for (var i = 0; i < metadataViews().length; i++) {
                     
-                    var md = metadataEditors()[i];
+                    var md = metadataViews()[i];
 
                     if (md.data == editorvm.data) {
                         var j = 0;
@@ -75,13 +75,27 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                     return;
                 }
                 
+                var eda = new metadatafac.MetadataEditor();
+                eda.seteditor("editor2", {title:"Editor 2 A"});
+                metadataViews.push(eda);
+
+                var edb = new metadatafac.MetadataEditor();
+                edb.seteditor("editor2", { title: "Editor 2 B" });
+                metadataViews.push(edb);
+
+
                 var ed1 = new metadatafac.MetadataEditor();
                 ed1.seteditor("test.html", { key: "Test key." });
-                metadataEditors.push(ed1)
+                metadataViews.push(ed1)
                 
                 var larmprogrameditor = new metadatafac.MetadataEditor();
-                larmprogrameditor.seteditor("larmprogram", { metadata: r.Metadatas });
-                metadataEditors.push(larmprogrameditor);
+                larmprogrameditor.seteditor("larmprogram", { metadata: r.Metadatas, id: "editor1" });
+                metadataViews.push(larmprogrameditor);
+
+                var larmprogrameditor2 = new metadatafac.MetadataEditor();
+                larmprogrameditor2.seteditor("larmprogram", { metadata: r.Metadatas, id: "editor2" });
+                metadataViews.push(larmprogrameditor2);
+
 
                 //var larmprogrameditor = ko.observable(new metadatafac.MetadataEditor());
                 //larmprogrameditor().seteditor("larmprogram", r.Metadatas);
@@ -134,7 +148,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
 
                 var ed2 = new metadatafac.MetadataEditor();
                 ed2.seteditor("generic", { guid: obj.metadataSchemaGuid, xml: obj.metadata });
-                metadataEditors.push(ed2)
+                metadataViews.push(ed2)
                     
             }
 
@@ -319,7 +333,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 playerposition: playerposition,
                 playerdebug: playerdebug,
                 metadataEditor: metadataEditor,
-                metadataEditors: metadataEditors,
+                metadataViews: metadataViews,
                 activate: function(param) {
                     if (param !== undefined) {
                         var id = getParameterByName('id', param);

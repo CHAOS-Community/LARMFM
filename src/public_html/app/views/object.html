@@ -1,5 +1,5 @@
 <h1 data-bind="html: title"></h1>
-<br/>
+<br />
 <div>Url: <span data-bind="html: mediaurl"></span></div>
 <div id="larmplayer">Loading the player...</div>
 <!--<div id="customTime">&nbsp;</div>
@@ -9,25 +9,20 @@
 <div>Player debug: <span data-bind="html: playerdebug"></span></div>
 <button type="button" class="btn" data-bind="click: play">Play</button>
 <button type="button" class="btn" data-bind="click: pause">Pause</button>
-<hr/>
-<!--<div data-bind="compose: metadataEditor"></div>-->
-<div data-bind="foreach: metadataEditors">
-    <div class="editor" data-bind="compose: editor"></div>
-</div>
-<hr/>
-<div data-bind="compose: 'views/editors/larmprogram'"></div>
 <hr />
-<div>Date: <span data-bind="html: publication"></span></div>
+<h1>Metadata</h1>
+<div data-bind="compose: metadataEditor"></div>
+<div data-bind="foreach: metadataViews">
+    <div data-bind="compose: editor"></div>
+</div>
+
+<!--<div>Date: <span data-bind="html: publication"></span></div>
 <div>Channel: <span data-bind="html: channel"></span></div>
 <div>Abstract <span data-bind="html: abstract"></span></div>
-<br/>
+<br />
 <div><span data-bind="html: description"></span></div>
+<label>Description</label>
+<input type="text" style="width:100%;" data-bind="value: newdescription" />
+<button type="button" class="btn" data-bind="click: saveMetadata">OK</button>-->
 
-        <label>Description</label>
-        <input type="text" style="width:100%;" data-bind="value: newdescription"/>
-        <button type="button" class="btn" data-bind="click: saveMetadata">OK</button>
-
-<div>
-
-</div>
 <pre data-bind="text: JSON.stringify(ko.toJS($data), null, 2)"></pre>

@@ -62,6 +62,8 @@
     <Content Include="app\views\editors\editor1.js" />
     <Content Include="app\viewmodels\object.js" />
     <Content Include="app\views\editors\editor1.html" />
+    <Content Include="app\views\editors\editor2.html" />
+    <Content Include="app\views\editors\editor2.js" />
     <Content Include="app\views\editors\generic.html" />
     <Content Include="app\views\editors\generic.js" />
     <Content Include="app\views\editors\larmprogram.html" />

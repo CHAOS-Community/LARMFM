@@ -14,6 +14,7 @@
             } else {
                 //ViewModel
                 this.editor("views/editors/" + editorname);
+
                 //this.editor("viewmodels/editors/" + editorname);
                 //var self = this;
                 //system.acquire("views/editors/" + editorname).done(function (modelCtor) {

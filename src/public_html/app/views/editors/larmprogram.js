@@ -30,7 +30,7 @@
             }
             else if (metadata[i].MetadataSchemaGuid == '00000000-0000-0000-0000-0000df820000') {
                 m1 = handlexml(metadata[i]);
-                mdtitle(m1.Larm_Program.Title);
+                mdtitle(m1.Larm_Program.Title + " : " + data().id);
             }
         }
     }
