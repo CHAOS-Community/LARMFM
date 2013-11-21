@@ -75,25 +75,25 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                     return;
                 }
                 
-                var eda = new metadatafac.MetadataEditor();
-                eda.seteditor("editor2", {title:"Editor 2 A"});
+                var eda = new metadatafac.MetadataView();
+                eda.setview("editor2", {title:"Editor 2 AA"});
                 metadataViews.push(eda);
 
-                var edb = new metadatafac.MetadataEditor();
-                edb.seteditor("editor2", { title: "Editor 2 B" });
+                var edb = new metadatafac.MetadataView();
+                edb.setview("editor2", { title: "Editor 2 BB" });
                 metadataViews.push(edb);
 
 
-                var ed1 = new metadatafac.MetadataEditor();
-                ed1.seteditor("test.html", { key: "Test key." });
+                var ed1 = new metadatafac.MetadataView();
+                ed1.setview("test.html", { key: "Test key." });
                 metadataViews.push(ed1)
                 
-                var larmprogrameditor = new metadatafac.MetadataEditor();
-                larmprogrameditor.seteditor("larmprogram", { metadata: r.Metadatas, id: "editor1" });
+                var larmprogrameditor = new metadatafac.MetadataView();
+                larmprogrameditor.setview("larmprogram", { metadata: r.Metadatas, id: "editor1" });
                 metadataViews.push(larmprogrameditor);
 
-                var larmprogrameditor2 = new metadatafac.MetadataEditor();
-                larmprogrameditor2.seteditor("larmprogram", { metadata: r.Metadatas, id: "editor2" });
+                var larmprogrameditor2 = new metadatafac.MetadataView();
+                larmprogrameditor2.setview("larmprogram", { metadata: r.Metadatas, id: "editor2" });
                 metadataViews.push(larmprogrameditor2);
 
 
@@ -146,8 +146,8 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
 
                 inittimeline();
 
-                var ed2 = new metadatafac.MetadataEditor();
-                ed2.seteditor("generic", { guid: obj.metadataSchemaGuid, xml: obj.metadata });
+                var ed2 = new metadatafac.MetadataView();
+                ed2.setview("generic", { guid: obj.metadataSchemaGuid, xml: obj.metadata });
                 metadataViews.push(ed2)
                     
             }

@@ -1,19 +1,19 @@
 ﻿define(['durandal/system', 'knockout', 'mods/portal', 'mods/xmlmanager', 'mods/metadataschema'], function (system, ko, portal, xmlman, metadataschema) {
 
-    var MetadataEditor = function () {
-        this.editor = ko.observable();
+    var MetadataView = function () {
+        this.view = ko.observable();
         this.data = null;
     };
 
-    MetadataEditor.prototype = function () {
+    MetadataView.prototype = function () {
 
-        var seteditor = function (editorname, data) {
+        var setview = function (viewname, data) {
             this.data = data;
-            if (editorname.indexOf('.html', editorname.length - 5) !== -1) {
-                this.editor("editors/" + editorname);
+            if (viewname.indexOf('.html', viewname.length - 5) !== -1) {
+                this.view("metadata/" + viewname);
             } else {
                 //ViewModel
-                this.editor("views/editors/" + editorname);
+                this.view("views/metadata/" + viewname);
 
                 //this.editor("viewmodels/editors/" + editorname);
                 //var self = this;
@@ -28,16 +28,12 @@
         }
 
         return {
-            seteditor: seteditor,
-            clack: function (data) {
-                var i = 0;
-
-            }
+            setview: setview
         };
     }();
 
     return {
-        MetadataEditor: MetadataEditor
+        MetadataView: MetadataView
     };
 });
 
