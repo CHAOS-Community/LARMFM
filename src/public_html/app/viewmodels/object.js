@@ -187,7 +187,6 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                                 if(timeline_centered){
                                     
                                 }
-
                             }
                         });
 
@@ -238,6 +237,12 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
 
             }
 
+            function getTimelineDate(d,millisecoffset) {
+                var dt = new Date(d);
+                dt.setMilliseconds(dt.getMilliseconds() + millisecoffset);
+                return dt;
+            }
+
             function drawVisualization() {
                 // Create and populate a data table.
                 data = new google.visualization.DataTable();
@@ -267,32 +272,57 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 playertime_end = t.getTime() + 30 * 60 * 1000;
 
                 data.addRows([
-                    [new Date(t.getTime() + 15), , 'Conversation<br>' +
-                                '<img src="img/comments-icon.png" style="width:32px; height:32px;">'],
-                    [new Date(t.getTime() + 16), , 'Mail from boss<br>' +
-                                '<img src="img/mail-icon.png" style="width:32px; height:32px;">'],
-                    [new Date(t.getTime() + 18), , 'Report'],
-                    [new Date(t.getTime() + 20), new Date(t.getTime() + 26), 'Traject A'],
-                    [new Date(t.getTime() + 22), , 'Memo<br>' +
-                                '<img src="img/notes-edit-icon.png" style="width:48px; height:48px;">'],
-                    [new Date(t.getTime() + 23), , 'Phone call<br>' +
-                                '<img src="img/Hardware-Mobile-Phone-icon.png" style="width:32px; height:32px;">'],
-                    [new Date(t.getTime() + 24), new Date(t.getTime() + 27), 'Traject B'],
-                    [new Date(t.getTime() + 29), , 'Report<br>' +
-                                '<img src="img/attachment-icon.png" style="width:32px; height:32px;">']
+                    [getTimelineDate(t, 1000 * 60 * 0), getTimelineDate(t, 1000 * 60 * 2), 'FODTRIN'],
+                    [getTimelineDate(t, 1000 * 60 * 1), getTimelineDate(t, 1000 * 60 * 5), 'TRAFIK'],
+                    [getTimelineDate(t, 1000 * 60 * 4), getTimelineDate(t, 1000 * 60 * 6), 'SM힚'],
+                    [getTimelineDate(t, 1000 * 60 * 0), getTimelineDate(t, 1000 * 60 * 4), 'FODTRIN'],
+                    [getTimelineDate(t, 1000 * 60 * 10), getTimelineDate(t, 1000 * 60 * 14), 'SM힚'],
+                    [getTimelineDate(t, 1000 * 60 * 16), getTimelineDate(t, 1000 * 60 * 20), 'TRAFIK'],
+
+                    //[new Date(t.getTime() + 16), , 'Mail from boss<br>' +
+                    //            '<img src="img/mail-icon.png" style="width:32px; height:32px;">'],
+                    //[new Date(t.getTime() + 18), , 'Report'],
+                    //[new Date(t.getTime() + 20), new Date(t.getTime() + 26), 'Traject A'],
+                    //[new Date(t.getTime() + 22), , 'Memo<br>' +
+                    //            '<img src="img/notes-edit-icon.png" style="width:48px; height:48px;">'],
+                    //[new Date(t.getTime() + 23), , 'Phone call<br>' +
+                    //            '<img src="img/Hardware-Mobile-Phone-icon.png" style="width:32px; height:32px;">'],
+                    //[new Date(t.getTime() + 24), new Date(t.getTime() + 27), 'Traject B'],
+                    //[new Date(t.getTime() + 29), , 'Report<br>' +
+                    //            '<img src="img/attachment-icon.png" style="width:32px; height:32px;">']
 
                 ]);
 
+                //var options = {
+                //    width: "100%",
+                //    height: "250px",
+                //    editable: true,
+                //    style: "box",
+                //    showCustomTime: true
+                //};
+
                 var options = {
                     width: "100%",
-                    height: "50px",
                     editable: true,
                     style: "box",
-                    showCustomTime: true
+                    showCustomTime: true,
+                    cluster: true,
+                    axisOnTop: true,
+                    //dragAreaWidth: 20,
+                    showMajorLabels: true,
+                    //groupsOnRight: true,
+                    enableKeys: true,
+                    showNavigation: true,
+                    showButtonNew: true,
+                    animate: true,
+                    animateZoom: true,
                 };
 
+
                 // Instantiate our timeline object.
-                timeline = new links.Timeline(document.getElementById('mytimeline'));
+                $("#timelines").append('<div id="timeline1"></div>');
+                timeline = new links.Timeline(document.getElementById('timeline1'));
+                //timeline = new links.Timeline(document.getElementById('mytimeline'));
 
                 // Add event listeners
                 google.visualization.events.addListener(timeline, 'timechange', onTimeChange);
@@ -303,16 +333,133 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 // Draw our timeline with the created data and options
                 timeline.draw(data, options);
 //                timeline.setVisibleChartRange(playertime.getTime(), playertime.getTime() + 3 * 60 * 1000);
+
+
                 timeline.setVisibleChartRange(playertime_start, playertime_end);
 
 
                 //timeline.setCurrentTime(playertime);
                 timeline.setCustomTime(playertime);
 
+                // LOAD METADATA
+                var data = metadatafac.annotationData;
+
+
 //                // set a custom range from -2 minute to +3 minutes current time
 //                var start = new Date((new Date()).getTime() - 2 * 60 * 1000);
 //                var end = new Date((new Date()).getTime() + 3 * 60 * 1000);
-//                timeline.setVisibleChartRange(start, end);
+                //                timeline.setVisibleChartRange(start, end);
+
+
+                //addTimeline();
+            }
+
+            function addTimeline() {
+                // Create and populate a data table.
+                data = new google.visualization.DataTable();
+                data.addColumn('datetime', 'start');
+                data.addColumn('datetime', 'end');
+                data.addColumn('string', 'content');
+
+                //                data.addRows([[
+                //                        new Date((new Date()).getTime() - 60 * 1000),
+                //                        new Date(),
+                //                        'Dynamic event']]);
+
+                //                // specify options
+                //                var options = {
+                //                    'showCustomTime': true
+                //                };
+
+
+                //var t = new Date(2010,7,23,16,30,15);
+                // 1990-02-19T22:00:00
+                var part_dt = publication().split("T");
+                var part_d = part_dt[0].split("-");
+                var part_t = part_dt[1].split(":");
+                var t = new Date(part_d[0], part_d[1], part_d[2], part_t[0], part_t[1], part_t[2]);
+                playertime = t;
+                playertime_start = t;
+                playertime_end = t.getTime() + 30 * 60 * 1000;
+
+                data.addRows([
+                    [getTimelineDate(t, 1000 * 60 * 0), getTimelineDate(t, 1000 * 60 * 2), 'FODTRIN'],
+                    [getTimelineDate(t, 1000 * 60 * 1), getTimelineDate(t, 1000 * 60 * 5), 'TRAFIK'],
+                    [getTimelineDate(t, 1000 * 60 * 4), getTimelineDate(t, 1000 * 60 * 6), 'SM힚'],
+                    [getTimelineDate(t, 1000 * 60 * 0), getTimelineDate(t, 1000 * 60 * 4), 'FODTRIN'],
+                    [getTimelineDate(t, 1000 * 60 * 10), getTimelineDate(t, 1000 * 60 * 14), 'SM힚'],
+                    [getTimelineDate(t, 1000 * 60 * 16), getTimelineDate(t, 1000 * 60 * 20), 'TRAFIK'],
+
+                    //[new Date(t.getTime() + 16), , 'Mail from boss<br>' +
+                    //            '<img src="img/mail-icon.png" style="width:32px; height:32px;">'],
+                    //[new Date(t.getTime() + 18), , 'Report'],
+                    //[new Date(t.getTime() + 20), new Date(t.getTime() + 26), 'Traject A'],
+                    //[new Date(t.getTime() + 22), , 'Memo<br>' +
+                    //            '<img src="img/notes-edit-icon.png" style="width:48px; height:48px;">'],
+                    //[new Date(t.getTime() + 23), , 'Phone call<br>' +
+                    //            '<img src="img/Hardware-Mobile-Phone-icon.png" style="width:32px; height:32px;">'],
+                    //[new Date(t.getTime() + 24), new Date(t.getTime() + 27), 'Traject B'],
+                    //[new Date(t.getTime() + 29), , 'Report<br>' +
+                    //            '<img src="img/attachment-icon.png" style="width:32px; height:32px;">']
+
+                ]);
+
+                //var options = {
+                //    width: "100%",
+                //    height: "250px",
+                //    editable: true,
+                //    style: "box",
+                //    showCustomTime: true
+                //};
+
+                var options = {
+                    width: "100%",
+                    editable: true,
+                    style: "box",
+                    showCustomTime: false,
+                    cluster: true,
+                    axisOnTop: true,
+                    //dragAreaWidth: 20,
+                    showMajorLabels: false,
+                    //groupsOnRight: true,
+                    enableKeys: true,
+                    showNavigation: true,
+                    showButtonNew: true,
+                    animate: true,
+                    animateZoom: true,
+                };
+
+
+                // Instantiate our timeline object.
+                $("#timelines").append('<div id="timeline2"></div>');
+                timeline = new links.Timeline(document.getElementById('timeline2'));
+                //timeline = new links.Timeline(document.getElementById('mytimeline'));
+
+                // Add event listeners
+                google.visualization.events.addListener(timeline, 'timechange', onTimeChange);
+                google.visualization.events.addListener(timeline, 'timechanged', onTimeChanged);
+
+                google.visualization.events.addListener(timeline, 'rangechange', onRangeChange);
+
+                // Draw our timeline with the created data and options
+                timeline.draw(data, options);
+                //                timeline.setVisibleChartRange(playertime.getTime(), playertime.getTime() + 3 * 60 * 1000);
+
+
+                timeline.setVisibleChartRange(playertime_start, playertime_end);
+
+
+                //timeline.setCurrentTime(playertime);
+                timeline.setCustomTime(playertime);
+
+                // LOAD METADATA
+                var data = metadatafac.annotationData;
+
+
+                //                // set a custom range from -2 minute to +3 minutes current time
+                //                var start = new Date((new Date()).getTime() - 2 * 60 * 1000);
+                //                var end = new Date((new Date()).getTime() + 3 * 60 * 1000);
+                //                timeline.setVisibleChartRange(start, end);
             }
 
             function getParameterByName(name, str) {
