@@ -303,6 +303,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
 
                 var options = {
                     width: "100%",
+                    //height: "100px",
                     editable: true,
                     style: "box",
                     showCustomTime: true,
