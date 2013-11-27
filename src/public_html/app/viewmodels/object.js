@@ -220,22 +220,33 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
             }
 
             var ontimelinescrollingdisable = false;
-            function ontimelinescrolling() {
+            function ontimelinescrolling(e) {
                 if (ontimelinescrollingdisable)
                 {
                     ontimelinescrollingdisable = false;
                     return;
                 }
 
-                var i = 0;
+                var totalvalue = playertime_end - playertime_start;
+                var totalpixel = $("#timelinescrollcontent").width();
+                var rangeobj = timeline.getVisibleChartRange();
+                var rangevalue = rangeobj.end - rangeobj.start;
+
+                var pixelpervalue = totalvalue / totalpixel;
+
+                var scrollpos = $("#timelinescroll").scrollLeft();
+                var res = totalpixel / (scrollpos); 
+
+                var start = playertime_start + totalvalue / res;
+                timeline.setVisibleChartRange( start  , start + rangevalue );
             }
 
             function onRangeChange(event) {
-                var total = playertime_end - playertime_start;
-                var showing = event.end - event.start;
-                var pixels = $("#timelinescroll").width();
+                var totalvalue = playertime_end - playertime_start;
+                var rangevalue = event.end - event.start;
+                var totalpixel = $("#timelinescroll").width();
 
-                var conwdt = (total / showing) * pixels;
+                var conwdt = (totalvalue / rangevalue) * totalpixel;
 
                 $("#timelinescrollcontent").width(conwdt);
 
@@ -245,7 +256,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 if(startdiff == 0)
                     $("#timelinescroll").scrollLeft(0);
                 else
-                    $("#timelinescroll").scrollLeft(conwdt/(total / startdiff));
+                    $("#timelinescroll").scrollLeft(conwdt / (totalvalue / startdiff));
 
                 return;
 
