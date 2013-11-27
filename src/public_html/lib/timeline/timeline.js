@@ -5341,9 +5341,9 @@ links.Timeline.ClusterGenerator.prototype.getClusters = function (scale) {
                         }
 
                         var cluster;
-                        var title = 'Cluster containing ' + count +
-                            ' events. Zoom in to see the individual events.';
-                        var content = '<div title="' + title + '">' + count + ' events</div>';
+                        var title = 'Gruppen indeholder ' + count +
+                            ' annotationer. Zoom ind for at se de individuelle annotationer.';
+                        var content = '<div title="' + title + '">' + count + ' annotationer</div>';
                         var group = item.group ? item.group.content : undefined;
                         if (containsRanges) {
                             // boxes and/or ranges

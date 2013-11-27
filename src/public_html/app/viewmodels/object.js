@@ -219,7 +219,36 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 onTimeChangeActive = false;
             }
 
-            function onRangeChange(event) {                
+            var ontimelinescrollingdisable = false;
+            function ontimelinescrolling() {
+                if (ontimelinescrollingdisable)
+                {
+                    ontimelinescrollingdisable = false;
+                    return;
+                }
+
+                var i = 0;
+            }
+
+            function onRangeChange(event) {
+                var total = playertime_end - playertime_start;
+                var showing = event.end - event.start;
+                var pixels = $("#timelinescroll").width();
+
+                var conwdt = (total / showing) * pixels;
+
+                $("#timelinescrollcontent").width(conwdt);
+
+                var startdiff = event.start - playertime_start;
+
+                ontimelinescrollingdisable = true;
+                if(startdiff == 0)
+                    $("#timelinescroll").scrollLeft(0);
+                else
+                    $("#timelinescroll").scrollLeft(conwdt/(total / startdiff));
+
+                return;
+
                 var update = false;
                 var ts = event.start;
                 var te = event.end;
@@ -277,7 +306,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 var part_t = part_dt[1].split(":");
                 var t = new Date(part_d[0], part_d[1], part_d[2], part_t[0], part_t[1], part_t[2]);
                 playertime = t;
-                playertime_start = t;
+                playertime_start = t.getTime();
                 playertime_end = t.getTime() + 74 * 60 * 1000;
 
                 // LOAD METADATA
@@ -336,8 +365,13 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                     showButtonNew: true,
                     animate: true,
                     animateZoom: true,
+                    locale: 'da',
+                    min: playertime_start,
+                    max: playertime_end,
+                    //minHeight: "200px"
                 };
 
+                $("#timelinescroll").scroll(ontimelinescrolling);
 
                 // Instantiate our timeline object.
                 $("#timelines").append('<div id="timeline1"></div>');
