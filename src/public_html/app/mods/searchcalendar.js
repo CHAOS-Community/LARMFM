@@ -66,7 +66,7 @@ define(['knockout', 'factory/calendar', 'mods/format'], function(ko, calfac, for
         item.search = itemclick;
         item.title(decade + "'erne");
         item.datebegin(decade + "-01-01");
-        item.dateend(decade + 9 + "-12-31");
+        item.dateend((""+decade).substring(0,3) + 9 + "-12-31");
         return item;
     }
 

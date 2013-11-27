@@ -200,6 +200,7 @@ links.Timeline = function(container) {
         'showNavigation': false,
         'showButtonNew': false,
         'groupsOnRight': false,
+        'groupsOrder' : true,
         'axisOnTop': false,
         'stackEvents': true,
         'animate': true,
@@ -431,7 +432,7 @@ links.Timeline.prototype.setData = function(data) {
                 'group':     ((cols.group != undefined)     ? data.getValue(row, cols.group)     : undefined),
                 'className': ((cols.className != undefined) ? data.getValue(row, cols.className) : undefined),
                 'editable':  ((cols.editable != undefined)  ? data.getValue(row, cols.editable)  : undefined),
-                'type':      ((cols.editable != undefined)  ? data.getValue(row, cols.type)      : undefined)
+                'type':      ((cols.type != undefined)      ? data.getValue(row, cols.type)      : undefined)
             }));
         }
     }
@@ -851,8 +852,6 @@ links.Timeline.prototype.repaintFrame = function() {
     if (!dom.frame) {
         dom.frame = document.createElement("DIV");
         dom.frame.className = "timeline-frame ui-widget ui-widget-content ui-corner-all";
-        dom.frame.style.position = "relative";
-        dom.frame.style.overflow = "hidden";
         dom.container.appendChild(dom.frame);
         needsReflow = true;
     }
@@ -870,8 +869,7 @@ links.Timeline.prototype.repaintFrame = function() {
     if (!dom.content) {
         // create content box where the axis and items will be created
         dom.content = document.createElement("DIV");
-        dom.content.style.position = "relative";
-        dom.content.style.overflow = "hidden";
+        dom.content.className = "timeline-content";
         dom.frame.appendChild(dom.content);
 
         var timelines = document.createElement("DIV");
@@ -4350,10 +4348,10 @@ links.Timeline.prototype.getItem = function (index) {
     if (item.group) {
         properties.group = this.getGroupName(item.group);
     }
-    if ('className' in item) {
-        properties.className = this.getGroupName(item.className);
+    if (item.className) {
+        properties.className = item.className;
     }
-    if (item.hasOwnProperty('editable') && (typeof item.editable != 'undefined')) {
+    if (typeof item.editable !== 'undefined') {
         properties.editable = item.editable;
     }
     if (item.type) {
@@ -4545,15 +4543,19 @@ links.Timeline.prototype.getGroup = function (groupName) {
         };
         groups.push(groupObj);
         // sort the groups
-        groups = groups.sort(function (a, b) {
-            if (a.content > b.content) {
-                return 1;
-            }
-            if (a.content < b.content) {
-                return -1;
-            }
-            return 0;
-        });
+        if (this.options.groupsOrder == true) {
+	        groups = groups.sort(function (a, b) {
+	            if (a.content > b.content) {
+	                return 1;
+	            }
+	            if (a.content < b.content) {
+	                return -1;
+	            }
+	            return 0;
+	        });
+        } else if (typeof(this.options.groupsOrder) == "function") {
+        	groups = groups.sort(this.options.groupsOrder)
+        }
 
         // rebuilt the groupIndexes
         for (var i = 0, iMax = groups.length; i < iMax; i++) {
@@ -5339,9 +5341,9 @@ links.Timeline.ClusterGenerator.prototype.getClusters = function (scale) {
                         }
 
                         var cluster;
-                        var title = 'Cluster containing ' + count +
-                            ' events. Zoom in to see the individual events.';
-                        var content = '<div title="' + title + '">' + count + ' events</div>';
+                        var title = 'Gruppen indeholder ' + count +
+                            ' annotationer. Zoom ind for at se de individuelle annotationer.';
+                        var content = '<div title="' + title + '">' + count + ' annotationer</div>';
                         var group = item.group ? item.group.content : undefined;
                         if (containsRanges) {
                             // boxes and/or ranges

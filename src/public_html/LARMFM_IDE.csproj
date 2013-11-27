@@ -59,9 +59,21 @@
   <ItemGroup>
     <Content Include="app\factory\metadata.js" />
     <Content Include="app\mods\jsonformfields.js" />
-    <Content Include="app\views\editors\generic.html" />
-    <Content Include="app\viewmodels\editors\generic.js" />
-    <Content Include="app\views\editors\test.html" />
+    <Content Include="app\views\metadata\editor1.js" />
+    <Content Include="app\viewmodels\object.js" />
+    <Content Include="app\views\metadata\editor1.html" />
+    <Content Include="app\views\metadata\editor2.html" />
+    <Content Include="app\views\metadata\editor2.js" />
+    <Content Include="app\views\metadata\generic.html" />
+    <Content Include="app\views\metadata\generic.js" />
+    <Content Include="app\views\metadata\larmprogram_org.js" />
+    <Content Include="app\views\metadata\larmprogram_org.html" />
+    <Content Include="app\views\metadata\larmprogram.html" />
+    <Content Include="app\views\metadata\larmprogram.js" />
+    <Content Include="app\views\metadata\larmprogramedit.html" />
+    <Content Include="app\views\metadata\larmprogramedit.js" />
+    <Content Include="app\views\metadata\test.html" />
+    <Content Include="app\views\object.html" />
     <Content Include="app\widgets\Readme.md" />
     <Content Include="favicon.ico" />
     <Content Include="index.html" />
@@ -74,6 +86,54 @@
     <Content Include="lib\jquery\jquery.maskedinput.min.js" />
     <Content Include="lib\jquery\jquery.min.map" />
     <Content Include="lib\jsonform\jsonform.js" />
+    <Content Include="lib\timeline\img\16\delete.png" />
+    <Content Include="lib\timeline\img\16\moveleft.png" />
+    <Content Include="lib\timeline\img\16\moveright.png" />
+    <Content Include="lib\timeline\img\16\new.png" />
+    <Content Include="lib\timeline\img\16\zoomin.png" />
+    <Content Include="lib\timeline\img\16\zoomout.png" />
+    <Content Include="lib\timeline\img\24\delete.png" />
+    <Content Include="lib\timeline\img\24\moveleft.png" />
+    <Content Include="lib\timeline\img\24\moveright.png" />
+    <Content Include="lib\timeline\img\24\new.png" />
+    <Content Include="lib\timeline\img\24\zoomin.png" />
+    <Content Include="lib\timeline\img\24\zoomout.png" />
+    <Content Include="lib\timeline\img\32\delete.png" />
+    <Content Include="lib\timeline\img\32\moveleft.png" />
+    <Content Include="lib\timeline\img\32\moveright.png" />
+    <Content Include="lib\timeline\img\32\new.png" />
+    <Content Include="lib\timeline\img\32\zoomin.png" />
+    <Content Include="lib\timeline\img\32\zoomout.png" />
+    <Content Include="lib\timeline\img\cluster_bg.png" />
+    <Content Include="lib\timeline\img\deleteEvent.png" />
+    <Content Include="lib\timeline\img\themeswitcher\buttonbg.png" />
+    <Content Include="lib\timeline\img\themeswitcher\icon_color_arrow.gif" />
+    <Content Include="lib\timeline\img\themeswitcher\menuhoverbg.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_black_matte.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_black_tie.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_blitzer.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_cupertino.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_dark_hive.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_dot_luv.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_eggplant.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_excite_bike.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_flick.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_hot_sneaks.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_humanity.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_le_frog.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_mint_choco.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_overcast.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_pepper_grinder.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_smoothness.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_south_street.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_start_menu.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_sunny.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_swanky_purse.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_trontastic.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_ui_dark.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_ui_light.png" />
+    <Content Include="lib\timeline\img\themeswitcher\theme_90_windoze.png" />
+    <Content Include="lib\timeline\timeline-larm.js" />
     <Content Include="locales\dev\app.json" />
     <Content Include="locales\en-US\app.json" />
     <Content Include="locales\en\app.json" />
@@ -98,7 +158,7 @@
     <Content Include="app\viewmodels\folderlist.js" />
     <Content Include="app\viewmodels\login.js" />
     <Content Include="app\viewmodels\metadataitem.js" />
-    <Content Include="app\viewmodels\object.js" />
+    <Content Include="app\viewmodels\object_test.js" />
     <Content Include="app\viewmodels\search.js" />
     <Content Include="app\viewmodels\searchpanel.js" />
     <Content Include="app\viewmodels\search\calendar.js" />
@@ -113,7 +173,7 @@
     <Content Include="app\views\folders\folderitem.html" />
     <Content Include="app\views\login.html" />
     <Content Include="app\views\metadataitem.html" />
-    <Content Include="app\views\object.html" />
+    <Content Include="app\views\object_test.html" />
     <Content Include="app\views\objects\objectitem.html" />
     <Content Include="app\views\objects\objectitem_sendeplan.html" />
     <Content Include="app\views\search.html" />
@@ -174,6 +234,7 @@
     <Content Include="lib\font-awesome\css\font\fontawesome-webfont.svg" />
     <Content Include="lib\i18next\i18next-1.6.0.js" />
     <Content Include="lib\i18next\i18next-1.6.0.min.js" />
+    <Content Include="lib\durandal\images\Thumbs.db" />
     <None Include="lib\jquery\jquery-1.9.1.intellisense.js" />
     <Content Include="lib\jquery\jquery-1.9.1.js" />
     <Content Include="lib\jquery\jquery-1.9.1.min.js" />
@@ -200,6 +261,7 @@
     <Content Include="settings.js" />
     <Content Include="timeline_test.html" />
     <Content Include="web.config" />
+    <Content Include="lib\timeline\img\Thumbs.db" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -210,6 +272,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
