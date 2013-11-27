@@ -243,6 +243,15 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 return dt;
             }
 
+            function getMilliFromString(timestr) {
+                var h = parseInt(timestr.substring(0, 2));
+                var m = parseInt(timestr.substring(3, 5));
+                var s = parseInt(timestr.substring(6, 8));
+                var ms = parseInt(timestr.substring(9, 12));
+
+                return ms + s * 1000 + m * 1000 * 60 + h * 1000 * 60 * 60;
+            }
+
             function drawVisualization() {
                 // Create and populate a data table.
                 data = new google.visualization.DataTable();
@@ -269,29 +278,39 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 var t = new Date(part_d[0], part_d[1], part_d[2], part_t[0], part_t[1], part_t[2]);
                 playertime = t;
                 playertime_start = t;
-                playertime_end = t.getTime() + 30 * 60 * 1000;
+                playertime_end = t.getTime() + 74 * 60 * 1000;
 
-                data.addRows([
-                    [getTimelineDate(t, 1000 * 60 * 0), getTimelineDate(t, 1000 * 60 * 2), 'FODTRIN'],
-                    [getTimelineDate(t, 1000 * 60 * 1), getTimelineDate(t, 1000 * 60 * 5), 'TRAFIK'],
-                    [getTimelineDate(t, 1000 * 60 * 4), getTimelineDate(t, 1000 * 60 * 6), 'SM힚'],
-                    [getTimelineDate(t, 1000 * 60 * 0), getTimelineDate(t, 1000 * 60 * 4), 'FODTRIN'],
-                    [getTimelineDate(t, 1000 * 60 * 10), getTimelineDate(t, 1000 * 60 * 14), 'SM힚'],
-                    [getTimelineDate(t, 1000 * 60 * 16), getTimelineDate(t, 1000 * 60 * 20), 'TRAFIK'],
+                // LOAD METADATA
+                var dataarray = [];
+                var amds = metadatafac.annotationData;
+                for (var i = 0; i < amds.length; i++) {
+                    var amd = amds[i];
+                    dataarray.push([getTimelineDate(t, getMilliFromString(amd.StartTime)), getTimelineDate(t, getMilliFromString(amd.EndTime)), amd.Title]);
+                }
 
-                    //[new Date(t.getTime() + 16), , 'Mail from boss<br>' +
-                    //            '<img src="img/mail-icon.png" style="width:32px; height:32px;">'],
-                    //[new Date(t.getTime() + 18), , 'Report'],
-                    //[new Date(t.getTime() + 20), new Date(t.getTime() + 26), 'Traject A'],
-                    //[new Date(t.getTime() + 22), , 'Memo<br>' +
-                    //            '<img src="img/notes-edit-icon.png" style="width:48px; height:48px;">'],
-                    //[new Date(t.getTime() + 23), , 'Phone call<br>' +
-                    //            '<img src="img/Hardware-Mobile-Phone-icon.png" style="width:32px; height:32px;">'],
-                    //[new Date(t.getTime() + 24), new Date(t.getTime() + 27), 'Traject B'],
-                    //[new Date(t.getTime() + 29), , 'Report<br>' +
-                    //            '<img src="img/attachment-icon.png" style="width:32px; height:32px;">']
+                data.addRows(dataarray);
 
-                ]);
+                //data.addRows([
+                //    [getTimelineDate(t, 1000 * 60 * 0), getTimelineDate(t, 1000 * 60 * 2), 'FODTRIN'],
+                //    [getTimelineDate(t, 1000 * 60 * 1), getTimelineDate(t, 1000 * 60 * 5), 'TRAFIK'],
+                //    [getTimelineDate(t, 1000 * 60 * 4), getTimelineDate(t, 1000 * 60 * 6), 'SM힚'],
+                //    [getTimelineDate(t, 1000 * 60 * 0), getTimelineDate(t, 1000 * 60 * 4), 'FODTRIN'],
+                //    [getTimelineDate(t, 1000 * 60 * 10), getTimelineDate(t, 1000 * 60 * 14), 'SM힚'],
+                //    [getTimelineDate(t, 1000 * 60 * 16), getTimelineDate(t, 1000 * 60 * 20), 'TRAFIK'],
+
+                //    //[new Date(t.getTime() + 16), , 'Mail from boss<br>' +
+                //    //            '<img src="img/mail-icon.png" style="width:32px; height:32px;">'],
+                //    //[new Date(t.getTime() + 18), , 'Report'],
+                //    //[new Date(t.getTime() + 20), new Date(t.getTime() + 26), 'Traject A'],
+                //    //[new Date(t.getTime() + 22), , 'Memo<br>' +
+                //    //            '<img src="img/notes-edit-icon.png" style="width:48px; height:48px;">'],
+                //    //[new Date(t.getTime() + 23), , 'Phone call<br>' +
+                //    //            '<img src="img/Hardware-Mobile-Phone-icon.png" style="width:32px; height:32px;">'],
+                //    //[new Date(t.getTime() + 24), new Date(t.getTime() + 27), 'Traject B'],
+                //    //[new Date(t.getTime() + 29), , 'Report<br>' +
+                //    //            '<img src="img/attachment-icon.png" style="width:32px; height:32px;">']
+
+                //]);
 
                 //var options = {
                 //    width: "100%",
@@ -342,8 +361,6 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 //timeline.setCurrentTime(playertime);
                 timeline.setCustomTime(playertime);
 
-                // LOAD METADATA
-                var data = metadatafac.annotationData;
 
 
 //                // set a custom range from -2 minute to +3 minutes current time
