@@ -75,35 +75,26 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                     return;
                 }
                 
-                var eda = new metadatafac.MetadataView();
-                eda.setview("editor2", {title:"Editor 2 AA"});
-                metadataViews.push(eda);
+                //var eda = new metadatafac.MetadataView();
+                //eda.setview("editor2", {title:"Editor 2 AA"});
+                //metadataViews.push(eda);
 
-                var edb = new metadatafac.MetadataView();
-                edb.setview("editor2", { title: "Editor 2 BB" });
-                metadataViews.push(edb);
+                //var edb = new metadatafac.MetadataView();
+                //edb.setview("editor2", { title: "Editor 2 BB" });
+                //metadataViews.push(edb);
 
 
-                var ed1 = new metadatafac.MetadataView();
-                ed1.setview("test.html", { key: "Test key." });
-                metadataViews.push(ed1)
+                //var ed1 = new metadatafac.MetadataView();
+                //ed1.setview("test.html", { key: "Test key." });
+                //metadataViews.push(ed1)
                 
-                var larmprogrameditor = new metadatafac.MetadataView();
-                larmprogrameditor.setview("larmprogram", { metadata: r.Metadatas, id: "editor1" });
-                metadataViews.push(larmprogrameditor);
+                //var larmprogrameditor = new metadatafac.MetadataView();
+                //larmprogrameditor.setview("larmprogram", { metadata: r.Metadatas, id: "editor1" });
+                //metadataViews.push(larmprogrameditor);
 
-                var larmprogrameditor2 = new metadatafac.MetadataView();
-                larmprogrameditor2.setview("larmprogram", { metadata: r.Metadatas, id: "editor2" });
-                metadataViews.push(larmprogrameditor2);
-
-
-                //var larmprogrameditor = ko.observable(new metadatafac.MetadataEditor());
-                //larmprogrameditor().seteditor("larmprogram", r.Metadatas);
-                //metadataEditors.push(larmprogrameditor);
-
-                //var larmprogrameditor2 = new metadatafac.MetadataEditor();
-                //larmprogrameditor2.seteditor("larmprogram", r.Metadatas);
-                //metadataEditor(larmprogrameditor2);
+                //var larmprogrameditor2 = new metadatafac.MetadataView();
+                //larmprogrameditor2.setview("larmprogram", { metadata: r.Metadatas, id: "editor2" });
+                //metadataViews.push(larmprogrameditor2);
 
 
                 for (var j = 0; j < r.Metadatas.length; j++)
@@ -146,9 +137,9 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
 
                 inittimeline();
 
-                var ed2 = new metadatafac.MetadataView();
-                ed2.setview("generic", { guid: obj.metadataSchemaGuid, xml: obj.metadata });
-                metadataViews.push(ed2)
+                //var ed2 = new metadatafac.MetadataView();
+                //ed2.setview("generic", { guid: obj.metadataSchemaGuid, xml: obj.metadata });
+                //metadataViews.push(ed2)
                     
             }
 
@@ -299,17 +290,6 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 data.addColumn('datetime', 'end');
                 data.addColumn('string', 'content');
 
-//                data.addRows([[
-//                        new Date((new Date()).getTime() - 60 * 1000),
-//                        new Date(),
-//                        'Dynamic event']]);
-
-//                // specify options
-//                var options = {
-//                    'showCustomTime': true
-//                };
-
-
                 //var t = new Date(2010,7,23,16,30,15);
                 // 1990-02-19T22:00:00
                 var part_dt = publication().split("T");
@@ -327,39 +307,14 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                     var amd = amds[i];
                     var content = '<div title="' + amd.Title + '">&nbsp;' + amd.Title + '</div>'
                     dataarray.push([getTimelineDate(t, getMilliFromString(amd.StartTime)), getTimelineDate(t, getMilliFromString(amd.EndTime)), content]);
+
+                    var annview = new metadatafac.MetadataView();
+                    annview.setview("annotation", amd);
+                    metadataViews.push(annview);
+
                 }
 
                 data.addRows(dataarray);
-
-                //data.addRows([
-                //    [getTimelineDate(t, 1000 * 60 * 0), getTimelineDate(t, 1000 * 60 * 2), 'FODTRIN'],
-                //    [getTimelineDate(t, 1000 * 60 * 1), getTimelineDate(t, 1000 * 60 * 5), 'TRAFIK'],
-                //    [getTimelineDate(t, 1000 * 60 * 4), getTimelineDate(t, 1000 * 60 * 6), 'SMÆK'],
-                //    [getTimelineDate(t, 1000 * 60 * 0), getTimelineDate(t, 1000 * 60 * 4), 'FODTRIN'],
-                //    [getTimelineDate(t, 1000 * 60 * 10), getTimelineDate(t, 1000 * 60 * 14), 'SMÆK'],
-                //    [getTimelineDate(t, 1000 * 60 * 16), getTimelineDate(t, 1000 * 60 * 20), 'TRAFIK'],
-
-                //    //[new Date(t.getTime() + 16), , 'Mail from boss<br>' +
-                //    //            '<img src="img/mail-icon.png" style="width:32px; height:32px;">'],
-                //    //[new Date(t.getTime() + 18), , 'Report'],
-                //    //[new Date(t.getTime() + 20), new Date(t.getTime() + 26), 'Traject A'],
-                //    //[new Date(t.getTime() + 22), , 'Memo<br>' +
-                //    //            '<img src="img/notes-edit-icon.png" style="width:48px; height:48px;">'],
-                //    //[new Date(t.getTime() + 23), , 'Phone call<br>' +
-                //    //            '<img src="img/Hardware-Mobile-Phone-icon.png" style="width:32px; height:32px;">'],
-                //    //[new Date(t.getTime() + 24), new Date(t.getTime() + 27), 'Traject B'],
-                //    //[new Date(t.getTime() + 29), , 'Report<br>' +
-                //    //            '<img src="img/attachment-icon.png" style="width:32px; height:32px;">']
-
-                //]);
-
-                //var options = {
-                //    width: "100%",
-                //    height: "250px",
-                //    editable: true,
-                //    style: "box",
-                //    showCustomTime: true
-                //};
 
                 var options = {
                     width: "100%",
