@@ -325,7 +325,8 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 var amds = metadatafac.annotationData;
                 for (var i = 0; i < amds.length; i++) {
                     var amd = amds[i];
-                    dataarray.push([getTimelineDate(t, getMilliFromString(amd.StartTime)), getTimelineDate(t, getMilliFromString(amd.EndTime)), amd.Title]);
+                    var content = '<div title="'+amd.Title+'">'+amd.Title+'</div>'
+                    dataarray.push([getTimelineDate(t, getMilliFromString(amd.StartTime)), getTimelineDate(t, getMilliFromString(amd.EndTime)), content]);
                 }
 
                 data.addRows(dataarray);
