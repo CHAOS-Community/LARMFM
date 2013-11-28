@@ -5343,7 +5343,26 @@ links.Timeline.ClusterGenerator.prototype.getClusters = function (scale) {
                         var cluster;
                         var title = 'Gruppen indeholder ' + count +
                             ' annotationer. Zoom ind for at se de individuelle annotationer.';
-                        var content = '<div title="' + title + '">' + count + ' annotationer</div>';
+
+                        if (count <= 15) {
+                            title = "";
+                            for (var cii = 0; cii < clusterItems.length; cii++) {
+                                var txt = clusterItems[cii].content;
+                                var qs = txt.indexOf('"') + 1;
+                                var qe = txt.indexOf('"', qs);
+                                txt = txt.substring(qs, qe);
+
+                                if (txt.length > 20)
+                                    txt = txt.substring(0, 19) + "...";
+
+                                if (title != "")
+                                    title += ", " + txt;
+                                else
+                                    title = txt;
+                            }
+                        }
+
+                        var content = '<div title="' + title + '">&nbsp;' + count + ' annotationer</div>';
                         var group = item.group ? item.group.content : undefined;
                         if (containsRanges) {
                             // boxes and/or ranges
