@@ -135,7 +135,8 @@
     <Content Include="lib\timeline\img\themeswitcher\theme_90_ui_dark.png" />
     <Content Include="lib\timeline\img\themeswitcher\theme_90_ui_light.png" />
     <Content Include="lib\timeline\img\themeswitcher\theme_90_windoze.png" />
-    <Content Include="lib\timeline\timeline-larm.js" />
+    <Content Include="lib\timeline\timeline-larm-ex.js" />
+    <Content Include="lib\timeline\timeline.js" />
     <Content Include="locales\dev\app.json" />
     <Content Include="locales\en-US\app.json" />
     <Content Include="locales\en\app.json" />
@@ -257,7 +258,7 @@
     <Content Include="lib\timeline\timeline-min.js" />
     <Content Include="lib\timeline\timeline-theme.css" />
     <Content Include="lib\timeline\timeline.css" />
-    <Content Include="lib\timeline\timeline.js" />
+    <Content Include="lib\timeline\timeline-larm.js" />
     <Content Include="lib\x2js\xml2json.js" />
     <Content Include="lib\x2js\xml2json.min.js" />
     <Content Include="settings.js" />

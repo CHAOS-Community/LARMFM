@@ -289,6 +289,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 data.addColumn('datetime', 'start');
                 data.addColumn('datetime', 'end');
                 data.addColumn('string', 'content');
+                data.addColumn('boolean', 'editable');
 
                 //var t = new Date(2010,7,23,16,30,15);
                 // 1990-02-19T22:00:00
@@ -305,8 +306,8 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 var amds = metadatafac.annotationData;
                 for (var i = 0; i < amds.length; i++) {
                     var amd = amds[i];
-                    var content = '<div title="' + amd.Title + '">&nbsp;' + amd.Title + '</div>'
-                    dataarray.push([getTimelineDate(t, getMilliFromString(amd.StartTime)), getTimelineDate(t, getMilliFromString(amd.EndTime)), content]);
+                    var content = '<div title="' + amd.Title + '" id="' + amd.GUID + '">&nbsp;' + amd.Title + '</div>'
+                    dataarray.push([getTimelineDate(t, getMilliFromString(amd.StartTime)), getTimelineDate(t, getMilliFromString(amd.EndTime)), content, true]);
 
                     var annview = new metadatafac.MetadataView();
                     annview.setview("annotation", amd);
@@ -330,8 +331,8 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                     enableKeys: true,
                     showNavigation: true,
                     showButtonNew: true,
-                    animate: true,
-                    animateZoom: true,
+                    animate: false,
+                    animateZoom: false,
                     locale: 'da',
                     min: playertime_start,
                     max: playertime_end,
@@ -369,8 +370,51 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
 //                var end = new Date((new Date()).getTime() + 3 * 60 * 1000);
                 //                timeline.setVisibleChartRange(start, end);
 
+                // add, change, edit, delete, select
+                google.visualization.events.addListener(timeline, 'select', onannotationselect);
+                google.visualization.events.addListener(timeline, 'edit', onannotationedit); // NOT FIRED!
+                google.visualization.events.addListener(timeline, 'change', onannotationchange);
 
                 //addTimeline();
+            }
+
+            function onannotationselect() {
+                var sel = timeline.getSelection();
+                if (sel.length) {
+                    if (sel[0].row != undefined) {
+                        var row = sel[0].row;
+                        var dat = timeline.getItem(row);
+                        alert("SELECTED: " + getGuidFromContent(dat.content));
+                    }
+                }
+            }
+
+            function onannotationedit() {
+                var sel = timeline.getSelection();
+                if (sel.length) {
+                    if (sel[0].row != undefined) {
+                        var row = sel[0].row;
+                        var dat = timeline.getItem(row);
+                        alert("EDIT: " +getGuidFromContent( dat.content));
+                    }
+                }
+            }
+
+            function onannotationchange() {
+                var sel = timeline.getSelection();
+                if (sel.length) {
+                    if (sel[0].row != undefined) {
+                        var row = sel[0].row;
+                        var dat = timeline.getItem(row);
+                        alert("CHANGED: " + getGuidFromContent(dat.content));
+                    }
+                }
+            }
+
+            function getGuidFromContent(content) {
+                var qs = content.indexOf('id="') + 4;
+                var qe = content.indexOf('"', qs);
+                return content.substring(qs, qe);
             }
 
             function addTimeline() {
