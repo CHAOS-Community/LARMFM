@@ -24,6 +24,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
 
             var data = undefined;
             var timeline = undefined;
+            var timeline2 = undefined;
             var onTimeChangeActive = false;
 
             var metadataEditor = ko.observable();
@@ -265,6 +266,9 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 else
                     $("#timelinescroll").scrollLeft(conwdt / (totalvalue / startdiff));
 
+                var range = timeline.getVisibleChartRange();
+                timeline2.setVisibleChartRange(range.start, range.end);
+
                 return;
 
                 var update = false;
@@ -282,6 +286,8 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 if (update)
                     timeline.setVisibleChartRange(ts, te);
 
+                var range = timeline.getVisibleChartRange();
+                timeline2.setVisibleChartRange(range.start, range.end);
             }
 
             function getTimelineDate(d,millisecoffset) {
@@ -395,7 +401,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 google.visualization.events.addListener(timeline, 'edit', onannotationedit); // NOT FIRED!
                 google.visualization.events.addListener(timeline, 'change', onannotationchange);
 
-                //addTimeline();
+                addTimeline2();
             }
 
             function onannotationselect() {
@@ -450,7 +456,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 return content.substring(qs, qe);
             }
 
-            function addTimeline() {
+            function addTimeline2() {
                 // Create and populate a data table.
                 data = new google.visualization.DataTable();
                 data.addColumn('datetime', 'start');
@@ -474,17 +480,17 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 var part_d = part_dt[0].split("-");
                 var part_t = part_dt[1].split(":");
                 var t = new Date(part_d[0], part_d[1], part_d[2], part_t[0], part_t[1], part_t[2]);
-                playertime = t;
-                playertime_start = t;
-                playertime_end = t.getTime() + 30 * 60 * 1000;
+                playertime = new Date(2000, 1, 1, 0, 0, 0, 0);
+                playertime_start = playertime;
+                playertime_end = playertime.getTime() + 74 * 60 * 1000;
 
                 data.addRows([
-                    [getTimelineDate(t, 1000 * 60 * 0), getTimelineDate(t, 1000 * 60 * 2), 'FODTRIN'],
-                    [getTimelineDate(t, 1000 * 60 * 1), getTimelineDate(t, 1000 * 60 * 5), 'TRAFIK'],
-                    [getTimelineDate(t, 1000 * 60 * 4), getTimelineDate(t, 1000 * 60 * 6), 'SM힚'],
-                    [getTimelineDate(t, 1000 * 60 * 0), getTimelineDate(t, 1000 * 60 * 4), 'FODTRIN'],
-                    [getTimelineDate(t, 1000 * 60 * 10), getTimelineDate(t, 1000 * 60 * 14), 'SM힚'],
-                    [getTimelineDate(t, 1000 * 60 * 16), getTimelineDate(t, 1000 * 60 * 20), 'TRAFIK'],
+                    [getTimelineDate(playertime, 1000 * 60 * 0), getTimelineDate(playertime, 1000 * 60 * 2), 'FODTRIN'],
+                    [getTimelineDate(playertime, 1000 * 60 * 1), getTimelineDate(playertime, 1000 * 60 * 5), 'TRAFIK'],
+                    [getTimelineDate(playertime, 1000 * 60 * 4), getTimelineDate(playertime, 1000 * 60 * 6), 'SM힚'],
+                    [getTimelineDate(playertime, 1000 * 60 * 0), getTimelineDate(playertime, 1000 * 60 * 4), 'FODTRIN'],
+                    [getTimelineDate(playertime, 1000 * 60 * 10), getTimelineDate(playertime, 1000 * 60 * 14), 'SM힚'],
+                    [getTimelineDate(playertime, 1000 * 60 * 16), getTimelineDate(playertime, 1000 * 60 * 20), 'TRAFIK'],
 
                     //[new Date(t.getTime() + 16), , 'Mail from boss<br>' +
                     //            '<img src="img/mail-icon.png" style="width:32px; height:32px;">'],
@@ -510,52 +516,63 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
 
                 var options = {
                     width: "100%",
-                    editable: true,
+                    editable: false,
                     style: "box",
                     showCustomTime: false,
-                    cluster: true,
-                    axisOnTop: true,
+                    cluster: false,
+                    axisOnTop: false,
                     //dragAreaWidth: 20,
                     showMajorLabels: false,
+                    showMinorLabels: false,
                     //groupsOnRight: true,
-                    enableKeys: true,
-                    showNavigation: true,
-                    showButtonNew: true,
-                    animate: true,
-                    animateZoom: true,
+                    enableKeys: false,
+                    showNavigation: false,
+                    showButtonNew: false,
+                    animate: false,
+                    animateZoom: false,
+                    min: playertime_start,
+                    max: playertime_end
                 };
 
 
                 // Instantiate our timeline object.
                 $("#timelines").append('<div id="timeline2"></div>');
-                timeline = new links.Timeline(document.getElementById('timeline2'));
+                timeline2 = new links.Timeline(document.getElementById('timeline2'));
                 //timeline = new links.Timeline(document.getElementById('mytimeline'));
 
                 // Add event listeners
-                google.visualization.events.addListener(timeline, 'timechange', onTimeChange);
-                google.visualization.events.addListener(timeline, 'timechanged', onTimeChanged);
+                //google.visualization.events.addListener(timeline2, 'timechange', onTimeChange);
+                //google.visualization.events.addListener(timeline2, 'timechanged', onTimeChanged);
 
-                google.visualization.events.addListener(timeline, 'rangechange', onRangeChange);
+                google.visualization.events.addListener(timeline2, 'rangechange', onrangechange2);
 
                 // Draw our timeline with the created data and options
-                timeline.draw(data, options);
+                timeline2.draw(data, options);
                 //                timeline.setVisibleChartRange(playertime.getTime(), playertime.getTime() + 3 * 60 * 1000);
 
 
-                timeline.setVisibleChartRange(playertime_start, playertime_end);
+                timeline2.setVisibleChartRange(playertime_start, playertime_end);
 
 
                 //timeline.setCurrentTime(playertime);
-                timeline.setCustomTime(playertime);
+                timeline2.setCustomTime(playertime);
 
-                // LOAD METADATA
-                var data = metadatafac.annotationData;
 
 
                 //                // set a custom range from -2 minute to +3 minutes current time
                 //                var start = new Date((new Date()).getTime() - 2 * 60 * 1000);
                 //                var end = new Date((new Date()).getTime() + 3 * 60 * 1000);
                 //                timeline.setVisibleChartRange(start, end);
+            }
+
+            function onrangechange1() {
+                var range = timeline.getVisibleChartRange();
+                timeline2.setVisibleChartRange(range.start, range.end);
+            }
+
+            function onrangechange2() {
+                var range = timeline2.getVisibleChartRange();
+                timeline.setVisibleChartRange(range.start, range.end);
             }
 
             function getParameterByName(name, str) {
