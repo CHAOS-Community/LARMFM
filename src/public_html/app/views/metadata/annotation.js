@@ -17,9 +17,12 @@
                 return {
 
                     compositionComplete: function (child, parent, settings) {
+                        settings.bindingContext.$data.data["self"] = this;
                         // settings.bindingContext.$data represents an
                         // instance of MetadataEditor under factory.
+                        //settings.bindingContext.$data.data
                         this.data = settings.bindingContext.$data.data;
+
                         this.title(this.data.Title);
                         this.starttime(this.data.StartTime);
                     },

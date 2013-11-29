@@ -445,6 +445,15 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                     if (sel[0].row != undefined) {
                         var row = sel[0].row;
                         var dat = timeline.getItem(row);
+
+                        for (var i = 0; i < metadataViews().length; i++) {
+
+                            var md = metadataViews()[i];
+                            if (md.data.GUID == dat.id) {
+                                md.data.self.starttime(format.getTimeStringFromDate(dat.start));
+                            }
+                        }
+
                         //alert("CHANGED: " + getGuidFromContent(dat.content));
                     }
                 }
