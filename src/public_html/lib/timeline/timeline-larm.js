@@ -5987,6 +5987,10 @@ links.Timeline.StepDate.prototype.getLabelMajor = function(options, date) {
         date = this.current;
     }
 
+    return this.addZeros(date.getHours(), 2) + ":" +
+                this.addZeros(date.getMinutes(), 2) + ":" +
+                this.addZeros(date.getSeconds(), 2);
+
     switch (this.scale) {
         case links.Timeline.StepDate.SCALE.MILLISECOND:
             return  this.addZeros(date.getHours(), 2) + ":" +
