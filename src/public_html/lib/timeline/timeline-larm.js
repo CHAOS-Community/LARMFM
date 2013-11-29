@@ -365,6 +365,7 @@ links.Timeline.prototype.addItemType = function (typeName, typeFactory) {
  *         className: undefined
  *         editable: undefined
  *         type: undefined
+ *         id: undefined
  *     }
  * @param {google.visualization.DataTable} dataTable
  * @type {Object} map
@@ -379,7 +380,7 @@ links.Timeline.mapColumnIds = function (dataTable) {
         var id = dataTable.getColumnId(col) || dataTable.getColumnLabel(col);
         cols[id] = col;
         if (id == 'start' || id == 'end' || id == 'content' || id == 'group' ||
-            id == 'className' || id == 'editable' || id == 'type') {
+            id == 'className' || id == 'editable' || id == 'type' || id == 'id') {
             allUndefined = false;
         }
     }
@@ -394,6 +395,7 @@ links.Timeline.mapColumnIds = function (dataTable) {
         if (colCount > 4) {cols.className = 4}
         if (colCount > 5) {cols.editable = 5}
         if (colCount > 6) {cols.type = 6}
+        if (colCount > 7) { cols.id = 7 }
     }
 
     return cols;
@@ -432,7 +434,8 @@ links.Timeline.prototype.setData = function(data) {
                 'group':     ((cols.group != undefined)     ? data.getValue(row, cols.group)     : undefined),
                 'className': ((cols.className != undefined) ? data.getValue(row, cols.className) : undefined),
                 'editable':  ((cols.editable != undefined)  ? data.getValue(row, cols.editable)  : undefined),
-                'type':      ((cols.type != undefined)      ? data.getValue(row, cols.type)      : undefined)
+                'type': ((cols.type != undefined) ? data.getValue(row, cols.type) : undefined),
+                'id': ((cols.id != undefined) ? data.getValue(row, cols.id) : undefined)
             }));
         }
     }
@@ -3435,7 +3438,7 @@ links.Timeline.prototype.getGroupFromHeight = function(height) {
 /**
  * @constructor links.Timeline.Item
  * @param {Object} data       Object containing parameters start, end
- *                            content, group, type, editable.
+ *                            content, group, type, editable, id.
  * @param {Object} [options]  Options to set initial property values
  *                                {Number} top
  *                                {Number} left
@@ -3455,6 +3458,7 @@ links.Timeline.Item = function (data, options) {
         this.editable = data.editable;
         this.group = data.group;
         this.type = data.type;
+        this.id = data.id;
     }
     this.top = 0;
     this.left = 0;
@@ -3609,7 +3613,7 @@ links.Timeline.Item.prototype.getWidth = function (timeline) {
  * @constructor links.Timeline.ItemBox
  * @extends links.Timeline.Item
  * @param {Object} data       Object containing parameters start, end
- *                            content, group, type, className, editable.
+ *                            content, group, type, className, editable, id.
  * @param {Object} [options]  Options to set initial property values
  *                                {Number} top
  *                                {Number} left
@@ -3898,7 +3902,7 @@ links.Timeline.ItemBox.prototype.getRight = function (timeline) {
  * @constructor links.Timeline.ItemRange
  * @extends links.Timeline.Item
  * @param {Object} data       Object containing parameters start, end
- *                            content, group, type, className, editable.
+ *                            content, group, type, className, editable, id.
  * @param {Object} [options]  Options to set initial property values
  *                                {Number} top
  *                                {Number} left
@@ -4102,7 +4106,7 @@ links.Timeline.ItemRange.prototype.getWidth = function (timeline) {
  * @constructor links.Timeline.ItemDot
  * @extends links.Timeline.Item
  * @param {Object} data       Object containing parameters start, end
- *                            content, group, type, className, editable.
+ *                            content, group, type, className, editable, id.
  * @param {Object} [options]  Options to set initial property values
  *                                {Number} top
  *                                {Number} left
@@ -4331,6 +4335,7 @@ links.Timeline.ItemDot.prototype.getRight = function (timeline) {
  *                              {String} className (optional)
  *                              {boolean} editable (optional)
  *                              {String} type (optional)
+ *                              {String} id (optional)
  */
 links.Timeline.prototype.getItem = function (index) {
     if (index >= this.items.length) {
@@ -4357,7 +4362,9 @@ links.Timeline.prototype.getItem = function (index) {
     if (item.type) {
         properties.type = item.type;
     }
-
+    if (item.id) {
+        properties.id = item.id;
+    }
     return properties;
 };
 
@@ -4371,6 +4378,7 @@ links.Timeline.prototype.getItem = function (index) {
  *                              {String} className (optional)
  *                              {Boolean} editable (optional)
  *                              {String} type (optional)
+ *                              {String} id (optional)
  * @param {boolean} [preventRender=false]   Do not re-render timeline if true
  */
 links.Timeline.prototype.addItem = function (itemData, preventRender) {
@@ -4392,6 +4400,7 @@ links.Timeline.prototype.addItem = function (itemData, preventRender) {
  *                            {String} className (optional)
  *                            {String} editable (optional)
  *                            {String} type (optional)
+ *                            {String} id (optional)
  * @param {boolean} [preventRender=false]   Do not re-render timeline if true
  */
 links.Timeline.prototype.addItems = function (itemsData, preventRender) {
@@ -4436,7 +4445,8 @@ links.Timeline.prototype.createItem = function(itemData) {
         className: itemData.className,
         editable: itemData.editable,
         group: this.getGroup(itemData.group),
-        type: type
+        type: type,
+        id: itemData.id
     };
     // TODO: optimize this, when creating an item, all data is copied twice...
 
@@ -4467,7 +4477,8 @@ links.Timeline.prototype.createItem = function(itemData) {
  *                              {Date} start (required),
  *                              {Date} end (optional),
  *                              {String} content (required),
- *                              {String} group (optional)
+ *                              {String} group (optional),
+ *                              {String} id (optional)
  * @param {boolean} [preventRender=false]   Do not re-render timeline if true
  */
 links.Timeline.prototype.changeItem = function (index, itemData, preventRender) {
@@ -4484,8 +4495,9 @@ links.Timeline.prototype.changeItem = function (index, itemData, preventRender) 
         'group':     itemData.hasOwnProperty('group') ?     itemData.group :     this.getGroupName(oldItem.group),
         'className': itemData.hasOwnProperty('className') ? itemData.className : oldItem.className,
         'editable':  itemData.hasOwnProperty('editable') ?  itemData.editable :  oldItem.editable,
-        'type':      itemData.hasOwnProperty('type') ?      itemData.type :      oldItem.type
-    });
+        'type':      itemData.hasOwnProperty('type') ?      itemData.type :      oldItem.type,
+        'id':      itemData.hasOwnProperty('id') ?      itemData.id :      oldItem.id
+});
     this.items[index] = newItem;
 
     // append the changes to the render queue

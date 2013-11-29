@@ -290,6 +290,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 data.addColumn('datetime', 'end');
                 data.addColumn('string', 'content');
                 data.addColumn('boolean', 'editable');
+                data.addColumn('string', 'id');
 
                 //var t = new Date(2010,7,23,16,30,15);
                 // 1990-02-19T22:00:00
@@ -307,7 +308,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 for (var i = 0; i < amds.length; i++) {
                     var amd = amds[i];
                     var content = '<div title="' + amd.Title + '" id="' + amd.GUID + '">&nbsp;' + amd.Title + '</div>'
-                    dataarray.push([getTimelineDate(t, getMilliFromString(amd.StartTime)), getTimelineDate(t, getMilliFromString(amd.EndTime)), content, true]);
+                    dataarray.push([getTimelineDate(t, getMilliFromString(amd.StartTime)), getTimelineDate(t, getMilliFromString(amd.EndTime)), content, true, amd.GUID]);
 
                     var annview = new metadatafac.MetadataView();
                     annview.setview("annotation", amd);
@@ -384,7 +385,8 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                     if (sel[0].row != undefined) {
                         var row = sel[0].row;
                         var dat = timeline.getItem(row);
-                        alert("SELECTED: " + getGuidFromContent(dat.content));
+                        var elm = document.getElementById(getGuidFromContent(dat.content));
+                        //alert("SELECTED: " + getGuidFromContent(dat.content));
                     }
                 }
             }
@@ -395,7 +397,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                     if (sel[0].row != undefined) {
                         var row = sel[0].row;
                         var dat = timeline.getItem(row);
-                        alert("EDIT: " +getGuidFromContent( dat.content));
+                        //alert("EDIT: " +getGuidFromContent( dat.content));
                     }
                 }
             }
@@ -406,7 +408,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                     if (sel[0].row != undefined) {
                         var row = sel[0].row;
                         var dat = timeline.getItem(row);
-                        alert("CHANGED: " + getGuidFromContent(dat.content));
+                        //alert("CHANGED: " + getGuidFromContent(dat.content));
                     }
                 }
             }
