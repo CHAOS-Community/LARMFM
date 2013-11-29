@@ -326,7 +326,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 var amds = metadatafac.annotationData;
                 for (var i = 0; i < amds.length; i++) {
                     var amd = amds[i];
-                    var content = '<div title="' + amd.Title + '" id="' + amd.GUID + '">&nbsp;' + amd.Title + '</div>'
+                    var content = '<div title="' + amd.Title + '">&nbsp;' + amd.Title + '</div>'
                     dataarray.push([getTimelineDate(playertime, getMilliFromString(amd.StartTime)), getTimelineDate(playertime, getMilliFromString(amd.EndTime)), content, true, amd.GUID]);
 
                     var annview = new metadatafac.MetadataView();
