@@ -22,6 +22,11 @@
                         this.data = settings.bindingContext.$data.data;
                         this.title(this.data.Title);
                         this.starttime(this.data.StartTime);
+                    },
+                    btnedit: function (data) {
+                        var i = 0;
+                        //parentcontext.$data.entereditmode(this);
+                        app.trigger('metadata:edit', this);
                     }
 
                 };
