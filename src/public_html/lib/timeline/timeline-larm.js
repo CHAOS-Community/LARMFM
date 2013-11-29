@@ -4368,6 +4368,15 @@ links.Timeline.prototype.getItem = function (index) {
     return properties;
 };
 
+links.Timeline.prototype.getItemAndIndexByID = function (id) {
+    for (var i = 0; i < this.items.length; i++) {
+        if (this.items[i].id == id)
+            return { item: this.items[i], index: i };
+    }
+
+    return undefined;
+}
+
 /**
  * Add a new item.
  * @param {Object} itemData     Object containing item properties:<br>

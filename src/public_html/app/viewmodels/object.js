@@ -385,7 +385,25 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                     if (sel[0].row != undefined) {
                         var row = sel[0].row;
                         var dat = timeline.getItem(row);
-                        var elm = document.getElementById(getGuidFromContent(dat.content));
+                        timeline.changeItem(row, { start: new Date(dat.start.getTime() - 1000) });
+
+                        var evobj = timeline.getItemAndIndexByID("02120d71-c88b-7523-273b-6790bf0b77a5");
+                        timeline.changeItem(evobj.index, { end: new Date(playertime_end) })
+
+                        //var d = timeline.getData();
+                        //var ididx = -1
+                        //for (var i = 0; i < d.yf.length; i++)
+                        //    if (d.yf[i].label == "id")
+                        //        ididx = i;
+
+                        //for (var i = 0; i < d.xf.length; i++) {
+                        //    var idd = d.xf[i].c[ididx].v;
+                        //    var idi = dat.id;
+                        //    if (idd == idi) {
+                        //        var item = d.xf[i].c;
+                        //    }
+                        //}
+                        //var elm = document.getElementById(getGuidFromContent(dat.content));
                         //alert("SELECTED: " + getGuidFromContent(dat.content));
                     }
                 }
