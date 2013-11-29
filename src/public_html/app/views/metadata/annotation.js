@@ -26,7 +26,9 @@
                     btnedit: function (data) {
                         var i = 0;
                         //parentcontext.$data.entereditmode(this);
-                        app.trigger('metadata:edit', this);
+                        //app.trigger('metadata:edit', this);
+                        
+                        app.trigger('metadata:changedinview', this);
                     }
 
                 };

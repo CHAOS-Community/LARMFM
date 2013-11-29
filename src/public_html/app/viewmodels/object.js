@@ -1,5 +1,5 @@
-define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object', 'mods/xmlmanager', 'mods/jsonformfields','factory/metadata'],
-        function(app, ko, portal, state, objfac, xmlman, jsonformfields, metadatafac) {
+define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object', 'mods/xmlmanager', 'mods/jsonformfields','factory/metadata','mods/format'],
+        function(app, ko, portal, state, objfac, xmlman, jsonformfields, metadatafac, format) {
 
             var title = ko.observable();
             var channel = ko.observable();
@@ -28,6 +28,22 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
 
             var metadataEditor = ko.observable();
             var metadataViews = ko.observableArray();
+
+            app.on('metadata:changedinview').then(function (editorvm) {
+                if (editorvm.data === undefined)
+                    return;
+
+                var time = editorvm.starttime();
+                var pltm = getTimelineDate(playertime, getMilliFromString(time))
+
+                pltm = new Date(pltm.getTime() + 10000);
+
+                var guid = editorvm.data.GUID;
+                var obj = timeline.getItemAndIndexByID(guid);
+                timeline.changeItem(obj.index, { start: pltm });
+
+                editorvm.starttime(format.getTimeStringFromDate(pltm));
+            });
 
             app.on('metadata:edit').then(function (editorvm) {
                 if (editorvm.data === undefined)
@@ -298,9 +314,12 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 var part_d = part_dt[0].split("-");
                 var part_t = part_dt[1].split(":");
                 var t = new Date(part_d[0], part_d[1], part_d[2], part_t[0], part_t[1], part_t[2]);
-                playertime = t;
-                playertime_start = t.getTime();
-                playertime_end = t.getTime() + 74 * 60 * 1000;
+                //playertime = t;
+                //playertime_start = t.getTime();
+                //playertime_end = t.getTime() + 74 * 60 * 1000;
+                playertime = new Date(2000,1,1,0,0,0,0);
+                playertime_start = playertime.getTime();
+                playertime_end = playertime.getTime() + 74 * 60 * 1000;
 
                 // LOAD METADATA
                 var dataarray = [];
@@ -308,7 +327,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 for (var i = 0; i < amds.length; i++) {
                     var amd = amds[i];
                     var content = '<div title="' + amd.Title + '" id="' + amd.GUID + '">&nbsp;' + amd.Title + '</div>'
-                    dataarray.push([getTimelineDate(t, getMilliFromString(amd.StartTime)), getTimelineDate(t, getMilliFromString(amd.EndTime)), content, true, amd.GUID]);
+                    dataarray.push([getTimelineDate(playertime, getMilliFromString(amd.StartTime)), getTimelineDate(playertime, getMilliFromString(amd.EndTime)), content, true, amd.GUID]);
 
                     var annview = new metadatafac.MetadataView();
                     annview.setview("annotation", amd);
