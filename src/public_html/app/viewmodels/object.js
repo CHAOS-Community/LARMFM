@@ -1,10 +1,10 @@
-define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object', 'mods/xmlmanager', 'mods/jsonformfields','factory/metadata','mods/format'],
-        function(app, ko, portal, state, objfac, xmlman, jsonformfields, metadatafac, format) {
+define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object', 'mods/xmlmanager', 'mods/jsonformfields', 'factory/metadata', 'mods/format'],
+        function (app, ko, portal, state, objfac, xmlman, jsonformfields, metadatafac, format) {
 
             var title = ko.observable();
             var channel = ko.observable();
             var publication = ko.observable();
-            var abstract = ko.observable();
+            var abstracttxt = ko.observable();
             var description = ko.observable();
             var newdescription = ko.observable();
 
@@ -19,8 +19,8 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
             var playertime = undefined;
             var playertime_start = undefined;
             var playertime_end = undefined;
-            
-            var timeline_centered = false;
+
+            var timeline_centered = true;
 
             var data = undefined;
             var timeline = undefined;
@@ -51,14 +51,14 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                     return;
 
                 for (var i = 0; i < metadataViews().length; i++) {
-                    
+
                     var md = metadataViews()[i];
 
                     if (md.data == editorvm.data) {
                         var j = 0;
                     }
                 }
-                
+
                 //var vm = editorvm;
                 //$(".editor").each(function (index) {
                 //    var vm2 = vm;
@@ -72,26 +72,23 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
 
             });
 
-            var obj = {};    
+            var obj = {};
 
             // Getting data from API.
-            function queryReceived(data)
-            {
+            function queryReceived(data) {
                 var r = data.Body.Results[0];
                 // TODO: Settings.Search.metadataSchemaGuid
                 var mdsguid = state.searchMetadataSchemaGuids[0]; //brand.getSearchMetadataSchemaGuid(r);
-                
-                if(r == undefined)
-                {
+
+                if (r == undefined) {
                     app.showMessage("The data is not available for this object.", "Data missing", ["OK", "Cancel"]);
                     return;
-                }                
-                if(r.Metadatas == undefined)
-                {
+                }
+                if (r.Metadatas == undefined) {
                     app.showMessage("The metadata is not available for this object.", "Metadata missing", ["OK", "Cancel"]);
                     return;
                 }
-                
+
                 //var eda = new metadatafac.MetadataView();
                 //eda.setview("editor2", {title:"Editor 2 AA"});
                 //metadataViews.push(eda);
@@ -104,7 +101,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 //var ed1 = new metadatafac.MetadataView();
                 //ed1.setview("test.html", { key: "Test key." });
                 //metadataViews.push(ed1)
-                
+
                 //var larmprogrameditor = new metadatafac.MetadataView();
                 //larmprogrameditor.setview("larmprogram", { metadata: r.Metadatas, id: "editor1" });
                 //metadataViews.push(larmprogrameditor);
@@ -114,19 +111,17 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 //metadataViews.push(larmprogrameditor2);
 
 
-                for (var j = 0; j < r.Metadatas.length; j++)
-                {
-                    if (r.Metadatas[j].MetadataSchemaGuid == mdsguid)
-                    {
+                for (var j = 0; j < r.Metadatas.length; j++) {
+                    if (r.Metadatas[j].MetadataSchemaGuid == mdsguid) {
                         obj.metadataSchemaGuid = mdsguid;
                         var xml = r.Metadatas[j].MetadataXml;
                         var x = xmlman.parseXml(xml);
                         obj.metadata = x;
-                        
+
                         title($(x).find("Title").text());
                         channel($(x).find("PublicationChannel").text());
                         publication($(x).find("PublicationDateTime").text());
-                        abstract($(x).find("Abstract").text());
+                        abstracttxt($(x).find("Abstract").text());
                         description($(x).find("Description").text());
 
                     }
@@ -134,8 +129,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
 
                 var previous_mediaurl = mediaurl();
                 if (r.Files.length > 0)
-                    for (var i = 0; i < r.Files.length; i++)
-                    {
+                    for (var i = 0; i < r.Files.length; i++) {
                         var ft = r.Files[i].FormatType;
                         if (ft == "Audio") {
                             mediaurl(r.Files[i].URL);
@@ -157,11 +151,10 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 //var ed2 = new metadatafac.MetadataView();
                 //ed2.setview("generic", { guid: obj.metadataSchemaGuid, xml: obj.metadata });
                 //metadataViews.push(ed2)
-                    
+
             }
 
-            function initplayer()
-            {
+            function initplayer() {
                 if (playerready)
                     return;
 
@@ -179,26 +172,51 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                     width: 1,
                     height: 1,
                     image: mediaimage(),
-                    controls: true,
+                    controls: true
                 });
 
                 jwplayer().onTime(
-                        function() {
-                            playerposition(jwplayer().getPosition());
-                            if (!onTimeChangeActive){
+                        function () {
+                            var posseconds = jwplayer().getPosition();
+                            playerposition(posseconds);
+                            if (!onTimeChangeActive) {
                                 //timeline.setCurrentTime(playertime.getTime() + playerposition() * 1000);
                                 timeline.setCustomTime(playertime.getTime() + playerposition() * 1000);
                                 //timeline.setVisibleChartRangeNow();
                                 var r = timeline.getVisibleChartRange();
                                 playerdebug(timestr(r.start) + " - " + timestr(r.end));
 
-                                if(timeline_centered){
-                                    
+                                if (timeline_centered) {
+                                    timelineCenter();
                                 }
                             }
                         });
 
             }
+
+            /* === TIMELINE ================================================== */
+            function timelineCenter() {
+                var r = timeline.getVisibleChartRange();
+                var rs = r.start.getTime();
+                var re = r.end.getTime();
+                var t = timeline.getCustomTime().getTime();
+                var rwh = (re - rs) / 2;
+
+                rs = t - rwh;
+                re = t + rwh;
+
+                var sd = rs - playertime_start;
+                if (sd < 0) {
+                    rs -= sd;
+                    re -= sd;
+                }
+
+                if (rs >= playertime_start && re <= playertime_end) {
+                    timeline.setVisibleChartRange(new Date(rs), new Date(re));
+                }
+            }
+
+            /* === TIMELINE ================================================== */
 
             function timestr(d) {
                 var h = d.getHours();
@@ -214,7 +232,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 if (!dataready || !viewready)
                     return;
 
-                google.load("visualization", "1", {"callback": drawVisualization});
+                google.load("visualization", "1", { "callback": drawVisualization });
             }
 
             function onTimeChange(event) {
@@ -229,8 +247,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
 
             var ontimelinescrollingdisable = false;
             function ontimelinescrolling(e) {
-                if (ontimelinescrollingdisable)
-                {
+                if (ontimelinescrollingdisable) {
                     ontimelinescrollingdisable = false;
                     return;
                 }
@@ -243,10 +260,10 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 var pixelpervalue = totalvalue / totalpixel;
 
                 var scrollpos = $("#timelinescroll").scrollLeft();
-                var res = totalpixel / (scrollpos); 
+                var res = totalpixel / (scrollpos);
 
                 var start = playertime_start + totalvalue / res;
-                timeline.setVisibleChartRange( start  , start + rangevalue );
+                timeline.setVisibleChartRange(start, start + rangevalue);
             }
 
             function onRangeChange(event) {
@@ -261,7 +278,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 var startdiff = event.start - playertime_start;
 
                 ontimelinescrollingdisable = true;
-                if(startdiff == 0)
+                if (startdiff == 0)
                     $("#timelinescroll").scrollLeft(0);
                 else
                     $("#timelinescroll").scrollLeft(conwdt / (totalvalue / startdiff));
@@ -290,7 +307,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 timeline2.setVisibleChartRange(range.start, range.end);
             }
 
-            function getTimelineDate(d,millisecoffset) {
+            function getTimelineDate(d, millisecoffset) {
                 var dt = new Date(d);
                 dt.setMilliseconds(dt.getMilliseconds() + millisecoffset);
                 return dt;
@@ -323,7 +340,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 //playertime = t;
                 //playertime_start = t.getTime();
                 //playertime_end = t.getTime() + 74 * 60 * 1000;
-                playertime = new Date(2000,1,1,0,0,0,0);
+                playertime = new Date(2000, 1, 1, 0, 0, 0, 0);
                 playertime_start = playertime.getTime();
                 playertime_end = playertime.getTime() + 74 * 60 * 1000;
 
@@ -361,7 +378,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                     animateZoom: false,
                     locale: 'da',
                     min: playertime_start,
-                    max: playertime_end,
+                    max: playertime_end
                     //minHeight: "200px"
                 };
 
@@ -380,7 +397,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
 
                 // Draw our timeline with the created data and options
                 timeline.draw(data, options);
-//                timeline.setVisibleChartRange(playertime.getTime(), playertime.getTime() + 3 * 60 * 1000);
+                //                timeline.setVisibleChartRange(playertime.getTime(), playertime.getTime() + 3 * 60 * 1000);
 
 
                 timeline.setVisibleChartRange(playertime_start, playertime_end);
@@ -391,9 +408,9 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
 
 
 
-//                // set a custom range from -2 minute to +3 minutes current time
-//                var start = new Date((new Date()).getTime() - 2 * 60 * 1000);
-//                var end = new Date((new Date()).getTime() + 3 * 60 * 1000);
+                //                // set a custom range from -2 minute to +3 minutes current time
+                //                var start = new Date((new Date()).getTime() - 2 * 60 * 1000);
+                //                var end = new Date((new Date()).getTime() + 3 * 60 * 1000);
                 //                timeline.setVisibleChartRange(start, end);
 
                 // add, change, edit, delete, select
@@ -587,21 +604,21 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 mediaurl: mediaurl,
                 channel: channel,
                 publication: publication,
-                abstract: abstract,
+                abstracttxt: abstracttxt,
                 description: description,
                 newdescription: newdescription,
                 playerposition: playerposition,
                 playerdebug: playerdebug,
                 metadataEditor: metadataEditor,
                 metadataViews: metadataViews,
-                activate: function(param) {
+                activate: function (param) {
                     if (param !== undefined) {
                         var id = getParameterByName('id', param);
                         obj.id = id;
                         //var query = "GUID:" + id;
 
                         // function(callback, query, sort, accessPointGUID, pageIndex, pageSize, includeMetadata, includeFiles, includeObjectRelations, includeAccessPoints)
-                        
+
                         //Object.Get = function (
                         //objectGuids, accessPointGuid, includeMetadata, includeFiles, 
                         //includeObjectRelations, includeFolders, includeAccessPoints, 
@@ -609,44 +626,44 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                         //)
                         var objguids = [];
                         objguids.push(id);
-                        
+
                         CHAOS.Portal.Client.Object.Get(
-                            objguids,Settings.accessPointGuid,true,true,
-                            true,false,false,
-                            1,0,null).WithCallback(queryReceived);
-                        
+                            objguids, Settings.accessPointGuid, true, true,
+                            true, false, false,
+                            1, 0, null).WithCallback(queryReceived);
+
                         //(queryReceived, query, null, null, 0, 1, true, true, true, false);
 
                     }
                 },
-                compositionComplete: function() {
+                compositionComplete: function () {
                     viewready = true;
                     initplayer();
                     inittimeline();
                 },
-                play: function() {
+                play: function () {
                     jwplayer().play(true);
                 },
-                pause: function() {
+                pause: function () {
                     jwplayer().play(false);
                 },
-                
-                saveMetadata: function(){
-                                   
-               var x2js = new X2JS();
-               var jsondata = x2js.xml_str2json( obj.metadata );
-               jsondata["Larm.Program"].Description = newdescription();
-               var xmldata = x2js.json2xml_str(jsondata);
 
-                // Metadata.Set = function (
-                // objectGUID, metadataSchemaGUID, languageCode, 
-                // revisionID, metadataXML, serviceCaller)
-               CHAOS.Portal.Client.Metadata.Set(
-                   obj.id,obj.metadataSchemaGuid,"da",
-                    1,xmldata,null);
-               
+                saveMetadata: function () {
+
+                    var x2js = new X2JS();
+                    var jsondata = x2js.xml_str2json(obj.metadata);
+                    jsondata["Larm.Program"].Description = newdescription();
+                    var xmldata = x2js.json2xml_str(jsondata);
+
+                    // Metadata.Set = function (
+                    // objectGUID, metadataSchemaGUID, languageCode, 
+                    // revisionID, metadataXML, serviceCaller)
+                    CHAOS.Portal.Client.Metadata.Set(
+                        obj.id, obj.metadataSchemaGuid, "da",
+                         1, xmldata, null);
+
                 }
-                
+
             };
         });
 
