@@ -16,6 +16,12 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
             var playerposition = ko.observable(0);
             var playerdebug = ko.observable("");
 
+            var cbgroupannotations = ko.observable("true");
+            cbgroupannotations.subscribe(function(newValue){
+                timeline.options.cluster = newValue;
+                timeline.redraw();
+            });
+
             var playertime = undefined;
             var playertime_start = undefined;
             var playertime_end = undefined;
@@ -661,7 +667,8 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                         obj.id, obj.metadataSchemaGuid, "da",
                          1, xmldata, null);
 
-                }
+                },
+                cbgroupannotations: cbgroupannotations
 
             };
         });
