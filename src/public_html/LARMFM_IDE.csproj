@@ -135,6 +135,7 @@
     <Content Include="lib\timeline\img\themeswitcher\theme_90_ui_dark.png" />
     <Content Include="lib\timeline\img\themeswitcher\theme_90_ui_light.png" />
     <Content Include="lib\timeline\img\themeswitcher\theme_90_windoze.png" />
+    <Content Include="lib\timeline\timeline-larm.css" />
     <Content Include="lib\timeline\timeline-larm-ex.js" />
     <Content Include="lib\timeline\timeline.js" />
     <Content Include="locales\dev\app.json" />

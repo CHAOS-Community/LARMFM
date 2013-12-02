@@ -362,9 +362,9 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
 
                 var options = {
                     width: "100%",
-                    //height: "100px",
+                    //height: "200px",
                     editable: true,
-                    style: "box",
+                    //style: "box",
                     showCustomTime: true,
                     cluster: true,
                     axisOnTop: true,
@@ -374,9 +374,8 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                     enableKeys: true,
                     showNavigation: true,
                     showButtonNew: true,
-                    animate: false,
-                    animateZoom: false,
-                    locale: 'da',
+                    animate: true,
+                    animateZoom: true,
                     min: playertime_start,
                     max: playertime_end
                     //minHeight: "200px"
