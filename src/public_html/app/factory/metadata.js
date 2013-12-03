@@ -7,9 +7,9 @@
 
     MetadataView.prototype = function () {
 
-        var setview = function (viewname, data) {
+        var setview = function (viewname, data, inview) {
             this.data = data;
-            if (viewname.indexOf('.html', viewname.length - 5) !== -1) {
+            if (inview !== undefined || viewname.indexOf('.html', viewname.length - 5) !== -1) {
                 this.view("metadata/" + viewname);
             } else {
                 //ViewModel

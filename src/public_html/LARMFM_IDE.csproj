@@ -59,6 +59,10 @@
   <ItemGroup>
     <Content Include="app\factory\metadata.js" />
     <Content Include="app\mods\jsonformfields.js" />
+    <Content Include="app\views\metadata\annotationedit.html" />
+    <Content Include="app\views\metadata\annotationedit.js" />
+    <Content Include="app\views\metadata\annotation.html" />
+    <Content Include="app\views\metadata\annotation.js" />
     <Content Include="app\views\metadata\editor1.js" />
     <Content Include="app\viewmodels\object.js" />
     <Content Include="app\views\metadata\editor1.html" />
@@ -133,7 +137,9 @@
     <Content Include="lib\timeline\img\themeswitcher\theme_90_ui_dark.png" />
     <Content Include="lib\timeline\img\themeswitcher\theme_90_ui_light.png" />
     <Content Include="lib\timeline\img\themeswitcher\theme_90_windoze.png" />
-    <Content Include="lib\timeline\timeline-larm.js" />
+    <Content Include="lib\timeline\timeline-larm.css" />
+    <Content Include="lib\timeline\timeline-larm-ex.js" />
+    <Content Include="lib\timeline\timeline.js" />
     <Content Include="locales\dev\app.json" />
     <Content Include="locales\en-US\app.json" />
     <Content Include="locales\en\app.json" />
@@ -255,7 +261,7 @@
     <Content Include="lib\timeline\timeline-min.js" />
     <Content Include="lib\timeline\timeline-theme.css" />
     <Content Include="lib\timeline\timeline.css" />
-    <Content Include="lib\timeline\timeline.js" />
+    <Content Include="lib\timeline\timeline-larm.js" />
     <Content Include="lib\x2js\xml2json.js" />
     <Content Include="lib\x2js\xml2json.min.js" />
     <Content Include="settings.js" />

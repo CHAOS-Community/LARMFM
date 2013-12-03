@@ -123,6 +123,10 @@ define(function() {
         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
 
+    function getTimeStringFromDate(date) {
+        return getDigit2(date.getHours()) + ':' + getDigit2(date.getMinutes()) + ':' + getDigit2(date.getSeconds()) + '.' + date.getMilliseconds();
+    }
+
     return {
         getParamByName: getParamByName,
         getSolrDateStr: getSolrDateStr,
@@ -131,6 +135,7 @@ define(function() {
         getDigit3: getDigit3,
         getDateFromQueryDateStr: getDateFromQueryDateStr,
         getSolrFilterFromDateRangeStr: getSolrFilterFromDateRangeStr,
-        getDateFromSolrDateString: getDateFromSolrDateString
+        getDateFromSolrDateString: getDateFromSolrDateString,
+        getTimeStringFromDate: getTimeStringFromDate
     };
 });
