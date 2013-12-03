@@ -6489,3 +6489,26 @@ links.Timeline.parseJSONDate = function (date) {
     // failing that, try to parse whatever we've got.
     return Date.parse(date);
 };
+
+/* === LARM CUSTOM FUNCTIONALITY === */
+links.Timeline.prototype.centerTimeline = function () {
+    var r = this.getVisibleChartRange();
+    var rs = r.start.getTime();
+    var re = r.end.getTime();
+    var t = this.getCustomTime().getTime();
+    var rwh = (re - rs) / 2;
+
+    rs = t - rwh;
+    re = t + rwh;
+
+    var sd = rs - this.options.min;
+    if (sd < 0) {
+        rs -= sd;
+        re -= sd;
+    }
+
+    if (rs >= this.options.min && re <= this.options.max) {
+        this.setVisibleChartRange(new Date(rs), new Date(re));
+    }
+};
+/* ================================= */

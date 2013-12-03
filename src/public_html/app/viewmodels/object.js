@@ -193,36 +193,12 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                                 playerdebug(timestr(r.start) + " - " + timestr(r.end));
 
                                 if (timeline_centered) {
-                                    timelineCenter();
+                                    timeline.centerTimeline();
                                 }
                             }
                         });
 
             }
-
-            /* === TIMELINE ================================================== */
-            function timelineCenter() {
-                var r = timeline.getVisibleChartRange();
-                var rs = r.start.getTime();
-                var re = r.end.getTime();
-                var t = timeline.getCustomTime().getTime();
-                var rwh = (re - rs) / 2;
-
-                rs = t - rwh;
-                re = t + rwh;
-
-                var sd = rs - playertime_start;
-                if (sd < 0) {
-                    rs -= sd;
-                    re -= sd;
-                }
-
-                if (rs >= playertime_start && re <= playertime_end) {
-                    timeline.setVisibleChartRange(new Date(rs), new Date(re));
-                }
-            }
-
-            /* === TIMELINE ================================================== */
 
             function timestr(d) {
                 var h = d.getHours();
