@@ -59,6 +59,8 @@
   <ItemGroup>
     <Content Include="app\factory\metadata.js" />
     <Content Include="app\mods\jsonformfields.js" />
+    <Content Include="app\views\metadata\annotationedit.html" />
+    <Content Include="app\views\metadata\annotationedit.js" />
     <Content Include="app\views\metadata\annotation.html" />
     <Content Include="app\views\metadata\annotation.js" />
     <Content Include="app\views\metadata\editor1.js" />

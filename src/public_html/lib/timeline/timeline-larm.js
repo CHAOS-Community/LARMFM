@@ -215,12 +215,12 @@ links.Timeline = function(container) {
         'MONTHS_SHORT': new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"),
         'DAYS': new Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"),
         'DAYS_SHORT': new Array("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"),
-        'ZOOM_IN': "Zoom in",
-        'ZOOM_OUT': "Zoom out",
-        'MOVE_LEFT': "Move left",
-        'MOVE_RIGHT': "Move right",
-        'NEW': "New",
-        'CREATE_NEW_EVENT': "Create new event"
+        'ZOOM_IN': "Zoom ind",
+        'ZOOM_OUT': "Zoom ud",
+        'MOVE_LEFT': "Scroll til venstre",
+        'MOVE_RIGHT': "Scroll til højre",
+        'NEW': " Ny annotation",
+        'CREATE_NEW_EVENT': "Opret ny annotation"
     };
 
     this.clientTimeOffset = 0;    // difference between client time and the time
@@ -2183,7 +2183,12 @@ links.Timeline.prototype.repaintNavigation = function () {
             //addIconSpan.className = "ui-icon ui-icon-circle-plus";            
             navBar.addButton.appendChild(addIconSpan);
             
-            var onAdd = function(event) {
+            var onAdd = function (event) {
+                
+                /* --- Larm --- */
+                timeline.centerTimeline();
+                /* ------------ */
+
                 links.Timeline.preventDefault(event);
                 links.Timeline.stopPropagation(event);
 
@@ -2196,6 +2201,12 @@ links.Timeline.prototype.repaintNavigation = function () {
                     timeline.step.snap(xstart);
                     timeline.step.snap(xend);
                 }
+
+                // --- Larm specific: move it to the customtime cursor but keep width
+                var xwidth = xend - xstart;
+                xstart = timeline.getCustomTime();
+                xend = new Date(xstart.getTime() + xwidth);
+                // ---
 
                 var content = options.NEW;
                 var group = timeline.groups.length ? timeline.groups[0].content : undefined;
