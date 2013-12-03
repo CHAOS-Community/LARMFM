@@ -26,6 +26,7 @@
 
                         this.title(this.data.Title);
                         this.starttime(this.data.StartTime);
+                        this.endtime(this.data.EndTime);
                     },
                     btnsave: function (data) {
                         //var i = 0;

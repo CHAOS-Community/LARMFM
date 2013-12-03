@@ -35,6 +35,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
 
             var metadataEditor = ko.observable();
             var metadataViews = ko.observableArray();
+            var metadataEditors = ko.observableArray();
 
             app.on('metadata:changedinview').then(function (editorvm) {
                 if (editorvm.data === undefined)
@@ -405,23 +406,29 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
 
             function onannotationadd() {
 
-                /*
-                var amd = {
-                    GUID: "02120d71-c88b-7523-273b-6790bf0b77a5",
-                    MetadataSchemaGUID: "50ad46c4-eaf1-42f6-9361-3f6b56c5f320",
-                    EditingUserGUID: "7d2db0e4-8cfd-4ecf-92e8-3eba34914011",
-                    EditingUser: "Thomas Lynge",
-                    DateCreated: "05-04-2013 09:07:15",
-                    LanguageCode: "da",
-                    StartTime: "00:07:45.9780000",
-                    EndTime: "00:08:40.1880000",
-                    Title: "STEMMER"
-                };
+                var sel = timeline.getSelection();
+                if (sel.length) {
+                    if (sel[0].row != undefined) {
+                        var row = sel[0].row;
+                        var dat = timeline.getItem(row);
 
-                var annedit = new metadatafac.MetadataView();
-                annedit.setview("annotationedit", amd, true);
-                metadataEditor(annedit);
-                */
+                        var amd = {
+                            GUID: "02120d71-c88b-7523-273b-6790bf0b77a5",
+                            MetadataSchemaGUID: "50ad46c4-eaf1-42f6-9361-3f6b56c5f320",
+                            EditingUserGUID: "7d2db0e4-8cfd-4ecf-92e8-3eba34914011",
+                            EditingUser: "Thomas Lynge",
+                            DateCreated: "05-04-2013 09:07:15",
+                            LanguageCode: "da",
+                            StartTime: format.getTimeStringFromDate(dat.start),
+                                EndTime: format.getTimeStringFromDate(dat.end),
+                            Title: dat.content
+                        };
+
+                        var annedit = new metadatafac.MetadataView();
+                        annedit.setview("annotationedit", amd);
+                        metadataEditors.push(annedit);
+                    }
+                }
             }
 
             function onannotationselect() {
@@ -614,6 +621,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 playerdebug: playerdebug,
                 metadataEditor: metadataEditor,
                 metadataViews: metadataViews,
+                metadataEditors: metadataEditors,
                 activate: function (param) {
                     if (param !== undefined) {
                         var id = getParameterByName('id', param);

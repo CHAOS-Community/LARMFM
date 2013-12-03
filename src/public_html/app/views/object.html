@@ -16,7 +16,9 @@
 <button type="button" class="btn" data-bind="click: pause">Pause</button>
 <hr />
 <h1>Metadata</h1>
-<div data-bind="compose: metadataEditor"></div>
+<div data-bind="foreach: metadataEditors">
+    <div data-bind="compose: view"></div>
+</div>
 <div data-bind="foreach: metadataViews">
     <div data-bind="compose: view"></div>
 </div>
