@@ -3,8 +3,9 @@
 
             var annotationedit = function () {
                 this.data = null;
-                this.title = ko.observable("");
+                this.title = ko.observable("TEST");
                 this.starttime = ko.observable("");
+                this.endtime = ko.observable("");
             };
 
 

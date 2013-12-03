@@ -266,7 +266,7 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                     $("#timelinescroll").scrollLeft(conwdt / (totalvalue / startdiff));
 
                 var range = timeline.getVisibleChartRange();
-                timeline2.setVisibleChartRange(range.start, range.end);
+                //timeline2.setVisibleChartRange(range.start, range.end);
 
                 return;
 
@@ -285,8 +285,8 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 if (update)
                     timeline.setVisibleChartRange(ts, te);
 
-                var range = timeline.getVisibleChartRange();
-                timeline2.setVisibleChartRange(range.start, range.end);
+                //var range = timeline.getVisibleChartRange();
+                //timeline2.setVisibleChartRange(range.start, range.end);
             }
 
             function getTimelineDate(d, millisecoffset) {
@@ -398,8 +398,30 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
                 google.visualization.events.addListener(timeline, 'select', onannotationselect);
                 google.visualization.events.addListener(timeline, 'edit', onannotationedit); // NOT FIRED!
                 google.visualization.events.addListener(timeline, 'change', onannotationchange);
+                google.visualization.events.addListener(timeline, 'add', onannotationadd);
 
-                addTimeline2();
+                //addTimeline2();
+            }
+
+            function onannotationadd() {
+
+                /*
+                var amd = {
+                    GUID: "02120d71-c88b-7523-273b-6790bf0b77a5",
+                    MetadataSchemaGUID: "50ad46c4-eaf1-42f6-9361-3f6b56c5f320",
+                    EditingUserGUID: "7d2db0e4-8cfd-4ecf-92e8-3eba34914011",
+                    EditingUser: "Thomas Lynge",
+                    DateCreated: "05-04-2013 09:07:15",
+                    LanguageCode: "da",
+                    StartTime: "00:07:45.9780000",
+                    EndTime: "00:08:40.1880000",
+                    Title: "STEMMER"
+                };
+
+                var annedit = new metadatafac.MetadataView();
+                annedit.setview("annotationedit", amd, true);
+                metadataEditor(annedit);
+                */
             }
 
             function onannotationselect() {
@@ -564,13 +586,13 @@ define(['durandal/app', 'knockout', 'mods/portal', 'mods/state', 'factory/object
             }
 
             function onrangechange1() {
-                var range = timeline.getVisibleChartRange();
-                timeline2.setVisibleChartRange(range.start, range.end);
+                //var range = timeline.getVisibleChartRange();
+                //timeline2.setVisibleChartRange(range.start, range.end);
             }
 
             function onrangechange2() {
-                var range = timeline2.getVisibleChartRange();
-                timeline.setVisibleChartRange(range.start, range.end);
+                //var range = timeline2.getVisibleChartRange();
+                //timeline.setVisibleChartRange(range.start, range.end);
             }
 
             function getParameterByName(name, str) {
