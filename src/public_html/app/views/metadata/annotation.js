@@ -5,6 +5,7 @@
                 this.data = null;
                 this.title = ko.observable("");
                 this.starttime = ko.observable("");
+                this.collapsed = ko.observable(true);
             };
 
 
@@ -32,6 +33,9 @@
                         //app.trigger('metadata:edit', this);
                         
                         app.trigger('metadata:changedinview', this);
+                    },
+                    btnexpand: function () {
+                        this.collapsed(!this.collapsed());
                     }
 
                 };
