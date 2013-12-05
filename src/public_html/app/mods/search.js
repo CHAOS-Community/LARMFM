@@ -304,6 +304,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                     oi.isselected(objectselector.contains(oi.id()));
                     oi.title("" + r.Title);
                     if (r.Type == "Radio") {
+                        r.Id = "bf99b5b4-07e7-4acf-9726-0416e21f91df"; // TEST
                         oi.hash('#!object/id=' + r.Id);
                         oi.type("radio");
                     }
