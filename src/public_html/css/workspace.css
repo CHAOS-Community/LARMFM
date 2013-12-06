@@ -144,3 +144,8 @@ div.order {
     margin:1px;
     overflow: hidden;
 }
+
+
+.wshide {
+    display:none;
+}

@@ -4,19 +4,21 @@
 <div id="larmplayer">Loading the player...</div>
 <!--<div id="customTime">&nbsp;</div>
 <p></p>-->
+<div><input type="checkbox" data-bind="checked: cbgroupannotations" />Grupper annotationer</div>
 <div id="mytimeline"></div>
 <div id="timelines"></div>
 <div id="timelinescroll" style="width: 100%; overflow-x: scroll">
     <div id="timelinescrollcontent" style="width:1px;height:1px"></div>
 </div>
-<div><input type="checkbox" data-bind="checked: cbgroupannotations" />Grupper annotationer</div>
-<div>Player position: <span data-bind="html: playerposition"></span></div>
-<div>Player debug: <span data-bind="html: playerdebug"></span></div>
-<button type="button" class="btn" data-bind="click: play">Play</button>
-<button type="button" class="btn" data-bind="click: pause">Pause</button>
+<div>
+<button type="button" class="btn" data-bind="click: play">Play</button> <button type="button" class="btn" data-bind="click: pause">Pause</button>
+&nbsp;Player position: <span data-bind="html: playerposition"></span> - Player debug: <span data-bind="html: playerdebug"></span>
+</div>
 <hr />
 <h1>Metadata</h1>
-<div data-bind="compose: metadataEditor"></div>
+<div data-bind="foreach: metadataEditors">
+    <div data-bind="compose: view"></div>
+</div>
 <div data-bind="foreach: metadataViews">
     <div data-bind="compose: view"></div>
 </div>

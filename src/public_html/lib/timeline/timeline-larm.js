@@ -2159,13 +2159,13 @@ links.Timeline.prototype.repaintNavigation = function () {
             //navBar.className = "timeline-navigation ui-widget ui-state-highlight ui-corner-all";
             navBar.className = "timeline-navigation";
             if (options.groupsOnRight) {
-                navBar.style.left = '10px';
+                navBar.style.left = '0px';
             }
             else {
-                navBar.style.right = '10px';
+                navBar.style.right = '0px';
             }
             if (options.axisOnTop) {
-                navBar.style.top = '50px';
+                navBar.style.top = '38px';
             }
             else {
                 navBar.style.top = '10px';

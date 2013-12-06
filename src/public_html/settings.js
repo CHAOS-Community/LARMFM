@@ -31,9 +31,9 @@ Settings.Search = {
         { title: "Sendetidspunkt (nyeste først)", id: "2", value: "PubStartDate+desc" },
         { title: "Titel (a til z)", id: "3", value: "Title+asc" },
         { title: "Title (z til a)", id: "4", value: "Title+desc" },
-        { title: "Antal annotationer (flest først)", id: "5", value: "Annotation-Count+desc" },
-        { title: "LARM OCR Parsing (mindst først)", id: "6", value: "OCR-Report_float+asc" },
-        { title: "LARM OCR Parsing (højest først)", id: "7", value: "OCR-Report_float+desc" }
+        { title: "Antal annotationer (flest først)", id: "5", value: "AnnotationCount+desc" }//,
+        //{ title: "LARM OCR Parsing (mindst først)", id: "6", value: "OCR-Report_float+asc" },
+        //{ title: "LARM OCR Parsing (højest først)", id: "7", value: "OCR-Report_float+desc" }
     ],
     objecttypefilter: [
         { fid: "0", title: "Alt", value: "" },
@@ -61,6 +61,10 @@ Settings.Search = {
         // key
         { key: "m00000000-0000-0000-0000-0000df820000_da_all" }
     ]
+};
+
+Settings.Object = {
+    FileInfosSchemaGuid: '00000000-0000-0000-0000-0000dd820000'
 };
 
 Settings.MetadataSchemas = [
