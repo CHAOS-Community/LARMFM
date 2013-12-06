@@ -1,9 +1,10 @@
-﻿define(function () {
+﻿define(['knockout'] ,function (ko) {
 
     var data;
     var playlist;
     var mediaImage;
     var isplaying = true; // autoplay
+    var duration = ko.observable(0);
 
     var STATE_INIT = 0;
     var STATE_GETDURATION = 1;
@@ -106,6 +107,14 @@
             if (e.position < playlist[idx].start) {
                 jwplayer().seek(playlist[idx].start);
             }
+            else if (e.position > playlist[idx].end) {
+                
+                if(idx+1 == playlist.length)
+                    isplaying = false;
+                else
+                    jwplayer().playlistItem(idx+1);
+            }
+
         }
         else if (state == STATE_DURATIONOK) {
             jwplayer().play(isplaying);
@@ -117,16 +126,24 @@
             item.fileduration = e.duration;
 
             // Duration missing?
+            var dur = 0;
             for (var i = 0; i < playlist.length; i++) {
                 if (playlist[i].fileduration == 0) {
                     jwplayer().playlistItem(i);
                     return;
                 }
+                var start = playlist[i].start;
+                var end = playlist[i].end;
+                if (end == 0) {
+                    end = playlist[i].fileduration;
+                }
+                dur += end - start;
             }
 
             if (idx != 0) {
                 jwplayer().playlistItem(0);
             }
+            duration(dur);
             state = STATE_DURATIONOK;
         }
     }
@@ -139,7 +156,8 @@
                 return;
 
             setupPlayer();
-        }
+        },
+        duration: duration
         
     };
 });

@@ -387,6 +387,9 @@ define([
                 //metadataViews.push(larmprogrameditor2);
 
                 player.init(r);
+                player.duration.subscribe(function (newValue) {
+                    var programduration = newValue;
+                });
 
                 for (var j = 0; j < r.Metadatas.length; j++) {
                     if (r.Metadatas[j].MetadataSchemaGuid == mdsguid) {
