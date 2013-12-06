@@ -113,9 +113,13 @@
                 else
                     jwplayer().playlistItem(idx+1);
             }
-
-            // TODO: calculate position
-            position(10);
+            else {
+                // Calculate position
+                var pos = e.position - playlist[idx].start;
+                if (idx == 1)
+                    pos += playlist[0].end - playlist[0].start;
+                position(pos);
+            }
         }
         else if (state == STATE_DURATIONOK) {
             jwplayer().play(isplaying);
