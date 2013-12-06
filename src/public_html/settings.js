@@ -63,6 +63,10 @@ Settings.Search = {
     ]
 };
 
+Settings.Object = {
+    FileInfosSchemaGuid: '00000000-0000-0000-0000-0000dd820000'
+};
+
 Settings.MetadataSchemas = [
     {
         guid: '00000000-0000-0000-0000-0000dd820000',

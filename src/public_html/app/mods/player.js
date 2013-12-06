@@ -3,7 +3,7 @@
     var data;
     var playlist;
     var mediaImage;
-    var isplaying = false;
+    var isplaying = true; // autoplay
 
     var STATE_INIT = 0;
     var STATE_GETDURATION = 1;
@@ -14,16 +14,42 @@
     function createPlaylist() {
         
         playlist = [];
+
+        // Parse FileInfos
+        // <Larm.FileInfos><Larm.FileInfo><StartOffSetMS>3840000</StartOffSetMS><EndOffSetMS>0</EndOffSetMS><FileName>P2_1800_2000_890121_001.mp3</FileName><Index>0</Index></Larm.FileInfo><Larm.FileInfo><StartOffSetMS>0</StartOffSetMS><EndOffSetMS>1320000</EndOffSetMS><FileName>P2_2000_2200_890121_001.mp3</FileName><Index>1</Index></Larm.FileInfo></Larm.FileInfos>
+        var fileinfo = [];
+        for (var i = 0; i < data.Metadatas.length; i++) {
+            var md = data.Metadatas[i];
+            if (md.MetadataSchemaGuid == Settings.Object.FileInfosSchemaGuid) {
+                var xml = md.MetadataXml;
+                xml = xml.replace(/\./g, '_');
+                var x2js = new X2JS();
+                var json = x2js.xml_str2json(xml);
+                for (var j = 0; j < json.Larm_FileInfos.Larm_FileInfo.length; j++) {
+                    var info = json.Larm_FileInfos.Larm_FileInfo[j];
+                    var index = parseInt(info.Index, 10);
+                    var start = parseInt(info.StartOffSetMS, 10) / 1000;    // Should be in seconds for jwplayer.
+                    var end = parseInt(info.EndOffSetMS, 10) / 1000;
+                    fileinfo[index] = { start: start, end: end };
+                }
+                break;
+            }
+        }
+
+        // Parse Files
         if (data.Files.length > 0) {
             for (var i = 0; i < data.Files.length; i++) {
                 var ft = data.Files[i].FormatType;
                 if (ft == "Audio") {
+                    var fi = fileinfo[i];
+                    if (fi === undefined)
+                        return;
                     playlist.push(
                         {
                             file: data.Files[i].URL,
                             fileduration: 0,
-                            start: 0,
-                            end: 0
+                            start: fi.start,
+                            end: fi.end
                         }
                         );
                 }
@@ -39,9 +65,6 @@
 
         createPlaylist();
         
-        //if (mediaUrls.length == 0)
-        //    return;
-
         mediaUrlsIdx = 0;
 
         state = STATE_GETDURATION;
@@ -77,7 +100,12 @@
         if (state == STATE_READY) {
             var s = jwplayer().getState();
             if (!isplaying && s == "PLAYING")
-                jwplayer.play(false);
+                jwplayer().play(false);
+            
+            var idx = jwplayer().getPlaylistIndex();
+            if (e.position < playlist[idx].start) {
+                jwplayer().seek(playlist[idx].start);
+            }
         }
         else if (state == STATE_DURATIONOK) {
             jwplayer().play(isplaying);
@@ -103,11 +131,6 @@
         }
     }
 
-    function getfilesduration() {
-        
-    }
-
-
     return {
         init: function (objectdata) {
             data = objectdata;
@@ -116,7 +139,6 @@
                 return;
 
             setupPlayer();
-            //getfilesduration();
         }
         
     };
