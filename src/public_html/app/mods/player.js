@@ -3,7 +3,7 @@
     var data;
     var playlist;
     var mediaImage;
-    var isplaying = true; // autoplay
+    var isplaying = false;
     var duration = ko.observable(0);
 
     var STATE_INIT = 0;
@@ -70,16 +70,12 @@
 
         state = STATE_GETDURATION;
 
-        //jwplayer("larmplayer").setup({
-        //    file: mediaUrls[mediaUrlsIdx],
-        //    width: 1,
-        //    height: 1,
-        //    image: mediaImage,
-        //    controls: true
-        //});
-
         jwplayer("larmplayer").setup({
-            playlist: playlist
+            playlist: playlist,
+            width: 400,
+            height: 30,
+            image: mediaImage,
+            controls: true
         });
 
 
@@ -132,12 +128,11 @@
                     jwplayer().playlistItem(i);
                     return;
                 }
-                var start = playlist[i].start;
-                var end = playlist[i].end;
-                if (end == 0) {
-                    end = playlist[i].fileduration;
-                }
-                dur += end - start;
+
+                if (playlist[i].end == 0)
+                    playlist[i].end = playlist[i].fileduration;
+
+                dur += playlist[i].end - playlist[i].start;
             }
 
             if (idx != 0) {
@@ -157,7 +152,16 @@
 
             setupPlayer();
         },
-        duration: duration
+        duration: duration,
+        play: function () {
+            isplaying = true;
+            jwplayer().play(true);
+        },
+        pause: function () {
+            isplaying = false;
+            jwplayer().play(false);
+        }
+
         
     };
 });

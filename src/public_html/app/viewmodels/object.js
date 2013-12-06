@@ -132,18 +132,18 @@ define([
                 data.addColumn('boolean', 'editable');
                 data.addColumn('string', 'id');
 
-                //var t = new Date(2010,7,23,16,30,15);
-                // 1990-02-19T22:00:00
-                var part_dt = publication().split("T");
-                var part_d = part_dt[0].split("-");
-                var part_t = part_dt[1].split(":");
-                var t = new Date(part_d[0], part_d[1], part_d[2], part_t[0], part_t[1], part_t[2]);
-                //playertime = t;
-                //playertime_start = t.getTime();
-                //playertime_end = t.getTime() + 74 * 60 * 1000;
+                ////var t = new Date(2010,7,23,16,30,15);
+                //// 1990-02-19T22:00:00
+                //var part_dt = publication().split("T");
+                //var part_d = part_dt[0].split("-");
+                //var part_t = part_dt[1].split(":");
+                //var t = new Date(part_d[0], part_d[1], part_d[2], part_t[0], part_t[1], part_t[2]);
+                ////playertime = t;
+                ////playertime_start = t.getTime();
+                ////playertime_end = t.getTime() + 74 * 60 * 1000;
                 playertime = new Date(2000, 1, 1, 0, 0, 0, 0);
                 playertime_start = playertime.getTime();
-                playertime_end = playertime.getTime() + 74 * 60 * 1000;
+                playertime_end = playertime.getTime() + player.duration() * 1000;
 
                 //// LOAD METADATA
                 //var dataarray = [];
@@ -388,7 +388,7 @@ define([
 
                 player.init(r);
                 player.duration.subscribe(function (newValue) {
-                    var programduration = newValue;
+                    inittimeline();
                 });
 
                 for (var j = 0; j < r.Metadatas.length; j++) {
@@ -753,10 +753,10 @@ define([
                     inittimeline();
                 },
                 play: function () {
-                    jwplayer().play(true);
+                    player.play();
                 },
                 pause: function () {
-                    jwplayer().play(false);
+                    player.pause();
                 },
 
                 saveMetadata: function () {
