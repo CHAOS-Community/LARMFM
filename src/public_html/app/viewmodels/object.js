@@ -443,6 +443,7 @@ define([
 
                 playerready = true;
 
+                return;
 
                 jwplayer("larmplayer").setup({
                     file: mediaurl(),

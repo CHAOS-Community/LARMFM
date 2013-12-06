@@ -304,7 +304,8 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                     oi.isselected(objectselector.contains(oi.id()));
                     oi.title("" + r.Title);
                     if (r.Type == "Radio") {
-                        r.Id = "bf99b5b4-07e7-4acf-9726-0416e21f91df"; // TEST
+                        //r.Id = "bf99b5b4-07e7-4acf-9726-0416e21f91df"; // TEST: objekt med annotationer. 1 fil.
+                        r.Id = "598e81b1-2d86-443c-92de-a9ffb83b2193"; // TEST: En japaner i Berlin. 2 filer.
                         oi.hash('#!object/id=' + r.Id);
                         oi.type("radio");
                     }
