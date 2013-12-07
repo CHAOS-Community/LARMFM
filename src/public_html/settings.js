@@ -9,6 +9,7 @@ Settings.brandModule = "brand/larm";
 //Settings.servicePath = "http://api.test.chaos-systems.com";
 //Settings.servicePath = "http://api.chaos-systems.com";
 Settings.servicePath = "http://api.larm.fm";
+Settings.wayfPath = "https://wayf.larm.fm";
 Settings.clientGUID = "3D652FD1-33FA-40F7-A440-A942A1317F99";
 
 Settings.accessPointGuid = "00000000-0000-0000-0000-000007000000";

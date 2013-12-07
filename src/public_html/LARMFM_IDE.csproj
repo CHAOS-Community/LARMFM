@@ -60,6 +60,7 @@
     <Content Include="app\factory\metadata.js" />
     <Content Include="app\mods\jsonformfields.js" />
     <Content Include="app\mods\player.js" />
+    <Content Include="app\viewmodels\wayflogin.js" />
     <Content Include="app\views\metadata\annotationedit.html" />
     <Content Include="app\views\metadata\annotationedit.js" />
     <Content Include="app\views\metadata\annotation.html" />
@@ -79,6 +80,7 @@
     <Content Include="app\views\metadata\larmprogramedit.js" />
     <Content Include="app\views\metadata\test.html" />
     <Content Include="app\views\object.html" />
+    <Content Include="app\views\wayflogin.html" />
     <Content Include="app\widgets\Readme.md" />
     <Content Include="favicon.ico" />
     <Content Include="index.html" />
@@ -212,7 +214,6 @@
     <Content Include="lib\bootstrap\js\bootstrap.js" />
     <Content Include="lib\bootstrap\js\bootstrap.min.js" />
     <Content Include="lib\chaos\CHAOS.Portal.Client.PortalClient.js" />
-    <Content Include="lib\chaos\PortalClient.js" />
     <Content Include="lib\chaos\PortalClient.min.js" />
     <Content Include="lib\durandal\css\durandal.css" />
     <Content Include="lib\durandal\images\icon.png" />
