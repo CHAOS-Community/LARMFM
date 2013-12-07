@@ -75,7 +75,7 @@
 
         jwplayer("larmplayer").setup({
             playlist: playlist,
-            width: 400,
+            width: "100%",
             height: 30,
             image: mediaImage,
             controls: true
