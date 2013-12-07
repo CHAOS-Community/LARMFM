@@ -5,12 +5,15 @@
     var mediaImage;
     var isplaying = false;
     var duration = ko.observable(0);
+    var position = ko.observable(0);
 
     var STATE_INIT = 0;
     var STATE_GETDURATION = 1;
     var STATE_DURATIONOK = 2;
     var STATE_READY = 3;
     var state = STATE_INIT;
+
+    var onTimeCallback;
 
     function createPlaylist() {
         
@@ -110,7 +113,13 @@
                 else
                     jwplayer().playlistItem(idx+1);
             }
-
+            else {
+                // Calculate position
+                var pos = e.position - playlist[idx].start;
+                if (idx == 1)
+                    pos += playlist[0].end - playlist[0].start;
+                position(pos);
+            }
         }
         else if (state == STATE_DURATIONOK) {
             jwplayer().play(isplaying);
@@ -144,6 +153,8 @@
     }
 
     return {
+        duration: duration,
+        position: position,
         init: function (objectdata) {
             data = objectdata;
 
@@ -152,7 +163,6 @@
 
             setupPlayer();
         },
-        duration: duration,
         play: function () {
             isplaying = true;
             jwplayer().play(true);
@@ -161,7 +171,5 @@
             isplaying = false;
             jwplayer().play(false);
         }
-
-        
     };
 });

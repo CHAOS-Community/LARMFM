@@ -387,9 +387,23 @@ define([
                 //metadataViews.push(larmprogrameditor2);
 
                 player.init(r);
+                player.position.subscribe(function (position) {
+                    playerposition(position);
+                    if (!onTimeChangeActive) {
+                        timeline.setCustomTime(playertime.getTime() + playerposition() * 1000);
+                        var r = timeline.getVisibleChartRange();
+                        playerdebug(timestr(r.start) + " - " + timestr(r.end));
+
+                        if (timeline_centered) {
+                            timeline.centerTimeline();
+                        }
+                    }
+                });
                 player.duration.subscribe(function (newValue) {
                     inittimeline();
                 });
+
+
 
                 for (var j = 0; j < r.Metadatas.length; j++) {
                     if (r.Metadatas[j].MetadataSchemaGuid == mdsguid) {
