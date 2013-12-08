@@ -115,7 +115,7 @@ define([
                     timestart = timeline.start() + timestart * 1000;
                     timeend = timeline.start() + timeend * 1000;
 
-                    dataarray.push([new Date(timestart), new Date(timeend), content, true, amd.GUID]);
+                    dataarray.push([new Date(timestart), new Date(timeend), content, true, amd.Id]);
 
                     var annview = new metadatafac.MetadataView();
                     annview.setview("annotation", amd);

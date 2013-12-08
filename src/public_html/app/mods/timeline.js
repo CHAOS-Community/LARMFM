@@ -236,6 +236,16 @@
         timeline.redraw();
     }
 
+    function getAnnotation(guid) {
+
+        var r = data.xf;
+        for (var i = 0; i < r.length; i++) {
+            if (r[i].c[4].v == guid) {
+                return r[i].c;
+            }
+        }
+    }
+
     return {
         state: state,
         start: start,
@@ -258,6 +268,7 @@
             }
         },
         isReady: isReady,
-        addData: addData
+        addData: addData,
+        getAnnotation: getAnnotation
     };
 });
