@@ -1,9 +1,10 @@
-define(function () {
+define(['knockout'], function (ko) {
 
-    var onAppReadyList = [];
-
-    var isAppReady = false;
+	var onAppReadyList = [];
+	var isAppReady = false;
+	var isAuthenticatedObservable = ko.observable(false);
     var client = CHAOS.Portal.Client.Initialize(Settings.servicePath);
+	
     client.SessionAcquired().Add(function (session)
     {
         isAppReady = true;
@@ -13,9 +14,13 @@ define(function () {
         onAppReadyList = [];
 
     });
+	client.SessionAuthenticated().Add(function() {
+		isAuthenticatedObservable(true);
+	});
 
     return {
-        client: client,
+    	client: client,
+    	isAuthenticated: isAuthenticatedObservable,
         isAppReady: isAppReady,
         onAppReady: function (callback) {
             if (isAppReady)

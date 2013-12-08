@@ -18,9 +18,12 @@
                     </div>                    
                     <ul class="nav pull-right">
                         <li class="divider-vertical"></li>
-                        <li><a href="#" data-bind="click:loginbtnclick">Login</a></li>
+						<li data-bind="visible: !isAuthenticated()"><a href="#" data-bind="click:loginbtnclick">Login</a></li>
+						<li data-bind="visible: !isAuthenticated()"><a href="#" data-bind="click:WayfLogin">wayf</a></li>
+						<li data-bind="visible: isAuthenticated"><a href="#" data-bind="click:LogOut">Log out</a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
+</div>

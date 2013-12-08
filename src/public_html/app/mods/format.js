@@ -127,6 +127,19 @@ define(function() {
         return getDigit2(date.getHours()) + ':' + getDigit2(date.getMinutes()) + ':' + getDigit2(date.getSeconds()) + '.' + date.getMilliseconds();
     }
 
+
+    function getSecondsFromString(timestr) {
+        return getMillisecondsFromString(timestr) / 1000;
+    }
+
+    function getMillisecondsFromString(timestr) {
+        var h = parseInt(timestr.substring(0, 2));
+        var m = parseInt(timestr.substring(3, 5));
+        var s = parseInt(timestr.substring(6, 8));
+        var ms = parseInt(timestr.substring(9, 12));
+        return ms + s * 1000 + m * 1000 * 60 + h * 1000 * 60 * 60;
+    }
+
     return {
         getParamByName: getParamByName,
         getSolrDateStr: getSolrDateStr,
@@ -136,6 +149,8 @@ define(function() {
         getDateFromQueryDateStr: getDateFromQueryDateStr,
         getSolrFilterFromDateRangeStr: getSolrFilterFromDateRangeStr,
         getDateFromSolrDateString: getDateFromSolrDateString,
-        getTimeStringFromDate: getTimeStringFromDate
+        getTimeStringFromDate: getTimeStringFromDate,
+        getMillisecondsFromString: getMillisecondsFromString,
+        getSecondsFromString: getSecondsFromString
     };
 });

@@ -1,4 +1,4 @@
-﻿define(['knockout'] ,function (ko) {
+﻿define(['knockout'], function (ko) {
 
     var data;
     var playlist;
@@ -16,7 +16,7 @@
     var onTimeCallback;
 
     function createPlaylist() {
-        
+
         playlist = [];
 
         // Parse FileInfos
@@ -68,14 +68,14 @@
     function setupPlayer() {
 
         createPlaylist();
-        
+
         mediaUrlsIdx = 0;
 
         state = STATE_GETDURATION;
 
         jwplayer("larmplayer").setup({
             playlist: playlist,
-            width: 400,
+            width: "100%",
             height: 30,
             image: mediaImage,
             controls: true
@@ -89,7 +89,7 @@
     }
 
     function onPlay() {
-        
+
     }
 
     function onPause() {
@@ -101,17 +101,17 @@
             var s = jwplayer().getState();
             if (!isplaying && s == "PLAYING")
                 jwplayer().play(false);
-            
+
             var idx = jwplayer().getPlaylistIndex();
             if (e.position < playlist[idx].start) {
                 jwplayer().seek(playlist[idx].start);
             }
             else if (e.position > playlist[idx].end) {
-                
-                if(idx+1 == playlist.length)
+
+                if (idx + 1 == playlist.length)
                     isplaying = false;
                 else
-                    jwplayer().playlistItem(idx+1);
+                    jwplayer().playlistItem(idx + 1);
             }
             else {
                 // Calculate position
@@ -152,6 +152,28 @@
         }
     }
 
+    // Returns program time in seconds.
+    function getProgramTimeFromFileTime(fileTimeInSeconds) {
+        var filetime = fileTimeInSeconds;
+        var fileduracc = 0; // filedurationaccumulated
+        var progtmacc = 0; // program time accumulated
+        for (var i = 0; i < playlist.length; i++) {
+            var pl = playlist[i];
+            if (filetime <= fileduracc + pl.fileduration) {
+                var localfiletime = filetime - fileduracc;
+                var reltime = Math.max(0, localfiletime - pl.start);
+                return progtmacc + reltime;
+            }
+            fileduracc += pl.fileduration;
+            progtmacc += pl.end - pl.start;
+        }
+        return 0;
+    }
+
+    function isReady() {
+        return duration() !== 0;
+    }
+
     return {
         duration: duration,
         position: position,
@@ -163,6 +185,7 @@
 
             setupPlayer();
         },
+        isReady: isReady,
         play: function () {
             isplaying = true;
             jwplayer().play(true);
@@ -170,6 +193,7 @@
         pause: function () {
             isplaying = false;
             jwplayer().play(false);
-        }
+        },
+        getProgramTimeFromFileTime: getProgramTimeFromFileTime
     };
 });

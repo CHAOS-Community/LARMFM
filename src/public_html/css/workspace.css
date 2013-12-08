@@ -149,3 +149,15 @@ div.order {
 .wshide {
     display:none;
 }
+
+/* WAYF LOGIN */
+
+.WayfLoginContainer {
+	background-color: white;
+}
+
+.WayfLoginContainer .LoginFrame {
+	width: 1000px;
+	height: 960px;
+	border: none;
+}
