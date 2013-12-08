@@ -154,7 +154,7 @@ define([
                         // Annotation View
                         CHAOS.Portal.Client.View.Get(
                             'Annotation', 'ProgramGUID:"' + obj.guid + '"',
-                            null, null, 0, 9999).WithCallback(annotationsReceived);
+                            'StartTime+ASC', null, 0, 9999).WithCallback(annotationsReceived);
 
                     }
                 },

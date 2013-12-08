@@ -74,8 +74,14 @@
 
         state = STATE_GETDURATION;
 
-        if (playlist.length > 0)
-            mediaUrl(playlist[0].file);
+        var mu = "";
+        for (var i = 0; i < playlist.length; i++) {
+            if(i > 0)
+                mu += "<br/>" + playlist[i].file;
+            else
+                mu += playlist[i].file;
+        }
+        mediaUrl(mu);
 
         jwplayer("larmplayer").setup({
             playlist: playlist,
