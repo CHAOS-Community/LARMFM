@@ -155,15 +155,17 @@
     // Returns program time in seconds.
     function getProgramTimeFromFileTime(fileTimeInSeconds) {
         var filetime = fileTimeInSeconds;
-        var fileduracc = 0; // filedurationaccumlated
+        var fileduracc = 0; // filedurationaccumulated
+        var progtmacc = 0; // program time accumulated
         for (var i = 0; i < playlist.length; i++) {
             var pl = playlist[i];
             if (filetime <= fileduracc + pl.fileduration) {
                 var localfiletime = filetime - fileduracc;
                 var reltime = Math.max(0, localfiletime - pl.start);
-                return reltime;
+                return progtmacc + reltime;
             }
             fileduracc += pl.fileduration;
+            progtmacc += pl.end - pl.start;
         }
         return 0;
     }
