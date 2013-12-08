@@ -1,7 +1,8 @@
 <h1 data-bind="html: title"></h1>
 <br />
-<!--<div>Url: <span data-bind="html: mediaurl"></span></div>-->
+<div><small><span data-bind="html: mediaUrl"></span></small></div>
 <div id="larmplayer">Loading the player...</div>
+<div style="height:8px"></div>
 <!--<div id="customTime">&nbsp;</div>
 <p></p>-->
 <!--<div><input type="checkbox" data-bind="checked: cbgroupannotations" />Grupper annotationer</div>-->
@@ -10,12 +11,12 @@
 <div id="timelinescroll" style="opacity: 0; width: 100%; overflow-x: scroll">
     <div id="timelinescrollcontent" style="width:1px;height:1px"></div>
 </div>
+<div style="height:8px"></div>
 <div>
 <button type="button" class="btn" data-bind="click: play">Play</button> <button type="button" class="btn" data-bind="click: pause">Pause</button>
 <!--&nbsp;Player position: <span data-bind="html: playerposition"></span> - Player debug: <span data-bind="html: playerdebug"></span>-->
 </div>
-<hr />
-<h1>Metadata</h1>
+<h3>Metadata</h3>
 <div data-bind="foreach: metadataEditors">
     <div data-bind="compose: view"></div>
 </div>

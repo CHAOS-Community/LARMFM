@@ -117,9 +117,9 @@ define([
 
                     dataarray.push([new Date(timestart), new Date(timeend), content, true, amd.GUID]);
 
-                    //var annview = new metadatafac.MetadataView();
-                    //annview.setview("annotation", amd);
-                    //metadataViews.push(annview);
+                    var annview = new metadatafac.MetadataView();
+                    annview.setview("annotation", amd);
+                    metadataViews.push(annview);
 
                 }
 
@@ -128,6 +128,7 @@ define([
             }
 
             return {
+                mediaUrl: player.mediaUrl,
                 title: title,
                 channel: channel,
                 publication: publication,

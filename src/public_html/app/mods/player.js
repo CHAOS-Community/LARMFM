@@ -2,6 +2,7 @@
 
     var data;
     var playlist;
+    var mediaUrl = ko.observable();
     var mediaImage;
     var isplaying = false;
     var duration = ko.observable(0);
@@ -27,7 +28,7 @@
             if (md.MetadataSchemaGuid == Settings.Object.FileInfosSchemaGuid) {
                 var xml = md.MetadataXml;
                 xml = xml.replace(/\./g, '_');
-                var x2js = new X2JS();
+                var x2js = new X2JS({ arrayAccessFormPaths: ['Larm_FileInfos.Larm_FileInfo'] });
                 var json = x2js.xml_str2json(xml);
                 for (var j = 0; j < json.Larm_FileInfos.Larm_FileInfo.length; j++) {
                     var info = json.Larm_FileInfos.Larm_FileInfo[j];
@@ -72,6 +73,9 @@
         mediaUrlsIdx = 0;
 
         state = STATE_GETDURATION;
+
+        if (playlist.length > 0)
+            mediaUrl(playlist[0].file);
 
         jwplayer("larmplayer").setup({
             playlist: playlist,
@@ -177,6 +181,7 @@
     return {
         duration: duration,
         position: position,
+        mediaUrl: mediaUrl,
         init: function (objectdata) {
             data = objectdata;
 
