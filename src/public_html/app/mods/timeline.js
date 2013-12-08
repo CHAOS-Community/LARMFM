@@ -1,6 +1,8 @@
 ﻿define(['knockout'], function (ko) {
 
     var timeline = undefined;
+    var state = ko.observable(0);
+    var ready = false;
     var data = undefined;
     var timelines = [];
     var datas = [];
@@ -71,6 +73,8 @@
         google.visualization.events.addListener(timeline, 'change', onannotationchange);
         google.visualization.events.addListener(timeline, 'add', onannotationadd);
 
+        ready = true;
+        state(1);
     }
 
     function onannotationadd() {
@@ -223,16 +227,19 @@
         return dt;
     }
 
-    function getMilliFromString(timestr) {
-        var h = parseInt(timestr.substring(0, 2));
-        var m = parseInt(timestr.substring(3, 5));
-        var s = parseInt(timestr.substring(6, 8));
-        var ms = parseInt(timestr.substring(9, 12));
+    function isReady() {
+        return ready;
+    }
 
-        return ms + s * 1000 + m * 1000 * 60 + h * 1000 * 60 * 60;
+    function addData(datarows) {
+        data.addRows(datarows);
+        timeline.redraw();
     }
 
     return {
+        state: state,
+        start: start,
+        end: end,
         // dur = duration in seconds
         init: function (dur) {
             duration = dur * 1000; // Convert to milliseconds
@@ -249,7 +256,8 @@
                     timeline.centerTimeline();
                 }
             }
-
-        }
+        },
+        isReady: isReady,
+        addData: addData
     };
 });
