@@ -269,6 +269,9 @@
         },
         isReady: isReady,
         addData: addData,
-        getAnnotation: getAnnotation
+        getAnnotation: getAnnotation,
+        editItem: function (id) {
+            timeline.editItem(id);
+        }
     };
 });

@@ -3002,6 +3002,9 @@ links.Timeline.prototype.onMouseUp = function (event) {
  * @param {Event}  event
  */
 links.Timeline.prototype.onDblClick = function (event) {
+
+    return;
+
     var params = this.eventParams,
         options = this.options,
         dom = this.dom,
@@ -6543,5 +6546,10 @@ links.Timeline.prototype.centerTimeline = function () {
     if (rs >= this.options.min && re <= this.options.max) {
         this.setVisibleChartRange(new Date(rs), new Date(re));
     }
+};
+
+links.Timeline.prototype.editItem = function (id) {
+    var r = this.getItemAndIndexByID(id);
+    alert("edit!");
 };
 /* ================================= */

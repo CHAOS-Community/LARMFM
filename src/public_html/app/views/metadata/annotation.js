@@ -37,7 +37,7 @@
                         var i = 0;
                         //parentcontext.$data.entereditmode(this);
                         //app.trigger('metadata:edit', this);
-                        
+                        this.timeline.editItem(data.data.Id);
                         app.trigger('metadata:changedinview', this);
                     },
                     btnexpand: function () {
