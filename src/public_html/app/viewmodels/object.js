@@ -112,8 +112,8 @@ define([
                     var timeend = format.getSecondsFromString(amd.EndTime);
                     timestart = player.getProgramTimeFromFileTime(timestart);
                     timeend = player.getProgramTimeFromFileTime(timeend);
-                    timestart = timeline.start + timestart * 1000;
-                    timeend = timeline.start + timeend * 1000;
+                    timestart = timeline.start() + timestart * 1000;
+                    timeend = timeline.start() + timeend * 1000;
 
                     dataarray.push([new Date(timestart), new Date(timeend), content, true, amd.GUID]);
 

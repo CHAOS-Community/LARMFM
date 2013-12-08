@@ -9,9 +9,9 @@
     var timeline_centered = true;
     var onTimeChangeActive = false;
 
-    var duration;
-    var start;
-    var end;
+    var duration = ko.observable(0);
+    var start = ko.observable(0);
+    var end = ko.observable(0);
 
     function initTimeline() {
         // Create and populate a data table.
@@ -24,8 +24,8 @@
         data.addColumn('string', 'id');
 
         var date = new Date(2000, 1, 1, 0, 0, 0, 0);
-        start = date.getTime();
-        end = start + duration;
+        start(date.getTime());
+        end(start() + duration());
 
         var options = {
             width: "100%",
@@ -44,8 +44,8 @@
             showButtonNew: true,
             animate: true,
             animateZoom: true,
-            min: start,
-            max: end
+            min: start(),
+            max: end()
         };
 
         $("#timelinescroll").css("opacity","1");
@@ -64,14 +64,14 @@
         // Draw our timeline with the created data and options
         timeline.draw(data, options);
 
-        timeline.setVisibleChartRange(start, end);
-        timeline.setCustomTime(start);
+        timeline.setVisibleChartRange(start(), end());
+        timeline.setCustomTime(start());
 
         // add, change, edit, delete, select
-        google.visualization.events.addListener(timeline, 'select', onannotationselect);
-        google.visualization.events.addListener(timeline, 'edit', onannotationedit); // NOT FIRED!
-        google.visualization.events.addListener(timeline, 'change', onannotationchange);
-        google.visualization.events.addListener(timeline, 'add', onannotationadd);
+        //google.visualization.events.addListener(timeline, 'select', onannotationselect);
+        //google.visualization.events.addListener(timeline, 'edit', onannotationedit); // NOT FIRED!
+        //google.visualization.events.addListener(timeline, 'change', onannotationchange);
+        //google.visualization.events.addListener(timeline, 'add', onannotationadd);
 
         ready = true;
         state(1);
@@ -155,7 +155,7 @@
     }
 
     function onTimeChanged(event) {
-        var timediff = event.time - start;
+        var timediff = event.time - start();
         jwplayer().seek(timediff / 1000);
         onTimeChangeActive = false;
     }
@@ -171,17 +171,17 @@
         var rangeobj = timeline.getVisibleChartRange();
         var rangevalue = rangeobj.end - rangeobj.start;
 
-        var pixelpervalue = duration / totalpixel;
+        var pixelpervalue = duration() / totalpixel;
 
         var scrollpos = $("#timelinescroll").scrollLeft();
         var res = totalpixel / (scrollpos);
 
-        var starttime = start + duration / res;
+        var starttime = start() + duration() / res;
         timeline.setVisibleChartRange(starttime, starttime + rangevalue);
     }
 
     function onRangeChange(event) {
-        var totalvalue = end - start;
+        var totalvalue = end() - start();
         var rangevalue = event.end - event.start;
         var totalpixel = $("#timelinescroll").width();
 
@@ -189,7 +189,7 @@
 
         $("#timelinescrollcontent").width(conwdt);
 
-        var startdiff = event.start - start;
+        var startdiff = event.start - start();
 
         ontimelinescrollingdisable = true;
         if (startdiff == 0)
@@ -242,13 +242,13 @@
         end: end,
         // dur = duration in seconds
         init: function (dur) {
-            duration = dur * 1000; // Convert to milliseconds
+            duration(dur * 1000); // Convert to milliseconds
             google.load("visualization", "1", { "callback": initTimeline });
         },
         // setTime: time = Seconds
         setPosition: function (position) {
             if (!onTimeChangeActive) {
-                timeline.setCustomTime(start + position * 1000); // Convert to milliseconds
+                timeline.setCustomTime(start() + position * 1000); // Convert to milliseconds
                 var r = timeline.getVisibleChartRange();
                 //playerdebug(timestr(r.start) + " - " + timestr(r.end));
 
