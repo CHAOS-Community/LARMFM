@@ -1,8 +1,9 @@
-﻿define(['durandal/app', 'knockout'],
-        function (app, ko) {
+﻿define(['durandal/app', 'knockout', 'mods/timeline', 'mods/xmlmanager', 'mods/format'],
+        function (app, ko, timeline, xmlmanager, format) {
 
             var annotationedit = function () {
                 this.data = null;
+                this.json = null;
                 this.title = ko.observable("");
                 this.description = ko.observable("");
                 this.starttime = ko.observable("");
@@ -16,6 +17,18 @@
                     // Private code here
                 };
 
+                var getField = function (field) {
+
+                    if (typeof field === "string")
+                        return field;
+
+                    if (typeof field === "object" && field.__cdata !== "undefined")
+                        return field.__cdata;
+
+                    return "";
+
+                };
+
                 return {
 
                     compositionComplete: function (child, parent, settings) {
@@ -24,11 +37,16 @@
                         // instance of MetadataEditor under factory.
                         //settings.bindingContext.$data.data
                         this.data = settings.bindingContext.$data.data;
+                        this.json = xmlmanager.toJsonDirect([], this.data.MetadataXml);
+                        //this.json = this.json["LARM.Annotation.Comment"];
 
-                        this.title(this.data.Title);
-                        this.description("");
-                        this.starttime(this.data.StartTime);
-                        this.endtime(this.data.EndTime);
+                        //var xml = xmlmanager.toXmlDirect(this.json);
+
+                        this.title(getField(this.json["LARM.Annotation.Comment"].Title));
+                        this.description(getField(this.json["LARM.Annotation.Comment"].Description));
+                        var tla = timeline.getAnnotation(this.data.Guid);
+                        this.starttime(format.getTimeStringFromDate(tla[0].v));
+                        this.endtime(format.getTimeStringFromDate(tla[1].v));
                     },
                     btnsave: function (data) {
                         //var i = 0;
