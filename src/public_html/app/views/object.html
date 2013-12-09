@@ -16,10 +16,11 @@
 <button type="button" class="btn" data-bind="click: play">Play</button> <button type="button" class="btn" data-bind="click: pause">Pause</button>
 <!--&nbsp;Player position: <span data-bind="html: playerposition"></span> - Player debug: <span data-bind="html: playerdebug"></span>-->
 </div>
-<h3>Metadata</h3>
+<hr />
 <div data-bind="foreach: metadataEditors">
     <div data-bind="compose: view"></div>
 </div>
+<h3>Metadata</h3>
 <div data-bind="foreach: metadataViews">
     <div data-bind="compose: view"></div>
 </div>

@@ -4,6 +4,10 @@ define(['durandal/app', 'knockout', 'mods/search', 'mods/state'],
 
             var name = ko.observable();
 
+            function metadataSchemasReceived(r) {
+                var j = 0;
+            }
+
             return {
                 items: search.items,
                 pagingitems: search.pagingitems,
@@ -36,6 +40,10 @@ define(['durandal/app', 'knockout', 'mods/search', 'mods/state'],
                         search.pageindex(data.index);
 
                     search.searchpaging();
+
+                    // TEST
+                    CHAOS.Portal.Client.MetadataSchema.Get(null, null).WithCallback(metadataSchemasReceived);
+
                 },
                 objtpfilteritems: search.objtpfilteritems,
                 sortitems: search.sortitems,

@@ -65,6 +65,7 @@
     <Content Include="app\viewmodels\object_tmp.js" />
     <Content Include="app\viewmodels\object_20131207.js" />
     <Content Include="app\viewmodels\wayflogin.js" />
+    <Content Include="app\views\metadata\anncommentedit.js" />
     <Content Include="app\views\metadata\annotationedit.html" />
     <Content Include="app\views\metadata\annotationedit.js" />
     <Content Include="app\views\metadata\annotation.html" />
@@ -82,6 +83,7 @@
     <Content Include="app\views\metadata\larmprogram.js" />
     <Content Include="app\views\metadata\larmprogramedit.html" />
     <Content Include="app\views\metadata\larmprogramedit.js" />
+    <Content Include="app\views\metadata\anncommentedit.html" />
     <Content Include="app\views\metadata\test.html" />
     <Content Include="app\views\object.html" />
     <Content Include="app\views\wayflogin.html" />

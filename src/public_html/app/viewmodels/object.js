@@ -38,17 +38,30 @@ define([
                 var d = editorvm.data;
 
                 objectmanager.getByGuid(d.Id, function (r) {
-                    var j = 0;
+
+                    metadataEditors.removeAll();
+                    var mds = r.Metadatas;
+                    for (var i = 0; i < mds.length; i++) {
+                        if (mds[i].MetadataSchemaGuid == 'd0edf6f9-caf0-ac41-b8b3-b0d950fdef4e') {
+                            var editor = new metadatafac.MetadataView();
+                            editor.setview("anncommentedit", mds[i]);
+                            metadataEditors.push(editor)
+                        }
+                    }
+
                 });
 
+                /*
+                metadataEditors.removeAll();
                 for (var i = 0; i < metadataViews().length; i++) {
-
                     var md = metadataViews()[i];
-
                     if (md.data == editorvm.data) {
-                        var j = 0;
+                        var annview = new metadatafac.MetadataView();
+                        annview.setview("annotationedit", md.data);
+                        metadataEditors.push(annview);
                     }
                 }
+                */
             });
 
             // Getting data from API.
