@@ -4405,6 +4405,7 @@ links.Timeline.prototype.getItem = function (index) {
     return properties;
 };
 
+// Param id (guid). Returns {item, index}
 links.Timeline.prototype.getItemAndIndexByID = function (id) {
     for (var i = 0; i < this.items.length; i++) {
         if (this.items[i].id == id)
@@ -6550,6 +6551,24 @@ links.Timeline.prototype.centerTimeline = function () {
 
 links.Timeline.prototype.editItem = function (id) {
     var r = this.getItemAndIndexByID(id);
-    alert("edit!");
+    var params = this.eventParams,
+    options = this.options,
+    dom = this.dom;
+
+    params.itemIndex = r.index;
+    var item = this.items[params.itemIndex];
+    this.selectItem(params.itemIndex);
+    this.trigger('select');
+    var isSelected = this.isSelected(params.itemIndex);
+    params.editItem = isSelected && this.isEditable(item);
+    if (params.editItem) {
+        params.itemStart = item.start;
+        params.itemEnd = item.end;
+        params.itemGroup = item.group;
+        params.itemLeft = item.start ? this.timeToScreen(item.start) : undefined;
+        params.itemRight = item.end ? this.timeToScreen(item.end) : undefined;
+    }
+
+    this.render();
 };
 /* ================================= */
