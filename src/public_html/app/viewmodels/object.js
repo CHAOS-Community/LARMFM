@@ -44,7 +44,7 @@ define([
                     for (var i = 0; i < mds.length; i++) {
                         if (mds[i].MetadataSchemaGuid == 'd0edf6f9-caf0-ac41-b8b3-b0d950fdef4e') {
                             var editor = new metadatafac.MetadataView();
-                            editor.setview("anncommentedit", mds[i]);
+                            editor.setview("anncommentedit", {guid: r.Id, metadata: mds[i]});
                             metadataEditors.push(editor)
                         }
                     }

@@ -37,14 +37,14 @@
                         // instance of MetadataEditor under factory.
                         //settings.bindingContext.$data.data
                         this.data = settings.bindingContext.$data.data;
-                        this.json = xmlmanager.toJsonDirect([], this.data.MetadataXml);
+                        this.json = xmlmanager.toJsonDirect([], this.data.metadata.MetadataXml);
                         //this.json = this.json["LARM.Annotation.Comment"];
 
                         //var xml = xmlmanager.toXmlDirect(this.json);
 
                         this.title(getField(this.json["LARM.Annotation.Comment"].Title));
                         this.description(getField(this.json["LARM.Annotation.Comment"].Description));
-                        var tla = timeline.getAnnotation(this.data.Guid);
+                        var tla = timeline.getAnnotation(this.data.guid);
                         this.starttime(format.getTimeStringFromDate(tla[0].v));
                         this.endtime(format.getTimeStringFromDate(tla[1].v));
                     },
