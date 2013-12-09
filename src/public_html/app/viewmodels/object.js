@@ -9,10 +9,11 @@ define([
     'factory/metadata',
     'mods/format',
     'mods/player',
-    'mods/timeline'
+    'mods/timeline',
+    'mods/objectmanager'
 ],
         function (app, ko, portal, state, objfac, xmlman,
-            jsonformfields, metadatafac, format, player, timeline) {
+            jsonformfields, metadatafac, format, player, timeline, objectmanager) {
 
             var obj = {};
             obj.guid;
@@ -30,6 +31,25 @@ define([
 
             var metadataViews = ko.observableArray();
             var metadataEditors = ko.observableArray();
+
+            app.on('metadata:edit').then(function (editorvm) {
+                if (editorvm.data === undefined)
+                    return;
+                var d = editorvm.data;
+
+                objectmanager.getByGuid(d.Id, function (r) {
+                    var j = 0;
+                });
+
+                for (var i = 0; i < metadataViews().length; i++) {
+
+                    var md = metadataViews()[i];
+
+                    if (md.data == editorvm.data) {
+                        var j = 0;
+                    }
+                }
+            });
 
             // Getting data from API.
             function metadataReceived(data) {
@@ -116,7 +136,7 @@ define([
                     timeend = timeline.start() + timeend * 1000;
 
                     // not editable
-                    dataarray.push([new Date(timestart), new Date(timeend), content, true, amd.Id]);
+                    dataarray.push([new Date(timestart), new Date(timeend), content, false, amd.Id]);
 
                     var annview = new metadatafac.MetadataView();
                     annview.setview("annotation", amd);

@@ -69,7 +69,7 @@
 
         // add, change, edit, delete, select
         //google.visualization.events.addListener(timeline, 'select', onannotationselect);
-        //google.visualization.events.addListener(timeline, 'edit', onannotationedit); // NOT FIRED!
+        google.visualization.events.addListener(timeline, 'edit', onannotationedit); // NOT FIRED!
         //google.visualization.events.addListener(timeline, 'change', onannotationchange);
         //google.visualization.events.addListener(timeline, 'add', onannotationadd);
 

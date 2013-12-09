@@ -4773,6 +4773,7 @@ links.Timeline.prototype.unselectItem = function() {
             var domItem = item.dom;
             domItem.style.cursor = '';
             item.unselect();
+            item.editable = false;
         }
 
         this.selection = undefined;
@@ -6560,6 +6561,7 @@ links.Timeline.prototype.editItem = function (id) {
     this.selectItem(params.itemIndex);
     this.trigger('select');
     var isSelected = this.isSelected(params.itemIndex);
+    item.editable = true;
     params.editItem = isSelected && this.isEditable(item);
     if (params.editItem) {
         params.itemStart = item.start;

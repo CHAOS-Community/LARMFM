@@ -59,6 +59,7 @@
   <ItemGroup>
     <Content Include="app\factory\metadata.js" />
     <Content Include="app\mods\jsonformfields.js" />
+    <Content Include="app\mods\objectmanager.js" />
     <Content Include="app\mods\player.js" />
     <Content Include="app\mods\timeline.js" />
     <Content Include="app\viewmodels\object_tmp.js" />
