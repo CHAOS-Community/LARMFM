@@ -32,6 +32,10 @@ define([
             var metadataViews = ko.observableArray();
             var metadataEditors = ko.observableArray();
 
+            app.on('metadata:save').then(function (e) {
+
+            })
+
             app.on('metadata:changed_timeline').then(function (e) {
                 var d = e.data;
                 if (metadataEditors().length == 1) {

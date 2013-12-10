@@ -180,6 +180,59 @@
         return 0;
     }
 
+    // Returns file time in seconds
+    function getFileTimeFromProgramTime(programTimeInSeconds) {
+        var pt = programTimeInSeconds;
+        var ptacc = 0;
+        var ftacc = 0; 
+        for (var i = 0; i < playlist.length; i++) {
+            var pl = playlist[i];
+            var programduration = pl.end - pl.start;
+            if (pt > programduration + ptacc) {
+                ptacc += programduration;
+                ftacc += pl.fileduration;
+            }
+            else {
+                return (pt - ptacc) + ftacc + pl.start;
+            }
+        }
+
+        return 0;
+    }
+
+    /*
+    public double GetGlobalFilePosition(double visualposition)
+		{
+			visualposition = System.Math.Max(0, visualposition);
+			visualposition = System.Math.Min(_uiwidth, visualposition);
+
+			double ratio = visualposition / _uiwidth;
+
+			double visualdurationacc = 0;
+			foreach (var f in _program.Files)
+				visualdurationacc += (f.OffsetEndMaximum - f.OffsetBeginMinimum);
+
+			double relativepos = visualdurationacc * ratio;
+			double fileduration = 0;
+			double filedurationacc = 0;
+			double visualduration = 0;
+			visualdurationacc = 0;
+			foreach (var f in _program.Files)
+			{
+				fileduration = f.Duration;
+				visualduration = f.OffsetEndMaximum - f.OffsetBeginMinimum;
+				if (relativepos <= (visualdurationacc + visualduration))
+				{
+					return filedurationacc + (relativepos - visualdurationacc) + f.OffsetBeginMinimum;
+				}
+				visualdurationacc += visualduration;
+				filedurationacc += fileduration;
+			}
+
+			return 0;
+		}
+    */
+
     function isReady() {
         return duration() !== 0;
     }
@@ -205,6 +258,7 @@
             isplaying = false;
             jwplayer().play(false);
         },
-        getProgramTimeFromFileTime: getProgramTimeFromFileTime
+        getProgramTimeFromFileTime: getProgramTimeFromFileTime,
+        getFileTimeFromProgramTime: getFileTimeFromProgramTime
     };
 });
