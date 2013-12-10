@@ -95,6 +95,7 @@ div.timeline-axis-text {
 
 /*===================================================*/
 /* TIMELINE EVENT */
+/*
 div.timeline-event {
     border: none;
     background-color: white;
@@ -105,6 +106,7 @@ div.timeline-event-content {
     white-space: nowrap;
     overflow: hidden;
     background: #ffffff;
+*/
     /*
     border-color: #bbbbbb;
     text-align: center;
@@ -113,15 +115,17 @@ div.timeline-event-content {
     border-radius: 5px;
     -moz-border-radius: 5px;
     */
+    /*
     font-family: Arial;
     font-size: 9px;
 }
-
+        */
+/*
 div.timeline-event-selected {
     background-color: #C0D8E1;
     border-color: #0000ff;
 }
-
+*/
 /*===================================================*/
 
 div.timeline-groups-axis {

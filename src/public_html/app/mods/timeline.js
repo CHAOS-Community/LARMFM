@@ -1,4 +1,4 @@
-﻿define(['knockout'], function (ko) {
+﻿define(['durandal/app', 'knockout'], function (app, ko) {
 
     var timeline = undefined;
     var state = ko.observable(0);
@@ -69,8 +69,8 @@
 
         // add, change, edit, delete, select
         //google.visualization.events.addListener(timeline, 'select', onannotationselect);
-        //google.visualization.events.addListener(timeline, 'edit', onannotationedit); // NOT FIRED!
-        //google.visualization.events.addListener(timeline, 'change', onannotationchange);
+        google.visualization.events.addListener(timeline, 'edit', onannotationedit); // NOT FIRED!
+        google.visualization.events.addListener(timeline, 'change', onannotationchange);
         //google.visualization.events.addListener(timeline, 'add', onannotationadd);
 
         ready = true;
@@ -125,7 +125,6 @@
             if (sel[0].row != undefined) {
                 var row = sel[0].row;
                 var dat = timeline.getItem(row);
-                //alert("EDIT: " +getGuidFromContent( dat.content));
             }
         }
     }
@@ -136,16 +135,7 @@
             if (sel[0].row != undefined) {
                 var row = sel[0].row;
                 var dat = timeline.getItem(row);
-
-                for (var i = 0; i < metadataViews().length; i++) {
-
-                    var md = metadataViews()[i];
-                    if (md.data.GUID == dat.id) {
-                        md.data.self.starttime(format.getTimeStringFromDate(dat.start));
-                    }
-                }
-
-                //alert("CHANGED: " + getGuidFromContent(dat.content));
+                app.trigger('metadata:changed_timeline', {data: dat});
             }
         }
     }
@@ -236,6 +226,16 @@
         timeline.redraw();
     }
 
+    function getAnnotation(guid) {
+
+        var r = data.xf;
+        for (var i = 0; i < r.length; i++) {
+            if (r[i].c[4].v == guid) {
+                return r[i].c;
+            }
+        }
+    }
+
     return {
         state: state,
         start: start,
@@ -258,6 +258,36 @@
             }
         },
         isReady: isReady,
-        addData: addData
+        addData: addData,
+        getAnnotation: getAnnotation,
+        editItem: function (id) {
+            timeline.editItem(id);
+        },
+        getSelection: function () {
+            var sel = timeline.getSelection();
+            if (sel.length) {
+                if (sel[0].row != undefined) {
+                    var row = sel[0].row;
+                    var dat = timeline.getItem(row);
+                    return dat;
+                }
+            }
+            return undefined;
+        },
+        changeItem: function (start, end, content) {
+            var sel = timeline.getSelection();
+            if (sel.length) {
+                if (sel[0].row != undefined) {
+                    var row = sel[0].row;
+                    var dat = timeline.getItem(row);
+
+                    var s = start;
+                    var e = end;
+                    var c = content;
+
+                    timeline.changeItem(row, { start: s, end: e, content: c });
+                }
+            }
+        }
     };
 });

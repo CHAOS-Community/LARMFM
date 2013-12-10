@@ -9,10 +9,11 @@ define([
     'factory/metadata',
     'mods/format',
     'mods/player',
-    'mods/timeline'
+    'mods/timeline',
+    'mods/objectmanager'
 ],
         function (app, ko, portal, state, objfac, xmlman,
-            jsonformfields, metadatafac, format, player, timeline) {
+            jsonformfields, metadatafac, format, player, timeline, objectmanager) {
 
             var obj = {};
             obj.guid;
@@ -30,6 +31,85 @@ define([
 
             var metadataViews = ko.observableArray();
             var metadataEditors = ko.observableArray();
+
+            app.on('metadata:save').then(function (e) {
+                metadataEditors.removeAll();
+                /*
+                CHAOS.Portal.Client.Metadata.Set(
+                obj.id, obj.metadataSchemaGuid, "da",
+                1, xmldata, null).WithCallback(metadataSaved);
+                */
+            })
+
+            function metadataSaved(r) {
+                var i = 0;
+            }
+
+            app.on('metadata:changed_timeline').then(function (e) {
+                var d = e.data;
+                if (metadataEditors().length == 1) {
+                    var ed = metadataEditors()[0];
+                    if (ed.data.guid == d.id) {
+                        ed.data.self.starttime(format.getTimeStringFromDate(d.start));
+                        ed.data.self.endtime(format.getTimeStringFromDate(d.end));
+                    }
+                }
+            });
+
+            app.on('metadata:changed_editor').then(function (e) {
+                var dat = timeline.getSelection();
+                if (dat == undefined)
+                    return;
+
+                if (metadataEditors().length == 1) {
+                    var ed = metadataEditors()[0];
+                    if (ed.data.guid == dat.id) {
+                        var s = ed.data.self.starttime();
+                        var e = ed.data.self.endtime();
+                        var t = ed.data.self.title();
+
+                        if (s == "" || e == "")
+                            return;
+
+                        var timestart = timeline.start() + format.getMillisecondsFromString(s);
+                        var timeend = timeline.start() + format.getMillisecondsFromString(e);
+                        var content = '<div title="' + t + '">&nbsp;' + t + '</div>'
+                        timeline.changeItem(new Date(timestart), new Date(timeend), content);
+                    }
+                }
+            });
+
+            app.on('metadata:edit').then(function (editorvm) {
+                if (editorvm.data === undefined)
+                    return;
+                var d = editorvm.data;
+
+                objectmanager.getByGuid(d.Id, function (r) {
+
+                    metadataEditors.removeAll();
+                    var mds = r.Metadatas;
+                    for (var i = 0; i < mds.length; i++) {
+                        if (mds[i].MetadataSchemaGuid == 'd0edf6f9-caf0-ac41-b8b3-b0d950fdef4e') {
+                            var editor = new metadatafac.MetadataView();
+                            editor.setview("anncommentedit", {guid: r.Id, metadata: mds[i]});
+                            metadataEditors.push(editor)
+                        }
+                    }
+
+                });
+
+                /*
+                metadataEditors.removeAll();
+                for (var i = 0; i < metadataViews().length; i++) {
+                    var md = metadataViews()[i];
+                    if (md.data == editorvm.data) {
+                        var annview = new metadatafac.MetadataView();
+                        annview.setview("annotationedit", md.data);
+                        metadataEditors.push(annview);
+                    }
+                }
+                */
+            });
 
             // Getting data from API.
             function metadataReceived(data) {
@@ -115,11 +195,12 @@ define([
                     timestart = timeline.start() + timestart * 1000;
                     timeend = timeline.start() + timeend * 1000;
 
-                    dataarray.push([new Date(timestart), new Date(timeend), content, true, amd.GUID]);
+                    // not editable
+                    dataarray.push([new Date(timestart), new Date(timeend), content, false, amd.Id]);
 
-                    //var annview = new metadatafac.MetadataView();
-                    //annview.setview("annotation", amd);
-                    //metadataViews.push(annview);
+                    var annview = new metadatafac.MetadataView();
+                    annview.setview("annotation", amd);
+                    metadataViews.push(annview);
 
                 }
 
@@ -128,6 +209,7 @@ define([
             }
 
             return {
+                mediaUrl: player.mediaUrl,
                 title: title,
                 channel: channel,
                 publication: publication,
@@ -153,7 +235,7 @@ define([
                         // Annotation View
                         CHAOS.Portal.Client.View.Get(
                             'Annotation', 'ProgramGUID:"' + obj.guid + '"',
-                            null, null, 0, 9999).WithCallback(annotationsReceived);
+                            'StartTime+ASC', null, 0, 9999).WithCallback(annotationsReceived);
 
                     }
                 },

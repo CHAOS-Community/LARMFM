@@ -37,21 +37,33 @@ div.timeline-axis-text-major {
 }
 
 div.timeline-event {
-    color: #1A1A1A;
-    border-color: #97B0F8;
-    background-color: #D5DDF6;
+    color: #585858;
+    border-color: #bbbbbb;
+    /*background-color: #D5DDF6;*/
     display: inline-block;
+    font-family: Arial;
+    font-size: 9px;
+
+background: -moz-linear-gradient(top,  rgba(248,248,248,0.7) 0%, rgba(255,255,255,0.7) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(248,248,248,0.7)), color-stop(100%,rgba(255,255,255,0.7))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(248,248,248,0.7) 0%,rgba(255,255,255,0.7) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(248,248,248,0.7) 0%,rgba(255,255,255,0.7) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(248,248,248,0.7) 0%,rgba(255,255,255,0.7) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(248,248,248,0.7) 0%,rgba(255,255,255,0.7) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3f8f8f8', endColorstr='#b3ffffff',GradientType=0 ); /* IE6-9 */
+
 }
 
 div.timeline-event-selected {
-    border-color: #FFC200;
-    background-color: #FFF785;
     z-index: 999;
+    border: 1px solid #68abf9;
+	font-weight: normal;
+	color: #212121;
 }
 
 div.timeline-event-cluster {
     /* TODO: use another color or pattern? */
-    background: #97B0F8 url('img/cluster_bg.png');
+    background: #585858 url('img/cluster_bg.png');
     color: white;
 }
 div.timeline-event-cluster div.timeline-event-dot {
@@ -96,7 +108,7 @@ div.timeline-event-line {
 }
 
 div.timeline-event-content {
-    margin: 5px;
+    margin: 0px;
     white-space: nowrap;
     overflow: hidden;
 }

@@ -854,7 +854,8 @@ links.Timeline.prototype.repaintFrame = function() {
     // main frame
     if (!dom.frame) {
         dom.frame = document.createElement("DIV");
-        dom.frame.className = "timeline-frame ui-widget ui-widget-content ui-corner-all";
+        //dom.frame.className = "timeline-frame ui-widget ui-widget-content ui-corner-all";
+        dom.frame.className = "timeline-frame ui-corner-all";
         dom.container.appendChild(dom.frame);
         needsReflow = true;
     }
@@ -3001,6 +3002,9 @@ links.Timeline.prototype.onMouseUp = function (event) {
  * @param {Event}  event
  */
 links.Timeline.prototype.onDblClick = function (event) {
+
+    return;
+
     var params = this.eventParams,
         options = this.options,
         dom = this.dom,
@@ -3667,9 +3671,12 @@ links.Timeline.ItemBox.prototype.reflow = function () {
  */
 links.Timeline.ItemBox.prototype.select = function () {
     var dom = this.dom;
-    links.Timeline.addClassName(dom, 'timeline-event-selected ui-state-active');
-    links.Timeline.addClassName(dom.line, 'timeline-event-selected ui-state-active');
-    links.Timeline.addClassName(dom.dot, 'timeline-event-selected ui-state-active');
+    //links.Timeline.addClassName(dom, 'timeline-event-selected ui-state-active');
+    //links.Timeline.addClassName(dom.line, 'timeline-event-selected ui-state-active');
+    //links.Timeline.addClassName(dom.dot, 'timeline-event-selected ui-state-active');
+    links.Timeline.addClassName(dom, 'timeline-event-selected');
+    links.Timeline.addClassName(dom.line, 'timeline-event-selected');
+    links.Timeline.addClassName(dom.dot, 'timeline-event-selected');
 };
 
 /**
@@ -3678,9 +3685,12 @@ links.Timeline.ItemBox.prototype.select = function () {
  */
 links.Timeline.ItemBox.prototype.unselect = function () {
     var dom = this.dom;
-    links.Timeline.removeClassName(dom, 'timeline-event-selected ui-state-active');
-    links.Timeline.removeClassName(dom.line, 'timeline-event-selected ui-state-active');
-    links.Timeline.removeClassName(dom.dot, 'timeline-event-selected ui-state-active');
+    //links.Timeline.removeClassName(dom, 'timeline-event-selected ui-state-active');
+    //links.Timeline.removeClassName(dom.line, 'timeline-event-selected ui-state-active');
+    //links.Timeline.removeClassName(dom.dot, 'timeline-event-selected ui-state-active');
+    links.Timeline.removeClassName(dom, 'timeline-event-selected');
+    links.Timeline.removeClassName(dom.line, 'timeline-event-selected');
+    links.Timeline.removeClassName(dom.dot, 'timeline-event-selected');
 };
 
 /**
@@ -3786,14 +3796,20 @@ links.Timeline.ItemBox.prototype.updateDOM = function () {
         divBox.firstChild.innerHTML = this.content;
 
         // update class
-        divBox.className = "timeline-event timeline-event-box ui-widget ui-state-default";
-        divLine.className = "timeline-event timeline-event-line ui-widget ui-state-default";
-        divDot.className  = "timeline-event timeline-event-dot ui-widget ui-state-default";
+        //divBox.className = "timeline-event timeline-event-box ui-widget ui-state-default";
+        //divLine.className = "timeline-event timeline-event-line ui-widget ui-state-default";
+        //divDot.className  = "timeline-event timeline-event-dot ui-widget ui-state-default";
+        divBox.className = "timeline-event timeline-event-box";
+        divLine.className = "timeline-event timeline-event-line";
+        divDot.className = "timeline-event timeline-event-dot";
 
         if (this.isCluster) {
-            links.Timeline.addClassName(divBox, 'timeline-event-cluster ui-widget-header');
-            links.Timeline.addClassName(divLine, 'timeline-event-cluster ui-widget-header');
-            links.Timeline.addClassName(divDot, 'timeline-event-cluster ui-widget-header');
+            //links.Timeline.addClassName(divBox, 'timeline-event-cluster ui-widget-header');
+            //links.Timeline.addClassName(divLine, 'timeline-event-cluster ui-widget-header');
+            //links.Timeline.addClassName(divDot, 'timeline-event-cluster ui-widget-header');
+            links.Timeline.addClassName(divBox, 'timeline-event-cluster');
+            links.Timeline.addClassName(divLine, 'timeline-event-cluster');
+            links.Timeline.addClassName(divDot, 'timeline-event-cluster');
         }
 
         // add item specific class name when provided
@@ -3933,7 +3949,8 @@ links.Timeline.ItemRange.prototype = new links.Timeline.Item();
  */
 links.Timeline.ItemRange.prototype.select = function () {
     var dom = this.dom;
-    links.Timeline.addClassName(dom, 'timeline-event-selected ui-state-active');
+    //links.Timeline.addClassName(dom, 'timeline-event-selected ui-state-active');
+    links.Timeline.addClassName(dom, 'timeline-event-selected');
 };
 
 /**
@@ -3942,7 +3959,8 @@ links.Timeline.ItemRange.prototype.select = function () {
  */
 links.Timeline.ItemRange.prototype.unselect = function () {
     var dom = this.dom;
-    links.Timeline.removeClassName(dom, 'timeline-event-selected ui-state-active');
+    //links.Timeline.removeClassName(dom, 'timeline-event-selected ui-state-active');
+    links.Timeline.removeClassName(dom, 'timeline-event-selected');
 };
 
 /**
@@ -4017,10 +4035,12 @@ links.Timeline.ItemRange.prototype.updateDOM = function () {
         divBox.firstChild.innerHTML = this.content;
 
         // update class
-        divBox.className = "timeline-event timeline-event-range ui-widget ui-state-default";
+        //divBox.className = "timeline-event timeline-event-range ui-widget ui-state-default";
+        divBox.className = "timeline-event timeline-event-range";
 
         if (this.isCluster) {
-            links.Timeline.addClassName(divBox, 'timeline-event-cluster ui-widget-header');
+            //links.Timeline.addClassName(divBox, 'timeline-event-cluster ui-widget-header');
+            links.Timeline.addClassName(divBox, 'timeline-event-cluster');
         }
 
         // add item specific class name when provided
@@ -4160,7 +4180,8 @@ links.Timeline.ItemDot.prototype.reflow = function () {
  */
 links.Timeline.ItemDot.prototype.select = function () {
     var dom = this.dom;
-    links.Timeline.addClassName(dom, 'timeline-event-selected ui-state-active');
+    //links.Timeline.addClassName(dom, 'timeline-event-selected ui-state-active');
+    links.Timeline.addClassName(dom, 'timeline-event-selected');
 };
 
 /**
@@ -4169,7 +4190,8 @@ links.Timeline.ItemDot.prototype.select = function () {
  */
 links.Timeline.ItemDot.prototype.unselect = function () {
     var dom = this.dom;
-    links.Timeline.removeClassName(dom, 'timeline-event-selected ui-state-active');
+    //links.Timeline.removeClassName(dom, 'timeline-event-selected ui-state-active');
+    links.Timeline.removeClassName(dom, 'timeline-event-selected');
 };
 
 /**
@@ -4256,11 +4278,14 @@ links.Timeline.ItemDot.prototype.updateDOM = function () {
 
         // update classes
         divBox.className = "timeline-event-dot-container";
-        divDot.className  = "timeline-event timeline-event-dot ui-widget ui-state-default";
+        //divDot.className  = "timeline-event timeline-event-dot ui-widget ui-state-default";
+        divDot.className = "timeline-event timeline-event-dot";
 
         if (this.isCluster) {
-            links.Timeline.addClassName(divBox, 'timeline-event-cluster ui-widget-header');
-            links.Timeline.addClassName(divDot, 'timeline-event-cluster ui-widget-header');
+            //links.Timeline.addClassName(divBox, 'timeline-event-cluster ui-widget-header');
+            //links.Timeline.addClassName(divDot, 'timeline-event-cluster ui-widget-header');
+            links.Timeline.addClassName(divBox, 'timeline-event-cluster');
+            links.Timeline.addClassName(divDot, 'timeline-event-cluster');
         }
 
         // add item specific class name when provided
@@ -4380,6 +4405,7 @@ links.Timeline.prototype.getItem = function (index) {
     return properties;
 };
 
+// Param id (guid). Returns {item, index}
 links.Timeline.prototype.getItemAndIndexByID = function (id) {
     for (var i = 0; i < this.items.length; i++) {
         if (this.items[i].id == id)
@@ -4747,6 +4773,7 @@ links.Timeline.prototype.unselectItem = function() {
             var domItem = item.dom;
             domItem.style.cursor = '';
             item.unselect();
+            item.editable = false;
         }
 
         this.selection = undefined;
@@ -6521,5 +6548,29 @@ links.Timeline.prototype.centerTimeline = function () {
     if (rs >= this.options.min && re <= this.options.max) {
         this.setVisibleChartRange(new Date(rs), new Date(re));
     }
+};
+
+links.Timeline.prototype.editItem = function (id) {
+    var r = this.getItemAndIndexByID(id);
+    var params = this.eventParams,
+    options = this.options,
+    dom = this.dom;
+
+    params.itemIndex = r.index;
+    var item = this.items[params.itemIndex];
+    this.selectItem(params.itemIndex);
+    this.trigger('select');
+    var isSelected = this.isSelected(params.itemIndex);
+    item.editable = true;
+    params.editItem = isSelected && this.isEditable(item);
+    if (params.editItem) {
+        params.itemStart = item.start;
+        params.itemEnd = item.end;
+        params.itemGroup = item.group;
+        params.itemLeft = item.start ? this.timeToScreen(item.start) : undefined;
+        params.itemRight = item.end ? this.timeToScreen(item.end) : undefined;
+    }
+
+    this.render();
 };
 /* ================================= */
