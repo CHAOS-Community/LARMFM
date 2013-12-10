@@ -8,6 +8,21 @@
                 this.description = ko.observable("");
                 this.starttime = ko.observable("");
                 this.endtime = ko.observable("");
+
+                this.starttime.subscribe(function (v) { app.trigger('metadata:changed_editor', {})});
+                this.endtime.subscribe(function (v) { app.trigger('metadata:changed_editor', {}) });
+                this.title.subscribe(function (v) { app.trigger('metadata:changed_editor', {}) });
+
+                //this.starttime.subscribe(function (val) {
+                //    app.trigger('metadata:changed_editor', { start: this.starttime(), end: this.endtime(), title: this.title() });
+                //});
+                //this.endtime.subscribe(function (val) {
+                //    app.trigger('metadata:changed_editor', { start: this.starttime(), end: this.endtime(), title: this.title() });
+                //});
+                //this.title.subscribe(function (val) {
+                //    app.trigger('metadata:changed_editor', { start: this.starttime(), end: this.endtime(), title: this.title() });
+                //});
+
             };
 
 
@@ -30,7 +45,6 @@
                 };
 
                 return {
-
                     compositionComplete: function (child, parent, settings) {
                         settings.bindingContext.$data.data["self"] = this;
                         // settings.bindingContext.$data represents an

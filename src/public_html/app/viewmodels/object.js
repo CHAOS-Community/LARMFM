@@ -32,6 +32,40 @@ define([
             var metadataViews = ko.observableArray();
             var metadataEditors = ko.observableArray();
 
+            app.on('metadata:changed_timeline').then(function (e) {
+                var d = e.data;
+                if (metadataEditors().length == 1) {
+                    var ed = metadataEditors()[0];
+                    if (ed.data.guid == d.id) {
+                        ed.data.self.starttime(format.getTimeStringFromDate(d.start));
+                        ed.data.self.endtime(format.getTimeStringFromDate(d.end));
+                    }
+                }
+            });
+
+            app.on('metadata:changed_editor').then(function (e) {
+                var dat = timeline.getSelection();
+                if (dat == undefined)
+                    return;
+
+                if (metadataEditors().length == 1) {
+                    var ed = metadataEditors()[0];
+                    if (ed.data.guid == dat.id) {
+                        var s = ed.data.self.starttime();
+                        var e = ed.data.self.endtime();
+                        var t = ed.data.self.title();
+
+                        if (s == "" || e == "")
+                            return;
+
+                        var timestart = timeline.start() + format.getMillisecondsFromString(s);
+                        var timeend = timeline.start() + format.getMillisecondsFromString(e);
+                        var content = '<div title="' + t + '">&nbsp;' + t + '</div>'
+                        timeline.changeItem(new Date(timestart), new Date(timeend), content);
+                    }
+                }
+            });
+
             app.on('metadata:edit').then(function (editorvm) {
                 if (editorvm.data === undefined)
                     return;

@@ -1,9 +1,31 @@
-﻿<div>Rediger annotation</div>
+﻿<div><h3>Rediger annotation</h3></div>
 <div>
-    Start time: <input type="text" data-bind="value: starttime" /><br />
-    End time: <input type="text" data-bind="value: endtime" /><br />
-    Title: <input type="text" data-bind="value: title" /><br />
-    Beskrivelse: <input type="text" data-bind="value: description" /><br />
-    <button data-bind="click: btnsave">Gem</button>
+    <table>
+        <tr>
+            <td>Start time:</td>
+            <td>End time:</td>
+        </tr>
+        <tr>
+            <td><input type="text" data-bind="value: starttime" /></td>
+            <td><input type="text" data-bind="value: endtime" /></td>
+        </tr>
+        <tr>
+            <td colspan="2">Title: </td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="text" data-bind="value: title" /></td>
+        </tr>
+        <tr>
+            <td colspan="2">Beskrivelse: </td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="text" data-bind="value: description" /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button data-bind="click: btnsave">Gem</button>
+            </td>
+        </tr>
+    </table>
 </div>
 <hr />
