@@ -29,6 +29,7 @@
 
                     if (typeof field === "object" && field.__cdata !== "undefined") {
                         field.__cdata == value;
+                        return;
                     }
 
                     field = value;
@@ -61,14 +62,29 @@
 
                     },
                     btnsave: function (data) {
-                        setField(this.json["LARM.Annotation.Comment"].Title, this.title());
-                        setField(this.json["LARM.Annotation.Comment"].Description, this.description());
+                        if(this.json["LARM.Annotation.Comment"].Title.__cdata === undefined)
+                            this.json["LARM.Annotation.Comment"].Title = this.title();
+                        else
+                            this.json["LARM.Annotation.Comment"].Title.__cdata = this.title();
+
+                        if (this.json["LARM.Annotation.Comment"].Description.__cdata === undefined)
+                            this.json["LARM.Annotation.Comment"].Description = this.description();
+                        else
+                            this.json["LARM.Annotation.Comment"].Description.__cdata = this.description();
                         
                         var start_sec = player.getFileTimeFromProgramTime(format.getSecondsFromString(this.starttime()));
                         var end_sec = player.getFileTimeFromProgramTime(format.getSecondsFromString(this.endtime()));
 
                         start_str = format.getTimeStringFromDate(new Date(timeline.start() + start_sec*1000));
                         end_str = format.getTimeStringFromDate(new Date(timeline.start() + end_sec * 1000));
+
+                        this.json["LARM.Annotation.Comment"]._StartTime = start_str;
+                        this.json["LARM.Annotation.Comment"]._EndTime = end_str;
+
+                        var xml = xmlmanager.toXmlDirect(this.json);
+
+                        app.trigger("metadata:save", { guid: this.data.guid, xml: xml });
+                        // this.data.guid er det guid på annotation object?
                     }
 
                 };

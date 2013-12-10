@@ -33,8 +33,17 @@ define([
             var metadataEditors = ko.observableArray();
 
             app.on('metadata:save').then(function (e) {
-
+                metadataEditors.removeAll();
+                /*
+                CHAOS.Portal.Client.Metadata.Set(
+                obj.id, obj.metadataSchemaGuid, "da",
+                1, xmldata, null).WithCallback(metadataSaved);
+                */
             })
+
+            function metadataSaved(r) {
+                var i = 0;
+            }
 
             app.on('metadata:changed_timeline').then(function (e) {
                 var d = e.data;
