@@ -32,17 +32,21 @@ define([
             var metadataViews = ko.observableArray();
             var metadataEditors = ko.observableArray();
 
-            app.on('metadata:save').then(function (e) {
-                metadataEditors.removeAll();
-                /*
+            app.on('metadata:save').then(function (e) {                
                 CHAOS.Portal.Client.Metadata.Set(
-                obj.id, obj.metadataSchemaGuid, "da",
-                1, xmldata, null).WithCallback(metadataSaved);
-                */
+                e.guid, e.schemaguid, "da",
+                1, e.xml, null).WithCallback(metadataSaved);
+                
             })
 
             function metadataSaved(r) {
-                var i = 0;
+
+                if (r.Error != null) {
+                    app.showMessage(r.Error.Message, "Error saving", ["OK", "Cancel"]);
+                    return;
+                }
+
+                metadataEditors.removeAll();
             }
 
             app.on('metadata:changed_timeline').then(function (e) {
