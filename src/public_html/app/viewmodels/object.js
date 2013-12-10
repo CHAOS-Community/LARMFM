@@ -190,7 +190,7 @@ define([
                 var amds = obj.anndata;
                 for (var i = 0; i < amds.length; i++) {
                     var amd = amds[i];
-                    var content = '<div title="' + amd.Title + '">&nbsp;' + amd.Title + '</div>'
+                    var content = '<div title="' + amd.Title + '" style="background-color:rgba(128, 128, 255, 0.2)">&nbsp;' + amd.Title + '</div>'
 
                     var timestart = format.getSecondsFromString(amd.StartTime);
                     var timeend = format.getSecondsFromString(amd.EndTime);
