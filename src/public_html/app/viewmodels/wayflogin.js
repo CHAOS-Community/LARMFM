@@ -1,7 +1,7 @@
 ﻿define(['plugins/dialog', 'mods/portal', 'jquery'], function (dialog, portal, jquery) {
 	var wayflogin = function () {
 		this._wayfWindow = null;
-		this.CanUseIframe = window && window.navigator && window.navigator.userAgent && (window.navigator.userAgent.indexOf("Chrome") != -1 || window.navigator.userAgent.indexOf("Firefox") != -1) && false;
+		this.CanUseIframe = window && window.navigator && window.navigator.userAgent && (window.navigator.userAgent.indexOf("Chrome") != -1 || window.navigator.userAgent.indexOf("Firefox") != -1);
 	};
 
 	wayflogin.prototype.compositionComplete = function (child, parent, settings) {
