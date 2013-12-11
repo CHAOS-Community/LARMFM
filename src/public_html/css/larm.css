@@ -30,6 +30,10 @@
     background-color: #002a80;
 }
 
+.btn-schema1-event {
+    background-color: rgba(0, 109, 204, 0.1);
+}
+
 .btn-schema2 {
     color: #ffffff;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
@@ -60,6 +64,10 @@
 .btn-schema2-badge,
 .btn-schema2-badge[href] {
     background-color: #802420;
+}
+
+.btn-schema2-event {
+    background-color: rgba(218, 79, 73, 0.2);
 }
 
 .btn-schema3 {
@@ -94,6 +102,10 @@
     background-color: #387038;
 }
 
+.btn-schema3-event {
+    background-color: rgba(91, 183, 91, 0.2);
+}
+
 .btn-schema4 {
     color: #ffffff;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
@@ -124,4 +136,8 @@
 .btn-schema4-badge,
 .btn-schema4-badge[href] {
     background-color: #ad6704;
+}
+
+.btn-schema4-event {
+    background-color: rgba(250, 167, 50, 0.2);
 }

@@ -1,4 +1,4 @@
-﻿define(['knockout'],function (ko) {
+﻿define(['durandal/app','knockout'],function (app, ko) {
 
     // SchemaItem class ----------------
     var SchemaItem = function () {
@@ -29,6 +29,11 @@
     SchemaItem.prototype.click = function () {
         this.isactive(!this.isactive());
         this.updateCss();
+        app.trigger("schema:change", this);
+    };
+    SchemaItem.prototype.getContent = function (title) {
+        //var content = '<div title="' + this.title() + '" style="background-color:rgba(128, 128, 255, 0.2)">&nbsp;' + this.title() + '</div>'
+        return '<div title="' + title + '" class="btn-schema' + this.cssNo + '-event">&nbsp;' + title + '</div>'
     };
     // ---------------------------------
 

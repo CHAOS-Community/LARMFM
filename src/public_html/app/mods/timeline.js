@@ -259,6 +259,10 @@
         },
         isReady: isReady,
         addData: addData,
+        clearData: function(){
+            data.removeRows(0, data.getNumberOfRows());
+            timeline.redraw();
+        },
         getAnnotation: getAnnotation,
         editItem: function (id) {
             timeline.editItem(id);
