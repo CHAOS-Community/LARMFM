@@ -88,6 +88,12 @@
     <Content Include="app\views\object.html" />
     <Content Include="app\views\wayflogin.html" />
     <Content Include="app\widgets\Readme.md" />
+    <Content Include="css\larm.css">
+      <DependentUpon>larm.less</DependentUpon>
+    </Content>
+    <Content Include="css\larm.min.css">
+      <DependentUpon>larm.less</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="index.html" />
     <Content Include="jsonform_test.html" />
@@ -249,6 +255,7 @@
     <Content Include="lib\i18next\i18next-1.6.0.js" />
     <Content Include="lib\i18next\i18next-1.6.0.min.js" />
     <Content Include="lib\durandal\images\Thumbs.db" />
+    <Content Include="css\larm.less" />
     <None Include="lib\jquery\jquery-1.9.1.intellisense.js" />
     <Content Include="lib\jquery\jquery-1.9.1.js" />
     <Content Include="lib\jquery\jquery-1.9.1.min.js" />

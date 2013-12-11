@@ -15,17 +15,49 @@ define([
         function (app, ko, portal, state, objfac, xmlman,
             jsonformfields, metadatafac, format, player, timeline, objectmanager) {
 
+            // SchemaItem class ----------------
+            var SchemaItem = function () {
+                this.self = this;
+                this.title = "";
+                this.count = 0;
+                this.isactive = false;
+                this.cssNo = 1;
+                this.cssBtn = ko.observable("");
+                this.cssBadge = ko.observable("");
+            };
+            SchemaItem.prototype.setCss = function (no) {
+                this.cssNo = no;
+                this.updateCss();
+            };
+            SchemaItem.prototype.updateCss = function () {
+                if (this.isactive) {
+                    this.cssBtn("btn btn-small btn-schema" + this.cssNo);
+                    this.cssBadge("badge pull-right wsobjecttypebatch btn-schema" + this.cssNo + "-badge");
+                }
+                else {
+                    this.cssBtn("btn btn-small");
+                    this.cssBadge("badge pull-right wsobjecttypebatch");
+                }
+            };
+            SchemaItem.prototype.click = function () {
+                this.isactive = !this.isactive;
+                this.updateCss();
+            };
+            // ---------------------------------
+
             var obj = {};
             obj.guid;
             obj.data;
             obj.anndata;
             obj.anndatacount;
+            obj.anndataschemacount = [];
 
             var title = ko.observable();
             var channel = ko.observable();
             var publication = ko.observable();
             var abstracttxt = ko.observable();
             var description = ko.observable();
+            var schemaItems = ko.observableArray([]);
 
             var playerposition = ko.observable(0);
 
@@ -186,10 +218,23 @@ define([
 
                 annotationsHaveBeenInserted = true;
 
+                // amd.MetadataSchemaGUID
+                // "d0edf6f9-caf0-ac41-b8b3-b0d950fdef4e" Comments
+                // "7bb8d425-6e60-9545-80f4-0765c5eb6be6" Lydkilder
+                obj.anndataschemacount["d0edf6f9-caf0-ac41-b8b3-b0d950fdef4e"] = 0;
+                obj.anndataschemacount["7bb8d425-6e60-9545-80f4-0765c5eb6be6"] = 0;
+
                 var dataarray = [];
                 var amds = obj.anndata;
                 for (var i = 0; i < amds.length; i++) {
                     var amd = amds[i];
+
+                    var schguid = amd.MetadataSchemaGUID;
+                    if (schguid in obj.anndataschemacount)
+                        obj.anndataschemacount[schguid] = obj.anndataschemacount[schguid] + 1;
+                    else
+                        obj.anndataschemacount[schguid] = 1;
+
                     var content = '<div title="' + amd.Title + '" style="background-color:rgba(128, 128, 255, 0.2)">&nbsp;' + amd.Title + '</div>'
 
                     var timestart = format.getSecondsFromString(amd.StartTime);
@@ -210,6 +255,17 @@ define([
 
                 timeline.addData(dataarray);
 
+                var i = 1;
+                for (var key in obj.anndataschemacount) {
+                    var s1 = new SchemaItem();
+                    s1.title = key;
+                    s1.count = obj.anndataschemacount[key];
+                    s1.isactive = s1.count > 0;
+                    s1.setCss(i);
+                    schemaItems.push(s1);
+                    i++;
+                }
+
             }
 
             return {
@@ -222,6 +278,7 @@ define([
 
                 metadataViews: metadataViews,
                 metadataEditors: metadataEditors,
+                schemaItems: schemaItems,
 
                 activate: function (param) {
                     if (param !== undefined) {

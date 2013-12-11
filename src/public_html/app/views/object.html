@@ -7,6 +7,18 @@
 <p></p>-->
 <!--<div><input type="checkbox" data-bind="checked: cbgroupannotations" />Grupper annotationer</div>-->
 <!--<div id="mytimeline"></div>-->
+
+<div class='btn-toolbar' class="pull-left">
+    <div class='btn-group pull-left'>
+        <!-- ko foreach: schemaItems -->
+        <a data-bind="attr: { 'class': cssBtn}, click: click">
+            <span class='pull-left' data-bind="html: title"></span>
+            <span data-bind="text: count, attr: { 'class': cssBadge}"></span>
+        </a>
+        <!-- /ko -->
+    </div>
+</div>
+
 <div id="timelines"></div>
 <div id="timelinescroll" style="opacity: 0; width: 100%; overflow-x: scroll">
     <div id="timelinescrollcontent" style="width:1px;height:1px"></div>
