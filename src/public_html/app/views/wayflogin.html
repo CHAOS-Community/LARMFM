@@ -1,3 +1,10 @@
 ﻿<div class="WayfLoginContainer">
+	<!-- ko if: CanUseIframe-->
 	<iframe class="LoginFrame"></iframe>
+	<!-- /ko -->
+	<!-- ko ifnot: CanUseIframe-->
+	<h3>Wayf Login</h3>
+	<p>Click the button below to open the wayf login window</p>
+	<button data-bind="click:OpenWindow">Open</button>
+	<!-- /ko -->
 </div>
