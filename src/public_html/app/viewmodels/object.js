@@ -17,8 +17,6 @@ define([
             jsonformfields, metadatafac, format, player, timeline, objectmanager,
             schemaselector) {
 
-            
-
             var obj = {};
             obj.guid;
             obj.data;
@@ -31,7 +29,6 @@ define([
             var publication = ko.observable();
             var abstracttxt = ko.observable();
             var description = ko.observable();
-            var schemaItems = ko.observableArray([]);
 
             var playerposition = ko.observable(0);
 
@@ -229,17 +226,9 @@ define([
 
                 timeline.addData(dataarray);
 
-                var i = 1;
                 for (var key in obj.anndataschemacount) {
-                    var s1 = new schemaselector.SchemaItem();
-                    s1.title = key;
-                    s1.count = obj.anndataschemacount[key];
-                    s1.isactive = s1.count > 0;
-                    s1.setCss(i);
-                    schemaItems.push(s1);
-                    i++;
+                    schemaselector.addSchemaItem(key, obj.anndataschemacount[key]);
                 }
-
             }
 
             return {
@@ -252,7 +241,7 @@ define([
 
                 metadataViews: metadataViews,
                 metadataEditors: metadataEditors,
-                schemaItems: schemaItems,
+                schemaItems: schemaselector.schemaItems,
 
                 activate: function (param) {
                     if (param !== undefined) {

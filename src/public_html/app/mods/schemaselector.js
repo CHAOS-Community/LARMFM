@@ -30,9 +30,20 @@
     };
     // ---------------------------------
 
+    var schemaItems = ko.observableArray([]);
 
     return {
-        SchemaItem: SchemaItem
+        SchemaItem: SchemaItem,
+        schemaItems: schemaItems,
+        addSchemaItem: function (schemaguid,count) {
+            var cnt = schemaItems().length;
+            var item = new SchemaItem();
+            item.title = schemaguid;
+            item.count = count;
+            item.isactive = count > 0;
+            item.setCss(cnt + 1);
+            schemaItems.push(item);
+        }
     };
 
 });
