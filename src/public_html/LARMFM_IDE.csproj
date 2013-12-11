@@ -61,6 +61,7 @@
     <Content Include="app\mods\jsonformfields.js" />
     <Content Include="app\mods\objectmanager.js" />
     <Content Include="app\mods\player.js" />
+    <Content Include="app\mods\schemaselector.js" />
     <Content Include="app\mods\timeline.js" />
     <Content Include="app\viewmodels\object_tmp.js" />
     <Content Include="app\viewmodels\object_20131207.js" />

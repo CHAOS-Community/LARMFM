@@ -10,40 +10,14 @@ define([
     'mods/format',
     'mods/player',
     'mods/timeline',
-    'mods/objectmanager'
+    'mods/objectmanager',
+    'mods/schemaselector'
 ],
         function (app, ko, portal, state, objfac, xmlman,
-            jsonformfields, metadatafac, format, player, timeline, objectmanager) {
+            jsonformfields, metadatafac, format, player, timeline, objectmanager,
+            schemaselector) {
 
-            // SchemaItem class ----------------
-            var SchemaItem = function () {
-                this.self = this;
-                this.title = "";
-                this.count = 0;
-                this.isactive = false;
-                this.cssNo = 1;
-                this.cssBtn = ko.observable("");
-                this.cssBadge = ko.observable("");
-            };
-            SchemaItem.prototype.setCss = function (no) {
-                this.cssNo = no;
-                this.updateCss();
-            };
-            SchemaItem.prototype.updateCss = function () {
-                if (this.isactive) {
-                    this.cssBtn("btn btn-small btn-schema" + this.cssNo);
-                    this.cssBadge("badge pull-right wsobjecttypebatch btn-schema" + this.cssNo + "-badge");
-                }
-                else {
-                    this.cssBtn("btn btn-small");
-                    this.cssBadge("badge pull-right wsobjecttypebatch");
-                }
-            };
-            SchemaItem.prototype.click = function () {
-                this.isactive = !this.isactive;
-                this.updateCss();
-            };
-            // ---------------------------------
+            
 
             var obj = {};
             obj.guid;
@@ -257,7 +231,7 @@ define([
 
                 var i = 1;
                 for (var key in obj.anndataschemacount) {
-                    var s1 = new SchemaItem();
+                    var s1 = new schemaselector.SchemaItem();
                     s1.title = key;
                     s1.count = obj.anndataschemacount[key];
                     s1.isactive = s1.count > 0;
