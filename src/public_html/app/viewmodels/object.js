@@ -138,6 +138,7 @@ define([
 
                 objectmanager.getByGuid(d.Id, function (r) {
 
+                    window.scrollTo(0, 0);
                     metadataEditors.removeAll();
                     var mds = r.Metadatas;
                     for (var i = 0; i < mds.length; i++) {
