@@ -247,7 +247,7 @@
 
         prepos = position;
         timeline.setCustomTime(start() + position * 1000); // Convert to milliseconds
-        var r = timeline.getVisibleChartRange();
+        //var r = timeline.getVisibleChartRange();
         //playerdebug(timestr(r.start) + " - " + timestr(r.end));
 
         if (timeline_centered) {

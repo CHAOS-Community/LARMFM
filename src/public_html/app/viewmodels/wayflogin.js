@@ -1,4 +1,4 @@
-﻿define(['plugins/dialog', 'mods/portal', 'jquery'], function (dialog, portal, jquery) {
+﻿define(['plugins/dialog', 'mods/portal', 'jquery','mods/state'], function (dialog, portal, jquery, state) {
 	var wayflogin = function () {
 		this._wayfWindow = null;
 		this.CanUseIframe = window && window.navigator && window.navigator.userAgent && (window.navigator.userAgent.indexOf("Chrome") != -1 || window.navigator.userAgent.indexOf("Firefox") != -1);
@@ -25,6 +25,7 @@
 			this._wayfWindow.close();
 		
 		dialog.close(this);
+		state.isAuthenticated(true);
 	};
 
 	return wayflogin;
