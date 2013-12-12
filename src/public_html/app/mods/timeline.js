@@ -13,6 +13,8 @@
     var start = ko.observable(0);
     var end = ko.observable(0);
 
+    var pos = 0;
+
     function initTimeline() {
         // Create and populate a data table.
         data = new google.visualization.DataTable();
@@ -236,6 +238,45 @@
         }
     }
 
+    var prepos = 0;
+    var mainloop = function () {
+
+        var position = Math.round(pos * 100) / 100;
+        if (prepos == position)
+            return;
+
+        prepos = position;
+        timeline.setCustomTime(start() + position * 1000); // Convert to milliseconds
+        var r = timeline.getVisibleChartRange();
+        //playerdebug(timestr(r.start) + " - " + timestr(r.end));
+
+        if (timeline_centered) {
+            timeline.centerTimeline();
+        }
+
+
+    };
+
+    var animFrame = window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            window.msRequestAnimationFrame ||
+            null;
+
+    if (animFrame !== null) {
+        var recursiveAnim = function () {
+            mainloop();
+            animFrame(recursiveAnim);
+        };
+
+        // start the mainloop
+        animFrame(recursiveAnim);
+    } else {
+        var ONE_FRAME_TIME = 1000.0 / 60.0;
+        setInterval(mainloop, ONE_FRAME_TIME);
+    }
+
     return {
         state: state,
         start: start,
@@ -248,13 +289,7 @@
         // setTime: time = Seconds
         setPosition: function (position) {
             if (!onTimeChangeActive) {
-                timeline.setCustomTime(start() + position * 1000); // Convert to milliseconds
-                var r = timeline.getVisibleChartRange();
-                //playerdebug(timestr(r.start) + " - " + timestr(r.end));
-
-                if (timeline_centered) {
-                    timeline.centerTimeline();
-                }
+                pos = position;
             }
         },
         isReady: isReady,
