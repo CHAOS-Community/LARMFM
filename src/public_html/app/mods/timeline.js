@@ -342,6 +342,9 @@
                     timeline.changeItem(row, { start: s, end: e, content: c });
                 }
             }
+        },
+        unselectItem: function () {
+            timeline.unselectItem();
         }
     };
 });

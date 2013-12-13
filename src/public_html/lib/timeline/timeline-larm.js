@@ -2978,8 +2978,11 @@ links.Timeline.prototype.onMouseUp = function (event) {
                 }
                 else {
                     if (options.unselectable) {
-                        this.unselectItem();
-                        this.trigger('select');
+                        // TODO: Only deselect if not editing.
+                        if (1==2) {
+                            this.unselectItem();
+                            this.trigger('select');
+                        }
                     }
                 }
             }

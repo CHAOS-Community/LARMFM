@@ -8,6 +8,9 @@
                 this.description = ko.observable("");
                 this.starttime = ko.observable("");
                 this.endtime = ko.observable("");
+                this.s;
+                this.e;
+                this.c;
             };
 
 
@@ -53,8 +56,12 @@
                         this.title(getField(this.json["LARM.Annotation.Comment"].Title));
                         this.description(getField(this.json["LARM.Annotation.Comment"].Description));
                         var tla = timeline.getAnnotation(this.data.guid);
-                        this.starttime(format.getTimeStringFromDate(tla[0].v));
-                        this.endtime(format.getTimeStringFromDate(tla[1].v));
+                        this.s = tla[0].v;
+                        this.e = tla[1].v;
+                        this.c = tla[2].v
+
+                        this.starttime(format.getTimeStringFromDate(this.s));
+                        this.endtime(format.getTimeStringFromDate(this.e));
 
                         this.starttime.subscribe(function (v) { app.trigger('metadata:changed_editor', {}) });
                         this.endtime.subscribe(function (v) { app.trigger('metadata:changed_editor', {}) });
@@ -85,6 +92,10 @@
 
                         app.trigger("metadata:save", { guid: this.data.guid, schemaguid: 'd0edf6f9-caf0-ac41-b8b3-b0d950fdef4e', xml: xml });
                         // this.data.guid er det guid på annotation object?
+                    },
+                    btncancel: function (data) {
+                        timeline.changeItem(this.s, this.e, this.c);
+                        app.trigger("metadata:cancel", { guid: this.data.guid, schemaguid: 'd0edf6f9-caf0-ac41-b8b3-b0d950fdef4e' });
                     }
 
                 };

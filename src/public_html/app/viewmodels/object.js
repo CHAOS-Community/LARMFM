@@ -80,6 +80,12 @@ define([
                 timeline.addData(dataarray);
             });
 
+            app.on('metadata:cancel').then(function (e) {
+                timeline.unselectItem();
+                metadataEditors.removeAll();
+            });
+
+
             app.on('metadata:save').then(function (e) {
                 CHAOS.Portal.Client.Metadata.Set(
                 e.guid, e.schemaguid, "da",
