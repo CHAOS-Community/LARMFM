@@ -3003,6 +3003,8 @@ links.Timeline.prototype.onMouseUp = function (event) {
  */
 links.Timeline.prototype.onDblClick = function (event) {
 
+    this.trigger('dblclick');
+
     return;
 
     var params = this.eventParams,

@@ -75,8 +75,23 @@
         google.visualization.events.addListener(timeline, 'change', onannotationchange);
         //google.visualization.events.addListener(timeline, 'add', onannotationadd);
 
+        google.visualization.events.addListener(timeline, 'dblclick', ondblclick);
+
+        
+
         ready = true;
         state(1);
+    }
+
+    function ondblclick() {
+        var sel = timeline.getSelection();
+        if (sel.length) {
+            if (sel[0].row != undefined) {
+                var row = sel[0].row;
+                var dat = timeline.getItem(row);
+                app.trigger('metadata:edit', dat);
+            }
+        }
     }
 
     function onannotationadd() {

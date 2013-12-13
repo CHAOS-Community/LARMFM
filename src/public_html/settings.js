@@ -68,6 +68,30 @@ Settings.Object = {
     FileInfosSchemaGuid: '00000000-0000-0000-0000-0000dd820000'
 };
 
+// TODO: Settings.Schema may replace Settings.MetadataSchemas
+Settings.Schema = [];
+// LARM.Annotation.Comment
+Settings.Schema['d0edf6f9-caf0-ac41-b8b3-b0d950fdef4e'] =
+{
+    view: 'annotation',
+    edit: 'anncommentedit'
+};
+
+// LARM.Annotation.WP5.8.2.Jingles
+Settings.Schema['7bb8d425-6e60-9545-80f4-0765c5eb6be6'] =
+{
+    view: 'annotation_readonly',
+    edit: ''
+};
+
+// LARM.Annotation.WP5.8.1.LydkildeBeskrivelse
+Settings.Schema['c446ad50-f1ea-f642-9361-3f6b56c5f320'] =
+{
+    view: 'annotation_readonly',
+    edit: ''
+};
+
+
 Settings.MetadataSchemas = [
     {
         guid: '00000000-0000-0000-0000-0000dd820000',

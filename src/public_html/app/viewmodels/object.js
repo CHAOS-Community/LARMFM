@@ -70,7 +70,7 @@ define([
                         dataarray.push([new Date(timestart), new Date(timeend), content, false, amd.Id]);
 
                         var annview = new metadatafac.MetadataView();
-                        annview.setview("annotation", amd);
+                        annview.setview(Settings.Schema[amd.MetadataSchemaGUID].view, amd);
                         metadataViews.push(annview);
 
                     }
@@ -131,21 +131,31 @@ define([
                 }
             });
 
-            app.on('metadata:edit').then(function (editorvm) {
-                if (editorvm.data === undefined)
-                    return;
-                var d = editorvm.data;
+            app.on('metadata:edit').then(function (e) {
 
-                objectmanager.getByGuid(d.Id, function (r) {
+                var guid;
+
+                if (e.data) {
+                    if (e.data.Id)
+                        guid = e.data.Id;
+                }
+                else if (e.id)
+                    guid = e.id;
+
+                if (!guid)
+                    return;
+
+                objectmanager.getByGuid(guid, function (r) {
 
                     window.scrollTo(0, 0);
                     metadataEditors.removeAll();
                     var mds = r.Metadatas;
                     for (var i = 0; i < mds.length; i++) {
-                        if (mds[i].MetadataSchemaGuid == 'd0edf6f9-caf0-ac41-b8b3-b0d950fdef4e') {
+                        if (Settings.Schema[mds[i].MetadataSchemaGuid].edit !='') {
+                            timeline.editItem(guid);
                             var editor = new metadatafac.MetadataView();
-                            editor.setview("anncommentedit", { guid: r.Id, metadata: mds[i] });
-                            metadataEditors.push(editor)
+                            editor.setview(Settings.Schema[mds[i].MetadataSchemaGuid].edit, { guid: r.Id, metadata: mds[i] });
+                            metadataEditors.push(editor);
                         }
                     }
 

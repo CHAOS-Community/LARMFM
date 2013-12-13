@@ -68,6 +68,8 @@
     <Content Include="app\viewmodels\object_20131207.js" />
     <Content Include="app\viewmodels\wayflogin.js" />
     <Content Include="app\views\metadata\anncommentedit.js" />
+    <Content Include="app\views\metadata\annotation_readonly.html" />
+    <Content Include="app\views\metadata\annotation_readonly.js" />
     <Content Include="app\views\metadata\annotationedit.html" />
     <Content Include="app\views\metadata\annotationedit.js" />
     <Content Include="app\views\metadata\annotation.html" />
