@@ -282,6 +282,7 @@
     <Content Include="lib\x2js\xml2json.min.js" />
     <Content Include="settings.js" />
     <Content Include="timeline_test.html" />
+    <Content Include="WayfCallback.html" />
     <Content Include="web.config" />
     <Content Include="lib\timeline\img\Thumbs.db" />
     <None Include="web.Debug.config">
