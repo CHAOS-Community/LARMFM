@@ -16,16 +16,17 @@
 	wayflogin.prototype.OpenWindow = function() {
 		var that = this;
 		this._wayfWindow = window.open("", "WayfLogin", "width=800,height=800,menubar=no,status=no,toolbar=no,resizable=yes");
+		var callbackUrl = window.location.protocol + "//" + window.location.host + "/WayfCallback.html";
 
-		CHAOS.Portal.Client.Wayf.Login(Settings.wayfPath, this._wayfWindow, function(success) { that.LoginCompleted(success); });
+		CHAOS.Portal.Client.Wayf.Login(Settings.wayfPath, this._wayfWindow, function (success) { that.LoginCompleted(success); }, callbackUrl);
 	};
 
 	wayflogin.prototype.LoginCompleted = function (success) {
 		if (this._wayfWindow != null)
 			this._wayfWindow.close();
 		
-		dialog.close(this);
 		state.isAuthenticated(true);
+		dialog.close(this);
 	};
 
 	return wayflogin;
