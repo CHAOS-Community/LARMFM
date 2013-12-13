@@ -12,6 +12,7 @@ define(['knockout', 'mods/store'], function (ko, store) {
         client = CHAOS.Portal.Client.Initialize(Settings.servicePath, null, false);
         client.UpdateSession({ Guid: sessionGuid });
         client.SetSessionAuthenticated("Preauthenticated");
+        isAuthenticatedObservable(client.IsAuthenticated());
         triggerAppReady();
     }
 
