@@ -6578,4 +6578,56 @@ links.Timeline.prototype.editItem = function (id) {
 
     this.render();
 };
+
+links.Timeline.prototype.addItemAtCursor = function () {
+
+    var timeline = this;
+
+    timeline.centerTimeline();
+
+    // create a new event at the center of the frame
+    var w = timeline.size.contentWidth;
+    var x = w / 2;
+    var xstart = timeline.screenToTime(x - w / 10); // subtract 10% of timeline width
+    var xend = timeline.screenToTime(x + w / 10);   // add 10% of timeline width
+    if (options.snapEvents) {
+        timeline.step.snap(xstart);
+        timeline.step.snap(xend);
+    }
+
+    // --- Larm specific: move it to the customtime cursor but keep width
+    var xwidth = xend - xstart;
+    xstart = timeline.getCustomTime();
+    xend = new Date(xstart.getTime() + xwidth);
+    // ---
+
+    var content = options.NEW;
+    var group = timeline.groups.length ? timeline.groups[0].content : undefined;
+    var preventRender = true;
+    timeline.addItem({
+        'start': xstart,
+        'end': xend,
+        'content': content,
+        'group': group
+    }, preventRender);
+    var index = (timeline.items.length - 1);
+    timeline.selectItem(index);
+
+    timeline.applyAdd = true;
+
+    // fire an add event.
+    // Note that the change can be canceled from within an event listener if
+    // this listener calls the method cancelAdd().
+    timeline.trigger('add');
+
+    if (timeline.applyAdd) {
+        // render and select the item
+        timeline.render({ animate: false });
+        timeline.selectItem(index);
+    }
+    else {
+        // undo an add
+        timeline.deleteItem(index);
+    }
+}
 /* ================================= */
