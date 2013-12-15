@@ -219,7 +219,7 @@ links.Timeline = function(container) {
         'ZOOM_OUT': "Zoom ud",
         'MOVE_LEFT': "Scroll til venstre",
         'MOVE_RIGHT': "Scroll til højre",
-        'NEW': " Ny annotation",
+        'NEW': "&nbsp;",
         'CREATE_NEW_EVENT': "Opret ny annotation"
     };
 
@@ -6537,6 +6537,11 @@ links.Timeline.parseJSONDate = function (date) {
 };
 
 /* === LARM CUSTOM FUNCTIONALITY === */
+links.Timeline.prototype.deleteItemByID = function(id){
+    var r = this.getItemAndIndexByID(id);
+    this.deleteItem(r.index);
+};
+
 links.Timeline.prototype.centerTimeline = function () {
     var r = this.getVisibleChartRange();
     var rs = r.start.getTime();

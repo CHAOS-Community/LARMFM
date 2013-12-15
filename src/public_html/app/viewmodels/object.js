@@ -114,7 +114,13 @@ define([
 
 
             app.on('metadata:cancel').then(function (e) {
-                timeline.unselectItem();
+                var item = timeline.getSelection();
+                if (item.id.substring(0, 3) == "new") {
+                    timeline.deleteItemByID(item.id);
+                }
+                else
+                    timeline.unselectItem();
+
                 metadataEditors.removeAll();
             });
 

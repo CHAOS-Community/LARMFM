@@ -353,6 +353,9 @@
         },
         addItemAtCursor: function (id) {
             timeline.addItemAtCursor(id);
+        },
+        deleteItemByID: function (id) {
+            timeline.deleteItemByID(id);
         }
     };
 });
