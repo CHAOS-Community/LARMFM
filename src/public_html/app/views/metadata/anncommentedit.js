@@ -48,13 +48,13 @@
                         // instance of MetadataEditor under factory.
                         //settings.bindingContext.$data.data
                         this.data = settings.bindingContext.$data.data;
-                        this.json = xmlmanager.toJsonDirect([], this.data.metadata.MetadataXml);
-                        //this.json = this.json["LARM.Annotation.Comment"];
 
-                        //var xml = xmlmanager.toXmlDirect(this.json);
+                        if (this.data.metadata.MetadataXml) {
+                            this.json = xmlmanager.toJsonDirect([], this.data.metadata.MetadataXml);
+                            this.title(getField(this.json["LARM.Annotation.Comment"].Title));
+                            this.description(getField(this.json["LARM.Annotation.Comment"].Description));
+                        }
 
-                        this.title(getField(this.json["LARM.Annotation.Comment"].Title));
-                        this.description(getField(this.json["LARM.Annotation.Comment"].Description));
                         var tla = timeline.getAnnotation(this.data.guid);
                         this.s = tla[0].v;
                         this.e = tla[1].v;

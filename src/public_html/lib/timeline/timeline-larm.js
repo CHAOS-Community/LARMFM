@@ -2193,6 +2193,9 @@ links.Timeline.prototype.repaintNavigation = function () {
                 links.Timeline.preventDefault(event);
                 links.Timeline.stopPropagation(event);
 
+                timeline.trigger('requestadd');
+                return;
+
                 // create a new event at the center of the frame
                 var w = timeline.size.contentWidth;
                 var x = w / 2;
@@ -6579,8 +6582,11 @@ links.Timeline.prototype.editItem = function (id) {
     this.render();
 };
 
-links.Timeline.prototype.addItemAtCursor = function () {
+links.Timeline.prototype.addItemAtCursor = function (id) {
 
+    var params = this.eventParams,
+    options = this.options,
+    dom = this.dom;
     var timeline = this;
 
     timeline.centerTimeline();
@@ -6608,7 +6614,8 @@ links.Timeline.prototype.addItemAtCursor = function () {
         'start': xstart,
         'end': xend,
         'content': content,
-        'group': group
+        'group': group,
+        'id': id
     }, preventRender);
     var index = (timeline.items.length - 1);
     timeline.selectItem(index);

@@ -24,6 +24,8 @@ define([
             obj.anndatacount;
             obj.anndataschemacount = [];
 
+            var isPlayerLoading = ko.observable(true);
+
             var title = ko.observable();
             var channel = ko.observable();
             var publication = ko.observable();
@@ -49,6 +51,10 @@ define([
 
                 var dataarray = [];
                 var amds = obj.anndata;
+
+                if (amds == undefined)
+                    return;
+
                 for (var i = 0; i < amds.length; i++) {
                     var amd = amds[i];
 
@@ -79,6 +85,33 @@ define([
 
                 timeline.addData(dataarray);
             });
+
+            app.on('annotation:add').then(function (e) {
+                // TODO: Choose metadataschema if more are activated
+
+                // Only comments for now!
+                if(schemaselector.schemaItems().length<1 ||
+                    schemaselector.schemaItems()[0].isactive() == false){
+                    app.showMessage("Vaelg Comments ark for at annotere.");
+                    return;
+                }
+
+                var schema = schemaselector.schemaItems()[0];
+
+                timeline.addItemAtCursor('new1');
+                var dat = timeline.getSelection();
+
+                metadataEditors.removeAll();
+                // Add editor
+                amd = {};
+                amd.Id = 'new1';
+                var editor = new metadatafac.MetadataView();
+                editor.setview(Settings.Schema[schema.guid].edit, { guid: amd.Id, metadata: amd });
+                metadataEditors.push(editor);
+                timeline.editItem(amd.Id);
+
+            });
+
 
             app.on('metadata:cancel').then(function (e) {
                 timeline.unselectItem();
@@ -238,6 +271,18 @@ define([
                     obj.anndata = response.Body.Results;
 
                 insertAnnotations();
+            }
+
+            var addSchemasDone = false;
+            function addSchemas() {
+
+                if (addSchemasDone)
+                    return;
+
+                addSchemasDone = true;
+                schemaselector.addSchemaItem("d0edf6f9-caf0-ac41-b8b3-b0d950fdef4e", 0);
+                schemaselector.addSchemaItem("7bb8d425-6e60-9545-80f4-0765c5eb6be6", 0);
+                schemaselector.addSchemaItem("c446ad50-f1ea-f642-9361-3f6b56c5f320", 0);
 
             }
 
@@ -247,8 +292,19 @@ define([
                 if (annotationsHaveBeenInserted)
                     return;
 
-                if (obj.anndata === undefined || !player.isReady() || !timeline.isReady())
+                if (obj.anndatacount !== undefined && obj.anndatacount == 0 &&
+                    player.isReady() && timeline.isReady()
+                    ) {
+                    addSchemas();
+                    isPlayerLoading(false);
                     return;
+                }
+
+                if (obj.anndata === undefined || !player.isReady() || !timeline.isReady()) {
+                    return;
+                }
+
+                addSchemas();
 
                 annotationsHaveBeenInserted = true;
 
@@ -289,16 +345,16 @@ define([
 
                 //timeline.addData(dataarray);
 
-                schemaselector.addSchemaItem("d0edf6f9-caf0-ac41-b8b3-b0d950fdef4e", 0);
-                schemaselector.addSchemaItem("7bb8d425-6e60-9545-80f4-0765c5eb6be6", 0);
-                schemaselector.addSchemaItem("c446ad50-f1ea-f642-9361-3f6b56c5f320", 0);
-
                 for (var key in obj.anndataschemacount) {
                     schemaselector.addSchemaItem(key, obj.anndataschemacount[key]);
                 }
+
+                isPlayerLoading(false);
             }
 
             return {
+                isPlayerLoading: isPlayerLoading,
+
                 mediaUrl: player.mediaUrl,
                 title: title,
                 channel: channel,

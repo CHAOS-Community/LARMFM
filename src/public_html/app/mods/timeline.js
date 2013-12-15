@@ -76,11 +76,16 @@
         //google.visualization.events.addListener(timeline, 'add', onannotationadd);
 
         google.visualization.events.addListener(timeline, 'dblclick', ondblclick);
+        google.visualization.events.addListener(timeline, 'requestadd', onrequestadd);
 
         
 
         ready = true;
         state(1);
+    }
+
+    function onrequestadd() {
+        app.trigger("annotation:add", {});
     }
 
     function ondblclick() {
@@ -345,6 +350,9 @@
         },
         unselectItem: function () {
             timeline.unselectItem();
+        },
+        addItemAtCursor: function (id) {
+            timeline.addItemAtCursor(id);
         }
     };
 });

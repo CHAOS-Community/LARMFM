@@ -18,9 +18,9 @@
         <!-- /ko -->
     </div>
 </div>
-<br />
-<div style="height:8px"></div>
-
+<div class="loader" data-bind="css: { active: isPlayerLoading }">
+    <i class="icon-spinner icon-2x icon-spin"></i>
+</div>
 <div id="timelines"></div>
 <div id="timelinescroll" style="opacity: 0; width: 100%; overflow-x: scroll">
     <div id="timelinescrollcontent" style="width:1px;height:1px"></div>
