@@ -94,12 +94,13 @@
         }
         mediaUrl(mu);
 
-        var w = "100%";
-        var h = 30;
+        var w = 1;
+        var h = 1;
         var hascontrols = true;
 
         if (data == null){
             mediaImage = "";
+            w = 533;
             h = 300;
             hascontrols = false;
         }
