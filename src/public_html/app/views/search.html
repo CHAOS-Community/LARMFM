@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <span class="clearfix"></span>
-                <div class="pull-right wssorting">
+                <div class="pull-right wssorting" style="margin-right:12px;">
                     <select data-bind="options: sortitems,
                             optionsText: 'title',
                             optionsValue: 'id',
@@ -41,7 +41,7 @@
                         <li data-bind="css: { disabled: isdisabled, active: isactive }"><a href="#" data-bind="html: text, click: $parent.pagingclick"></a></li>
                         <!-- /ko -->
                     </ul>
-                </div>
+                </div>                
                 <div class="pull-left wsresulthits"><span data-bind="text:resulttext"></span><span data-bind="visible: (objectsselectcount()>0)"> - <span data-bind="text:objectsselectcount"></span> valgt</span></div>
                 <div class="row" style="clear: both; margin:0"><div class="span9" style="margin:0"><hr style="margin:0" /></div></div>
                 <div>

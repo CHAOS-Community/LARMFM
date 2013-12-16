@@ -99,6 +99,28 @@
       <DependentUpon>larm.less</DependentUpon>
     </Content>
     <Content Include="favicon.ico" />
+    <Content Include="img\FileTypes\_Schedule.png" />
+    <Content Include="img\FileTypes\_Radio.png" />
+    <Content Include="img\FileTypes\_ScheduleNote.png" />
+    <Content Include="img\FileTypes\Schedule.png" />
+    <Content Include="img\FileTypes\Radio.png" />
+    <Content Include="img\FileTypes\ScheduleNote.png" />
+    <Content Include="img\FileTypes\Video.png" />
+    <Content Include="img\FileTypes\_Video.png" />
+    <Content Include="img\IconTypes\anno.png" />
+    <Content Include="img\IconTypes\anno_on.png" />
+    <Content Include="img\IconTypes\audio.png" />
+    <Content Include="img\IconTypes\audio_on.png" />
+    <Content Include="img\IconTypes\doc.png" />
+    <Content Include="img\IconTypes\doc_on.png" />
+    <Content Include="img\IconTypes\indikator-0_grey.png" />
+    <Content Include="img\IconTypes\indikator-0_white.png" />
+    <Content Include="img\IconTypes\indikator-1_grey.png" />
+    <Content Include="img\IconTypes\indikator-1_white.png" />
+    <Content Include="img\IconTypes\indikator-2_grey.png" />
+    <Content Include="img\IconTypes\indikator-2_white.png" />
+    <Content Include="img\IconTypes\indikator-3_grey.png" />
+    <Content Include="img\IconTypes\indikator-3_white.png" />
     <Content Include="index.html" />
     <Content Include="jsonform_test.html" />
     <Content Include="lib\font-awesome\css\font\fontawesome-webfont.eot" />
