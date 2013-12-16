@@ -314,7 +314,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                     oi.id("1");
                     oi.title("Arbejdsløshedshæren");
                     oi.channel("Teater");
-                    oi.annotationCount(10);
+                    oi.annotationCount(25);
                     oi.hash('#!objectvideo/id=1');
                     oi.typetext("video");
                     oi.type("Video");
