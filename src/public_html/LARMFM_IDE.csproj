@@ -58,14 +58,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\factory\metadata.js" />
+    <Content Include="app\mods\store.js" />
     <Content Include="app\mods\jsonformfields.js" />
     <Content Include="app\mods\objectmanager.js" />
     <Content Include="app\mods\player.js" />
+    <Content Include="app\mods\schemaselector.js" />
     <Content Include="app\mods\timeline.js" />
+    <Content Include="app\viewmodels\objectvideo.js" />
     <Content Include="app\viewmodels\object_tmp.js" />
     <Content Include="app\viewmodels\object_20131207.js" />
     <Content Include="app\viewmodels\wayflogin.js" />
     <Content Include="app\views\metadata\anncommentedit.js" />
+    <Content Include="app\views\metadata\annotation_readonly.html" />
+    <Content Include="app\views\metadata\annotation_readonly.js" />
     <Content Include="app\views\metadata\annotationedit.html" />
     <Content Include="app\views\metadata\annotationedit.js" />
     <Content Include="app\views\metadata\annotation.html" />
@@ -85,10 +90,39 @@
     <Content Include="app\views\metadata\larmprogramedit.js" />
     <Content Include="app\views\metadata\anncommentedit.html" />
     <Content Include="app\views\metadata\test.html" />
+    <Content Include="app\views\objectvideo.html" />
     <Content Include="app\views\object.html" />
     <Content Include="app\views\wayflogin.html" />
     <Content Include="app\widgets\Readme.md" />
+    <Content Include="css\larm.css">
+      <DependentUpon>larm.less</DependentUpon>
+    </Content>
+    <Content Include="css\larm.min.css">
+      <DependentUpon>larm.less</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
+    <Content Include="img\FileTypes\_Schedule.png" />
+    <Content Include="img\FileTypes\_Radio.png" />
+    <Content Include="img\FileTypes\_ScheduleNote.png" />
+    <Content Include="img\FileTypes\Schedule.png" />
+    <Content Include="img\FileTypes\Radio.png" />
+    <Content Include="img\FileTypes\ScheduleNote.png" />
+    <Content Include="img\FileTypes\Video.png" />
+    <Content Include="img\FileTypes\_Video.png" />
+    <Content Include="img\IconTypes\anno.png" />
+    <Content Include="img\IconTypes\anno_on.png" />
+    <Content Include="img\IconTypes\audio.png" />
+    <Content Include="img\IconTypes\audio_on.png" />
+    <Content Include="img\IconTypes\doc.png" />
+    <Content Include="img\IconTypes\doc_on.png" />
+    <Content Include="img\IconTypes\indikator-0_grey.png" />
+    <Content Include="img\IconTypes\indikator-0_white.png" />
+    <Content Include="img\IconTypes\indikator-1_grey.png" />
+    <Content Include="img\IconTypes\indikator-1_white.png" />
+    <Content Include="img\IconTypes\indikator-2_grey.png" />
+    <Content Include="img\IconTypes\indikator-2_white.png" />
+    <Content Include="img\IconTypes\indikator-3_grey.png" />
+    <Content Include="img\IconTypes\indikator-3_white.png" />
     <Content Include="index.html" />
     <Content Include="jsonform_test.html" />
     <Content Include="lib\font-awesome\css\font\fontawesome-webfont.eot" />
@@ -249,6 +283,7 @@
     <Content Include="lib\i18next\i18next-1.6.0.js" />
     <Content Include="lib\i18next\i18next-1.6.0.min.js" />
     <Content Include="lib\durandal\images\Thumbs.db" />
+    <Content Include="css\larm.less" />
     <None Include="lib\jquery\jquery-1.9.1.intellisense.js" />
     <Content Include="lib\jquery\jquery-1.9.1.js" />
     <Content Include="lib\jquery\jquery-1.9.1.min.js" />
@@ -274,6 +309,7 @@
     <Content Include="lib\x2js\xml2json.min.js" />
     <Content Include="settings.js" />
     <Content Include="timeline_test.html" />
+    <Content Include="WayfCallback.html" />
     <Content Include="web.config" />
     <Content Include="lib\timeline\img\Thumbs.db" />
     <None Include="web.Debug.config">

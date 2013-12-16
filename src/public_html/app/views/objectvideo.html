@@ -1,13 +1,7 @@
 <h1 data-bind="html: title"></h1>
 <br />
-<div><small><span data-bind="html: mediaUrl"></span></small></div>
 <div id="larmplayer">Loading the player...</div>
 <div style="height:8px"></div>
-<!--<div id="customTime">&nbsp;</div>
-<p></p>-->
-<!--<div><input type="checkbox" data-bind="checked: cbgroupannotations" />Grupper annotationer</div>-->
-<!--<div id="mytimeline"></div>-->
-
 <div class='btn-toolbar' class="pull-left">
     <div class='btn-group pull-left'>
         <!-- ko foreach: schemaItems -->
@@ -28,7 +22,7 @@
 <div style="height:8px"></div>
 <div>
 <button type="button" class="btn" data-bind="click: play">Play</button> <button type="button" class="btn" data-bind="click: pause">Pause</button>
-<!--&nbsp;Player position: <span data-bind="html: playerposition"></span> - Player debug: <span data-bind="html: playerdebug"></span>-->
+<span data-bind="html: playerposition"></span>
 </div>
 <hr />
 <div data-bind="foreach: metadataEditors">

@@ -1,4 +1,4 @@
-define([
+﻿define([
     'durandal/app',
     'knockout',
     'mods/portal',
@@ -26,7 +26,7 @@ define([
 
             var isPlayerLoading = ko.observable(true);
 
-            var title = ko.observable();
+            var title = ko.observable("Arbejdsløshedshæren");
             var channel = ko.observable();
             var publication = ko.observable();
             var abstracttxt = ko.observable();
@@ -90,8 +90,8 @@ define([
                 // TODO: Choose metadataschema if more are activated
 
                 // Only comments for now!
-                if(schemaselector.schemaItems().length<1 ||
-                    schemaselector.schemaItems()[0].isactive() == false){
+                if (schemaselector.schemaItems().length < 1 ||
+                    schemaselector.schemaItems()[0].isactive() == false) {
                     app.showMessage("Vaelg Comments ark for at annotere.");
                     return;
                 }
@@ -196,7 +196,7 @@ define([
                     metadataEditors.removeAll();
                     var mds = r.Metadatas;
                     for (var i = 0; i < mds.length; i++) {
-                        if (Settings.Schema[mds[i].MetadataSchemaGuid].edit !='') {
+                        if (Settings.Schema[mds[i].MetadataSchemaGuid].edit != '') {
                             timeline.editItem(guid);
                             var editor = new metadatafac.MetadataView();
                             editor.setview(Settings.Schema[mds[i].MetadataSchemaGuid].edit, { guid: r.Id, metadata: mds[i] });
@@ -286,7 +286,7 @@ define([
                     return;
 
                 addSchemasDone = true;
-                schemaselector.addSchemaItem("d0edf6f9-caf0-ac41-b8b3-b0d950fdef4e", 0);
+                schemaselector.addSchemaItem("d0edf6f9-caf0-ac41-b8b3-b0d950fdef4e", 25);
                 schemaselector.addSchemaItem("7bb8d425-6e60-9545-80f4-0765c5eb6be6", 0);
                 schemaselector.addSchemaItem("c446ad50-f1ea-f642-9361-3f6b56c5f320", 0);
 
@@ -358,6 +358,22 @@ define([
                 isPlayerLoading(false);
             }
 
+            function md(start, end, title) {
+                return {
+                    DateCreated: "2012-12-03T10:03:58Z",
+                    DateModified: "2012-12-03T10:03:58Z",
+                    EditingUser: "Peter Overgaard",
+                    EditingUserGUID: "c05036fc-71fc-4c4d-b28d-a0a8ca6bc6c1",
+                    Id: "",
+                    LanguageCode: "da",
+                    MetadataSchemaGUID: "d0edf6f9-caf0-ac41-b8b3-b0d950fdef4e",
+                    ProgramGUID: "8a1f7ef2-4ec8-6841-9a83-b16fa9fdc648",
+                    StartTime: start,
+                    EndTime: end,
+                    Title: title
+                };
+            }
+
             return {
                 isPlayerLoading: isPlayerLoading,
 
@@ -371,33 +387,56 @@ define([
                 metadataViews: metadataViews,
                 metadataEditors: metadataEditors,
                 schemaItems: schemaselector.schemaItems,
+                compositionComplete: function () {
 
+                    player.init(null);
+                    player.position.subscribe(function (position) {
+                        playerposition(position);
+                        timeline.setPosition(playerposition());
+                    });
+                    player.duration.subscribe(function (duration) {
+                        timeline.init(duration);
+                    });
+
+                    addSchemas();
+
+                    obj.anndata = [];
+                    obj.anndata.push(md("00:00:00.000", "00:04:06.000", "Intro - stempelkort -interview"));
+                    obj.anndata.push(md("00:04:06.000", "00:06:02.000", "Kongens foged udsættelsesforretning"));
+                    obj.anndata.push(md("00:06:02.000", "00:07:09.000", "Demo - med sang"));
+                    obj.anndata.push(md("00:07:09.000", "00:08:12.000", "Dunlop er lukket"));
+                    obj.anndata.push(md("00:08:12.000", "00:09:59.000", "Afgang i folkeskolen"));
+                    obj.anndata.push(md("00:09:59.000", "00:10:58.000", "Ung i arbejde - vasker fliser"));
+                    obj.anndata.push(md("00:10:58.000", "00:13:40.000", "Vejle kommune - Byrådets hjælp til den privatejede glofbane"));
+                    obj.anndata.push(md("00:13:40.000", "00:16:44.000", "Må vi stille et par spørgsmål?"));
+                    obj.anndata.push(md("00:16:44.000", "00:22:08.000", "Vi mangler personalechefen fra ØK"));
+                    obj.anndata.push(md("00:22:08.000", "00:24:56.000", "Arbejdshæren på march"));
+                    obj.anndata.push(md("00:24:56.000", "00:26:00.000", "Skopudsning på Strøget"));
+                    obj.anndata.push(md("00:26:00.000", "00:26:30.000", "Vaske giler i Gentofte"));
+                    obj.anndata.push(md("00:27:22.000", "00:31:16.000", "Helbredsundersøgelse - Nervemedicin til arbejdsløse"));
+                    obj.anndata.push(md("00:31:16.000", "00:32:12.000", "Arbejdsløshed er ingen naturlov"));
+                    obj.anndata.push(md("00:32:12.000", "00:34:57.000", "Speek Organisering")); 
+                    obj.anndata.push(md("00:34:57.000", "00:35:59.000", "Arbejdsløshedshæren kommer til skoleafslutningen"));
+                    obj.anndata.push(md("00:35:59.000", "00:37:04.000", "Smede fra Sabroe Øst"));
+                    obj.anndata.push(md("00:37:04.000", "00:38:38.000", "Begravelse af Trosbekendelse"));
+                    obj.anndata.push(md("00:38:38.000", "00:46:56.000", "Buskonflikten"));
+                    obj.anndata.push(md("00:46:56.000", "00:50:50.000", "Foran Arbejdsretten"));
+                    obj.anndata.push(md("00:50:50.000", "00:51:44.000", "Sabrosmede vil ikke betale bod"));
+                    obj.anndata.push(md("00:51:44.000", "00:55:24.000", "Vi står foran kapitalens højborg"));
+                    obj.anndata.push(md("00:55:24.000", "00:59:55.000", "Vi er trætte af ord. Vi kræver handling"));
+
+
+                    isPlayerLoading(false);
+                },
                 activate: function (param) {
-                    if (param !== undefined) {
-                        var id = format.getParamByName('id', param);
-                        obj.guid = id;
-                        var objguids = [];
-                        objguids.push(id);
-
-                        // Object Get
-                        CHAOS.Portal.Client.Object.Get(
-                            objguids, Settings.accessPointGuid, true, true,
-                            true, false, false,
-                            1, 0, null).WithCallback(metadataReceived);
-
-                        // Annotation View
-                        CHAOS.Portal.Client.View.Get(
-                            'Annotation', 'ProgramGUID:"' + obj.guid + '"',
-                            'StartTime+ASC', null, 0, 9999).WithCallback(annotationsReceived);
-
-                    }
                 },
                 play: function () {
                     player.play();
                 },
                 pause: function () {
                     player.pause();
-                }
+                },
+                playerposition: player.position
             };
         });
 

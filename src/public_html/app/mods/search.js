@@ -292,29 +292,59 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 dosearchcore();                
             }
 
+            function getValInt(val) {
+                if (val == null)
+                    return 0;
+                return val;
+            }
+
+            function getValStr(val) {
+                if (val == null)
+                    return "";
+                return "" + val;
+            }
+
             function searchReceived(response)
             {
                 isSearching(false);
                 items.removeAll();
+
+                if (freetext() == "video") {
+                    var oi = new objfac.ObjectItem();
+                    oi.id("1");
+                    oi.title("Arbejdsløshedshæren");
+                    oi.channel("Teater");
+                    oi.annotationCount(25);
+                    oi.hash('#!objectvideo/id=1');
+                    oi.typetext("video");
+                    oi.type("Video");
+                    items.push(oi);
+                }
+
                 for (var i = 0; i < response.Body.Count; i++)
                 {
                     var r = response.Body.Results[i];
                     var oi = new objfac.ObjectItem();
                     oi.id(r.Id);
                     oi.isselected(objectselector.contains(oi.id()));
-                    oi.title("" + r.Title);
+                    oi.title(getValStr(r.Title));
+                    oi.channel(getValStr(r.Channel));
+                    oi.annotationCount(getValInt(r.AnnotationCount));
+
+                    oi.type(r.Type);
+
                     if (r.Type == "Radio") {
                         //r.Id = "bf99b5b4-07e7-4acf-9726-0416e21f91df"; // TEST: objekt med annotationer. 1 fil.
                         //r.Id = "598e81b1-2d86-443c-92de-a9ffb83b2193"; // TEST: En japaner i Berlin. 2 filer.
                         oi.hash('#!object/id=' + r.Id);
-                        oi.type("radio");
+                        oi.typetext("radio");
                     }
                     else {
 
                         if (r.Type == "Schedule")
-                            oi.type("programoversigt");
+                            oi.typetext("programoversigt");
                         else
-                            oi.type("rettelse til programoversigt");
+                            oi.typetext("rettelse til programoversigt");
 
                         oi.hash(r.Url);
                     }

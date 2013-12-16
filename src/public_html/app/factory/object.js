@@ -9,8 +9,12 @@ define(['knockout', 'mods/objectselector'], function(ko, objectselector) {
         this.datetimepretty = ko.observable();
         this.duration = ko.observable();
         this.type = ko.observable();
+        this.typetext = ko.observable();
+        this.channel = ko.observable("");
+        this.annotationCount = ko.observable(0);
+
         this.isselected = ko.observable(false);
-        
+
         this.isselected.subscribe(function(val){
            if (this.id() != "") {
                 if (val)

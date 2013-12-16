@@ -13,17 +13,20 @@
             <td colspan="2">Title: </td>
         </tr>
         <tr>
-            <td colspan="2"><input type="text" data-bind="value: title" /></td>
+            <td colspan="2"><input type="text" data-bind="value: title" style="width:100%" /></td>
         </tr>
         <tr>
             <td colspan="2">Beskrivelse: </td>
         </tr>
         <tr>
-            <td colspan="2"><input type="text" data-bind="value: description" /></td>
+            <td colspan="2"><input type="text" data-bind="value: description" style="width:100%" /></td>
         </tr>
         <tr>
-            <td colspan="2">
+            <td>
                 <button data-bind="click: btnsave">Gem</button>
+            </td>
+            <td>
+                <button data-bind="click: btncancel">Annuller</button>
             </td>
         </tr>
     </table>

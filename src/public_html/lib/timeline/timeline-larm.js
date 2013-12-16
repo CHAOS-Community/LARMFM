@@ -219,7 +219,7 @@ links.Timeline = function(container) {
         'ZOOM_OUT': "Zoom ud",
         'MOVE_LEFT': "Scroll til venstre",
         'MOVE_RIGHT': "Scroll til højre",
-        'NEW': " Ny annotation",
+        'NEW': "&nbsp;",
         'CREATE_NEW_EVENT': "Opret ny annotation"
     };
 
@@ -2193,6 +2193,9 @@ links.Timeline.prototype.repaintNavigation = function () {
                 links.Timeline.preventDefault(event);
                 links.Timeline.stopPropagation(event);
 
+                timeline.trigger('requestadd');
+                return;
+
                 // create a new event at the center of the frame
                 var w = timeline.size.contentWidth;
                 var x = w / 2;
@@ -2978,8 +2981,11 @@ links.Timeline.prototype.onMouseUp = function (event) {
                 }
                 else {
                     if (options.unselectable) {
-                        this.unselectItem();
-                        this.trigger('select');
+                        // TODO: Only deselect if not editing.
+                        if (1==2) {
+                            this.unselectItem();
+                            this.trigger('select');
+                        }
                     }
                 }
             }
@@ -3002,6 +3008,8 @@ links.Timeline.prototype.onMouseUp = function (event) {
  * @param {Event}  event
  */
 links.Timeline.prototype.onDblClick = function (event) {
+
+    this.trigger('dblclick');
 
     return;
 
@@ -6529,6 +6537,11 @@ links.Timeline.parseJSONDate = function (date) {
 };
 
 /* === LARM CUSTOM FUNCTIONALITY === */
+links.Timeline.prototype.deleteItemByID = function(id){
+    var r = this.getItemAndIndexByID(id);
+    this.deleteItem(r.index);
+};
+
 links.Timeline.prototype.centerTimeline = function () {
     var r = this.getVisibleChartRange();
     var rs = r.start.getTime();
@@ -6573,4 +6586,60 @@ links.Timeline.prototype.editItem = function (id) {
 
     this.render();
 };
+
+links.Timeline.prototype.addItemAtCursor = function (id) {
+
+    var params = this.eventParams,
+    options = this.options,
+    dom = this.dom;
+    var timeline = this;
+
+    timeline.centerTimeline();
+
+    // create a new event at the center of the frame
+    var w = timeline.size.contentWidth;
+    var x = w / 2;
+    var xstart = timeline.screenToTime(x - w / 10); // subtract 10% of timeline width
+    var xend = timeline.screenToTime(x + w / 10);   // add 10% of timeline width
+    if (options.snapEvents) {
+        timeline.step.snap(xstart);
+        timeline.step.snap(xend);
+    }
+
+    // --- Larm specific: move it to the customtime cursor but keep width
+    var xwidth = xend - xstart;
+    xstart = timeline.getCustomTime();
+    xend = new Date(xstart.getTime() + xwidth);
+    // ---
+
+    var content = options.NEW;
+    var group = timeline.groups.length ? timeline.groups[0].content : undefined;
+    var preventRender = true;
+    timeline.addItem({
+        'start': xstart,
+        'end': xend,
+        'content': content,
+        'group': group,
+        'id': id
+    }, preventRender);
+    var index = (timeline.items.length - 1);
+    timeline.selectItem(index);
+
+    timeline.applyAdd = true;
+
+    // fire an add event.
+    // Note that the change can be canceled from within an event listener if
+    // this listener calls the method cancelAdd().
+    timeline.trigger('add');
+
+    if (timeline.applyAdd) {
+        // render and select the item
+        timeline.render({ animate: false });
+        timeline.selectItem(index);
+    }
+    else {
+        // undo an add
+        timeline.deleteItem(index);
+    }
+}
 /* ================================= */

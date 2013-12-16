@@ -11,6 +11,7 @@
                     <div>
                         <a href="#!object/id=598e81b1-2d86-443c-92de-a9ffb83b2193" target="_blank">En japaner i Berlin</a><br />
                         <a href="#!object/id=bf99b5b4-07e7-4acf-9726-0416e21f91df" target="_blank">De ringer - vi spiller</a><br />
+                        <a href="#!objectvideo/id=1" target="_blank">Arbejdsløshedshæren</a><br />
                     </div>
                 </div>
             </div>
@@ -28,7 +29,7 @@
                     </div>
                 </div>
                 <span class="clearfix"></span>
-                <div class="pull-right wssorting">
+                <div class="pull-right wssorting" style="margin-right:12px;">
                     <select data-bind="options: sortitems,
                             optionsText: 'title',
                             optionsValue: 'id',
@@ -41,7 +42,7 @@
                         <li data-bind="css: { disabled: isdisabled, active: isactive }"><a href="#" data-bind="html: text, click: $parent.pagingclick"></a></li>
                         <!-- /ko -->
                     </ul>
-                </div>
+                </div>                
                 <div class="pull-left wsresulthits"><span data-bind="text:resulttext"></span><span data-bind="visible: (objectsselectcount()>0)"> - <span data-bind="text:objectsselectcount"></span> valgt</span></div>
                 <div class="row" style="clear: both; margin:0"><div class="span9" style="margin:0"><hr style="margin:0" /></div></div>
                 <div>

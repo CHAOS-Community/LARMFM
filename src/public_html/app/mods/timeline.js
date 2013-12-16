@@ -13,6 +13,8 @@
     var start = ko.observable(0);
     var end = ko.observable(0);
 
+    var pos = 0;
+
     function initTimeline() {
         // Create and populate a data table.
         data = new google.visualization.DataTable();
@@ -73,8 +75,28 @@
         google.visualization.events.addListener(timeline, 'change', onannotationchange);
         //google.visualization.events.addListener(timeline, 'add', onannotationadd);
 
+        google.visualization.events.addListener(timeline, 'dblclick', ondblclick);
+        google.visualization.events.addListener(timeline, 'requestadd', onrequestadd);
+
+        
+
         ready = true;
         state(1);
+    }
+
+    function onrequestadd() {
+        app.trigger("annotation:add", {});
+    }
+
+    function ondblclick() {
+        var sel = timeline.getSelection();
+        if (sel.length) {
+            if (sel[0].row != undefined) {
+                var row = sel[0].row;
+                var dat = timeline.getItem(row);
+                app.trigger('metadata:edit', dat);
+            }
+        }
     }
 
     function onannotationadd() {
@@ -236,6 +258,45 @@
         }
     }
 
+    var prepos = 0;
+    var mainloop = function () {
+
+        var position = Math.round(pos * 100) / 100;
+        if (prepos == position)
+            return;
+
+        prepos = position;
+        timeline.setCustomTime(start() + position * 1000); // Convert to milliseconds
+        //var r = timeline.getVisibleChartRange();
+        //playerdebug(timestr(r.start) + " - " + timestr(r.end));
+
+        if (timeline_centered) {
+            timeline.centerTimeline();
+        }
+
+
+    };
+
+    var animFrame = window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            window.msRequestAnimationFrame ||
+            null;
+
+    if (animFrame !== null) {
+        var recursiveAnim = function () {
+            mainloop();
+            animFrame(recursiveAnim);
+        };
+
+        // start the mainloop
+        animFrame(recursiveAnim);
+    } else {
+        var ONE_FRAME_TIME = 1000.0 / 60.0;
+        setInterval(mainloop, ONE_FRAME_TIME);
+    }
+
     return {
         state: state,
         start: start,
@@ -248,17 +309,15 @@
         // setTime: time = Seconds
         setPosition: function (position) {
             if (!onTimeChangeActive) {
-                timeline.setCustomTime(start() + position * 1000); // Convert to milliseconds
-                var r = timeline.getVisibleChartRange();
-                //playerdebug(timestr(r.start) + " - " + timestr(r.end));
-
-                if (timeline_centered) {
-                    timeline.centerTimeline();
-                }
+                pos = position;
             }
         },
         isReady: isReady,
         addData: addData,
+        clearData: function(){
+            data.removeRows(0, data.getNumberOfRows());
+            timeline.redraw();
+        },
         getAnnotation: getAnnotation,
         editItem: function (id) {
             timeline.editItem(id);
@@ -288,6 +347,15 @@
                     timeline.changeItem(row, { start: s, end: e, content: c });
                 }
             }
+        },
+        unselectItem: function () {
+            timeline.unselectItem();
+        },
+        addItemAtCursor: function (id) {
+            timeline.addItemAtCursor(id);
+        },
+        deleteItemByID: function (id) {
+            timeline.deleteItemByID(id);
         }
     };
 });

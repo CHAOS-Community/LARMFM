@@ -1,3 +1,14 @@
 ﻿<div class="WayfLoginContainer">
-	<iframe class="LoginFrame"></iframe>
+    <!-- ko if: CanUseIframe-->
+    <iframe class="LoginFrame"></iframe>
+    <!-- /ko -->
+    <!-- ko ifnot: CanUseIframe-->
+    <div style="border: 2px solid; border-color: #999999;">
+        <h3 style="margin-left: 10px; color:#333333;">Wayf Login</h3>
+        <div style="margin: 10px 10px 10px 10px;">
+            <p>Tryk på knappen for at åbne Wayf login vinduet.</p>
+            <button class="btn" data-bind="click:OpenWindow">Login</button>
+        </div>
+    </div>
+    <!-- /ko -->
 </div>

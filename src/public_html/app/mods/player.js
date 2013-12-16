@@ -20,6 +20,17 @@
 
         playlist = [];
 
+        if (data == null) {
+            playlist.push(
+                       {
+                           file: "rtmp://ec2-79-125-71-117.eu-west-1.compute.amazonaws.com/vods3/mp4:amazons3/chaosdata/LARM/LARMFM_demo/logical_h264_5min.mp4",
+                           fileduration: 4123,
+                           start: 0,
+                           end: 4123
+                       });
+            return;
+        }
+
         // Parse FileInfos
         // <Larm.FileInfos><Larm.FileInfo><StartOffSetMS>3840000</StartOffSetMS><EndOffSetMS>0</EndOffSetMS><FileName>P2_1800_2000_890121_001.mp3</FileName><Index>0</Index></Larm.FileInfo><Larm.FileInfo><StartOffSetMS>0</StartOffSetMS><EndOffSetMS>1320000</EndOffSetMS><FileName>P2_2000_2200_890121_001.mp3</FileName><Index>1</Index></Larm.FileInfo></Larm.FileInfos>
         var fileinfo = [];
@@ -83,12 +94,22 @@
         }
         mediaUrl(mu);
 
+        var w = "100%";
+        var h = 30;
+        var hascontrols = true;
+
+        if (data == null){
+            mediaImage = "";
+            h = 300;
+            hascontrols = false;
+        }
+
         jwplayer("larmplayer").setup({
             playlist: playlist,
-            width: "100%",
-            height: 30,
+            width: w,
+            height: h,
             image: mediaImage,
-            controls: true
+            controls: hascontrols
         });
 
 
@@ -138,7 +159,8 @@
         else if (state == STATE_GETDURATION) {
             var idx = jwplayer().getPlaylistIndex();
             var item = playlist[idx];
-            item.fileduration = e.duration;
+            if(item.fileduration == 0)
+                item.fileduration = e.duration;
 
             // Duration missing?
             var dur = 0;
@@ -243,6 +265,11 @@
         mediaUrl: mediaUrl,
         init: function (objectdata) {
             data = objectdata;
+
+            if (data == null) {
+                setupPlayer();
+                return;
+            }
 
             if (data == undefined)
                 return;

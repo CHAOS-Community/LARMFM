@@ -5,6 +5,7 @@ define(['plugins/router'], function (router) {
             return router.map([
                 { route: ['', '!search', '!search/:param'], moduleId: Settings.Search.UIViews.search, title: 'Search', nav: true },
                 { route: '!object/:param', moduleId: 'viewmodels/object', title: 'Object', nav: false },
+                { route: '!objectvideo/:param', moduleId: 'viewmodels/objectvideo', title: 'ObjectVideo', nav: false },
                 { route: 'login', moduleId: 'viewmodels/login', title: 'Login', nav: false }
             ]).buildNavigationModel()
               .mapUnknownRoutes('hello/index', 'not-found')
