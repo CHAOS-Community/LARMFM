@@ -308,6 +308,19 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
             {
                 isSearching(false);
                 items.removeAll();
+
+                if (freetext() == "video") {
+                    var oi = new objfac.ObjectItem();
+                    oi.id("1");
+                    oi.title("Arbejdsløshedshæren");
+                    oi.channel("Teater");
+                    oi.annotationCount(10);
+                    oi.hash('#!objectvideo/id=1');
+                    oi.typetext("video");
+                    oi.type("Video");
+                    items.push(oi);
+                }
+
                 for (var i = 0; i < response.Body.Count; i++)
                 {
                     var r = response.Body.Results[i];
@@ -323,15 +336,8 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                     if (r.Type == "Radio") {
                         //r.Id = "bf99b5b4-07e7-4acf-9726-0416e21f91df"; // TEST: objekt med annotationer. 1 fil.
                         //r.Id = "598e81b1-2d86-443c-92de-a9ffb83b2193"; // TEST: En japaner i Berlin. 2 filer.
-                        if (r.Id == "d4c2add1-5cda-6742-a788-9f0d7db2dd20") {
-                            oi.hash('#!objectvideo/id=' + r.Id);
-                            oi.typetext("video");
-                            oi.type("Video");
-                        }
-                        else {
-                            oi.hash('#!object/id=' + r.Id);
-                            oi.typetext("radio");
-                        }
+                        oi.hash('#!object/id=' + r.Id);
+                        oi.typetext("radio");
                     }
                     else {
 
