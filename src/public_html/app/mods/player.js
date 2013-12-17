@@ -23,7 +23,7 @@
         if (data == null) {
             playlist.push(
                        {
-                           file: "rtmp://ec2-79-125-71-117.eu-west-1.compute.amazonaws.com/vods3/mp4:amazons3/chaosdata/LARM/LARMFM_demo/logical_h264_5min.mp4",
+                           file: "rtmp://ec2-79-125-71-117.eu-west-1.compute.amazonaws.com/vods3/mp4:amazons3/chaosdata/LARM/LARMFM_demo/logical_h264_2.mp4",
                            fileduration: 4123,
                            start: 0,
                            end: 4123
