@@ -17,8 +17,8 @@ Settings.accessPointGuid = "00000000-0000-0000-0000-000007000000";
 Settings.anonymousUsername = "thfl@dr.dk";
 Settings.anonymousPassword = "1234";
 
-Settings.username = "";
-Settings.password = "";
+Settings.username = "thfl@dr.dk";
+Settings.password = "1234";
 
 Settings.startPath = "!search";
 Settings.publicPaths = ['AppLoader', 'Login'];
