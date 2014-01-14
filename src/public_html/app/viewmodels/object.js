@@ -289,7 +289,6 @@ define([
                 schemaselector.addSchemaItem("d0edf6f9-caf0-ac41-b8b3-b0d950fdef4e", 0);
                 schemaselector.addSchemaItem("7bb8d425-6e60-9545-80f4-0765c5eb6be6", 0);
                 schemaselector.addSchemaItem("c446ad50-f1ea-f642-9361-3f6b56c5f320", 0);
-
             }
 
             var annotationsHaveBeenInserted = false;
@@ -356,6 +355,10 @@ define([
                 }
 
                 isPlayerLoading(false);
+
+                // Choose Comments annotation as default.
+                schemaselector.schemaItems()[0].click();
+
             }
 
             return {
