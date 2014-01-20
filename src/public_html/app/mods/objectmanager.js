@@ -1,10 +1,27 @@
 ﻿define(function () {
 
     var callbacks = [];
+    var callbackData = [];
 
     function metadataReceived(data) {
         var r = data.Body.Results[0];
         doCallback(r.Id, r);
+    }
+
+    function createObjectReceived(data) {
+        var i = 0;
+    }
+
+    function createAnnotationReceived(data) {
+
+    }
+
+    function createAnnotationReceived_relation(data) {
+
+    }
+
+    function createAnnotationReceived_metadata(data) {
+
     }
 
     function doCallback(guid, param) {
@@ -33,9 +50,52 @@
         if (callbacks[guid] === undefined) {
             callbacks[guid] = [];
         }
-
         callbacks[guid].push(callback);
     }
+
+    // --- CREATE ANNOTATION begin
+    var CreateAnnotation = function (guid, parentGuid, schemaGuid, lang, metadata, callback) {
+        this.guid = guid;
+        this.parentGuid = parentGuid;
+        this.schemaGuid = schemaGuid;
+        this.lang = lang;
+        this.metadata = metadata;
+        this.callback = callback;
+        this.relationdone = false;
+        this.metadatadone = false;
+    };
+
+    CreateAnnotation.prototype.create = function () {
+        //Object.Create(guid, objectTypeID, folderID, serviceCaller)
+        CHAOS.Portal.Client.Object.Create(this.guid, 64, 717, null).WithCallback(this.createReceived);
+    };
+
+    CreateAnnotation.prototype.createReceived = function (data) {
+        if (data.Error !== null || data.Body.Count < 1) {
+            // Show error!
+            return;
+        }
+        // ObjectRelation.Set(object1Guid, object2Guid, objectRelationTypeID, sequence, metadataGuid, metadataSchemaGuid, languageCode, metadataXml, serviceCaller)
+        CHAOS.Portal.Client.ObjectRelation.Set
+            (this.parentGuid, this.guid, 16).WithCallback(this.relationReceived);
+        // Metadata.Set
+        CHAOS.Portal.Client.Metadata.Set(
+            this.guid, this.schemaGuid, this.lang,
+            1, this.metadata, null).WithCallback(metadataReceived);
+    };
+
+    CreateAnnotation.prototype.relationReceived = function (data) {
+        this.relationdone = true;
+        if (this.metadatadone)
+            this.callback();
+    };
+
+    CreateAnnotation.prototype.metadataReceived = function (data) {
+        this.metadatadone = true;
+        if (this.relationdone)
+            this.callback();
+    };
+    // --- CREATE ANNOTATION end
 
     // --- Public properties and methods ---
     return {
@@ -63,8 +123,15 @@
         //-------------------------------------------------
         createObject: function (callback) {
             var guid = generateGUID();
-            pushGuid(guid, callback);
-
+            pushCallback(guid, callback);
+            //Object.Create(guid, objectTypeID, folderID, serviceCaller)
+            CHAOS.Portal.Client.Object.Create(guid, 64, 717, null).WithCallback(createObjectReceived);
+        },
+        //-------------------------------------------------
+        createAnnotation: function (parentGuid, schemaGuid, lang, metadata, callback) {
+            var guid = generateGUID();
+            var createAnn = new CreateAnnotation(guid, parentGuid, schemaGuid, lang, metadata, callback);
+            createAnn.create();
         }
         //-------------------------------------------------
     };

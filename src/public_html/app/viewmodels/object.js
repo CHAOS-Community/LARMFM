@@ -126,10 +126,17 @@ define([
 
 
             app.on('metadata:save').then(function (e) {
-                CHAOS.Portal.Client.Metadata.Set(
-                e.guid, e.schemaguid, "da",
-                1, e.xml, null).WithCallback(metadataSaved);
 
+                if (!e.guid || e.guid.substring(0, 3) == "new") {
+                    // Create object
+                    objectmanager.createAnnotation(obj.guid, e.schemaguid, "da", e.xml, annotationCreated);
+
+                } else {
+                    // Update existing object
+                    CHAOS.Portal.Client.Metadata.Set(
+                    e.guid, e.schemaguid, "da",
+                    1, e.xml, null).WithCallback(metadataSaved);
+                }
             });
 
             function metadataSaved(r) {
@@ -140,6 +147,10 @@ define([
                 }
 
                 metadataEditors.removeAll();
+            }
+
+            function annotationCreated() {
+                var i = 0;
             }
 
             app.on('metadata:changed_timeline').then(function (e) {

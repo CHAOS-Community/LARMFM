@@ -1,5 +1,11 @@
 ﻿var Settings = Settings || {};
 
+// ---------------------
+// Nyt logo.
+// Nyt login
+// filtering af skemaer
+// ----------------------
+
 Settings.title = "LARM.fm";
 //Settings.title = "Sendeplanen";
 
