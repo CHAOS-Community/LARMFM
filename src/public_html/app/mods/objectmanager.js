@@ -78,16 +78,18 @@
         // ObjectRelation.Set(object1Guid, object2Guid, objectRelationTypeID, sequence, metadataGuid, metadataSchemaGuid, languageCode, metadataXml, serviceCaller)
         CHAOS.Portal.Client.ObjectRelation.Set
             (self.parentGuid, self.guid, 16).WithCallbackAndToken(self.relationReceived, self);
-        // Metadata.Set(objectGuid, metadataSchemaGuid, languageCode, revisionID, metadataXml, serviceCaller)
-        CHAOS.Portal.Client.Metadata.Set(
-            self.guid, self.schemaGuid, self.lang,
-            1, self.metadata, null).WithCallbackAndToken(self.metadataReceived, self);
     };
 
     CreateAnnotation.prototype.relationReceived = function (data, self) {
         self.relationdone = true;
         if (self.metadatadone)
             self.callback();
+
+        // Metadata.Set(objectGuid, metadataSchemaGuid, languageCode, revisionID, metadataXml, serviceCaller)
+        CHAOS.Portal.Client.Metadata.Set(
+            self.guid, self.schemaGuid, self.lang,
+            0, self.metadata, null).WithCallbackAndToken(self.metadataReceived, self);
+
     };
 
     CreateAnnotation.prototype.metadataReceived = function (data, self) {

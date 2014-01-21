@@ -129,7 +129,8 @@ define([
 
                 if (!e.guid || e.guid.substring(0, 3) == "new") {
                     // Create object
-                    objectmanager.createAnnotation(obj.guid, e.schemaguid, "da", e.xml, annotationCreated);
+                    var schemaGuid = e.schemaguid; //"f9f6edd0-f0ca-41ac-b8b3-b0d950fdef4e"; // e.schemaguid;
+                    objectmanager.createAnnotation(obj.guid, schemaGuid, "da", e.xml, annotationCreated);
 
                 } else {
                     // Update existing object
