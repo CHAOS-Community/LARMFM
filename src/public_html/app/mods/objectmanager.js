@@ -67,33 +67,33 @@
 
     CreateAnnotation.prototype.create = function () {
         //Object.Create(guid, objectTypeID, folderID, serviceCaller)
-        CHAOS.Portal.Client.Object.Create(this.guid, 64, 717, null).WithCallback(this.createReceived);
+        CHAOS.Portal.Client.Object.Create(this.guid, 64, 717, null).WithCallbackAndToken(this.createReceived, this);
     };
 
-    CreateAnnotation.prototype.createReceived = function (data) {
+    CreateAnnotation.prototype.createReceived = function (data, self) {
         if (data.Error !== null || data.Body.Count < 1) {
             // Show error!
             return;
         }
         // ObjectRelation.Set(object1Guid, object2Guid, objectRelationTypeID, sequence, metadataGuid, metadataSchemaGuid, languageCode, metadataXml, serviceCaller)
         CHAOS.Portal.Client.ObjectRelation.Set
-            (this.parentGuid, this.guid, 16).WithCallback(this.relationReceived);
-        // Metadata.Set
+            (self.parentGuid, self.guid, 16).WithCallbackAndToken(self.relationReceived, self);
+        // Metadata.Set(objectGuid, metadataSchemaGuid, languageCode, revisionID, metadataXml, serviceCaller)
         CHAOS.Portal.Client.Metadata.Set(
-            this.guid, this.schemaGuid, this.lang,
-            1, this.metadata, null).WithCallback(metadataReceived);
+            self.guid, self.schemaGuid, self.lang,
+            1, self.metadata, null).WithCallbackAndToken(self.metadataReceived, self);
     };
 
-    CreateAnnotation.prototype.relationReceived = function (data) {
-        this.relationdone = true;
-        if (this.metadatadone)
-            this.callback();
+    CreateAnnotation.prototype.relationReceived = function (data, self) {
+        self.relationdone = true;
+        if (self.metadatadone)
+            self.callback();
     };
 
-    CreateAnnotation.prototype.metadataReceived = function (data) {
-        this.metadatadone = true;
-        if (this.relationdone)
-            this.callback();
+    CreateAnnotation.prototype.metadataReceived = function (data, self) {
+        self.metadatadone = true;
+        if (self.relationdone)
+            self.callback();
     };
     // --- CREATE ANNOTATION end
 
