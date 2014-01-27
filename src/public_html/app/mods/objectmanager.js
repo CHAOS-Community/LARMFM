@@ -116,8 +116,13 @@
             // serviceCaller
             var guids = [];
             guids.push(guid);
+            //CHAOS.Portal.Client.Object.Get(
+            //    guids, Settings.accessPointGuid,
+            //    true, true, true,
+            //    false, false, 1, 0,
+            //    null).WithCallback(metadataReceived);
             CHAOS.Portal.Client.Object.Get(
-                guids, Settings.accessPointGuid,
+                guids, null,
                 true, true, true,
                 false, false, 1, 0,
                 null).WithCallback(metadataReceived);

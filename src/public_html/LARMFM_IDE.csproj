@@ -57,6 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\factory\authentication.js" />
     <Content Include="app\factory\metadata.js" />
     <Content Include="app\mods\store.js" />
     <Content Include="app\mods\jsonformfields.js" />
