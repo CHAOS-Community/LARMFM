@@ -63,6 +63,7 @@
         this.callback = callback;
         this.relationdone = false;
         this.metadatadone = false;
+        this.publishdone = false;
     };
 
     CreateAnnotation.prototype.create = function () {
@@ -76,27 +77,46 @@
             return;
         }
         // ObjectRelation.Set(object1Guid, object2Guid, objectRelationTypeID, sequence, metadataGuid, metadataSchemaGuid, languageCode, metadataXml, serviceCaller)
+
+        var preday = new Date();
+        preday.setDate(preday.getDate() - 5);
+        // public static SetPublishSettings(objectGUID: string, accessPointGUID: string, startDate: Date, endDate: Date, serviceCaller: CHAOS.Portal.Client.IServiceCaller = null): ICallState<any>
+        CHAOS.Portal.Client.Object.SetPublishSettings(self.guid, Settings.accessPointGuid, preday).WithCallbackAndToken(self.setPublishSettingsReceived, self);
+
+
         CHAOS.Portal.Client.ObjectRelation.Set
             (self.parentGuid, self.guid, 16).WithCallbackAndToken(self.relationReceived, self);
     };
 
+    CreateAnnotation.prototype.setPublishSettingsReceived = function (data, self) {
+        self.publishdone = true;
+        self.createDone(self);
+    };
+
     CreateAnnotation.prototype.relationReceived = function (data, self) {
         self.relationdone = true;
-        if (self.metadatadone)
-            self.callback();
 
-        // Metadata.Set(objectGuid, metadataSchemaGuid, languageCode, revisionID, metadataXml, serviceCaller)
-        CHAOS.Portal.Client.Metadata.Set(
-            self.guid, self.schemaGuid, self.lang,
-            0, self.metadata, null).WithCallbackAndToken(self.metadataReceived, self);
+        if (!self.metadatadone) {
+            // Metadata.Set(objectGuid, metadataSchemaGuid, languageCode, revisionID, metadataXml, serviceCaller)
+            CHAOS.Portal.Client.Metadata.Set(
+                self.guid, self.schemaGuid, self.lang,
+                0, self.metadata, null).WithCallbackAndToken(self.metadataReceived, self);
+        }
 
+        self.createDone(self);
     };
 
     CreateAnnotation.prototype.metadataReceived = function (data, self) {
         self.metadatadone = true;
-        if (self.relationdone)
-            self.callback();
+        self.createDone(self);
     };
+
+    CreateAnnotation.prototype.createDone = function (self) {
+        if (self.relationdone && self.metadatadone && self.publishdone) {
+            self.callback();
+        }
+    }
+
     // --- CREATE ANNOTATION end
 
     // --- Public properties and methods ---
@@ -116,16 +136,16 @@
             // serviceCaller
             var guids = [];
             guids.push(guid);
-            //CHAOS.Portal.Client.Object.Get(
-            //    guids, Settings.accessPointGuid,
-            //    true, true, true,
-            //    false, false, 1, 0,
-            //    null).WithCallback(metadataReceived);
             CHAOS.Portal.Client.Object.Get(
-                guids, null,
+                guids, Settings.accessPointGuid,
                 true, true, true,
                 false, false, 1, 0,
                 null).WithCallback(metadataReceived);
+            //CHAOS.Portal.Client.Object.Get(
+            //    guids, null,
+            //    true, true, true,
+            //    false, false, 1, 0,
+            //    null).WithCallback(metadataReceived);
         },
         //-------------------------------------------------
         createObject: function (callback) {

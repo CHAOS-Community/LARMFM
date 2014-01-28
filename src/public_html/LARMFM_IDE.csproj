@@ -127,6 +127,7 @@
     <Content Include="img\larm_logo.png" />
     <Content Include="index.html" />
     <Content Include="jsonform_test.html" />
+    <Content Include="lib\chaos\PortalClient.min.js" />
     <Content Include="lib\font-awesome\css\font\fontawesome-webfont.eot" />
     <Content Include="lib\font-awesome\css\font\fontawesome-webfont.ttf" />
     <Content Include="lib\font-awesome\css\font\fontawesome-webfont.woff" />
@@ -256,7 +257,7 @@
     <Content Include="lib\bootstrap\js\bootstrap.js" />
     <Content Include="lib\bootstrap\js\bootstrap.min.js" />
     <Content Include="lib\chaos\CHAOS.Portal.Client.PortalClient.js" />
-    <Content Include="lib\chaos\PortalClient.min.js" />
+    <Content Include="lib\chaos\PortalClient.min_ORG.js" />
     <Content Include="lib\durandal\css\durandal.css" />
     <Content Include="lib\durandal\images\icon.png" />
     <Content Include="lib\durandal\images\ios-startup-image-landscape.png" />

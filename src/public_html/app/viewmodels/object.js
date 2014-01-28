@@ -91,7 +91,7 @@ define([
 
                 // Only comments for now!
                 if(schemaselector.schemaItems().length<1 ||
-                    schemaselector.schemaItems()[0].isactive() == false){
+                    schemaselector.schemaItems()[0].isactive() == false) {
                     app.showMessage("Vaelg Comments ark for at annotere.");
                     return;
                 }
@@ -151,7 +151,7 @@ define([
             }
 
             function annotationCreated() {
-                var i = 0;
+                metadataEditors.removeAll();
             }
 
             app.on('metadata:changed_timeline').then(function (e) {
