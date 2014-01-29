@@ -162,6 +162,8 @@ div.timeline-navigation {
     background-color: #F5F5F5;
     border-radius: 2px;
     -moz-border-radius: 2px;  /* For Firefox 3.6 and older */
+
+    opacity: 0.8;
 }
 
 div.timeline-navigation-new, div.timeline-navigation-delete,

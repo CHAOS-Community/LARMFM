@@ -100,7 +100,7 @@
 
                         var xml = xmlmanager.toXmlDirect(this.json);
 
-                        app.trigger("metadata:save", { guid: this.data.guid, schemaguid: 'd0edf6f9-caf0-ac41-b8b3-b0d950fdef4e', xml: xml });
+                        app.trigger("metadata:save", { guid: this.data.guid, schemaguid: 'd0edf6f9-caf0-ac41-b8b3-b0d950fdef4e', title: this.title(), xml: xml });
                         // this.data.guid er det guid på annotation object?
                     },
                     btncancel: function (data) {

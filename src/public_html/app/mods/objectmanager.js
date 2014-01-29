@@ -155,8 +155,7 @@
             CHAOS.Portal.Client.Object.Create(guid, 64, 717, null).WithCallback(createObjectReceived);
         },
         //-------------------------------------------------
-        createAnnotation: function (parentGuid, schemaGuid, lang, metadata, callback) {
-            var guid = generateGUID();
+        createAnnotation: function (guid, parentGuid, schemaGuid, lang, metadata, callback) {
             var createAnn = new CreateAnnotation(guid, parentGuid, schemaGuid, lang, metadata, callback);
             createAnn.create();
         }

@@ -43,7 +43,7 @@
             //groupsOnRight: true,
             enableKeys: true,
             showNavigation: true,
-            showButtonNew: true,
+            showButtonNew: false,
             animate: true,
             animateZoom: true,
             min: start(),
@@ -260,6 +260,9 @@
 
     var prepos = 0;
     var mainloop = function () {
+
+        if (!ready)
+            return;
 
         var position = Math.round(pos * 100) / 100;
         if (prepos == position)

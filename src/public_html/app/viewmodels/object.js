@@ -23,6 +23,7 @@ define([
             obj.anndata;
             obj.anndatacount;
             obj.anndataschemacount = [];
+            obj.activeSchemaItemsDic = [];
 
             var isPlayerLoading = ko.observable(true);
 
@@ -44,7 +45,8 @@ define([
                 metadataViews.removeAll();
                 timeline.clearData();
 
-                var dic = [];
+                obj.activeSchemaItemsDic = [];
+                var dic = obj.activeSchemaItemsDic;
                 for (var i = 0; i < schemaselector.schemaItems().length; i++)
                     if (schemaselector.schemaItems()[i].isactive())
                         dic[schemaselector.schemaItems()[i].guid] = schemaselector.schemaItems()[i];
@@ -58,28 +60,7 @@ define([
                 for (var i = 0; i < amds.length; i++) {
                     var amd = amds[i];
 
-                    if (amd.MetadataSchemaGUID in dic) {
-                        //var content = '<div title="' + amd.Title + '" style="background-color:rgba(128, 128, 255, 0.2)">&nbsp;' + amd.Title + '</div>'
-
-                        var schitem = dic[amd.MetadataSchemaGUID];
-
-                        var content = schitem.getContent(amd.Title);
-
-                        var timestart = format.getSecondsFromString(amd.StartTime);
-                        var timeend = format.getSecondsFromString(amd.EndTime);
-                        timestart = player.getProgramTimeFromFileTime(timestart);
-                        timeend = player.getProgramTimeFromFileTime(timeend);
-                        timestart = timeline.start() + timestart * 1000;
-                        timeend = timeline.start() + timeend * 1000;
-
-                        // not editable
-                        dataarray.push([new Date(timestart), new Date(timeend), content, false, amd.Id]);
-
-                        var annview = new metadatafac.MetadataView();
-                        annview.setview(Settings.Schema[amd.MetadataSchemaGUID].view, amd);
-                        metadataViews.push(annview);
-
-                    }
+                    addAmdToMetadataViews(amd, dataarray);
 
                 }
 
@@ -98,13 +79,15 @@ define([
 
                 var schema = schemaselector.schemaItems()[0];
 
-                timeline.addItemAtCursor('new1');
+                var id = "n" + objectmanager.generateGUID();
+
+                timeline.addItemAtCursor(id);
                 var dat = timeline.getSelection();
 
                 metadataEditors.removeAll();
                 // Add editor
                 amd = {};
-                amd.Id = 'new1';
+                amd.Id = id;
                 var editor = new metadatafac.MetadataView();
                 editor.setview(Settings.Schema[schema.guid].edit, { guid: amd.Id, metadata: amd });
                 metadataEditors.push(editor);
@@ -127,10 +110,17 @@ define([
 
             app.on('metadata:save').then(function (e) {
 
-                if (!e.guid || e.guid.substring(0, 3) == "new") {
+                if (!e.guid || e.guid.substring(0, 1) == "n") {
+
+                    // Add to MetadataViews
+                    var amd = createNewAmd(e);
+                    addAmdToMetadataViews(amd);
+                    timeline.unselectItem();
+
                     // Create object
+                    var guid = e.guid.substring(1);
                     var schemaGuid = e.schemaguid; //"f9f6edd0-f0ca-41ac-b8b3-b0d950fdef4e"; // e.schemaguid;
-                    objectmanager.createAnnotation(obj.guid, schemaGuid, "da", e.xml, annotationCreated);
+                    objectmanager.createAnnotation(guid, obj.guid, schemaGuid, "da", e.xml, annotationCreated)
 
                 } else {
                     // Update existing object
@@ -139,6 +129,59 @@ define([
                     1, e.xml, null).WithCallback(metadataSaved);
                 }
             });
+
+            function createNewAmd(e) {
+                // player.getProgramTimeFromFileTime(timestart);
+                var ann = timeline.getAnnotation(e.guid);
+                var amd = {};
+                amd.DateCreated = format.getSolrDateStr(new Date());
+                amd.DateModified = amd.DateCreated;
+                amd.EditingUser = "Dig";
+                amd.EditingUserGUID = "";
+                amd.EndTime = format.getTimeStringFromDate(ann[1].v);
+                amd.Id = e.guid;
+                amd.LanguageCode = "da";
+                amd.MetadataSchemaGUID = e.schemaguid;
+                amd.ProgramGUID = obj.guid;
+                amd.StartTime = format.getTimeStringFromDate(ann[0].v);
+                amd.Title = e.title;
+
+                return amd;
+            }
+
+            function addAmdToMetadataViews(amd, dataarray) {
+
+                var dic = obj.activeSchemaItemsDic;
+
+                if (amd.MetadataSchemaGUID in dic) {
+                    //var content = '<div title="' + amd.Title + '" style="background-color:rgba(128, 128, 255, 0.2)">&nbsp;' + amd.Title + '</div>'
+
+                    var schitem = dic[amd.MetadataSchemaGUID];
+
+                    var content = schitem.getContent(amd.Title);
+
+                    var timestart = format.getSecondsFromString(amd.StartTime);
+                    var timeend = format.getSecondsFromString(amd.EndTime);
+                    timestart = player.getProgramTimeFromFileTime(timestart);
+                    timeend = player.getProgramTimeFromFileTime(timeend);
+                    timestart = timeline.start() + timestart * 1000;
+                    timeend = timeline.start() + timeend * 1000;
+
+                    if (dataarray) {
+                        // not editable
+                        dataarray.push([new Date(timestart), new Date(timeend), content, false, amd.Id]);
+                    }
+                    else {
+                        // update existing timeline annotation
+                        var an = timeline.getAnnotation(amd.Id);
+                        an[2].v = content;
+                    }
+
+                    var annview = new metadatafac.MetadataView();
+                    annview.setview(Settings.Schema[amd.MetadataSchemaGUID].view, amd);
+                    metadataViews.push(annview);
+                }
+            }
 
             function metadataSaved(r) {
 
@@ -412,6 +455,9 @@ define([
                 },
                 pause: function () {
                     player.pause();
+                },
+                annotationAddBtn: function () {
+                    app.trigger("annotation:add", {});
                 }
             };
         });
