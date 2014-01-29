@@ -7,10 +7,15 @@
     return {
         data: data,
         dataCount: dataCount,
-        setAnnotations: function (annData, annDataCount) {
+        setAnnotationData: function (annData, annDataCount) {
             data(annData);
             dataCount(annDataCount);
+        },
+        // Addes annotation to data. It has to be present in the timeline before calling this.
+        addAnnotationToData: function (guid, schemaGuid, title) {
+
         }
+
 
     };
 

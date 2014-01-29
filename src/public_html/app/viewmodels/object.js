@@ -129,6 +129,7 @@ define([
                 }
             });
 
+            // TODO: Remove. Is moved to annotation module
             function createNewAmd(e) {
                 // player.getProgramTimeFromFileTime(timestart);
                 var ann = timeline.getAnnotation(e.guid);
@@ -331,7 +332,7 @@ define([
                 //if (obj.anndatacount > 0)
                 //    obj.anndata = response.Body.Results;
 
-                annotation.setAnnotations(response.Body.Results, response.Body.Count);
+                annotation.setAnnotationData(response.Body.Results, response.Body.Count);
 
                 insertAnnotations();
             }
