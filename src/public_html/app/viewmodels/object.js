@@ -11,17 +11,16 @@ define([
     'mods/player',
     'mods/timeline',
     'mods/objectmanager',
-    'mods/schemaselector'
+    'mods/schemaselector',
+    'mods/annotation'
 ],
         function (app, ko, portal, state, objfac, xmlman,
             jsonformfields, metadatafac, format, player, timeline, objectmanager,
-            schemaselector) {
+            schemaselector, annotation) {
 
             var obj = {};
             obj.guid;
             obj.data;
-            obj.anndata;
-            obj.anndatacount;
             obj.anndataschemacount = [];
             obj.activeSchemaItemsDic = [];
 
@@ -52,7 +51,7 @@ define([
                         dic[schemaselector.schemaItems()[i].guid] = schemaselector.schemaItems()[i];
 
                 var dataarray = [];
-                var amds = obj.anndata;
+                var amds = annotation.data();
 
                 if (amds == undefined)
                     return;
@@ -98,7 +97,7 @@ define([
 
             app.on('metadata:cancel').then(function (e) {
                 var item = timeline.getSelection();
-                if (item.id.substring(0, 3) == "new") {
+                if (item.id.substring(0, 1) == "n") {
                     timeline.deleteItemByID(item.id);
                 }
                 else
@@ -175,6 +174,7 @@ define([
                         // update existing timeline annotation
                         var an = timeline.getAnnotation(amd.Id);
                         an[2].v = content;
+                        timeline.changeItem(new Date(timestart), new Date(timeend), content);
                     }
 
                     var annview = new metadatafac.MetadataView();
@@ -327,9 +327,11 @@ define([
 
             function annotationsReceived(response) {
 
-                obj.anndatacount = response.Body.Count;
-                if (obj.anndatacount > 0)
-                    obj.anndata = response.Body.Results;
+                //obj.anndatacount = response.Body.Count;
+                //if (obj.anndatacount > 0)
+                //    obj.anndata = response.Body.Results;
+
+                annotation.setAnnotations(response.Body.Results, response.Body.Count);
 
                 insertAnnotations();
             }
@@ -352,7 +354,7 @@ define([
                 if (annotationsHaveBeenInserted)
                     return;
 
-                if (obj.anndatacount !== undefined && obj.anndatacount == 0 &&
+                if (annotation.dataCount() !== undefined && annotation.dataCount() == 0 &&
                     player.isReady() && timeline.isReady()
                     ) {
                     addSchemas();
@@ -360,7 +362,7 @@ define([
                     return;
                 }
 
-                if (obj.anndata === undefined || !player.isReady() || !timeline.isReady()) {
+                if (annotation.data() === undefined || !player.isReady() || !timeline.isReady()) {
                     return;
                 }
 
@@ -375,7 +377,7 @@ define([
                 obj.anndataschemacount["7bb8d425-6e60-9545-80f4-0765c5eb6be6"] = 0;
 
                 //var dataarray = [];
-                var amds = obj.anndata;
+                var amds = annotation.data();
                 for (var i = 0; i < amds.length; i++) {
                     var amd = amds[i];
 
