@@ -38,11 +38,20 @@
     // ---------------------------------
 
     var schemaItems = ko.observableArray([]);
+    var activeSchemaItems = ko.observableArray([]); // Dictionary
 
     return {
         SchemaItem: SchemaItem,
         schemaItems: schemaItems,
-        addSchemaItem: function (schemaguid,count) {
+        // Dictionary of SchemaItems
+        activeSchemaItems: activeSchemaItems,
+        updateActiveSchemaItems: function() {
+            activeSchemaItems([]);
+            for (var i = 0; i < schemaItems().length; i++)
+                if (schemaItems()[i].isactive())
+                    activeSchemaItems()[schemaItems()[i].guid] = schemaItems()[i];
+        },
+        addSchemaItem: function (schemaguid, count) {
             var cnt = schemaItems().length;
             var item;
             // already present?

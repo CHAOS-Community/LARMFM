@@ -20,16 +20,21 @@
 <div class="loader" data-bind="css: { active: isPlayerLoading }">
     <i class="icon-spinner icon-2x icon-spin"></i>
 </div>
-<div id="timelines"></div>
-<div id="timelinescroll" style="opacity: 0; width: 100%; overflow-x: scroll">
-    <div id="timelinescrollcontent" style="width:1px;height:1px"></div>
+<div style="background-color: #f0f0f0;">
+    <div style="float:left; width:11%; overflow: hidden;">
+        <div style="text-align:center;margin-left:10px;margin-top:10px;">
+            <button type="button" class="btn" data-bind="click: play">Play</button>
+            <button type="button" class="btn" data-bind="click: pause">Pause</button>
+            <button type="button" class="btn" data-bind="click: annotationAddBtn">Tilføj annotation</button>
+          <!--<span data-bind="html: playerposition"></span> - <span data-bind="html: playerdebug"></span>-->
+        </div>
+    </div>
+    <div id="timelines" style="background-color:white;float:right;width:88%"></div>
+    <div id="timelinescroll" style="opacity: 0; width: 100%; overflow-x: scroll">
+        <div id="timelinescrollcontent" style="width:1px;height:1px"></div>
+    </div>
 </div>
 <div style="height:8px"></div>
-<div>
-<button type="button" class="btn" data-bind="click: play">Play</button> <button type="button" class="btn" data-bind="click: pause">Pause</button>
-<button type="button" class="btn" data-bind="click: annotationAddBtn">Tilføj annotation</button>
-<!--&nbsp;Player position: <span data-bind="html: playerposition"></span> - Player debug: <span data-bind="html: playerdebug"></span>-->
-</div>
 <hr />
 <div data-bind="foreach: metadataEditors">
     <div data-bind="compose: view"></div>

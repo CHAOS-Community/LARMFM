@@ -56,6 +56,14 @@
                         }
 
                         var tla = timeline.getAnnotation(this.data.guid);
+
+                        if (!tla) {
+                            // Look for new annotation instead
+                            var tla = timeline.getAnnotation("n" + this.data.guid);
+                            if (!tla)
+                                return;
+                        }
+
                         this.s = tla[0].v;
                         this.e = tla[1].v;
                         this.c = tla[2].v
@@ -100,7 +108,7 @@
 
                         var xml = xmlmanager.toXmlDirect(this.json);
 
-                        app.trigger("metadata:save", { guid: this.data.guid, schemaguid: 'd0edf6f9-caf0-ac41-b8b3-b0d950fdef4e', title: this.title(), xml: xml });
+                        app.trigger("metadata:save", { guid: this.data.guid, schemaguid: 'd0edf6f9-caf0-ac41-b8b3-b0d950fdef4e', title: this.title(), start: start_str, end: end_str, xml: xml });
                         // this.data.guid er det guid på annotation object?
                     },
                     btncancel: function (data) {
