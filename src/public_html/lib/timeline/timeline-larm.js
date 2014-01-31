@@ -2967,9 +2967,9 @@ links.Timeline.prototype.onMouseUp = function (event) {
 
             if (params.target === this.dom.items.deleteButton) {
                 // delete item
-                if (this.selection) {
-                    this.confirmDeleteItem(this.selection.index);
-                }
+                // if (this.selection) {
+                //    this.confirmDeleteItem(this.selection.index);
+                //}
             }
             else if (options.selectable) {
                 // select/unselect item
