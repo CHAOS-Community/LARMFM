@@ -35,6 +35,8 @@ define([
             var metadataViews = ko.observableArray();
             var metadataEditors = ko.observableArray();
 
+            var $window = $(window);
+
             app.on('schema:change').then(function (e) {
 
                 var guid = e.guid;
@@ -413,6 +415,13 @@ define([
 
             }
 
+            function windowSizeChange() {
+                var w = $window.width();
+                var h = $window.height();
+                $("#timelines").width(w - 180);
+                timeline.redraw();
+            }
+
             return {
                 isPlayerLoading: isPlayerLoading,
 
@@ -426,7 +435,10 @@ define([
                 metadataViews: metadataViews,
                 metadataEditors: metadataEditors,
                 schemaItems: schemaselector.schemaItems,
-
+                compositionComplete: function (child, parent, settings) {
+                    windowSizeChange();
+                    $window.resize(windowSizeChange);
+                },
                 activate: function (param) {
                     if (param !== undefined) {
                         var id = format.getParamByName('id', param);

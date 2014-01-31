@@ -317,6 +317,10 @@
         },
         isReady: isReady,
         addData: addData,
+        redraw: function () {
+            if(timeline)
+                timeline.redraw();
+        },
         clearData: function(){
             data.removeRows(0, data.getNumberOfRows());
             timeline.redraw();
