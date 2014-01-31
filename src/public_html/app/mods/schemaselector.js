@@ -51,6 +51,9 @@
                 if (schemaItems()[i].isactive())
                     activeSchemaItems()[schemaItems()[i].guid] = schemaItems()[i];
         },
+        isActive: function (schemaGuid){
+            return schemaGuid in activeSchemaItems();
+        },
         addSchemaItem: function (schemaguid, count) {
             var cnt = schemaItems().length;
             var item;
@@ -89,6 +92,15 @@
             item.isactive(false);
             item.setCss(ci);
             
+        },
+        getContent: function (schemaGuid, title) {
+            for (var i = 0; i < schemaItems().length; i++) {
+                if (schemaItems()[i].guid == schemaGuid) {
+                    return schemaItems()[i].getContent(title);
+                }
+            }
+
+            return "";
         }
     };
 

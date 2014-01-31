@@ -122,25 +122,25 @@ define([
                     var anndata = annotation.updateAnnotationData(e);
 
                     // Set annotation in timeline to readonly
-                    var ann = timeline.getSelection();
+                    //var ann = timeline.getSelection();
                     timeline.unselectItem();
-                    if (anndata) {
-                        if (ann && ann.id == anndata.Id) {
-                            var dic = schemaselector.activeSchemaItems();
+                    //if (anndata) {
+                    //    if (ann && ann.id == anndata.Id) {
+                    //        var dic = schemaselector.activeSchemaItems();
                             
-                            if (anndata.MetadataSchemaGUID in dic) {
-                                var schitem = dic[anndata.MetadataSchemaGUID];
-                                var content = schitem.getContent(anndata.Title);
-                                var timestart = format.getSecondsFromString(anndata.StartTime);
-                                var timeend = format.getSecondsFromString(anndata.EndTime);
-                                timestart = player.getProgramTimeFromFileTime(timestart);
-                                timeend = player.getProgramTimeFromFileTime(timeend);
-                                timestart = timeline.start() + timestart * 1000;
-                                timeend = timeline.start() + timeend * 1000;
-                                timeline.changeItem(new Date(timestart), new Date(timeend), content);
-                            }
-                        }
-                    }
+                    //        if (anndata.MetadataSchemaGUID in dic) {
+                    //            var schitem = dic[anndata.MetadataSchemaGUID];
+                    //            var content = schitem.getContent(anndata.Title);
+                    //            var timestart = format.getSecondsFromString(anndata.StartTime);
+                    //            var timeend = format.getSecondsFromString(anndata.EndTime);
+                    //            timestart = player.getProgramTimeFromFileTime(timestart);
+                    //            timeend = player.getProgramTimeFromFileTime(timeend);
+                    //            timestart = timeline.start() + timestart * 1000;
+                    //            timeend = timeline.start() + timeend * 1000;
+                    //            timeline.changeItem(new Date(timestart), new Date(timeend), content);
+                    //        }
+                    //    }
+                    //}
 
                     // Update metadata readonly view if present
                     for (var i = 0; i < metadataViews().length; i++) {
@@ -179,38 +179,68 @@ define([
 
             function addAmdToMetadataViews(amd, dataarray) {
 
-                var dic = schemaselector.activeSchemaItems();
+                if (!schemaselector.isActive(amd.MetadataSchemaGUID))
+                    return;
 
-                if (amd.MetadataSchemaGUID in dic) {
-                    //var content = '<div title="' + amd.Title + '" style="background-color:rgba(128, 128, 255, 0.2)">&nbsp;' + amd.Title + '</div>'
+                var content = schemaselector.getContent(amd.MetadataSchemaGUID, amd.Title);
 
-                    var schitem = dic[amd.MetadataSchemaGUID];
+                var timestart = format.getSecondsFromString(amd.StartTime);
+                var timeend = format.getSecondsFromString(amd.EndTime);
+                timestart = player.getProgramTimeFromFileTime(timestart);
+                timeend = player.getProgramTimeFromFileTime(timeend);
+                timestart = timeline.start() + timestart * 1000;
+                timeend = timeline.start() + timeend * 1000;
 
-                    var content = schitem.getContent(amd.Title);
-
-                    var timestart = format.getSecondsFromString(amd.StartTime);
-                    var timeend = format.getSecondsFromString(amd.EndTime);
-                    timestart = player.getProgramTimeFromFileTime(timestart);
-                    timeend = player.getProgramTimeFromFileTime(timeend);
-                    timestart = timeline.start() + timestart * 1000;
-                    timeend = timeline.start() + timeend * 1000;
-
-                    if (dataarray) {
-                        // not editable
-                        dataarray.push([new Date(timestart), new Date(timeend), content, false, amd.Id]);
-                    }
-                    else {
-                        // update existing timeline annotation
-                        var an = timeline.getAnnotation(amd.Id);
-                        an[2].v = content;
-                        timeline.changeItem(new Date(timestart), new Date(timeend), content);
-                    }
-
-                    var annview = new metadatafac.MetadataView();
-                    annview.setview(Settings.Schema[amd.MetadataSchemaGUID].view, amd);
-                    metadataViews.push(annview);
+                if (dataarray) {
+                    // not editable
+                    dataarray.push([new Date(timestart), new Date(timeend), content, false, amd.Id]);
                 }
+                else {
+                    // update existing timeline annotation
+                    var an = timeline.getAnnotation(amd.Id);
+                    an[2].v = content;
+                    timeline.changeItem(new Date(timestart), new Date(timeend), content);
+                }
+
+                var annview = new metadatafac.MetadataView();
+                annview.setview(Settings.Schema[amd.MetadataSchemaGUID].view, amd);
+                metadataViews.push(annview);
             }
+
+            //function addAmdToMetadataViews(amd, dataarray) {
+
+            //    var dic = schemaselector.activeSchemaItems();
+
+            //    if (amd.MetadataSchemaGUID in dic) {
+            //        //var content = '<div title="' + amd.Title + '" style="background-color:rgba(128, 128, 255, 0.2)">&nbsp;' + amd.Title + '</div>'
+
+            //        var schitem = dic[amd.MetadataSchemaGUID];
+
+            //        var content = schitem.getContent(amd.Title);
+
+            //        var timestart = format.getSecondsFromString(amd.StartTime);
+            //        var timeend = format.getSecondsFromString(amd.EndTime);
+            //        timestart = player.getProgramTimeFromFileTime(timestart);
+            //        timeend = player.getProgramTimeFromFileTime(timeend);
+            //        timestart = timeline.start() + timestart * 1000;
+            //        timeend = timeline.start() + timeend * 1000;
+
+            //        if (dataarray) {
+            //            // not editable
+            //            dataarray.push([new Date(timestart), new Date(timeend), content, false, amd.Id]);
+            //        }
+            //        else {
+            //            // update existing timeline annotation
+            //            var an = timeline.getAnnotation(amd.Id);
+            //            an[2].v = content;
+            //            timeline.changeItem(new Date(timestart), new Date(timeend), content);
+            //        }
+
+            //        var annview = new metadatafac.MetadataView();
+            //        annview.setview(Settings.Schema[amd.MetadataSchemaGUID].view, amd);
+            //        metadataViews.push(annview);
+            //    }
+            //}
 
             function metadataSaved(r) {
 
@@ -254,7 +284,9 @@ define([
 
                         var timestart = timeline.start() + format.getMillisecondsFromString(s);
                         var timeend = timeline.start() + format.getMillisecondsFromString(e);
-                        var content = '<div title="' + t + '">&nbsp;' + t + '</div>'
+
+                        var content = schemaselector.getContent(ed.data.metadata.MetadataSchemaGuid, t);
+                        //var content = '<div title="' + t + '">&nbsp;' + t + '</div>'
                         timeline.changeItem(new Date(timestart), new Date(timeend), content);
                     }
                 }
