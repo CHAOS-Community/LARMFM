@@ -11,13 +11,13 @@ define([
     'mods/player',
     'mods/timeline',
     'mods/objectmanager',
-    'mods/schemaselector',
+    'mods/timelineschemaselector',
     'mods/annotation',
     'mods/metadataTab'
 ],
         function (app, ko, portal, state, objfac, xmlman,
             jsonformfields, metadatafac, format, player, timeline, objectmanager,
-            schemaselector, annotation, metadataTab) {
+            timelineschemaselector, annotation, metadataTab) {
 
             var obj = {};
             obj.guid;
@@ -41,18 +41,71 @@ define([
             // Message: metadataTab:changed
             app.on('metadataTab:changed').then(function (tab) {
 
-                var i = 0;
+                metadataViews.removeAll();
+
+                if (tab.id == "1") {
+                    // Show main metadata
+                    // TODO: 
+
+                    return;
+                }
+
+                // Annotation data
+
+                // is timeline schema visible?
+                if (tab.schemaGuid in timelineschemaselector.activeSchemaItems() == false) {
+                    // Nope. Load it!
+                    timelineschemaselector.activateByGuid(tab.schemaGuid);
+                    // And run addAnnotationsToMetadataViews in timelineschema:change
+                    return;
+                }
+
+                addAnnotationsToMetadataViews();
             });
 
+            function addAnnotationsToMetadataViews() {
+
+                var amds = annotation.data();
+                if (amds == undefined)
+                    return;
+
+                var tab = metadataTab.activeTab();
+
+                for (var i = 0; i < amds.length; i++) {
+                    var amd = amds[i];
+                    if (tab.schemaGuid != amd.MetadataSchemaGUID)
+                        continue;
+
+                    var annview = new metadatafac.MetadataView();
+                    annview.setview(Settings.Schema[amd.MetadataSchemaGUID].view, amd);
+                    metadataViews.push(annview);
+                }
+            }
+
             // Message: 
-            app.on('schema:change').then(function (e) {
+            app.on('timelineschema:change').then(function (e) {
 
                 var guid = e.guid;
 
-                metadataViews.removeAll();
+                // Make sure active metadatatab is still in the timeline
+                var tab = metadataTab.activeTab();
+                var timelineschemas = timelineschemaselector.schemaItems();
+                for (var i = 0; i < timelineschemas.length; i++) {
+                    if (timelineschemas[i].guid == tab.schemaGuid) {
+
+                        if (timelineschemas[i].isactive() == false) {
+                            metadataViews.removeAll();
+                            metadataTab.tabs()[0].click(); // Choose "beskrivelse" tab
+                        }
+
+                        break;
+                    }
+                }
+
+                //metadataViews.removeAll();
                 timeline.clearData();
 
-                schemaselector.updateActiveSchemaItems();
+                timelineschemaselector.updateActiveSchemaItems();
 
                 var dataarray = [];
                 var amds = annotation.data();
@@ -66,6 +119,8 @@ define([
                 }
 
                 timeline.addData(dataarray);
+
+                addAnnotationsToMetadataViews();
             });
 
             // Message: 
@@ -73,13 +128,13 @@ define([
                 // TODO: Choose metadataschema if more are activated
 
                 // Only comments for now!
-                if(schemaselector.schemaItems().length<1 ||
-                    schemaselector.schemaItems()[0].isactive() == false) {
+                if (timelineschemaselector.schemaItems().length < 1 ||
+                    timelineschemaselector.schemaItems()[0].isactive() == false) {
                     app.showMessage("Vaelg Comments ark for at annotere.");
                     return;
                 }
 
-                var schema = schemaselector.schemaItems()[0];
+                var schema = timelineschemaselector.schemaItems()[0];
 
                 var id = "n" + objectmanager.generateGUID();
 
@@ -136,7 +191,7 @@ define([
                     timeline.unselectItem();
                     //if (anndata) {
                     //    if (ann && ann.id == anndata.Id) {
-                    //        var dic = schemaselector.activeSchemaItems();
+                    //        var dic = timelineschemaselector.activeSchemaItems();
                             
                     //        if (anndata.MetadataSchemaGUID in dic) {
                     //            var schitem = dic[anndata.MetadataSchemaGUID];
@@ -189,10 +244,10 @@ define([
 
             function addAmdToMetadataViews(amd, dataarray) {
 
-                if (!schemaselector.isActive(amd.MetadataSchemaGUID))
+                if (!timelineschemaselector.isActive(amd.MetadataSchemaGUID))
                     return;
 
-                var content = schemaselector.getContent(amd.MetadataSchemaGUID, amd.Title);
+                var content = timelineschemaselector.getContent(amd.MetadataSchemaGUID, amd.Title);
 
                 var timestart = format.getSecondsFromString(amd.StartTime);
                 var timeend = format.getSecondsFromString(amd.EndTime);
@@ -212,14 +267,17 @@ define([
                     timeline.changeItem(new Date(timestart), new Date(timeend), content);
                 }
 
-                var annview = new metadatafac.MetadataView();
-                annview.setview(Settings.Schema[amd.MetadataSchemaGUID].view, amd);
-                metadataViews.push(annview);
+                //if (metadataTab.activeTab == null || metadataTab.activeTab.schemaGuid != amd.MetadataSchemaGUID)
+                //    return;
+
+                //var annview = new metadatafac.MetadataView();
+                //annview.setview(Settings.Schema[amd.MetadataSchemaGUID].view, amd);
+                //metadataViews.push(annview);
             }
 
             //function addAmdToMetadataViews(amd, dataarray) {
 
-            //    var dic = schemaselector.activeSchemaItems();
+            //    var dic = timelineschemaselector.activeSchemaItems();
 
             //    if (amd.MetadataSchemaGUID in dic) {
             //        //var content = '<div title="' + amd.Title + '" style="background-color:rgba(128, 128, 255, 0.2)">&nbsp;' + amd.Title + '</div>'
@@ -297,7 +355,7 @@ define([
                         var timestart = timeline.start() + format.getMillisecondsFromString(s);
                         var timeend = timeline.start() + format.getMillisecondsFromString(e);
 
-                        var content = schemaselector.getContent(ed.data.metadata.MetadataSchemaGuid, t);
+                        var content = timelineschemaselector.getContent(ed.data.metadata.MetadataSchemaGuid, t);
                         //var content = '<div title="' + t + '">&nbsp;' + t + '</div>'
                         timeline.changeItem(new Date(timestart), new Date(timeend), content);
                     }
@@ -422,9 +480,13 @@ define([
                     return;
 
                 addSchemasDone = true;
-                schemaselector.addSchemaItem("d0edf6f9-caf0-ac41-b8b3-b0d950fdef4e", 0);
-                schemaselector.addSchemaItem("7bb8d425-6e60-9545-80f4-0765c5eb6be6", 0);
-                schemaselector.addSchemaItem("c446ad50-f1ea-f642-9361-3f6b56c5f320", 0);
+                timelineschemaselector.addSchemaItem("d0edf6f9-caf0-ac41-b8b3-b0d950fdef4e", 0);
+                timelineschemaselector.addSchemaItem("7bb8d425-6e60-9545-80f4-0765c5eb6be6", 0);
+                timelineschemaselector.addSchemaItem("c446ad50-f1ea-f642-9361-3f6b56c5f320", 0);
+
+                metadataTab.add("Comments", "", "d0edf6f9-caf0-ac41-b8b3-b0d950fdef4e");
+                metadataTab.add("Jingles", "", "7bb8d425-6e60-9545-80f4-0765c5eb6be6");
+                metadataTab.add("Lydkilde", "", "c446ad50-f1ea-f642-9361-3f6b56c5f320");
             }
 
             var annotationsHaveBeenInserted = false;
@@ -450,13 +512,13 @@ define([
                 annotationsHaveBeenInserted = true;
 
                 for (var key in annotation.annotationCountPerSchema()) {
-                    schemaselector.addSchemaItem(key, annotation.annotationCountPerSchema()[key]);
+                    timelineschemaselector.addSchemaItem(key, annotation.annotationCountPerSchema()[key]);
                 }
 
                 isPlayerLoading(false);
 
                 // Choose Comments annotation as default.
-                schemaselector.schemaItems()[0].click();
+                timelineschemaselector.schemaItems()[0].click();
 
             }
 
@@ -480,15 +542,13 @@ define([
                 metadataViews: metadataViews,
                 metadataEditors: metadataEditors,
                 metadataTabs: metadataTab.tabs,
-                schemaItems: schemaselector.schemaItems,
+                schemaItems: timelineschemaselector.schemaItems,
                 compositionComplete: function (child, parent, settings) {
                     windowSizeChange();
                     $window.resize(windowSizeChange);
 
-                    metadataTab.add("Beskrivelse", "1");
-                    metadataTab.add("Annotationer", "2");
-                    metadataTab.add("Jingler", "3");
-                    metadataTab.add("Lydkilder", "4");
+                    metadataTab.add("Beskrivelse", "1", "");
+
                 },
                 activate: function (param) {
                     if (param !== undefined) {

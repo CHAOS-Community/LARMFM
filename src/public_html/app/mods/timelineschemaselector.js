@@ -29,7 +29,7 @@
     SchemaItem.prototype.click = function () {
         this.isactive(!this.isactive());
         this.updateCss();
-        app.trigger("schema:change", this);
+        app.trigger("timelineschema:change", this);
     };
     SchemaItem.prototype.getContent = function (title) {
         //var content = '<div title="' + this.title() + '" style="background-color:rgba(128, 128, 255, 0.2)">&nbsp;' + this.title() + '</div>'
@@ -92,6 +92,16 @@
             item.isactive(false);
             item.setCss(ci);
             
+        },
+        activateByGuid: function(schemaGuid) {
+            for (var i = 0; i < schemaItems().length; i++) {
+                var schemaItem = schemaItems()[i];
+                if (schemaItem.guid == schemaGuid) {
+                    if (schemaItem.isactive() == false) {
+                        schemaItem.click();
+                    }
+                }
+            }
         },
         getContent: function (schemaGuid, title) {
             for (var i = 0; i < schemaItems().length; i++) {

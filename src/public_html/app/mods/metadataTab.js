@@ -3,6 +3,7 @@
     var Tab = function () {
         this.title = "";
         this.id = "";
+        this.schemaGuid = "";
         this.isActive = ko.observable(false);
     }
     Tab.prototype.click = function () {
@@ -36,10 +37,11 @@
     return {
         tabs: tabs,
         activeTab: activeTab,
-        add: function (title, id) {
+        add: function (title, id, schemaGuid) {
             var t = new Tab();
             t.title = title;
             t.id = id;
+            t.schemaGuid = schemaGuid;
             tabs.push(t);
             if (tabs().length == 1)
                 app.trigger("metadataTab:change", t);
