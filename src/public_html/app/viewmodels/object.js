@@ -12,11 +12,12 @@ define([
     'mods/timeline',
     'mods/objectmanager',
     'mods/schemaselector',
-    'mods/annotation'
+    'mods/annotation',
+    'mods/metadataTab'
 ],
         function (app, ko, portal, state, objfac, xmlman,
             jsonformfields, metadatafac, format, player, timeline, objectmanager,
-            schemaselector, annotation) {
+            schemaselector, annotation, metadataTab) {
 
             var obj = {};
             obj.guid;
@@ -37,6 +38,13 @@ define([
 
             var $window = $(window);
 
+            // Message: metadataTab:changed
+            app.on('metadataTab:changed').then(function (tab) {
+
+                var i = 0;
+            });
+
+            // Message: 
             app.on('schema:change').then(function (e) {
 
                 var guid = e.guid;
@@ -60,6 +68,7 @@ define([
                 timeline.addData(dataarray);
             });
 
+            // Message: 
             app.on('annotation:add').then(function (e) {
                 // TODO: Choose metadataschema if more are activated
 
@@ -88,10 +97,11 @@ define([
 
             });
 
-
+            // Message: 
             app.on('metadata:cancel').then(function (e) {
                 var item = timeline.getSelection();
-                if (item.id.substring(0, 1) == "n") {
+
+                if (item && item.id.substring(0, 1) == "n") {
                     timeline.deleteItemByID(item.id);
                 }
                 else
@@ -100,7 +110,7 @@ define([
                 metadataEditors.removeAll();
             });
 
-
+            // Message: 
             app.on('metadata:save').then(function (e) {
 
                 if (!e.guid || e.guid.substring(0, 1) == "n") {
@@ -256,6 +266,7 @@ define([
                 metadataEditors.removeAll();
             }
 
+            // Message: 
             app.on('metadata:changed_timeline').then(function (e) {
                 var d = e.data;
                 if (metadataEditors().length == 1) {
@@ -267,6 +278,7 @@ define([
                 }
             });
 
+            // Message: 
             app.on('metadata:changed_editor').then(function (e) {
                 var dat = timeline.getSelection();
                 if (dat == undefined)
@@ -292,6 +304,7 @@ define([
                 }
             });
 
+            // Message: 
             app.on('metadata:edit').then(function (e) {
 
                 var guid;
@@ -466,10 +479,16 @@ define([
 
                 metadataViews: metadataViews,
                 metadataEditors: metadataEditors,
+                metadataTabs: metadataTab.tabs,
                 schemaItems: schemaselector.schemaItems,
                 compositionComplete: function (child, parent, settings) {
                     windowSizeChange();
                     $window.resize(windowSizeChange);
+
+                    metadataTab.add("Beskrivelse", "1");
+                    metadataTab.add("Annotationer", "2");
+                    metadataTab.add("Jingler", "3");
+                    metadataTab.add("Lydkilder", "4");
                 },
                 activate: function (param) {
                     if (param !== undefined) {
@@ -499,6 +518,9 @@ define([
                 },
                 annotationAddBtn: function () {
                     app.trigger("annotation:add", {});
+                },
+                metadataTabClick: function (e, p) {
+                    var i = 0;
                 }
             };
         });

@@ -35,7 +35,11 @@
     </div>
 </div>
 <div style="height:8px"></div>
-<hr />
+<ul id="metadataTab" class="nav nav-tabs">
+    <!-- ko foreach: metadataTabs -->
+    <li data-bind="css: {active: isActive}"><a data-bind="click: click" data-toggle="tab"><!--ko text: title--><!--/ko--></a></li>
+    <!-- /ko -->
+</ul> 
 <div data-bind="foreach: metadataEditors">
     <div data-bind="compose: view"></div>
 </div>
