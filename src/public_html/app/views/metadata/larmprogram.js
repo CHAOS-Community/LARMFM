@@ -3,7 +3,13 @@
 
     var larmprogram = function () {
         this.data = null;
-        this.mdtitle = ko.observable("");
+        this.mdTitle = ko.observable("");
+        this.mdAbstract = ko.observable("");
+        this.mdDescription = ko.observable("");
+        this.mdChannel = ko.observable("");
+        this.mdStartDate = ko.observable("");
+        this.mdEndDate = ko.observable("");
+
         this.m0 = null;
         this.m1 = null;
     };
@@ -21,7 +27,7 @@
 
             metadataschema.loadxmlschemas();
 
-            var metadata = self.data.metadata;
+            var metadata = self.data.Metadatas;
             // LARM.Metadata: 17d59e41-13fb-469a-a138-bb691f13f2ba
             // Larm.Program: 00000000-0000-0000-0000-0000df820000
             for (var i = 0; i < metadata.length; i++) {
@@ -31,7 +37,13 @@
                 }
                 else if (metadata[i].MetadataSchemaGuid == '00000000-0000-0000-0000-0000df820000') {
                     self.m1 = handlexml(metadata[i]);
-                    self.mdtitle(self.m1.Larm_Program.Title + " : " + self.data.id);
+                    
+                    self.mdTitle(self.m1.Larm_Program.Title);
+                    self.mdAbstract(self.m1.Larm_Program.Abstract);
+                    self.mdDescription(self.m1.Larm_Program.Description);
+                    self.mdChannel(self.m1.Larm_Program.PublicationChannel);
+                    self.mdStartDate(self.m1.Larm_Program.PublicationDateTime);
+                    self.mdEndDate(self.m1.Larm_Program.PublicationEndDateTime);
                 }
             }
         }
@@ -45,9 +57,7 @@
                 if (this.data === undefined)
                     return;
 
-                if (this.data.metadata !== undefined) {
-                    init(this);
-                }
+                init(this);
             },
             btnedit: function (data) {
                 var i = 0;

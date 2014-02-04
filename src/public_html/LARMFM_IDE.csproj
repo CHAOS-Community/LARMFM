@@ -139,6 +139,7 @@
     <Content Include="lib\jquery\jquery.min.map" />
     <Content Include="lib\jsonform\jsonform.js" />
     <Content Include="lib\timeline\img\16\delete.png" />
+    <Content Include="lib\timeline\img\16\delete_org.png" />
     <Content Include="lib\timeline\img\16\moveleft.png" />
     <Content Include="lib\timeline\img\16\moveright.png" />
     <Content Include="lib\timeline\img\16\new.png" />

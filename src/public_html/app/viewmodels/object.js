@@ -43,10 +43,9 @@ define([
 
                 metadataViews.removeAll();
 
-                if (tab.id == "1") {
+                if (tab.id === "1") {
                     // Show main metadata
-                    // TODO: 
-
+                    showMainMetadata();
                     return;
                 }
 
@@ -62,6 +61,32 @@ define([
 
                 addAnnotationsToMetadataViews();
             });
+
+            function showMainMetadata() {
+
+                // Test Conditions. Is the tab selected? Is data loaded?
+                var tab = metadataTab.activeTab();
+                if (!tab)
+                    return;
+
+                if (tab.id !== "1")
+                    return;
+
+                if (!obj.data)
+                    return;
+
+                metadataViews.removeAll();
+                // Stall the thread, otherwise larmprogram will not call compositeComplete
+                setTimeout(
+                    function () {
+                        var annview = new metadatafac.MetadataView();
+                        annview.setview("larmprogram", obj.data);
+                        metadataViews.push(annview);
+                    },
+                    1
+                    );
+
+            }
 
             function addAnnotationsToMetadataViews() {
 
@@ -413,8 +438,8 @@ define([
 
             // Getting data from API.
             function metadataReceived(data) {
-                obj.data = data;
                 var r = data.Body.Results[0];
+                obj.data = r;
                 var mdsguid = state.searchMetadataSchemaGuids[0];
                 if (r == undefined) {
                     app.showMessage("The data is not available for this object.", "Data missing", ["OK", "Cancel"]);
@@ -455,6 +480,8 @@ define([
                         description($(x).find("Description").text());
                     }
                 }
+
+                showMainMetadata();
             }
 
             function loadAnnotations() {
@@ -548,7 +575,6 @@ define([
                     $window.resize(windowSizeChange);
 
                     metadataTab.add("Beskrivelse", "1", "");
-
                 },
                 activate: function (param) {
                     if (param !== undefined) {
@@ -567,7 +593,6 @@ define([
                         CHAOS.Portal.Client.View.Get(
                             'Annotation', 'ProgramGUID:"' + obj.guid + '"',
                             'StartTime+ASC', null, 0, 9999).WithCallback(annotationsReceived);
-
                     }
                 },
                 play: function () {
@@ -578,9 +603,6 @@ define([
                 },
                 annotationAddBtn: function () {
                     app.trigger("annotation:add", {});
-                },
-                metadataTabClick: function (e, p) {
-                    var i = 0;
                 }
             };
         });
