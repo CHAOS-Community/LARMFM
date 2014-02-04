@@ -168,8 +168,7 @@ define([
 
                 metadataEditors.removeAll();
                 // Add editor
-                amd = {};
-                amd.Id = id;
+                var amd = createNewAmd({ guid: id, schemaguid: schema.guid })
                 var editor = new metadatafac.MetadataView();
                 editor.setview(Settings.Schema[schema.guid].edit, { guid: amd.Id, metadata: amd });
                 metadataEditors.push(editor);
@@ -259,7 +258,7 @@ define([
                 amd.EndTime = format.getTimeStringFromDate(ann[1].v);
                 amd.Id = e.guid;
                 amd.LanguageCode = "da";
-                amd.MetadataSchemaGUID = e.schemaguid;
+                amd.MetadataSchemaGuid = e.schemaguid;
                 amd.ProgramGUID = obj.guid;
                 amd.StartTime = format.getTimeStringFromDate(ann[0].v);
                 amd.Title = e.title;
@@ -418,6 +417,7 @@ define([
                             var editor = new metadatafac.MetadataView();
                             editor.setview(Settings.Schema[mds[i].MetadataSchemaGuid].edit, { guid: r.Id, metadata: mds[i] });
                             metadataEditors.push(editor);
+                            break;
                         }
                     }
 
