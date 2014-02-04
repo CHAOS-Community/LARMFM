@@ -1,4 +1,4 @@
-﻿define(['mods/state'], function(state){
+﻿define(['mods/state'], function (state) {
 
     var Authenticate = function () {
 
