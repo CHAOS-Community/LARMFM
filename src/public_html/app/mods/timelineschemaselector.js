@@ -29,7 +29,7 @@
     SchemaItem.prototype.click = function () {
         this.isactive(!this.isactive());
         this.updateCss();
-        app.trigger("schema:change", this);
+        app.trigger("timelineschema:change", this);
     };
     SchemaItem.prototype.getContent = function (title) {
         //var content = '<div title="' + this.title() + '" style="background-color:rgba(128, 128, 255, 0.2)">&nbsp;' + this.title() + '</div>'
@@ -38,11 +38,23 @@
     // ---------------------------------
 
     var schemaItems = ko.observableArray([]);
+    var activeSchemaItems = ko.observableArray([]); // Dictionary
 
     return {
         SchemaItem: SchemaItem,
         schemaItems: schemaItems,
-        addSchemaItem: function (schemaguid,count) {
+        // Dictionary of SchemaItems
+        activeSchemaItems: activeSchemaItems,
+        updateActiveSchemaItems: function() {
+            activeSchemaItems([]);
+            for (var i = 0; i < schemaItems().length; i++)
+                if (schemaItems()[i].isactive())
+                    activeSchemaItems()[schemaItems()[i].guid] = schemaItems()[i];
+        },
+        isActive: function (schemaGuid){
+            return schemaGuid in activeSchemaItems();
+        },
+        addSchemaItem: function (schemaguid, count) {
             var cnt = schemaItems().length;
             var item;
             // already present?
@@ -80,6 +92,25 @@
             item.isactive(false);
             item.setCss(ci);
             
+        },
+        activateByGuid: function(schemaGuid) {
+            for (var i = 0; i < schemaItems().length; i++) {
+                var schemaItem = schemaItems()[i];
+                if (schemaItem.guid == schemaGuid) {
+                    if (schemaItem.isactive() == false) {
+                        schemaItem.click();
+                    }
+                }
+            }
+        },
+        getContent: function (schemaGuid, title) {
+            for (var i = 0; i < schemaItems().length; i++) {
+                if (schemaItems()[i].guid == schemaGuid) {
+                    return schemaItems()[i].getContent(title);
+                }
+            }
+
+            return "";
         }
     };
 

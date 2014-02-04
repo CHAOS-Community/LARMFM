@@ -11,11 +11,11 @@
     'mods/player',
     'mods/timeline',
     'mods/objectmanager',
-    'mods/schemaselector'
+    'mods/timelineschemaselector'
 ],
         function (app, ko, portal, state, objfac, xmlman,
             jsonformfields, metadatafac, format, player, timeline, objectmanager,
-            schemaselector) {
+            timelineschemaselector) {
 
             var obj = {};
             obj.guid;
@@ -37,7 +37,7 @@
             var metadataViews = ko.observableArray();
             var metadataEditors = ko.observableArray();
 
-            app.on('schema:change').then(function (e) {
+            app.on('timelineschema:change').then(function (e) {
 
                 var guid = e.guid;
 
@@ -45,9 +45,9 @@
                 timeline.clearData();
 
                 var dic = [];
-                for (var i = 0; i < schemaselector.schemaItems().length; i++)
-                    if (schemaselector.schemaItems()[i].isactive())
-                        dic[schemaselector.schemaItems()[i].guid] = schemaselector.schemaItems()[i];
+                for (var i = 0; i < timelineschemaselector.schemaItems().length; i++)
+                    if (timelineschemaselector.schemaItems()[i].isactive())
+                        dic[timelineschemaselector.schemaItems()[i].guid] = timelineschemaselector.schemaItems()[i];
 
                 var dataarray = [];
                 var amds = obj.anndata;
@@ -90,13 +90,13 @@
                 // TODO: Choose metadataschema if more are activated
 
                 // Only comments for now!
-                if (schemaselector.schemaItems().length < 1 ||
-                    schemaselector.schemaItems()[0].isactive() == false) {
+                if (timelineschemaselector.schemaItems().length < 1 ||
+                    timelineschemaselector.schemaItems()[0].isactive() == false) {
                     app.showMessage("Vaelg Comments ark for at annotere.");
                     return;
                 }
 
-                var schema = schemaselector.schemaItems()[0];
+                var schema = timelineschemaselector.schemaItems()[0];
 
                 timeline.addItemAtCursor('new1');
                 var dat = timeline.getSelection();
@@ -286,9 +286,9 @@
                     return;
 
                 addSchemasDone = true;
-                schemaselector.addSchemaItem("d0edf6f9-caf0-ac41-b8b3-b0d950fdef4e", 25);
-                schemaselector.addSchemaItem("7bb8d425-6e60-9545-80f4-0765c5eb6be6", 0);
-                schemaselector.addSchemaItem("c446ad50-f1ea-f642-9361-3f6b56c5f320", 0);
+                timelineschemaselector.addSchemaItem("d0edf6f9-caf0-ac41-b8b3-b0d950fdef4e", 25);
+                timelineschemaselector.addSchemaItem("7bb8d425-6e60-9545-80f4-0765c5eb6be6", 0);
+                timelineschemaselector.addSchemaItem("c446ad50-f1ea-f642-9361-3f6b56c5f320", 0);
 
             }
 
@@ -352,7 +352,7 @@
                 //timeline.addData(dataarray);
 
                 for (var key in obj.anndataschemacount) {
-                    schemaselector.addSchemaItem(key, obj.anndataschemacount[key]);
+                    timelineschemaselector.addSchemaItem(key, obj.anndataschemacount[key]);
                 }
 
                 isPlayerLoading(false);
@@ -386,7 +386,7 @@
 
                 metadataViews: metadataViews,
                 metadataEditors: metadataEditors,
-                schemaItems: schemaselector.schemaItems,
+                schemaItems: timelineschemaselector.schemaItems,
                 compositionComplete: function () {
 
                     player.init(null);

@@ -162,9 +162,22 @@ div.timeline-navigation {
     background-color: #F5F5F5;
     border-radius: 2px;
     -moz-border-radius: 2px;  /* For Firefox 3.6 and older */
+
+    opacity: 0.8;
 }
 
-div.timeline-navigation-new, div.timeline-navigation-delete,
+div.timeline-navigation-delete {
+    /*cursor: pointer;*/
+    padding: 10px 10px;
+    float: left;
+    text-decoration: none;
+    border-color: #BEBEBE; /* border is used for the separator between new and navigation buttons */
+
+    width: 16px;
+    height: 16px;
+}
+
+div.timeline-navigation-new,
 div.timeline-navigation-zoom-in,  div.timeline-navigation-zoom-out,
 div.timeline-navigation-move-left, div.timeline-navigation-move-right {
     cursor: pointer;

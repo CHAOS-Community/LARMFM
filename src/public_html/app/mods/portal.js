@@ -1,4 +1,4 @@
-define(['knockout', 'mods/store'], function (ko, store) {
+define(['knockout', 'mods/store', 'factory/authentication'], function (ko, store, authentication) {
 
 	var onAppReadyList = [];
 	var isAppReady = false;
@@ -21,12 +21,19 @@ define(['knockout', 'mods/store'], function (ko, store) {
         var sessionGuid = session.Guid;
         store.cookie("sessionGuid", sessionGuid, 1);
 
-        triggerAppReady();
+        // Autologin
+        var auth = new authentication.Authenticate();
+        auth.login("thfl@dr.dk", "1234", triggerAppReadyAfterLogin);
+        //triggerAppReady();
 
     });
 	client.SessionAuthenticated().Add(function() {
 		isAuthenticatedObservable(true);
 	});
+
+	function triggerAppReadyAfterLogin() {
+	    triggerAppReady();
+	}
 
 	function triggerAppReady(){
 	    isAppReady = true;

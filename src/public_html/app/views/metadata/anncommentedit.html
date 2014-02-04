@@ -1,13 +1,19 @@
 ﻿<div><h3>Rediger annotation</h3></div>
 <div>
-    <table>
+    <table style="width:90%;">
         <tr>
-            <td>Start time:</td>
-            <td>End time:</td>
-        </tr>
-        <tr>
-            <td><input type="text" data-bind="value: starttime" /></td>
-            <td><input type="text" data-bind="value: endtime" /></td>
+            <td colspan="2">
+                <table>
+                    <tr>
+                        <td>Start time:</td>
+                        <td>End time:</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" data-bind="value: starttime" /></td>
+                        <td><input type="text" data-bind="value: endtime" /></td>
+                    </tr>
+                </table>
+            </td>
         </tr>
         <tr>
             <td colspan="2">Title: </td>
@@ -19,14 +25,20 @@
             <td colspan="2">Beskrivelse: </td>
         </tr>
         <tr>
-            <td colspan="2"><input type="text" data-bind="value: description" style="width:100%" /></td>
+            <td colspan="2"><textarea data-bind="value: description" rows="5" style="width:100%"></textarea></td>
         </tr>
         <tr>
-            <td>
-                <button data-bind="click: btnsave">Gem</button>
-            </td>
-            <td>
-                <button data-bind="click: btncancel">Annuller</button>
+            <td colspan="2">
+                <table>
+                    <tr>
+                        <td>
+                            <button data-bind="click: btnsave">Gem</button>
+                        </td>
+                        <td>
+                            <button data-bind="click: btncancel">Annuller</button>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
     </table>

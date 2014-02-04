@@ -57,12 +57,15 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\factory\authentication.js" />
     <Content Include="app\factory\metadata.js" />
+    <Content Include="app\mods\annotation.js" />
+    <Content Include="app\mods\metadataTab.js" />
     <Content Include="app\mods\store.js" />
     <Content Include="app\mods\jsonformfields.js" />
     <Content Include="app\mods\objectmanager.js" />
     <Content Include="app\mods\player.js" />
-    <Content Include="app\mods\schemaselector.js" />
+    <Content Include="app\mods\timelineschemaselector.js" />
     <Content Include="app\mods\timeline.js" />
     <Content Include="app\viewmodels\objectvideo.js" />
     <Content Include="app\viewmodels\object_tmp.js" />
@@ -126,6 +129,7 @@
     <Content Include="img\larm_logo.png" />
     <Content Include="index.html" />
     <Content Include="jsonform_test.html" />
+    <Content Include="lib\chaos\PortalClient.min.js" />
     <Content Include="lib\font-awesome\css\font\fontawesome-webfont.eot" />
     <Content Include="lib\font-awesome\css\font\fontawesome-webfont.ttf" />
     <Content Include="lib\font-awesome\css\font\fontawesome-webfont.woff" />
@@ -135,6 +139,7 @@
     <Content Include="lib\jquery\jquery.min.map" />
     <Content Include="lib\jsonform\jsonform.js" />
     <Content Include="lib\timeline\img\16\delete.png" />
+    <Content Include="lib\timeline\img\16\delete_org.png" />
     <Content Include="lib\timeline\img\16\moveleft.png" />
     <Content Include="lib\timeline\img\16\moveright.png" />
     <Content Include="lib\timeline\img\16\new.png" />
@@ -255,7 +260,7 @@
     <Content Include="lib\bootstrap\js\bootstrap.js" />
     <Content Include="lib\bootstrap\js\bootstrap.min.js" />
     <Content Include="lib\chaos\CHAOS.Portal.Client.PortalClient.js" />
-    <Content Include="lib\chaos\PortalClient.min.js" />
+    <Content Include="lib\chaos\PortalClient.min_ORG.js" />
     <Content Include="lib\durandal\css\durandal.css" />
     <Content Include="lib\durandal\images\icon.png" />
     <Content Include="lib\durandal\images\ios-startup-image-landscape.png" />

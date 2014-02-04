@@ -43,7 +43,7 @@
             //groupsOnRight: true,
             enableKeys: true,
             showNavigation: true,
-            showButtonNew: true,
+            showButtonNew: false,
             animate: true,
             animateZoom: true,
             min: start(),
@@ -261,6 +261,9 @@
     var prepos = 0;
     var mainloop = function () {
 
+        if (!ready)
+            return;
+
         var position = Math.round(pos * 100) / 100;
         if (prepos == position)
             return;
@@ -314,6 +317,10 @@
         },
         isReady: isReady,
         addData: addData,
+        redraw: function () {
+            if(timeline)
+                timeline.redraw();
+        },
         clearData: function(){
             data.removeRows(0, data.getNumberOfRows());
             timeline.redraw();
