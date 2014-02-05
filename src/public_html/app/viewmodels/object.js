@@ -167,6 +167,9 @@ define([
                 timeline.addItemAtCursor(id);
                 var dat = timeline.getSelection();
 
+                var content = timelineschemaselector.getContent(schema.guid, "");
+                timeline.changeItem(dat.start, dat.end, content);
+
                 metadataEditors.removeAll();
                 // Add editor
                 var amd = createNewAmd({ guid: id, schemaguid: schema.guid })
@@ -298,7 +301,10 @@ define([
                     return;
 
                 // Is it in MetadataViews?
-
+                for (var i = 0; i < metadataViews().length; i++) {
+                    if (metadataViews()[i].data.Id === amd.Id)
+                        return;
+                }
 
                 var annview = new metadatafac.MetadataView();
                 annview.setview(Settings.Schema[amd.MetadataSchemaGUID].view, amd);
