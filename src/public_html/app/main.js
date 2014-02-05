@@ -17,11 +17,12 @@
     }
 });
 
-define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'mods/portal', 'mods/state', 'knockout'],
-        function(system, app, viewLocator, portal, state, ko) {
+define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'mods/portal', 'mods/state', 'knockout', 'mods/localization'],
+        function(system, app, viewLocator, portal, state, ko, localization) {
             //>>excludeStart("build", true);
             system.debug(true);
             //>>excludeEnd("build");
+            window.locale = 'sv';
 
             app.title = 'LARM.fm';
 

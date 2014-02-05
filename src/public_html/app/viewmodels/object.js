@@ -572,7 +572,8 @@ define([
             function windowSizeChange() {
                 var w = $window.width();
                 var h = $window.height();
-                $("#timelines").width(w - 180);
+                //$("#timelines").width(w - 180);
+                $("#timelines").width(w - 170);
                 timeline.redraw();
             }
 

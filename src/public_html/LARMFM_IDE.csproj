@@ -60,6 +60,7 @@
     <Content Include="app\factory\authentication.js" />
     <Content Include="app\factory\metadata.js" />
     <Content Include="app\mods\annotation.js" />
+    <Content Include="app\mods\localization.js" />
     <Content Include="app\mods\metadataTab.js" />
     <Content Include="app\mods\store.js" />
     <Content Include="app\mods\jsonformfields.js" />
@@ -138,6 +139,7 @@
     <Content Include="lib\jquery\jquery.maskedinput.min.js" />
     <Content Include="lib\jquery\jquery.min.map" />
     <Content Include="lib\jsonform\jsonform.js" />
+    <Content Include="lib\knockout\ko.localizationbinding.js" />
     <Content Include="lib\timeline\img\16\delete.png" />
     <Content Include="lib\timeline\img\16\delete_org.png" />
     <Content Include="lib\timeline\img\16\moveleft.png" />
@@ -313,6 +315,7 @@
     <Content Include="lib\timeline\timeline-larm.js" />
     <Content Include="lib\x2js\xml2json.js" />
     <Content Include="lib\x2js\xml2json.min.js" />
+    <Content Include="locales\resources.js" />
     <Content Include="settings.js" />
     <Content Include="timeline_test.html" />
     <Content Include="WayfCallback.html" />
