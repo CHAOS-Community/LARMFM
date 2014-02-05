@@ -54,10 +54,11 @@
 
         // Parse Files
         if (data.Files.length > 0) {
+            var fileinfocount = 0;
             for (var i = 0; i < data.Files.length; i++) {
                 var ft = data.Files[i].FormatType;
                 if (ft == "Audio") {
-                    var fi = fileinfo[i];
+                    var fi = fileinfo[fileinfocount];
                     if (fi === undefined)
                         return;
                     playlist.push(
@@ -68,6 +69,7 @@
                             end: fi.end
                         }
                         );
+                    fileinfocount++;
                 }
                 else if (ft == "Image") {
                     mediaImage = data.Files[i].URL;

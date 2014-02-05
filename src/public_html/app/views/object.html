@@ -1,5 +1,5 @@
 ﻿<h1 data-bind="html: title"></h1>
-<!--<div><small><span data-bind="html: mediaUrl"></span></small></div>-->
+<div><small><span data-bind="text: mediaUrl"></span></small></div>
 <div id="larmplayer">Loading the player...</div>
 <div style="height:8px"></div>
 <!--<div id="customTime">&nbsp;</div>
@@ -20,13 +20,13 @@
 <div class="loader" data-bind="css: { active: isPlayerLoading }">
     <i class="icon-spinner icon-2x icon-spin"></i>
 </div>
-<div style="background-color: #f0f0f0;">
-    <div style="float:left; width:120px; overflow: hidden;">
+<div style="background-color: #f0f0f0; overflow: hidden;">
+    <div style="float:left; width:120px;">
         <div style="text-align:center;margin-left:10px;margin-top:10px;">
             <button type="button" class="btn" data-bind="click: play">Play</button>
             <button type="button" class="btn" data-bind="click: pause">Pause</button>
             <button type="button" class="btn" data-bind="click: annotationAddBtn">Tilføj annotation</button>
-          <!--<span data-bind="html: playerposition"></span> - <span data-bind="html: playerdebug"></span>-->
+            <!--<span data-bind="html: playerposition"></span> - <span data-bind="html: playerdebug"></span>-->
         </div>
     </div>
     <div id="timelines" style="background-color:white;float:right;"></div>
@@ -34,15 +34,31 @@
         <div id="timelinescrollcontent" style="width:1px;height:1px"></div>
     </div>
 </div>
+<!--<div style="background-color: #f0f0f0;">
+    <div style="float:left; width:120px; overflow: hidden;">
+        <div style="text-align:center;margin-left:10px;margin-top:10px;">
+            <button type="button" class="btn" data-bind="click: play">Play</button>
+            <button type="button" class="btn" data-bind="click: pause">Pause</button>
+            <button type="button" class="btn" data-bind="click: annotationAddBtn">Tilføj annotation</button>
+        </div>
+    </div>
+    <div id="timelines" style="background-color:white;float:right;"></div>
+    <div id="timelinescroll" style="opacity: 0; width: 100%; overflow-x: scroll">
+        <div id="timelinescrollcontent" style="width:1px;height:1px"></div>
+    </div>
+</div>-->
+
 <div data-bind="foreach: metadataEditors">
     <div data-bind="compose: view"></div>
 </div>
-<div style="height:8px"></div>
-<ul id="metadataTab" class="nav nav-tabs">
-    <!-- ko foreach: metadataTabs -->
-    <li data-bind="css: {active: isActive}"><a data-bind="click: click" data-toggle="tab"><!--ko text: title--><!--/ko--></a></li>
-    <!-- /ko -->
-</ul> 
+<div style="height:8px; clear: both"></div>
+<div style="clear: both;">
+    <ul id="metadataTab" class="nav nav-tabs">
+        <!-- ko foreach: metadataTabs -->
+        <li data-bind="css: {active: isActive}"><a data-bind="click: click" data-toggle="tab"><!--ko text: title--><!--/ko--></a></li>
+        <!-- /ko -->
+    </ul>
+</div> 
 <div data-bind="foreach: metadataViews">
     <div data-bind="compose: view"></div>
 </div>
