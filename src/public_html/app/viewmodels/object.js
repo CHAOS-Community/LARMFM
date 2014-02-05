@@ -172,7 +172,8 @@ define([
 
                 metadataEditors.removeAll();
                 // Add editor
-                var amd = createNewAmd({ guid: id, schemaguid: schema.guid })
+                var amd = createNewAmd({ guid: id, schemaguid: schema.guid });
+                
                 var editor = new metadatafac.MetadataView();
                 editor.setview(Settings.Schema[schema.guid].edit, { guid: amd.Id, metadata: amd });
                 metadataEditors.push(editor);
@@ -200,6 +201,7 @@ define([
 
                     // Add to MetadataViews
                     var amd = createNewAmd(e);
+                    annotation.addAnnotationToData(amd);
                     addAmdToMetadataViews(amd);
                     timeline.unselectItem();
 
