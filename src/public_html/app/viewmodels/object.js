@@ -145,7 +145,8 @@ define([
 
                 timeline.addData(dataarray);
 
-                addAnnotationsToMetadataViews();
+                if (metadataViews().length==0)
+                    addAnnotationsToMetadataViews();
             });
 
             // Message: 
@@ -258,7 +259,7 @@ define([
                 amd.EndTime = format.getTimeStringFromDate(ann[1].v);
                 amd.Id = e.guid;
                 amd.LanguageCode = "da";
-                amd.MetadataSchemaGuid = e.schemaguid;
+                amd.MetadataSchemaGUID = e.schemaguid;
                 amd.ProgramGUID = obj.guid;
                 amd.StartTime = format.getTimeStringFromDate(ann[0].v);
                 amd.Title = e.title;
@@ -291,12 +292,17 @@ define([
                     timeline.changeItem(new Date(timestart), new Date(timeend), content);
                 }
 
-                //if (metadataTab.activeTab == null || metadataTab.activeTab.schemaGuid != amd.MetadataSchemaGUID)
-                //    return;
+                // Add annotation to MetadataViews
 
-                //var annview = new metadatafac.MetadataView();
-                //annview.setview(Settings.Schema[amd.MetadataSchemaGUID].view, amd);
-                //metadataViews.push(annview);
+                if (metadataTab.activeTab() == null || metadataTab.activeTab().schemaGuid != amd.MetadataSchemaGUID)
+                    return;
+
+                // Is it in MetadataViews?
+
+
+                var annview = new metadatafac.MetadataView();
+                annview.setview(Settings.Schema[amd.MetadataSchemaGUID].view, amd);
+                metadataViews.push(annview);
             }
 
             //function addAmdToMetadataViews(amd, dataarray) {
@@ -346,6 +352,7 @@ define([
 
             function annotationCreated() {
                 metadataEditors.removeAll();
+
             }
 
             // Message: 
@@ -379,7 +386,12 @@ define([
                         var timestart = timeline.start() + format.getMillisecondsFromString(s);
                         var timeend = timeline.start() + format.getMillisecondsFromString(e);
 
-                        var content = timelineschemaselector.getContent(ed.data.metadata.MetadataSchemaGuid, t);
+                        // Is needed because guid is named differently between View and ObjectGet
+                        var schemaguid = ed.data.metadata.MetadataSchemaGUID;
+                        if (!schemaguid)
+                            schemaguid = ed.data.metadata.MetadataSchemaGuid;
+
+                        var content = timelineschemaselector.getContent(schemaguid, t);
                         //var content = '<div title="' + t + '">&nbsp;' + t + '</div>'
                         timeline.changeItem(new Date(timestart), new Date(timeend), content);
                     }
