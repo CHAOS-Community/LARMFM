@@ -127,6 +127,7 @@
     <Content Include="img\IconTypes\indikator-2_white.png" />
     <Content Include="img\IconTypes\indikator-3_grey.png" />
     <Content Include="img\IconTypes\indikator-3_white.png" />
+    <Content Include="img\larm.png" />
     <Content Include="img\larm_logo.png" />
     <Content Include="index.html" />
     <Content Include="jsonform_test.html" />

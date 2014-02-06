@@ -198,11 +198,20 @@ div.timeline-navigation-new-line {
     border-right: solid 1px;
 }
 
-div.timeline-navigation-delete {
+/*div.timeline-navigation-delete {
     padding: 0px;
     padding-left: 5px;
     background: url('img/16/delete.png') no-repeat center;
+}*/
+
+div.timeline-navigation-delete {
+    padding: 0px;
+    padding-left: 0px;
+    margin-left: 5px;
+    width: 16px; height: 16px;
+    background: url('../../img/larm.png') 16px 0px;
 }
+
 
 div.timeline-navigation-zoom-in {
     background: url('img/16/zoomin.png') no-repeat center;
