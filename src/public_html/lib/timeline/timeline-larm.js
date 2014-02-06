@@ -6615,13 +6615,31 @@ links.Timeline.prototype.addItemAtCursor = function (id) {
     var content = options.NEW;
     var group = timeline.groups.length ? timeline.groups[0].content : undefined;
     var preventRender = true;
+
+    //data.addColumn('datetime', 'start');
+    //data.addColumn('datetime', 'end');
+    //data.addColumn('string', 'content');
+    //data.addColumn('boolean', 'editable');
+    //data.addColumn('string', 'id');
+
     timeline.addItem({
         'start': xstart,
         'end': xend,
         'content': content,
-        'group': group,
+        'editable': true,
         'id': id
     }, preventRender);
+
+    //timeline.addItem({
+    //    'start': xstart,
+    //    'end': xend,
+    //    'content': content,
+    //    'group': group,
+    //    'id': id
+    //}, preventRender);
+
+
+
     var index = (timeline.items.length - 1);
     timeline.selectItem(index);
 
