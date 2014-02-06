@@ -210,6 +210,11 @@ define([
                     var schemaGuid = e.schemaguid; //"f9f6edd0-f0ca-41ac-b8b3-b0d950fdef4e"; // e.schemaguid;
                     objectmanager.createAnnotation(guid, obj.guid, schemaGuid, "da", e.xml, annotationCreated)
 
+                    var schemaItem = timelineschemaselector.getByGuid(schemaGuid);
+                    if (schemaItem !== null) {
+                        schemaItem.count(schemaItem.count()+1);
+                    }
+
                 } else {
                     // Update existing object
 
