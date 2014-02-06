@@ -1,4 +1,13 @@
-﻿define(['knockout'], function (ko) {
+﻿define(['knockout','mods/state'], function (ko, state) {
+
+    // Parameters:
+    //
+    // <div data-bind="visible: name && city, reshtml: { key: 'welcome', params: { name: name, city: city } }">			
+    //
+    // welcome: {
+    //        sv: 'Hej <strong>#name</strong>! Du bor i #city.',
+    //        en: 'Hello <strong>#name</strong>! You live in #city.'
+    //}
 
     ko.bindingHandlers.restext = {
         update: function (element, valueAccessor, allBindingsAccessor, viewModel, context) {
@@ -68,9 +77,11 @@
             throw "ko.localationbinding.getLocalizedText: resources object is not defined";
         }
 
-        if (typeof locale === "undefined") {
-            throw "ko.localationbinding.getLocalizedText: locale object is not defined";
-        }
+        //if (typeof locale === "undefined") {
+        //    throw "ko.localationbinding.getLocalizedText: locale object is not defined";
+        //}
+
+        var locale = state.locale();
 
         // Accept both restext: 'mytext' and restext: { key: 'mytext' }
         if (Object.prototype.toString.call(binding) === '[object String]') {
@@ -102,4 +113,15 @@
     }
     ko.bindingHandlers.restext.getText = getLocalizedText;
 
+
+    return {
+        text: function (key, params) {
+
+            if (params) {
+                return getLocalizedText({ key: key, params: params });
+            }
+
+            return getLocalizedText({ key: key });
+        }
+    };
 });

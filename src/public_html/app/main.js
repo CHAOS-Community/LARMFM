@@ -22,7 +22,7 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'mods/portal'
             //>>excludeStart("build", true);
             system.debug(true);
             //>>excludeEnd("build");
-            window.locale = 'sv';
+            state.locale(Settings.locale);
 
             app.title = 'LARM.fm';
 

@@ -316,7 +316,7 @@
     <Content Include="lib\timeline\timeline-larm.js" />
     <Content Include="lib\x2js\xml2json.js" />
     <Content Include="lib\x2js\xml2json.min.js" />
-    <Content Include="locales\resources.js" />
+    <Content Include="resources.js" />
     <Content Include="settings.js" />
     <Content Include="timeline_test.html" />
     <Content Include="WayfCallback.html" />

@@ -3,7 +3,7 @@
 <button class="btn" data-bind="click: search, enable: cansearch">Søg</button>
 </div>-->
 <div class="input-append" style="margin-left:0px; margin-right:0px; margin-bottom:0px; margin-top:5px">
-    <input type="text" placeholder="skriv søgetekst..." class="span6" data-bind="value: searchtext, valueUpdate: ['afterkeydown'], event: { keypress: searchKeyboardCmd}">
-<button class="btn" data-bind="click: search, enable: cansearch">Søg</button>
+    <input type="text" placeholder="" class="span6" data-bind="value: searchtext, valueUpdate: ['afterkeydown'], event: { keypress: searchKeyboardCmd}, resattr:{placeholder: 'searchboxhint'}">
+<button class="btn" data-bind="click: search, enable: cansearch, restext:'search'">Søg</button>
 </div>
 

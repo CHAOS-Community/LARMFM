@@ -1,6 +1,6 @@
 // Search Module
-define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/format', 'mods/searchcalendar', 'factory/filter', 'mods/objectselector'],
-        function(ko, objfac, router, state, format, searchcalendar, filfac, objectselector) {
+define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/format', 'mods/searchcalendar', 'factory/filter', 'mods/objectselector', 'mods/localization'],
+        function(ko, objfac, router, state, format, searchcalendar, filfac, objectselector, locale) {
 
             // Paging
             var pagesize = ko.observable(20);
@@ -273,7 +273,8 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
 
                 items.removeAll();
                 isSearching(true);
-                resulttext("Søger...");
+
+                resulttext(locale.text('searching'));
                 var flter = createfilter();
                 CHAOS.Portal.Client.View.Get(Settings.Search.viewName, freetext(), createsort(), flter, pageindex(), pagesize()).WithCallback(searchReceived);
 
@@ -374,11 +375,11 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 noofpages = Math.ceil(totalcount / pagesize());
 
                 if (totalcount == 0)
-                    resulttext("Ingen resultater");
+                    resulttext(locale.text('results0'));
                 else if (totalcount == 1)
-                    resulttext("1 resultat");
+                    resulttext(locale.text('results1'));
                 else
-                    resulttext(totalcount + " resultater")
+                    resulttext(locale.text('resultsn', { 'count': totalcount }));
 
                 updatePaging();
             }
