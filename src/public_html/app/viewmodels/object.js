@@ -13,11 +13,12 @@ define([
     'mods/objectmanager',
     'mods/timelineschemaselector',
     'mods/annotation',
-    'mods/metadataTab'
+    'mods/metadataTab',
+    'mods/localization'
 ],
         function (app, ko, portal, state, objfac, xmlman,
             jsonformfields, metadatafac, format, player, timeline, objectmanager,
-            timelineschemaselector, annotation, metadataTab) {
+            timelineschemaselector, annotation, metadataTab, locale) {
 
             var obj = {};
             obj.guid;
@@ -30,6 +31,7 @@ define([
             var publication = ko.observable();
             var abstracttxt = ko.observable();
             var description = ko.observable();
+            var publishtext = ko.observable();
 
             var playerposition = ko.observable(0);
 
@@ -503,6 +505,20 @@ define([
                         publication($(x).find("PublicationDateTime").text());
                         abstracttxt($(x).find("Abstract").text());
                         description($(x).find("Description").text());
+
+                        var start = new Date(publication()).toLocaleString();
+                        var end = new Date($(x).find("PublicationEndDateTime").text()).toLocaleString();
+
+                        if (start === "Invalid Date") {
+                            start = locale.text("unknowndate");
+                        }
+
+                        if (end === "Invalid Date") {
+                            end = locale.text("unknowndate");
+                        }
+
+                        publishtext(", " + start + " - " + end);
+                        //publishtext(", sendt 19. april, 1973. Kl. 19:00 - 19:59 (59 min)");
                     }
                 }
 
@@ -591,6 +607,7 @@ define([
                 publication: publication,
                 abstracttxt: abstracttxt,
                 description: description,
+                publishtext: publishtext,
 
                 metadataViews: metadataViews,
                 metadataEditors: metadataEditors,
