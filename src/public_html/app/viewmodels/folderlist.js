@@ -33,6 +33,7 @@ define(['durandal/app', 'mods/portal', 'mods/state', 'factory/folder', 'knockout
         {
             var data = response.Body.Results[i];
             var fi = new ffac.FolderItem();
+            
             fi.init(data,0);
             items.push(fi);
         }

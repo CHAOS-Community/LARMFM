@@ -1,16 +1,18 @@
 define(['knockout', 'mods/portal'], function(ko, portal) {
 
     var FolderItem = function() {
+        this.folderID = ko.observable();
         this.level = ko.observable();
         this.title = ko.observable();
         this.hash = ko.observable();
         this.style = ko.observable();
         this.isexpanded = ko.observable(false);
         this.children = ko.observableArray();
+        this.isInEditMode = ko.observable(false);
     };
 
     FolderItem.prototype = function() {
-
+        
         var childfolderReceived = function(response) {
             if (response.Error != null) {
                 return;
@@ -35,26 +37,49 @@ define(['knockout', 'mods/portal'], function(ko, portal) {
         }
 
         var init = function(data, tlevel) {
-            this.title = data.Name;
+            this.title(data.Name);
             this.hash = '#!search/fid=' + data.ID;
             this.level(tlevel);
-
+            
             this.style("margin: 0px 0px 0px " + (20 * tlevel) + "px");
-
-            CHAOS.Portal.Client.Folder.Get(null, null, data.ID).WithCallback(childfolderReceived, this);
+            this.folderID(data.ID);
+            this.loadSubFolders();
+            
+        }
+        
+        var loadSubFolders = function(){
+            CHAOS.Portal.Client.Folder.Get(null, null, this.folderID()).WithCallback(childfolderReceived, this);
+        }
+        
+        var addNewFolder = function(){
+           
+            CHAOS.Portal.Client.Folder.Create(null,"New folder",this.folderID(),1).WithCallback(loadSubFolders, this);
+        }
+        
+        var saveFolderName = function(){
+           
+            CHAOS.Portal.Client.Folder.Update(this.folderID(), this.title())
         }
 
         var mouseevent = function(data, event) {
             if (event.type == 'mouseover' || event.type == 'mouseout')
                 $(event.currentTarget).toggleClass('folderitemover');
         }
+        
+        
 
 
         return {
             init: init,
+            addNewFolder:addNewFolder,
             mouseevent: mouseevent,
+            loadSubFolders:loadSubFolders,
+            saveFolderName:saveFolderName,
             toggleexpand: function() {
                 this.isexpanded(!this.isexpanded());
+            },
+             toggleeditmode: function() {
+                this.isInEditMode(!this.isInEditMode());
             }
 
         };

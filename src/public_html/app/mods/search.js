@@ -187,6 +187,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
 
             // === Navigate and search functionality ===
             function navigate() {
+               
                 var s = '!search/s=' + freetext();
 
                 if (datebegin() != null) {
@@ -236,6 +237,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
             }
 
             function dosearchcore(param) {
+                
                 if (param != undefined) {
                     // New search. Reset page index.
                     pageindex(0);
@@ -276,6 +278,11 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
 
                 resulttext(locale.text('searching'));
                 var flter = createfilter();
+                
+                if(format.getParamByName('fid', param) != ""){
+                    flter ="(FolderID:" + format.getParamByName('fid', param) + ")";
+                }
+                
                 CHAOS.Portal.Client.View.Get(Settings.Search.viewName, freetext(), createsort(), flter, pageindex(), pagesize()).WithCallback(searchReceived);
 
                 $('html, body').animate({

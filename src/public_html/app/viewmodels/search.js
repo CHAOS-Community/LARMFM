@@ -17,6 +17,7 @@ define(['durandal/app', 'knockout', 'mods/search', 'mods/state'],
                 search: search,
                 activate: function(param) {
                     if (param != undefined) {
+                       
                         search.search(param);
                     }
                     else {

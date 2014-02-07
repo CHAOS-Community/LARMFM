@@ -2,7 +2,11 @@
     <div data-bind="attr: {style:style}">
         <a data-bind="visible:isexpanded, click: toggleexpand"><i class="icon-folder-open"></i></a>
         <a data-bind="visible:(!isexpanded()), click: toggleexpand"><i class="icon-folder-close"></i></a>
-        <a data-bind="attr: { href: hash}, text: title"></a>
+        <a data-bind="visible: !isInEditMode(),attr: { href: hash}, text: title"></a>
+        <input class="input input-medium" type="text" data-bind="event: { change: function(){setTimeout(function(){$data.saveFolderName()},1)}}, visible: isInEditMode(),hasFocus:isInEditMode,value: title"/>
+        <a data-bind=" click: toggleeditmode"><i class="icon-edit"></i></a>
+        <a data-bind=" click: addNewFolder"><i class="icon-plus"></i></a>
+        
     </div>
 </div>
 <div data-bind="foreach: children, visible: isexpanded">
