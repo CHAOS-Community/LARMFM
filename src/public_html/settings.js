@@ -12,6 +12,8 @@ Settings.title = "LARM.fm";
 Settings.brandName = "larm";
 Settings.brandModule = "brand/larm";
 
+Settings.locale = "en";
+
 //Settings.servicePath = "http://api.test.chaos-systems.com";
 //Settings.servicePath = "http://api.chaos-systems.com";
 Settings.servicePath = "http://api.larm.fm";

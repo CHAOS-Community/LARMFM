@@ -172,7 +172,8 @@ define([
 
                 metadataEditors.removeAll();
                 // Add editor
-                var amd = createNewAmd({ guid: id, schemaguid: schema.guid })
+                var amd = createNewAmd({ guid: id, schemaguid: schema.guid });
+                
                 var editor = new metadatafac.MetadataView();
                 editor.setview(Settings.Schema[schema.guid].edit, { guid: amd.Id, metadata: amd });
                 metadataEditors.push(editor);
@@ -200,6 +201,7 @@ define([
 
                     // Add to MetadataViews
                     var amd = createNewAmd(e);
+                    annotation.addAnnotationToData(amd);
                     addAmdToMetadataViews(amd);
                     timeline.unselectItem();
 
@@ -207,6 +209,11 @@ define([
                     var guid = e.guid.substring(1);
                     var schemaGuid = e.schemaguid; //"f9f6edd0-f0ca-41ac-b8b3-b0d950fdef4e"; // e.schemaguid;
                     objectmanager.createAnnotation(guid, obj.guid, schemaGuid, "da", e.xml, annotationCreated)
+
+                    var schemaItem = timelineschemaselector.getByGuid(schemaGuid);
+                    if (schemaItem !== null) {
+                        schemaItem.count(schemaItem.count()+1);
+                    }
 
                 } else {
                     // Update existing object
@@ -570,7 +577,8 @@ define([
             function windowSizeChange() {
                 var w = $window.width();
                 var h = $window.height();
-                $("#timelines").width(w - 180);
+                //$("#timelines").width(w - 180);
+                $("#timelines").width(w - 170);
                 timeline.redraw();
             }
 

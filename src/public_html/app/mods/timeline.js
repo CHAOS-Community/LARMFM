@@ -24,6 +24,7 @@
         data.addColumn('string', 'content');
         data.addColumn('boolean', 'editable');
         data.addColumn('string', 'id');
+        //data.addColumn('string', 'group');
 
         var date = new Date(2000, 1, 1, 0, 0, 0, 0);
         start(date.getTime());

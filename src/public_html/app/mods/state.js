@@ -10,6 +10,7 @@ define(['knockout'], function (ko) {
     var lastRedirectedFromURL = ko.observable();
 
     var searchMetadataSchemaGuids = [];
+    var locale = ko.observable("en");
 
     return {
         userGuid: userGuid,
@@ -18,7 +19,8 @@ define(['knockout'], function (ko) {
         hasSession: hasSession,
         isAuthenticated: isAuthenticated,
         searchMetadataSchemaGuids: searchMetadataSchemaGuids,
-        lastRedirectedFromURL: lastRedirectedFromURL
+        lastRedirectedFromURL: lastRedirectedFromURL,
+        locale: locale
         
     };
 });

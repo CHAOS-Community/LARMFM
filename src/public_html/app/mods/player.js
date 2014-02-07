@@ -96,8 +96,8 @@
         }
         mediaUrl(mu);
 
-        var w = 1;
-        var h = 1;
+        var w = 1; // 400
+        var h = 1; // 150
         var hascontrols = true;
 
         if (data == null){
@@ -107,26 +107,49 @@
             hascontrols = false;
         }
 
-        jwplayer("larmplayer").setup({
-            playlist: playlist,
-            width: w,
-            height: h,
-            image: mediaImage,
-            controls: hascontrols
-        });
+        //setTimeout(function () {
+        console.log("Player Setup");
+            jwplayer("larmplayer").setup({
+                playlist: playlist,
+                width: w,
+                height: h,
+                image: mediaImage,
+                controls: hascontrols
+            });
 
+            jwplayer().onSetupError(function (e) {
+                console.log("Player Setup Error");
+            });
 
-        jwplayer().onTime(onTime);
-        jwplayer().onPlay(onPlay);
-        jwplayer().onPause(onPause);
-        jwplayer().play(true); // Play
+            jwplayer().onReady(function (e) {
+                console.log("Player Ready");
+            });
+
+            jwplayer().getRenderingMode(function (e) {
+                console.log("Player getRenderingMode");
+            });
+
+            jwplayer().onTime(onTime);
+            jwplayer().onPlay(onPlay);
+            jwplayer().onPause(onPause);
+            jwplayer().onBuffer(function (oldstate) {
+                console.log("Player Buffering + " + oldstate);
+            });
+            jwplayer().onError(function (message) {
+                console.log("Player onError = " + message);
+            });
+
+            jwplayer().play(true); // Play
+        //}, 1);
+
     }
 
     function onPlay() {
-
+        console.log("Player Play");
     }
 
     function onPause() {
+        console.log("Player Pause");
     }
 
     function onTime(e) {

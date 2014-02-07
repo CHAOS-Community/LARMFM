@@ -33,10 +33,10 @@
             updateAnnotationCount();
         },
         // Addes annotation to data. It has to be present in the timeline before calling this.
-        addAnnotationToData: function (guid, schemaGuid, title) {
+        addAnnotationToData: function (amd) {
 
             // TODO: Add Annotation
-
+            data().push(amd);
             updateAnnotationCount();
         },
         updateAnnotationData: function (values) {

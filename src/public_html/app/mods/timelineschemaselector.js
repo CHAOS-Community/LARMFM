@@ -93,6 +93,16 @@
             item.setCss(ci);
             
         },
+        getByGuid: function (schemaGuid) {
+            for (var i = 0; i < schemaItems().length; i++) {
+                var schemaItem = schemaItems()[i];
+                if (schemaItem.guid == schemaGuid) {
+                    return schemaItem;
+                }
+            }
+
+            return null;
+        },
         activateByGuid: function(schemaGuid) {
             for (var i = 0; i < schemaItems().length; i++) {
                 var schemaItem = schemaItems()[i];

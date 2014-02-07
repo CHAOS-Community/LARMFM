@@ -60,6 +60,7 @@
     <Content Include="app\factory\authentication.js" />
     <Content Include="app\factory\metadata.js" />
     <Content Include="app\mods\annotation.js" />
+    <Content Include="app\mods\localization.js" />
     <Content Include="app\mods\metadataTab.js" />
     <Content Include="app\mods\store.js" />
     <Content Include="app\mods\jsonformfields.js" />
@@ -97,11 +98,11 @@
     <Content Include="app\views\object.html" />
     <Content Include="app\views\wayflogin.html" />
     <Content Include="app\widgets\Readme.md" />
-    <Content Include="css\larm.css">
-      <DependentUpon>larm.less</DependentUpon>
+    <Content Include="css\default.css">
+      <DependentUpon>default.less</DependentUpon>
     </Content>
-    <Content Include="css\larm.min.css">
-      <DependentUpon>larm.less</DependentUpon>
+    <Content Include="css\default.min.css">
+      <DependentUpon>default.css</DependentUpon>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="img\FileTypes\_Schedule.png" />
@@ -126,6 +127,7 @@
     <Content Include="img\IconTypes\indikator-2_white.png" />
     <Content Include="img\IconTypes\indikator-3_grey.png" />
     <Content Include="img\IconTypes\indikator-3_white.png" />
+    <Content Include="img\larm.png" />
     <Content Include="img\larm_logo.png" />
     <Content Include="index.html" />
     <Content Include="jsonform_test.html" />
@@ -134,10 +136,12 @@
     <Content Include="lib\font-awesome\css\font\fontawesome-webfont.ttf" />
     <Content Include="lib\font-awesome\css\font\fontawesome-webfont.woff" />
     <Content Include="lib\font-awesome\css\font\FontAwesome.otf" />
+    <Content Include="lib\jquery\jquery-1.11.0.min.js" />
     <Content Include="lib\jquery\jquery-1.9.1.min.map" />
     <Content Include="lib\jquery\jquery.maskedinput.min.js" />
     <Content Include="lib\jquery\jquery.min.map" />
     <Content Include="lib\jsonform\jsonform.js" />
+    <Content Include="lib\knockout\ko.localizationbinding.js" />
     <Content Include="lib\timeline\img\16\delete.png" />
     <Content Include="lib\timeline\img\16\delete_org.png" />
     <Content Include="lib\timeline\img\16\moveleft.png" />
@@ -289,7 +293,10 @@
     <Content Include="lib\i18next\i18next-1.6.0.js" />
     <Content Include="lib\i18next\i18next-1.6.0.min.js" />
     <Content Include="lib\durandal\images\Thumbs.db" />
-    <Content Include="css\larm.less" />
+    <Content Include="css\default.less" />
+    <Content Include="css\default.css.map">
+      <DependentUpon>default.css</DependentUpon>
+    </Content>
     <None Include="lib\jquery\jquery-1.9.1.intellisense.js" />
     <Content Include="lib\jquery\jquery-1.9.1.js" />
     <Content Include="lib\jquery\jquery-1.9.1.min.js" />
@@ -313,6 +320,7 @@
     <Content Include="lib\timeline\timeline-larm.js" />
     <Content Include="lib\x2js\xml2json.js" />
     <Content Include="lib\x2js\xml2json.min.js" />
+    <Content Include="resources.js" />
     <Content Include="settings.js" />
     <Content Include="timeline_test.html" />
     <Content Include="WayfCallback.html" />
