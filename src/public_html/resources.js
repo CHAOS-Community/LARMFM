@@ -53,6 +53,20 @@ var resources = {
     md_contributors: {
         en: "Contributors:",
         da: "Medvirkende:"
+    },
+    md_creators: {
+        en: "Creators:",
+        da: "Ophav:"
+    },
+    md_locations: {
+        en: "Locations:",
+        da: "Lokationer:"
+    },
+    md_identifiers: {
+        en: "Identifiers:",
+        da: "Registreringsnumre:"
     }
+
+    
 
 };

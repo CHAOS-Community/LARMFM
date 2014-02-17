@@ -14,6 +14,18 @@
         this.mdSubjects = ko.observableArray([]);
 
         this.mdContributors = ko.observableArray([]);
+        this.mdCreators = ko.observableArray([]);
+        this.mdLocations = ko.observableArray([]);
+
+        /*
+            DR_ArchiveNumber: "2023"
+            DR_ProductionNumber: "666-666-6666"
+            SB_DomsID: "99"
+         */
+
+        this.mddrarchivenumber = ko.observable("");
+        this.mddrproductionnumber = ko.observable("");
+        this.sbdomsid = ko.observable("");
 
         this.m0 = null;
         this.m1 = null;
@@ -57,37 +69,74 @@
                             "<Contributor><Name>Benny Bidsk Jensen</Name><RoleName>Tekniker</RoleName><RoleID>2</RoleID></Contributor>" +
                             "<Contributor><Name>Bjarke Ahlstrand</Name><RoleName>Radiovært</RoleName><RoleID>3</RoleID></Contributor>" +
                         "</Contributors>" +
-                        "<Creators /><Locations /><Identifiers><DR.ProductionNumber /><DR.ArchiveNumber>2023</DR.ArchiveNumber><SB.DomsID /></Identifiers></Larm.Program>";
+                        "<Creators>" +
+                            "<Creator><Name>Jan Laursen</Name><RoleName>Radiovært</RoleName><RoleID>1</RoleID></Creator>" +
+                            "<Creator><Name>Benny Bidsk Jensen</Name><RoleName>Tekniker</RoleName><RoleID>2</RoleID></Creator>" +
+                            "<Creator><Name>Bjarke Ahlstrand</Name><RoleName>Radiovært</RoleName><RoleID>3</RoleID></Creator>" +
+                        "</Creators>" +
+                        "<Locations><Name>Svendborg</Name><Name>Svendborg havn</Name><Name>Svendborg banegård</Name></Locations>" +
+                        "<Identifiers><DR.ProductionNumber>666-666-6666</DR.ProductionNumber><DR.ArchiveNumber>2023</DR.ArchiveNumber><SB.DomsID>99</SB.DomsID></Identifiers></Larm.Program>";
                     //"<Contributor><Name></Name><RoleName></RoleName><RoleID></RoleID></Contributor>" +
                     // ---
 
                     self.m1 = handlexml(metadata[i]);
-                    
-                    self.mdTitle(self.m1.Larm_Program.Title);
 
-                    self.mdAbstract(self.m1.Larm_Program.Abstract);
-                    self.mdDescription(self.m1.Larm_Program.Description);
-                    self.mdChannel(self.m1.Larm_Program.PublicationChannel);
-                    self.mdPublisher(self.m1.Larm_Program.Publisher);
+                    var arkiv = self.m1.Larm_Program;
 
-                    for (var i = 0; i < self.m1.Larm_Program.Subjects.Subject.length; i++) {
-                        self.mdSubjects.push(self.m1.Larm_Program.Subjects.Subject[i]);
+                    self.mdTitle(arkiv.Title);
+
+                    self.mdAbstract(arkiv.Abstract);
+                    self.mdDescription(arkiv.Description);
+                    self.mdChannel(arkiv.PublicationChannel);
+                    self.mdPublisher(arkiv.Publisher);
+
+                    for (var i = 0; i < arkiv.Subjects.Subject.length; i++) {
+                        self.mdSubjects.push(arkiv.Subjects.Subject[i]);
                     }
 
-                    //if (self.m1.Larm_Program.Contributors.length > 0) {
-                        for (var i = 0; i < self.m1.Larm_Program.Contributors.Contributor.length; i++) {
-                            var c = self.m1.Larm_Program.Contributors.Contributor[i];
-                            self.mdContributors.push(
-                                {
-                                    Name: ko.observable(c.Name),
-                                    RoleID: ko.observable(c.RoleID),
-                                    RoleName: ko.observable(c.RoleName)
-                                });
-                        }
-                    //}
+                    for (var i = 0; i < arkiv.Contributors.Contributor.length; i++) {
+                        var c = arkiv.Contributors.Contributor[i];
+                        self.mdContributors.push(
+                            {
+                                Name: ko.observable(c.Name),
+                                RoleID: ko.observable(c.RoleID),
+                                RoleName: ko.observable(c.RoleName)
+                            });
+                    }
 
-                    self.mdStartDate(self.m1.Larm_Program.PublicationDateTime);
-                    self.mdEndDate(self.m1.Larm_Program.PublicationEndDateTime);
+                    for (var i = 0; i < arkiv.Creators.Creator.length; i++) {
+                        var c = arkiv.Creators.Creator[i];
+                        self.mdCreators.push(
+                            {
+                                Name: ko.observable(c.Name),
+                                RoleID: ko.observable(c.RoleID),
+                                RoleName: ko.observable(c.RoleName)
+                            });
+                    }
+
+                    if (arkiv.Locations.length > 0) {
+                        var n = arkiv.Locations[0].Name;
+                        for (var i = 0; i < n.length; i++) {
+                            self.mdLocations.push(n[i]);
+                        }
+                    }
+
+                    /*
+                        self.m1.Larm_Program.Identifiers
+                        {...}
+                            __proto__: {...}
+                            DR_ArchiveNumber: "2023"
+                            DR_ProductionNumber: "666-666-6666"
+                            SB_DomsID: "99"
+                     */
+
+                    self.mddrarchivenumber(arkiv.Identifiers.DR_ArchiveNumber);
+                    self.mddrproductionnumber(arkiv.Identifiers.DR_ProductionNumber);
+                    self.sbdomsid(arkiv.Identifiers.SB_DomsID);
+
+
+                    self.mdStartDate(arkiv.PublicationDateTime);
+                    self.mdEndDate(arkiv.PublicationEndDateTime);
 
                 }
             }
