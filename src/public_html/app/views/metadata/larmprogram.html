@@ -1,14 +1,19 @@
 ﻿<h4>ARKIV METADATA</h4>
-<h3 data-bind="text: mdTitle"></h3>
-<h4 data-bind="text: mdChannel"></h4>
-<div data-bind="text: mdAbstract"></div>
-<div data-bind="text: mdDescription"></div>
-<div>
 
+<h5 class="dotted" data-bind="restext: 'md_abstract'"></h5>
+<div class="textblock" data-bind="text: mdAbstract"></div>
+<h5 class="dotted" data-bind="restext: 'md_description'"></h5>
+<div class="textblock" data-bind="text: mdDescription"></div>
+<h5 class="dotted" data-bind="restext: 'md_publisher'"></h5>
+<div class="textblock" data-bind="text: mdPublisher"></div>
+<h5 class="dotted" data-bind="restext: 'md_subjects'"></h5>
+<div data-bind="foreach: mdSubjects">
+    <button class="btn btn-subject" data-bind="text: $data"></button>
 </div>
-    <span data-bind="text: mdStartDate"></span> - 
-    <span data-bind="text: mdEndDate"></span>
-</div>
+
+
+
+<div style="margin-bottom:20px;"></div>
 
 <!--<button data-bind="click: btnedit">ok</button>
 <pre data-bind="text: JSON.stringify(ko.toJS($data), null, 2)"></pre>
