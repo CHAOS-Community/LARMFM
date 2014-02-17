@@ -90,48 +90,48 @@ h5 {
 }
 
 
-// btn-subject
-@btnsubject_active: rgba(255, 255, 255, 0.75);
-@btnsubject_bg: #006dcc;
-@btnsubject_bg1: #0088cc;
-@btnsubject_bg1f: 0088cc;
-@btnsubject_bg2: #0044cc;
-@btnsubject_bg2f: 0044cc;
-@btnsubject_brd1: #0044cc;
-@btnsubject_brd2: #0044cc;
-@btnsubject_brd3: #002a80;
+// btn-tag
+@btntag_active: rgba(255, 255, 255, 0.75);
+@btntag_bg: #006dcc;
+@btntag_bg1: #0088cc;
+@btntag_bg1f: 0088cc;
+@btntag_bg2: #0044cc;
+@btntag_bg2f: 0044cc;
+@btntag_brd1: #0044cc;
+@btntag_brd2: #0044cc;
+@btntag_brd3: #002a80;
 
-.btn-subject {
+.btn-tag {
   color: #ffffff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: @btnsubject_bg;
-  *background-color: @btnsubject_bg2;
-  background-image: -moz-linear-gradient(top, @btnsubject_bg1, @btnsubject_bg2);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@btnsubject_bg1), to(@btnsubject_bg2));
-  background-image: -webkit-linear-gradient(top, @btnsubject_bg1, @btnsubject_bg2);
-  background-image: -o-linear-gradient(top, @btnsubject_bg1, @btnsubject_bg2);
-  background-image: linear-gradient(to bottom, @btnsubject_bg1, @btnsubject_bg2);
+  background-color: @btntag_bg;
+  *background-color: @btntag_bg2;
+  background-image: -moz-linear-gradient(top, @btntag_bg1, @btntag_bg2);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@btntag_bg1), to(@btntag_bg2));
+  background-image: -webkit-linear-gradient(top, @btntag_bg1, @btntag_bg2);
+  background-image: -o-linear-gradient(top, @btntag_bg1, @btntag_bg2);
+  background-image: linear-gradient(to bottom, @btntag_bg1, @btntag_bg2);
   background-repeat: repeat-x;
-  border-color: @btnsubject_brd1 @btnsubject_brd2 @btnsubject_brd3;
+  border-color: @btntag_brd1 @btntag_brd2 @btntag_brd3;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff@{btnsubject_bg1f}', endColorstr='#ff@{btnsubject_bg2f}', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff@{btntag_bg1f}', endColorstr='#ff@{btntag_bg2f}', GradientType=0);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }
-.btn-subject:hover,
-.btn-subject:focus,
-.btn-subject:active,
-.btn-subject.active,
-.btn-subject.disabled,
-.btn-subject[disabled] {
-  color: @btnsubject_active;
-  background-color: @btnsubject_bg2;
+.btn-tag:hover,
+.btn-tag:focus,
+.btn-tag:active,
+.btn-tag.active,
+.btn-tag.disabled,
+.btn-tag[disabled] {
+  color: @btntag_active;
+  background-color: @btntag_bg2;
 }
-.btn-subject-badge,
-.btn-subject-badge[href]
+.btn-tag-badge,
+.btn-tag-badge[href]
 {
-  background-color: @btnsubject_brd3;
+  background-color: @btntag_brd3;
 }
-.btn-subject-event{
+.btn-tag-event{
     background-color:rgba(0, 109, 204, 0.1);
 }
 

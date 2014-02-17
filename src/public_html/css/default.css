@@ -67,7 +67,7 @@ h5 {
 .nav-tabs > .active > a:focus {
   color: #5798F7;
 }
-.btn-subject {
+.btn-tag {
   color: #ffffff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   background-color: #006dcc;
@@ -83,20 +83,20 @@ h5 {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff88cc', endColorstr='#ff44cc', GradientType=0);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }
-.btn-subject:hover,
-.btn-subject:focus,
-.btn-subject:active,
-.btn-subject.active,
-.btn-subject.disabled,
-.btn-subject[disabled] {
+.btn-tag:hover,
+.btn-tag:focus,
+.btn-tag:active,
+.btn-tag.active,
+.btn-tag.disabled,
+.btn-tag[disabled] {
   color: rgba(255, 255, 255, 0.75);
   background-color: #0044cc;
 }
-.btn-subject-badge,
-.btn-subject-badge[href] {
+.btn-tag-badge,
+.btn-tag-badge[href] {
   background-color: #002a80;
 }
-.btn-subject-event {
+.btn-tag-event {
   background-color: rgba(0, 109, 204, 0.1);
 }
 .btn-schema1 {
