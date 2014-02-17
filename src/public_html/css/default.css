@@ -32,10 +32,18 @@ h5 {
   border-bottom-width: 1px;
   border-bottom-style: dotted;
 }
-.textblock {
+.md-text {
   width: 590px;
   font-size: 13px;
   color: #666666;
+}
+.md-tags {
+  width: 590px;
+  margin-top: 8px;
+}
+.md-table {
+  width: 590px;
+  margin-top: 8px;
 }
 .page-host {
   top: 61px;

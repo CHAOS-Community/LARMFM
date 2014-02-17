@@ -1,15 +1,31 @@
 ﻿<h4>ARKIV METADATA</h4>
 
 <h5 class="dotted" data-bind="restext: 'md_abstract'"></h5>
-<div class="textblock" data-bind="text: mdAbstract"></div>
+<div class="md-text" data-bind="text: mdAbstract"></div>
 <h5 class="dotted" data-bind="restext: 'md_description'"></h5>
-<div class="textblock" data-bind="text: mdDescription"></div>
+<div class="md-text" data-bind="text: mdDescription"></div>
 <h5 class="dotted" data-bind="restext: 'md_publisher'"></h5>
-<div class="textblock" data-bind="text: mdPublisher"></div>
+<div class="md-text" data-bind="text: mdPublisher"></div>
 <h5 class="dotted" data-bind="restext: 'md_subjects'"></h5>
-<div data-bind="foreach: mdSubjects">
+<div class="md-tags" data-bind="foreach: mdSubjects">
     <button class="btn btn-subject" data-bind="text: $data"></button>
 </div>
+<h5 class="dotted" data-bind="restext: 'md_contributors'"></h5>
+<table class="md-table table table-bordered">
+    <tr>
+        <th>Name</th>
+        <th>RoleName</th>
+        <th>RoleID</th>
+    </tr>
+    <!-- ko foreach: mdContributors -->
+    <tr>
+        <td data-bind="text: Name"></td>
+        <td data-bind="text: RoleName"></td>
+        <td data-bind="text: RoleID"></td>
+    </tr>
+    <!-- /ko -->
+</table>
+
 
 
 

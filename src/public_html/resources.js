@@ -49,6 +49,10 @@ var resources = {
     md_subjects: {
         en: "Subjects:",
         da: "Emneord:"
+    },
+    md_contributors: {
+        en: "Contributors:",
+        da: "Medvirkende:"
     }
 
 };
