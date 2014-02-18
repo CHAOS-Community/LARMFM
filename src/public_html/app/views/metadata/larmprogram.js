@@ -10,24 +10,7 @@
         this.mdStartDate = ko.observable("");
         this.mdEndDate = ko.observable("");
 
-        this.mdPublisher = ko.observable("");
-        this.mdSubjects = ko.observableArray([]);
-
-        this.mdContributors = ko.observableArray([]);
-        this.mdCreators = ko.observableArray([]);
-        this.mdLocations = ko.observableArray([]);
-
         this.mdhtml = ko.observableArray([]);
-
-        /*
-            DR_ArchiveNumber: "2023"
-            DR_ProductionNumber: "666-666-6666"
-            SB_DomsID: "99"
-         */
-
-        this.mddrarchivenumber = ko.observable("");
-        this.mddrproductionnumber = ko.observable("");
-        this.sbdomsid = ko.observable("");
 
         this.m0 = null;
         this.m1 = null;
@@ -86,94 +69,42 @@
                     var arkiv = self.m1.Larm_Program;
 
                     self.mdTitle(arkiv.Title);
-
                     self.mdAbstract(arkiv.Abstract);
                     self.mdDescription(arkiv.Description);
                     self.mdChannel(arkiv.PublicationChannel);
-                    self.mdPublisher(arkiv.Publisher);
-
-                    for (var i = 0; i < arkiv.Subjects.Subject.length; i++) {
-                        self.mdSubjects.push(arkiv.Subjects.Subject[i]);
-                    }
-
-                    for (var i = 0; i < arkiv.Contributors.Contributor.length; i++) {
-                        var c = arkiv.Contributors.Contributor[i];
-                        self.mdContributors.push(
-                            {
-                                Name: ko.observable(c.Name),
-                                RoleID: ko.observable(c.RoleID),
-                                RoleName: ko.observable(c.RoleName)
-                            });
-                    }
-
-                    for (var i = 0; i < arkiv.Creators.Creator.length; i++) {
-                        var c = arkiv.Creators.Creator[i];
-                        self.mdCreators.push(
-                            {
-                                Name: ko.observable(c.Name),
-                                RoleID: ko.observable(c.RoleID),
-                                RoleName: ko.observable(c.RoleName)
-                            });
-                    }
-
-                    if (arkiv.Locations.length > 0) {
-                        var n = arkiv.Locations[0].Name;
-                        for (var i = 0; i < n.length; i++) {
-                            self.mdLocations.push(n[i]);
-                        }
-                    }
-
-                    /*
-                        self.m1.Larm_Program.Identifiers
-                        {...}
-                            __proto__: {...}
-                            DR_ArchiveNumber: "2023"
-                            DR_ProductionNumber: "666-666-6666"
-                            SB_DomsID: "99"
-                     */
-
-                    self.mddrarchivenumber(arkiv.Identifiers.DR_ArchiveNumber);
-                    self.mddrproductionnumber(arkiv.Identifiers.DR_ProductionNumber);
-                    self.sbdomsid(arkiv.Identifiers.SB_DomsID);
 
                     self.mdStartDate(arkiv.PublicationDateTime);
                     self.mdEndDate(arkiv.PublicationEndDateTime);
 
-                    self.mdhtml.push(html.headline("ARKIV METADATA"));
-                    self.mdhtml.push(html.text("!md_abstract", arkiv.Abstract));
-                    self.mdhtml.push(html.text("!md_description", arkiv.Description));
-                    self.mdhtml.push(html.text("!md_publisher", arkiv.Publisher));
-                    self.mdhtml.push(html.tags("!md_subjects", arkiv.Subjects.Subject));
+                    var p = self.mdhtml;
+                    html.mdheadline(p, "ARKIV METADATA");
+                    html.mdtext(p, "!md_abstract", arkiv.Abstract);
+                    html.mdtext(p, "!md_description", arkiv.Description);
+                    html.mdtext(p, "!md_publisher", arkiv.Publisher);
+                    html.mdtags(p, "!md_subjects", arkiv.Subjects.Subject);
 
-                    self.mdhtml.push(html.table("!md_contributors",
+                    html.mdtable(p, "!md_contributors",
                         arkiv.Contributors.Contributor,
                         ['Name', 'RoleName', 'RoleID'],
-                        ['Name', 'RoleName', 'RoleID']));
+                        ['Name', 'RoleName', 'RoleID']);
 
-                    self.mdhtml.push(html.table("!md_creators",
+                    html.mdtable(p, "!md_creators",
                         arkiv.Creators.Creator,
                         ['Name', 'RoleName', 'RoleID'],
-                        ['Name', 'RoleName', 'RoleID']));
+                        ['Name', 'RoleName', 'RoleID']);
 
-                    self.mdhtml.push(html.tags("!md_locations", arkiv.Locations[0].Name));
+                    html.mdtags(p, "!md_locations", arkiv.Locations[0].Name);
 
-                    self.mdhtml.push(html.grid("!md_identifiers", [
+                    html.mdgrid(p, "!md_identifiers", [
                     ["DR produktionsnr:", arkiv.Identifiers.DR_ProductionNumber],
                     ["DR arkivnr:", arkiv.Identifiers.DR_ArchiveNumber],
                     ["SB Doms nr:", arkiv.Identifiers.SB_DomsID]
-                    ]));
+                    ]);
 
-                    self.mdhtml.push(html.headline("LARM METADATA"));
+                    html.mdheadline(p, "LARM METADATA");
 
-                    //mdtext(self.mdhtml,"Hello", "My text");
                 }
             }
-        }
-
-        function mdtext(mdhtml, title, text) {
-            var html = '<h5 class="dotted">' + title + '</h5>' +
-                '<div class="md-text">' + text + '</div>';
-            mdhtml.push(html);
         }
 
         return {

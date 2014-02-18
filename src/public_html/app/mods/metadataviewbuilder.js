@@ -16,14 +16,21 @@
     }
 
     return {
+        mdheadline: function(parent, title) {
+            parent.push(this.headline(title));
+        },
         headline: function (title) {
             return '<h4>' + loc(title) + '</h4>';
         },
-
+        mdtext: function(parent, title, text) {
+            parent.push(this.text(title, text));
+        },
         text: function (title, text) {
             return  titlehtml(title) + '<div class="md-text">' + text + '</div>';
         },
-
+        mdtags: function(parent, title, tagarray) {
+            parent.push(this.tags(title, tagarray));
+        },
         tags: function (title, tagarray) {
             var t = titlehtml(title) + '<div class="md-tags">';
             for(var i = 0; i < tagarray.length; i++){
@@ -32,7 +39,9 @@
             t += '</div>';
             return t;
         },
-
+        mdtable: function(parent, title, dataarray, titlearray, fieldarray) {
+            parent.push(this.table(title, dataarray, titlearray, fieldarray));
+        },
         table: function (title, dataarray, titlearray, fieldarray) {
             var t = titlehtml(title) + '<table class="md-table table table-bordered">';
             t += '<tr>';
@@ -50,7 +59,9 @@
             t += '</table>';
             return t;
         },
-
+        mdgrid: function(parent, title, gridarray) {
+            parent.push(this.grid(title, gridarray));
+        },
         grid: function (title, gridarray) {
             var t = titlehtml(title);
             t += '<table class="md-table table table-bordered">';
