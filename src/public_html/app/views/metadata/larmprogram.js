@@ -1,4 +1,4 @@
-﻿define(['durandal/app', 'knockout', 'mods/xmlmanager', 'mods/metadataschema'], function (app, ko, xmlman, metadataschema) {
+﻿define(['durandal/app', 'knockout', 'mods/xmlmanager', 'mods/metadataschema', 'mods/metadataviewbuilder'], function (app, ko, xmlman, metadataschema, html) {
 
 
     var larmprogram = function () {
@@ -16,6 +16,8 @@
         this.mdContributors = ko.observableArray([]);
         this.mdCreators = ko.observableArray([]);
         this.mdLocations = ko.observableArray([]);
+
+        this.mdhtml = ko.observableArray([]);
 
         /*
             DR_ArchiveNumber: "2023"
@@ -134,12 +136,44 @@
                     self.mddrproductionnumber(arkiv.Identifiers.DR_ProductionNumber);
                     self.sbdomsid(arkiv.Identifiers.SB_DomsID);
 
-
                     self.mdStartDate(arkiv.PublicationDateTime);
                     self.mdEndDate(arkiv.PublicationEndDateTime);
 
+                    self.mdhtml.push(html.headline("ARKIV METADATA"));
+                    self.mdhtml.push(html.text("!md_abstract", arkiv.Abstract));
+                    self.mdhtml.push(html.text("!md_description", arkiv.Description));
+                    self.mdhtml.push(html.text("!md_publisher", arkiv.Publisher));
+                    self.mdhtml.push(html.tags("!md_subjects", arkiv.Subjects.Subject));
+
+                    self.mdhtml.push(html.table("!md_contributors",
+                        arkiv.Contributors.Contributor,
+                        ['Name', 'RoleName', 'RoleID'],
+                        ['Name', 'RoleName', 'RoleID']));
+
+                    self.mdhtml.push(html.table("!md_creators",
+                        arkiv.Creators.Creator,
+                        ['Name', 'RoleName', 'RoleID'],
+                        ['Name', 'RoleName', 'RoleID']));
+
+                    self.mdhtml.push(html.tags("!md_locations", arkiv.Locations[0].Name));
+
+                    self.mdhtml.push(html.grid("!md_identifiers", [
+                    ["DR produktionsnr:", arkiv.Identifiers.DR_ProductionNumber],
+                    ["DR arkivnr:", arkiv.Identifiers.DR_ArchiveNumber],
+                    ["SB Doms nr:", arkiv.Identifiers.SB_DomsID]
+                    ]));
+
+                    self.mdhtml.push(html.headline("LARM METADATA"));
+
+                    //mdtext(self.mdhtml,"Hello", "My text");
                 }
             }
+        }
+
+        function mdtext(mdhtml, title, text) {
+            var html = '<h5 class="dotted">' + title + '</h5>' +
+                '<div class="md-text">' + text + '</div>';
+            mdhtml.push(html);
         }
 
         return {
