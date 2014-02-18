@@ -45,6 +45,14 @@ h5 {
   width: 590px;
   margin-top: 8px;
 }
+.md-table th {
+  background-color: #F5F5F5;
+  color: #333;
+  font-size: 13px;
+}
+.md-table td {
+  color: #666;
+}
 .page-host {
   top: 61px;
 }
@@ -69,18 +77,19 @@ h5 {
 }
 .btn-tag {
   color: #ffffff;
+  font-weight: bold;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #006dcc;
-  *background-color: #0044cc;
-  background-image: -moz-linear-gradient(top, #0088cc, #0044cc);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0044cc));
-  background-image: -webkit-linear-gradient(top, #0088cc, #0044cc);
-  background-image: -o-linear-gradient(top, #0088cc, #0044cc);
-  background-image: linear-gradient(to bottom, #0088cc, #0044cc);
+  background-color: #5798f7;
+  *background-color: #5798f7;
+  background-image: -moz-linear-gradient(top, #5798f7, #5798f7);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5798f7), to(#5798f7));
+  background-image: -webkit-linear-gradient(top, #5798f7, #5798f7);
+  background-image: -o-linear-gradient(top, #5798f7, #5798f7);
+  background-image: linear-gradient(to bottom, #5798f7, #5798f7);
   background-repeat: repeat-x;
-  border-color: #0044cc #0044cc #002a80;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff88cc', endColorstr='#ff44cc', GradientType=0);
+  border-color: #4b83d4 #4b83d4 #4b83d4;
+  /*border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);*/
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5798 F7', endColorstr='#ff5798 F7', GradientType=0);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }
 .btn-tag:hover,
@@ -90,11 +99,11 @@ h5 {
 .btn-tag.disabled,
 .btn-tag[disabled] {
   color: rgba(255, 255, 255, 0.75);
-  background-color: #0044cc;
+  background-color: #5798f7;
 }
 .btn-tag-badge,
 .btn-tag-badge[href] {
-  background-color: #002a80;
+  background-color: #4b83d4;
 }
 .btn-tag-event {
   background-color: rgba(0, 109, 204, 0.1);
