@@ -32,12 +32,42 @@
             var metadata = self.data.Metadatas;
             // LARM.Metadata: 17d59e41-13fb-469a-a138-bb691f13f2ba
             // Larm.Program: 00000000-0000-0000-0000-0000df820000
+
+            var larm_program = metadataschema.getMetadataSchemaByName("Larm.Program");
+            var larm_metadata = metadataschema.getMetadataSchemaByName("LARM.Metadata");
+            var larm_program_guid = larm_program.guid;
+            var larm_metadata_guid = larm_metadata.guid;
+
+            var arkiv = null;
+            var larm = null;
+            var p = self.mdhtml;
+
             for (var i = 0; i < metadata.length; i++) {
-                if (metadata[i].MetadataSchemaGuid == '17d59e41-13fb-469a-a138-bb691f13f2ba') {
+                if (metadata[i].MetadataSchemaGuid == larm_metadata_guid) {
+
+                    // --- TEST DATA
+                    metadata[i].MetadataXml =
+                        "<Larm.Metadata>" +
+                        "<Title>Dramatisk forum - Poul Reumert</Title>" +
+                        "<Description>Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor. Ut ullamcorper, ligula eu tempor congue, eros est euismod turpis, id tincidunt sapien risus a quam. Maecenas fermentum consequat mi. Donec fermentum. Pellentesque malesuada nulla a mi. Duis sapien sem, aliquet nec, commodo eget, consequat quis, neque. Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat. Curabitur augue lorem, dapibus quis, laoreet et, pretium ac, nisi. Aenean magna nisl, mollis quis, molestie eu, feugiat in, orci. In hac habitasse platea dictumst.</Description>" +
+                        "<Genre>svendborg politi kontor banegård</Genre>" +
+                        "<Subjects>svendborg politi kontor banegård</Subjects>" +
+                        "<Tags>svendborg politi kontor banegård</Tags>" +
+                        "<Note>Curabitur pretium tincidunt lacus. Nulla gravida orci a odio.</Note>" +
+                        "<RelatedObjects>Curabitur pretium tincidunt lacus. Nulla gravida orci a odio.</RelatedObjects>" +
+                        "<Contributors>" +
+                            "<Contributor><Name>Jan Laursen</Name><RoleName>Radiovært</RoleName><Subject>Nullam varius, turpis et commodo pharetra.</Subject></Contributor>" +
+                            "<Contributor><Name>Benny Bidsk Jensen</Name><RoleName>Tekniker</RoleName><Subject>Nullam varius, turpis et commodo pharetra.</Subject></Contributor>" +
+                            "<Contributor><Name>Bjarke Ahlstrand</Name><RoleName>Radiovært</RoleName><Subject>Nullam varius, turpis et commodo pharetra.</Subject></Contributor>" +
+                        "</Contributors>" +
+                        "</Larm.Metadata>";
+
                     self.m0 = handlexml(metadata[i]);
+                    larm = self.m0.Larm_Metadata;
+
 
                 }
-                else if (metadata[i].MetadataSchemaGuid == '00000000-0000-0000-0000-0000df820000') {
+                else if (metadata[i].MetadataSchemaGuid == larm_program_guid) {
 
                     // --- TEST DATA
                     metadata[i].MetadataXml =
@@ -66,7 +96,7 @@
 
                     self.m1 = handlexml(metadata[i]);
 
-                    var arkiv = self.m1.Larm_Program;
+                    arkiv = self.m1.Larm_Program;
 
                     self.mdTitle(arkiv.Title);
                     self.mdAbstract(arkiv.Abstract);
@@ -75,36 +105,48 @@
 
                     self.mdStartDate(arkiv.PublicationDateTime);
                     self.mdEndDate(arkiv.PublicationEndDateTime);
-
-                    var p = self.mdhtml;
-                    html.mdheadline(p, "ARKIV METADATA");
-                    html.mdtext(p, "!md_abstract", arkiv.Abstract);
-                    html.mdtext(p, "!md_description", arkiv.Description);
-                    html.mdtext(p, "!md_publisher", arkiv.Publisher);
-                    html.mdtags(p, "!md_subjects", arkiv.Subjects.Subject);
-
-                    html.mdtable(p, "!md_contributors",
-                        arkiv.Contributors.Contributor,
-                        ['Name', 'RoleName', 'RoleID'],
-                        ['Name', 'RoleName', 'RoleID']);
-
-                    html.mdtable(p, "!md_creators",
-                        arkiv.Creators.Creator,
-                        ['Name', 'RoleName', 'RoleID'],
-                        ['Name', 'RoleName', 'RoleID']);
-
-                    html.mdtags(p, "!md_locations", arkiv.Locations[0].Name);
-
-                    html.mdgrid(p, "!md_identifiers", [
-                    ["DR produktionsnr:", arkiv.Identifiers.DR_ProductionNumber],
-                    ["DR arkivnr:", arkiv.Identifiers.DR_ArchiveNumber],
-                    ["SB Doms nr:", arkiv.Identifiers.SB_DomsID]
-                    ]);
-
-                    html.mdheadline(p, "LARM METADATA");
-
                 }
             }
+
+            // Generate HTML
+            html.mdheadline(p, "ARKIV METADATA");
+            html.mdtext(p, "!md_abstract", arkiv.Abstract);
+            html.mdtext(p, "!md_description", arkiv.Description);
+            html.mdtext(p, "!md_publisher", arkiv.Publisher);
+            html.mdtags(p, "!md_subjects", arkiv.Subjects.Subject);
+
+            html.mdtable(p, "!md_contributors",
+                arkiv.Contributors.Contributor,
+                ['Name', 'RoleName', 'RoleID'],
+                ['Name', 'RoleName', 'RoleID']);
+
+            html.mdtable(p, "!md_creators",
+                arkiv.Creators.Creator,
+                ['Name', 'RoleName', 'RoleID'],
+                ['Name', 'RoleName', 'RoleID']);
+
+            html.mdtags(p, "!md_locations", arkiv.Locations[0].Name);
+
+            html.mdgrid(p, "!md_identifiers", [
+            ["DR produktionsnr:", arkiv.Identifiers.DR_ProductionNumber],
+            ["DR arkivnr:", arkiv.Identifiers.DR_ArchiveNumber],
+            ["SB Doms nr:", arkiv.Identifiers.SB_DomsID]
+            ]);
+
+            html.mdheadline(p, "LARM METADATA");
+            html.mdtext(p, "Title", larm.Title);
+            html.mdtext(p, "Description", larm.Description);
+            html.mdtags(p, "Genre", larm.Genre);
+            html.mdtags(p, "Subjects", larm.Subjects);
+            html.mdtags(p, "Tags", larm.Tags);
+            html.mdtext(p, "Note", larm.Note);
+            html.mdtext(p, "Related Objects", larm.RelatedObjects);
+
+            html.mdtable(p, "!md_contributors",
+                larm.Contributors.Contributor,
+                ['Name', 'RoleName', 'Subject'],
+                ['Name', 'RoleName', 'Subject']);
+
         }
 
         return {

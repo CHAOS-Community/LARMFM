@@ -123,7 +123,7 @@ Settings.MetadataSchemas = [
         arraypaths: []
     },
     {
-        guid: '17d59e41-13fb-469a-a138-bb691f13f2ba',
+        guid: '419ed517-fb13-9a46-a138-bb691f13f2ba',
         name: 'LARM.Metadata',
         schemaxml: '<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"><xs:element name="Larm.Metadata"><xs:complexType><xs:sequence><xs:element name="Title" type="xs:string" /><xs:element name="Description" type="xs:string" /><xs:element name="Genre" type="OpenEnumerationList_Tags" /><xs:element name="Subjects" type="OpenEnumerationList_Tags" /><xs:element name="Tags" type="OpenEnumerationList_Tags" /><xs:element name="Note" type="xs:string" /><xs:element name="RelatedObjects" type="xs:string" /><xs:element name="Contributors"><xs:complexType><xs:sequence><xs:element name="Contributor" minOccurs="0" maxOccurs="unbounded"><xs:complexType><xs:sequence><xs:element name="Name" type="xs:string" /><xs:element name="RoleName" type="xs:string" /><xs:element name="Subject" type="xs:string" /></xs:sequence></xs:complexType></xs:element></xs:sequence></xs:complexType></xs:element></xs:sequence></xs:complexType></xs:element><xs:simpleType name="OpenEnumerationList_Tags"><xs:list itemType="xs:string" /></xs:simpleType></xs:schema>',
         schemajson: null,

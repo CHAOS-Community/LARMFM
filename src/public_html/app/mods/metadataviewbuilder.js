@@ -33,8 +33,15 @@
         },
         tags: function (title, tagarray) {
             var t = titlehtml(title) + '<div class="md-tags">';
-            for(var i = 0; i < tagarray.length; i++){
-                t += '<button class="btn btn-tag" style="margin-left: 4px;">' + tagarray[i] + '</button>'
+
+            var arr = tagarray;
+            if (typeof arr === "string") {
+                //OpenEnumerationList_Tags
+                arr = arr.split(" ");
+            }
+
+            for (var i = 0; i < arr.length; i++) {
+                t += '<button class="btn btn-tag" style="margin-left: 4px;">' + arr[i] + '</button>'
             }
             t += '</div>';
             return t;
