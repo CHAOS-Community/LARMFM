@@ -5,7 +5,8 @@
 
     function metadataReceived(data) {
         var r = data.Body.Results[0];
-        doCallback(r.Id, r);
+        if(r)   
+            doCallback(r.Id, r);
     }
 
     function createObjectReceived(data) {
@@ -28,7 +29,8 @@
         var cb = callbacks[guid];
         if (cb !== undefined) {
             while (cb.length > 0) {
-                cb.shift()(param);
+                var c = cb.shift();
+                c.callback(param, c.context);
             }
 
             if (cb.length == 0)
@@ -46,11 +48,11 @@
         return uuid;
     }
 
-    function pushCallback(guid, callback) {
+    function pushCallback(guid, callback, context) {
         if (callbacks[guid] === undefined) {
             callbacks[guid] = [];
         }
-        callbacks[guid].push(callback);
+        callbacks[guid].push({callback:callback,context:context});
     }
 
     // --- CREATE ANNOTATION begin
@@ -124,9 +126,9 @@
         //-------------------------------------------------
         generateGUID: generateGUID,
         //-------------------------------------------------
-        getByGuid: function (guid, callback) {
+        getByGuid: function (guid, callback, context) {
 
-            pushCallback(guid, callback);
+            pushCallback(guid, callback, context);
 
             // Object.Get
             // ---------------------------------------------------------

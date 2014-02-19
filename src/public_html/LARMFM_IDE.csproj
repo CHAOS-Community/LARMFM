@@ -73,6 +73,8 @@
     <Content Include="app\viewmodels\object_tmp.js" />
     <Content Include="app\viewmodels\object_20131207.js" />
     <Content Include="app\viewmodels\wayflogin.js" />
+    <Content Include="app\views\metadata\anncomment.html" />
+    <Content Include="app\views\metadata\anncomment.js" />
     <Content Include="app\views\metadata\anncommentedit.js" />
     <Content Include="app\views\metadata\annotation_readonly.html" />
     <Content Include="app\views\metadata\annotation_readonly.js" />
@@ -80,6 +82,7 @@
     <Content Include="app\views\metadata\annotationedit.js" />
     <Content Include="app\views\metadata\annotation.html" />
     <Content Include="app\views\metadata\annotation.js" />
+    <Content Include="app\views\metadata\base\annotation.html" />
     <Content Include="app\views\metadata\editor1.js" />
     <Content Include="app\viewmodels\object.js" />
     <Content Include="app\views\metadata\editor1.html" />
@@ -87,6 +90,8 @@
     <Content Include="app\views\metadata\editor2.js" />
     <Content Include="app\views\metadata\generic.html" />
     <Content Include="app\views\metadata\generic.js" />
+    <Content Include="app\views\metadata\generic_metadata.html" />
+    <Content Include="app\views\metadata\generic_metadata.js" />
     <Content Include="app\views\metadata\larmprogram_org.js" />
     <Content Include="app\views\metadata\larmprogram_org.html" />
     <Content Include="app\views\metadata\larmprogram.html" />

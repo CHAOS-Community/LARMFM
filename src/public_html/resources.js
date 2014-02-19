@@ -34,6 +34,10 @@ var resources = {
         en: 'Hello <strong>#name</strong>! You live in #city.',
         da: 'Hej <strong>#name</strong>! Du bor i #city.'
     },
+    md_title: {
+        en: "Title:",
+        da: "Titel:"
+    },
     md_abstract: {
         en: "Abstract:",
         da: "Resume:"

@@ -225,7 +225,7 @@ Settings.MetadataSchemas = [
         schemaxml: '<xs:schema id="LARM.Annotation.Comment" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"><xs:element name="LARM.Annotation.Comment"><xs:complexType><xs:complexContent><xs:extension base="TimedAnnotation"><xs:sequence><xs:element name="Title" type="xs:string" /><xs:element name="Description" type="xs:string" /></xs:sequence></xs:extension></xs:complexContent></xs:complexType></xs:element><xs:complexType name="TimedAnnotation"><xs:attribute name="StartTime" type="TimeSpan" use="required" /><xs:attribute name="EndTime" type="TimeSpan" use="required" /></xs:complexType><xs:simpleType name="TimeSpan"><xs:restriction base="xs:string"><xs:pattern value="(d+.)?dd:dd:dd(.d{7})?" /></xs:restriction></xs:simpleType></xs:schema>',
         schemajson: null,
         arraypaths: [],
-        view: 'annotation',
+        view: 'anncomment',
         edit: 'anncommentedit'
     },
     {
