@@ -77,7 +77,7 @@
             if (arr != null) {
                 for (var i = 0; i < arr.length; i++) {
                     if (arr[i] !== "")
-                        t += '<button class="btn btn-tag" style="margin-left: 4px;margin-bottom: 4px;">' + arr[i] + '</button>'
+                        t += '<button class="btn btn-tag" style="margin-left: 4px;margin-bottom: 4px;">' + arr[i].replace('%20',' ') + '</button>'
                 }
             }
 

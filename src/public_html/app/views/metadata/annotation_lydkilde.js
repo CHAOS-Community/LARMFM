@@ -23,11 +23,6 @@
             };
 
             anncomment.prototype = (function () {
-
-                var private_stuff = function () {
-                    // Private code here
-                };
-
                 return {
 
                     compositionComplete: function (child, parent, settings) {
@@ -42,14 +37,6 @@
                         this.starttime(format.getTimeStringFromDate(tla[0].v));
                         this.endtime(format.getTimeStringFromDate(tla[1].v));
 
-                    },
-                    btnedit: function (data) {
-                        this.collapsed(true);
-                        var i = 0;
-                        //parentcontext.$data.entereditmode(this);
-                        this.timeline.editItem(data.data.Id);
-                        app.trigger('metadata:edit', this);
-                        //app.trigger('metadata:changedinview', this);
                     },
                     btnexpand: function () {
                         this.collapsed(!this.collapsed());
@@ -72,11 +59,17 @@
                                 var json = xmlman.toJson(schema.arraypaths, xml)
 
                                 var p = self.mdhtml;
-                                var d = json["LARM.Annotation.Comment"];
+                                var d = json["LARM.Annotation.WP5.8.1.LydkildeBeskrivelse"];
 
                                 p.removeAll();
-                                html.mdtext(p, "!md_title", d.Title);
-                                html.mdtext(p, "!md_description", d.Description);
+                                html.mdtext(p, "SoundSourceName", d.SoundSourceName);
+                                html.mdtags(p, "Tags", d.Tags);
+                                html.mdtags(p, "MixTypeIn", d.MixTypeIn);
+                                html.mdtags(p, "MixTypeOut", d.MixTypeOut);
+                                html.mdtags(p, "MixTypeSoundLevel", d.MixTypeSoundLevel);
+                                html.mdtags(p, "SoundType", d.SoundType);
+                                html.mdtags(p, "Anchorage", d.Anchorage);
+                                html.mdtext(p, "Description", d.Description);
 
                                 break;
                             }
