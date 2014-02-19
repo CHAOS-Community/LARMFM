@@ -76,6 +76,8 @@
     <Content Include="app\views\metadata\annotation_comment.html" />
     <Content Include="app\views\metadata\annotation_comment.js" />
     <Content Include="app\views\metadata\annotation_comment_edit.js" />
+    <Content Include="app\views\metadata\annotation_jingles.html" />
+    <Content Include="app\views\metadata\annotation_jingles.js" />
     <Content Include="app\views\metadata\annotation_lydkilde.html" />
     <Content Include="app\views\metadata\annotation_lydkilde.js" />
     <Content Include="app\views\metadata\annotation_readonly.html" />

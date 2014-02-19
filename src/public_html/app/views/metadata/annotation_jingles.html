@@ -1,0 +1,10 @@
+﻿<div data-bind="click: btnexpand"><span data-bind="html: starttime"></span> - <span data-bind="html: endtime"></span> : <span data-bind="html: title"></span></div>
+<div data-bind="css:{wshide: collapsed}">
+    <hr />
+    <div data-bind="foreach: mdhtml">
+        <div data-bind="html: $data"></div>
+    </div>
+    <div style="margin-bottom:20px;"></div>
+    <span class="loader" data-bind="css: { active: isLoading }"><i class="icon-spinner icon-spin"></i></span>
+</div>
+<hr />
