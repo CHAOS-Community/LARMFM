@@ -19,6 +19,7 @@
                 this.timeline = timeline;
 
                 this.mdhtml = ko.observableArray();
+                this.isLoading = ko.observable(false);
             };
 
             anncomment.prototype = (function () {
@@ -43,6 +44,7 @@
 
                     },
                     btnedit: function (data) {
+                        this.collapsed(true);
                         var i = 0;
                         //parentcontext.$data.entereditmode(this);
                         this.timeline.editItem(data.data.Id);
@@ -54,6 +56,7 @@
 
                         if (this.collapsed() === false) {
 
+                            this.isLoading(true);
                             objectmanager.getByGuid(this.data.Id, this.metadataReceived, this);
 
                         }
@@ -78,6 +81,7 @@
                                 break;
                             }
                         }
+                        self.isLoading(false);
                     }
 
 

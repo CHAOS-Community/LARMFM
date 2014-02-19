@@ -56,6 +56,13 @@ h5 {
 .page-host {
   top: 61px;
 }
+.loader {
+  margin: 6px 8px 4px 8px;
+  visibility: hidden;
+}
+.loader.active {
+  visibility: visible;
+}
 .navbar {
   height: 61px;
 }
