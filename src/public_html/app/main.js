@@ -57,6 +57,14 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'mods/portal'
                     state.searchMetadataSchemaGuids[ot.id] = ot.metadataSchemaGuid;
                 }
 
+                for (var i = 0; i < Settings.MetadataSchemas.length; i++) {
+                    var schema = Settings.MetadataSchemas[i];
+                    Settings.Schema[schema.guid] = {
+                        view: schema.view,
+                        edit: schema.edit
+                    }
+                }
+
 //    ko.bindingHandlers.loc = {
 //    init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
 //        // This will be called when the binding is first applied to an element
