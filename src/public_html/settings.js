@@ -156,12 +156,12 @@ Settings.MetadataSchemas = [
         edit: ''
     },
     {
-        guid: '50ad46c4-eaf1-42f6-9361-3f6b56c5f320',
+        guid: 'c446ad50-f1ea-f642-9361-3f6b56c5f320',
         name: 'LARM.Annotation.WP5.8.1.LydkildeBeskrivelse',
         schemaxml: '<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"><xs:element name="LARM.Annotation.WP5.8.1.LydkildeBeskrivelse"><xs:complexType><xs:complexContent><xs:extension base="TimedAnnotation"><xs:sequence><xs:element name="SoundSourceName" type="xs:string" /><xs:element name="Tags" type="OpenEnumerationList_Tags" /><xs:element name="MixTypeIn" type="Enumeration_MixTypeIn" /><xs:element name="MixTypeOut" type="Enumeration_MixTypeOut" /><xs:element name="MixTypeSoundLevel" type="Enumeration_MixTypeSoundLevel" /><xs:element name="SoundType" type="EnumerationList_SoundType" /><xs:element name="Anchorage" type="Enumeration_Anchorage" /><xs:element name="Description" type="xs:string" /></xs:sequence></xs:extension></xs:complexContent></xs:complexType></xs:element><xs:simpleType name="OpenEnumerationList_Tags"><xs:list itemType="xs:string" /></xs:simpleType><xs:simpleType name="Enumeration_MixTypeOut"><xs:restriction base="xs:string"><xs:enumeration value="Fader ud" /><xs:enumeration value="Klippes ud" /><xs:enumeration value="Krydsfades ud" /><xs:enumeration value="Ophører" /></xs:restriction></xs:simpleType><xs:simpleType name="Enumeration_MixTypeIn"><xs:restriction base="xs:string"><xs:enumeration value="Fader ind" /><xs:enumeration value="Klippes ind" /><xs:enumeration value="Krydsfades ind" /><xs:enumeration value="Opstår" /></xs:restriction></xs:simpleType><xs:simpleType name="Enumeration_MixTypeSoundLevel"><xs:restriction base="xs:string"><xs:enumeration value="Forgrund" /><xs:enumeration value="Mellemgrund" /><xs:enumeration value="Baggrund" /></xs:restriction></xs:simpleType><xs:simpleType name="EnumerationList_SoundType"><xs:list itemType="SoundTypeList" /></xs:simpleType><xs:simpleType name="SoundTypeList"><xs:restriction base="xs:string"><xs:enumeration value="Reallyd" /><xs:enumeration value="Effektlyd" /><xs:enumeration value="Scenografisk lyd" /></xs:restriction></xs:simpleType><xs:simpleType name="Enumeration_Anchorage"><xs:restriction base="xs:string"><xs:enumeration value="Rumlig forankring" /><xs:enumeration value="Semantisk forankring" /><xs:enumeration value="Rytmisk forankring" /><xs:enumeration value="Montage" /><xs:enumeration value="Tematisk forankring" /></xs:restriction></xs:simpleType><xs:complexType name="TimedAnnotation"><xs:attribute name="StartTime" type="TimeSpan" use="required" /><xs:attribute name="EndTime" type="TimeSpan" use="required" /></xs:complexType><xs:simpleType name="TimeSpan"><xs:restriction base="xs:string"><xs:pattern value="(d+.)?dd:dd:dd(.d{7})?" /></xs:restriction></xs:simpleType></xs:schema>',
         schemajson: null,
         arraypaths: [],
-        view: 'annotation_readonly',
+        view: 'annotation_lydkilde',
         edit: ''
     },
     {
@@ -225,8 +225,8 @@ Settings.MetadataSchemas = [
         schemaxml: '<xs:schema id="LARM.Annotation.Comment" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"><xs:element name="LARM.Annotation.Comment"><xs:complexType><xs:complexContent><xs:extension base="TimedAnnotation"><xs:sequence><xs:element name="Title" type="xs:string" /><xs:element name="Description" type="xs:string" /></xs:sequence></xs:extension></xs:complexContent></xs:complexType></xs:element><xs:complexType name="TimedAnnotation"><xs:attribute name="StartTime" type="TimeSpan" use="required" /><xs:attribute name="EndTime" type="TimeSpan" use="required" /></xs:complexType><xs:simpleType name="TimeSpan"><xs:restriction base="xs:string"><xs:pattern value="(d+.)?dd:dd:dd(.d{7})?" /></xs:restriction></xs:simpleType></xs:schema>',
         schemajson: null,
         arraypaths: [],
-        view: 'anncomment',
-        edit: 'anncommentedit'
+        view: 'annotation_comment',
+        edit: 'annotation_comment_edit'
     },
     {
         guid: 'fdfc39f7-ec30-0640-b40b-8d0b78cf8032',

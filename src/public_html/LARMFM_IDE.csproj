@@ -73,9 +73,11 @@
     <Content Include="app\viewmodels\object_tmp.js" />
     <Content Include="app\viewmodels\object_20131207.js" />
     <Content Include="app\viewmodels\wayflogin.js" />
-    <Content Include="app\views\metadata\anncomment.html" />
-    <Content Include="app\views\metadata\anncomment.js" />
-    <Content Include="app\views\metadata\anncommentedit.js" />
+    <Content Include="app\views\metadata\annotation_comment.html" />
+    <Content Include="app\views\metadata\annotation_comment.js" />
+    <Content Include="app\views\metadata\annotation_comment_edit.js" />
+    <Content Include="app\views\metadata\annotation_lydkilde.html" />
+    <Content Include="app\views\metadata\annotation_lydkilde.js" />
     <Content Include="app\views\metadata\annotation_readonly.html" />
     <Content Include="app\views\metadata\annotation_readonly.js" />
     <Content Include="app\views\metadata\annotationedit.html" />
@@ -98,7 +100,7 @@
     <Content Include="app\views\metadata\larmprogram.js" />
     <Content Include="app\views\metadata\larmprogramedit.html" />
     <Content Include="app\views\metadata\larmprogramedit.js" />
-    <Content Include="app\views\metadata\anncommentedit.html" />
+    <Content Include="app\views\metadata\annotation_comment_edit.html" />
     <Content Include="app\views\metadata\test.html" />
     <Content Include="app\views\objectvideo.html" />
     <Content Include="app\views\object.html" />
