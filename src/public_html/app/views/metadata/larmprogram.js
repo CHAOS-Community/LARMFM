@@ -113,7 +113,7 @@
             html.mdtext(p, "!md_description", arkiv.Description);
             html.mdtext(p, "!md_publisher", arkiv.Publisher);
 
-            html.mdtags(p, "!md_subjects", arkiv.Subjects);
+            html.mdtags(p, "!md_subjects", arkiv.Subjects, "Subject");
 
             html.mdtable(p, "!md_contributors",
                 arkiv.Contributors,
@@ -125,7 +125,7 @@
                 ['Name', 'RoleName', 'RoleID'],
                 ['Name', 'RoleName', 'RoleID']);
 
-            html.mdtags(p, "!md_locations", arkiv.Locations[0], "Name");
+            html.mdtags(p, "!md_locations", arkiv.Locations, "Name");
 
             html.mdgrid(p, "!md_identifiers", [
             ["DR produktionsnr:", arkiv.Identifiers.DR_ProductionNumber],

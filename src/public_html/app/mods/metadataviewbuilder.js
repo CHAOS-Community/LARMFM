@@ -60,6 +60,9 @@
                 arr = arr.split(" ");
             } else {
 
+                if (prop && Array.isArray(tagarray) && tagarray.length > 0)
+                    arr = tagarray[0];
+
                 if (prop) {
                     if (arr.hasOwnProperty(prop)) {
                         arr = getArray(arr[prop]);
@@ -74,7 +77,7 @@
             if (arr != null) {
                 for (var i = 0; i < arr.length; i++) {
                     if (arr[i] !== "")
-                        t += '<button class="btn btn-tag" style="margin-left: 4px;">' + arr[i] + '</button>'
+                        t += '<button class="btn btn-tag" style="margin-left: 4px;margin-bottom: 4px;">' + arr[i] + '</button>'
                 }
             }
 
@@ -100,7 +103,7 @@
                 for (var i = 0; i < da.length; i++) {
                     t += '<tr>';
                     for (var j = 0; j < fieldarray.length; j++) {
-                        t += '<td>' + da[i][fieldarray[j]] + '</td>';
+                        t += '<td>' + txt(da[i][fieldarray[j]]) + '</td>';
                     }
                     t += '</tr>';
                 }
