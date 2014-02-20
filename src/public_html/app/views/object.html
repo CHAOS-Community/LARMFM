@@ -22,12 +22,12 @@
     <i class="icon-spinner icon-2x icon-spin"></i>
 </div>
 <div class="player">
-    <div style="float:left; width:134px;">
-        <div class="playersidepanel">
+    <div class="playersidepanel">
+        <div class="playersidepanelinner">
             <div><button type="button" class="playerbackbtn"></button><button type="button" class="playerplaybtn" data-bind="click: playpause, css:{playerpausebtn:isplaying}"></button><button type="button" class="playerforwardbtn"></button></div>
             <div class="playerpositiontext" data-bind="text: playerpositiontext"></div>
             <div class="playerpositionlefttext" data-bind="text: playerpositionlefttext"></div>
-            <button type="button" class="playeraddannbtn" data-bind="click: annotationAddBtn">New Annotation</button>
+            <button type="button" class="playeraddannbtn" data-bind="click: annotationAddBtn, restext: 'newannotation'"></button>
         </div>
 
         <!--<span data-bind="html: playerposition"></span> - <span data-bind="html: playerdebug"></span>-->
