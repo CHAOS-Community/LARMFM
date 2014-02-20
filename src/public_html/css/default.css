@@ -32,6 +32,30 @@ h5 {
   border-bottom-width: 1px;
   border-bottom-style: dotted;
 }
+.md-annotation {
+  margin: 0 0 5px 0;
+  padding: 6px 0 5px 0;
+  border-bottom: 1px solid #DDDDDD;
+  font-family: Arial;
+  font-size: 15px;
+  color: #666666;
+  cursor: pointer;
+}
+.md-annotation-endline {
+  margin: 10px 0 0 0;
+  padding: 0;
+  border-bottom: 1px solid #DDDDDD;
+}
+.md-annotation-text {
+  display: inline-block;
+  overflow: hidden;
+  text-wrap: none;
+  white-space: nowrap;
+}
+.md-annotation-title {
+  width: 400px;
+  color: #333333;
+}
 .md-text {
   width: 590px;
   font-size: 13px;
@@ -152,6 +176,10 @@ h5 {
 }
 .navbar-contenttopmargin {
   margin-top: 11px;
+}
+.nav-tabs {
+  margin: 0 0 6px 0;
+  padding: 0;
 }
 .nav-tabs > li > a {
   font-size: 15px;
