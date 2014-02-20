@@ -594,7 +594,7 @@ define([
                 var w = $window.width();
                 var h = $window.height();
                 //$("#timelines").width(w - 180);
-                $("#timelines").width(w - 170);
+                $("#timelines").width(w - 180);
                 timeline.redraw();
             }
 
@@ -602,6 +602,7 @@ define([
                 isPlayerLoading: isPlayerLoading,
 
                 mediaUrl: player.mediaUrl,
+                isplaying: player.isplaying,
                 title: title,
                 channel: channel,
                 publication: publication,
@@ -643,6 +644,12 @@ define([
                 },
                 pause: function () {
                     player.pause();
+                },
+                playpause: function () {
+                    if (player.isplaying())
+                        player.pause();
+                    else
+                        player.play();
                 },
                 annotationAddBtn: function () {
                     app.trigger("annotation:add", {});

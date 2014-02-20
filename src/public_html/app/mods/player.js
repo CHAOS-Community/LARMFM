@@ -4,7 +4,7 @@
     var playlist;
     var mediaUrl = ko.observable();
     var mediaImage;
-    var isplaying = false;
+    var isplaying = ko.observable(false);
     var duration = ko.observable(0);
     var position = ko.observable(0);
 
@@ -156,7 +156,7 @@
         // e.duration, e.position
         if (state == STATE_READY) {
             var s = jwplayer().getState();
-            if (!isplaying && s == "PLAYING")
+            if (!isplaying() && s == "PLAYING")
                 jwplayer().play(false);
 
             var idx = jwplayer().getPlaylistIndex();
@@ -166,7 +166,7 @@
             else if (e.position > playlist[idx].end) {
 
                 if (idx + 1 == playlist.length)
-                    isplaying = false;
+                    isplaying(false);
                 else
                     jwplayer().playlistItem(idx + 1);
             }
@@ -179,7 +179,7 @@
             }
         }
         else if (state == STATE_DURATIONOK) {
-            jwplayer().play(isplaying);
+            jwplayer().play(isplaying());
             state = STATE_READY;
         }
         else if (state == STATE_GETDURATION) {
@@ -289,6 +289,7 @@
         duration: duration,
         position: position,
         mediaUrl: mediaUrl,
+        isplaying: isplaying,
         init: function (objectdata) {
             data = objectdata;
 
@@ -304,11 +305,11 @@
         },
         isReady: isReady,
         play: function () {
-            isplaying = true;
+            isplaying(true);
             jwplayer().play(true);
         },
         pause: function () {
-            isplaying = false;
+            isplaying(false);
             jwplayer().play(false);
         },
         getProgramTimeFromFileTime: getProgramTimeFromFileTime,
