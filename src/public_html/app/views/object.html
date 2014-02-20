@@ -23,9 +23,9 @@
 </div>
 <div class="player">
     <div style="float:left; width:134px;">
-        <div style="text-align:center;margin-left:7px;margin-top:7px; margin-right: 7px; margin-bottom: 7px;">
+        <div class="playersidepanel">
             <div><button type="button" class="playerbackbtn"></button><button type="button" class="playerplaybtn" data-bind="click: playpause, css:{playerpausebtn:isplaying}"></button><button type="button" class="playerforwardbtn"></button></div>
-            <div style="margin-bottom:10px"></div>
+            <div class="playerpositiontext" data-bind="text: playerpositiontext"></div>
             <button type="button" class="playeraddannbtn" data-bind="click: annotationAddBtn">New Annotation</button>
         </div>
 

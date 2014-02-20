@@ -603,6 +603,9 @@ define([
 
                 mediaUrl: player.mediaUrl,
                 isplaying: player.isplaying,
+                playerposition: player.position,
+                playerpositiontext: player.positiontext,
+
                 title: title,
                 channel: channel,
                 publication: publication,

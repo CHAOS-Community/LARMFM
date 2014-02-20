@@ -7,6 +7,7 @@
     var isplaying = ko.observable(false);
     var duration = ko.observable(0);
     var position = ko.observable(0);
+    var positiontext = ko.observable("00:00:00");
 
     var STATE_INIT = 0;
     var STATE_GETDURATION = 1;
@@ -176,6 +177,7 @@
                 if (idx == 1)
                     pos += playlist[0].end - playlist[0].start;
                 position(pos);
+                updatePositiontext();
             }
         }
         else if (state == STATE_DURATIONOK) {
@@ -248,6 +250,18 @@
         return 0;
     }
 
+    function updatePositiontext() {
+        var sec_num = parseInt(position(), 10);
+        var hours = Math.floor(sec_num / 3600);
+        var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+        var seconds = sec_num - (hours * 3600) - (minutes * 60);
+        if (hours < 10) { hours = "0" + hours; }
+        if (minutes < 10) { minutes = "0" + minutes; }
+        if (seconds < 10) { seconds = "0" + seconds; }
+        var time = hours + ':' + minutes + ':' + seconds;
+        positiontext(time);
+    }
+
     /*
     public double GetGlobalFilePosition(double visualposition)
 		{
@@ -288,6 +302,7 @@
     return {
         duration: duration,
         position: position,
+        positiontext: positiontext,
         mediaUrl: mediaUrl,
         isplaying: isplaying,
         init: function (objectdata) {
