@@ -97,6 +97,16 @@ h5 {
 .playerpausebtn {
   background-position: -64px 0;
 }
+.playeraddannbtn {
+  background-color: #FFFFFF;
+  border: 1px solid #BEBFBE;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  font-family: Arial;
+  font-size: 12px;
+  color: #3333333;
+}
 .page-host {
   top: 61px;
 }
