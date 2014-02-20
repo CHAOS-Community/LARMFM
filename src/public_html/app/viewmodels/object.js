@@ -590,6 +590,15 @@ define([
 
             }
 
+            function windowSizeChangeBegin() {
+                var w = $window.width() / 2;
+                var h = $window.height();
+                //$("#timelines").width(w - 180);
+                $("#timelines").width(w - 177);
+                timeline.redraw();
+            }
+
+
             function windowSizeChange() {
                 var w = $window.width();
                 var h = $window.height();
@@ -619,8 +628,10 @@ define([
                 metadataTabs: metadataTab.tabs,
                 schemaItems: timelineschemaselector.schemaItems,
                 compositionComplete: function (child, parent, settings) {
-                    windowSizeChange();
+                    windowSizeChangeBegin();
                     $window.resize(windowSizeChange);
+
+                    setTimeout(windowSizeChange, 500);
 
                     metadataTab.add("Beskrivelse", "1", "");
                 },
