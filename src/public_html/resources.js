@@ -69,8 +69,12 @@ var resources = {
     md_identifiers: {
         en: "Identifiers:",
         da: "Registreringsnumre:"
+    },
+    newannotation: {
+        en: "New Annotation",
+        da: "Ny annotation"
     }
-
+    
     
 
 };

@@ -32,6 +32,30 @@ h5 {
   border-bottom-width: 1px;
   border-bottom-style: dotted;
 }
+.md-annotation {
+  margin: 0 0 5px 0;
+  padding: 6px 0 5px 0;
+  border-bottom: 1px solid #DDDDDD;
+  font-family: Arial;
+  font-size: 15px;
+  color: #666666;
+  cursor: pointer;
+}
+.md-annotation-endline {
+  margin: 10px 0 0 0;
+  padding: 0;
+  border-bottom: 1px solid #DDDDDD;
+}
+.md-annotation-text {
+  display: inline-block;
+  overflow: hidden;
+  text-wrap: none;
+  white-space: nowrap;
+}
+.md-annotation-title {
+  width: 400px;
+  color: #333333;
+}
 .md-text {
   width: 590px;
   font-size: 13px;
@@ -53,6 +77,87 @@ h5 {
 .md-table td {
   color: #666;
 }
+.player {
+  background-color: #ffffff;
+  overflow: hidden;
+  border: 1px solid #BEBFBE;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+.playersidepanel {
+  float: left;
+  width: 134px;
+}
+.playersidepanelinner {
+  text-align: center;
+  margin-left: 7px;
+  margin-top: 7px;
+  margin-right: 7px;
+  margin-bottom: 7px;
+}
+.playerpositiontext {
+  color: #555555;
+  font-family: Arial;
+  font-size: 15px;
+  margin-top: 4px;
+  margin-bottom: 2px;
+}
+.playerpositionlefttext {
+  color: #555555;
+  font-family: Arial;
+  font-size: 14px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+.playerbackbtn {
+  background-color: #FFFFFF;
+  color: #FFFFFF;
+  border: 0 solid #FFFFFF;
+  padding: 0;
+  margin: -1px 0 0 0;
+  width: 21px;
+  height: 33px;
+  background-image: url(../img/player.png);
+  background-position: 0 -64px;
+}
+.playerforwardbtn {
+  background-color: #FFFFFF;
+  color: #FFFFFF;
+  border: 0 solid #FFFFFF;
+  padding: 0;
+  margin: -1px 0 0 0;
+  width: 21px;
+  height: 33px;
+  background-image: url(../img/player.png);
+  background-position: -21px -64px;
+}
+.playerplaybtn {
+  background-color: #FFFFFF;
+  color: #FFFFFF;
+  border: 0 solid #FFFFFF;
+  padding: 0;
+  margin: 0;
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/player.png);
+  background-position: 0 0;
+}
+.playerpausebtn {
+  background-position: -64px 0;
+}
+.playeraddannbtn {
+  background-color: #FFFFFF;
+  border: 1px solid #BEBFBE;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  font-family: Arial;
+  font-size: 13px;
+  font-weight: bold;
+  color: #333333;
+  height: 33px;
+}
 .page-host {
   top: 61px;
 }
@@ -72,15 +177,21 @@ h5 {
 .navbar-contenttopmargin {
   margin-top: 11px;
 }
+.nav-tabs {
+  margin: 0 0 6px 0;
+  padding: 0;
+}
 .nav-tabs > li > a {
   font-size: 15px;
   font-weight: bold;
   color: #333333;
+  cursor: pointer;
 }
 .nav-tabs > .active > a,
 .nav-tabs > .active > a:hover,
 .nav-tabs > .active > a:focus {
   color: #5798F7;
+  cursor: default;
 }
 .btn-tag {
   color: #ffffff;

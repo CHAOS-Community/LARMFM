@@ -21,15 +21,18 @@
 <div class="loader" data-bind="css: { active: isPlayerLoading }">
     <i class="icon-spinner icon-2x icon-spin"></i>
 </div>
-<div style="background-color: #f0f0f0; overflow: hidden;">
-    <div style="float:left; width:120px;">
-        <div style="text-align:center;margin-left:10px;margin-top:10px;">
-            <button type="button" class="btn" data-bind="click: play">Play</button>
-            <button type="button" class="btn" data-bind="click: pause">Pause</button>
-            <button type="button" class="btn" data-bind="click: annotationAddBtn">Tilføj annotation</button>
-            <!--<span data-bind="html: playerposition"></span> - <span data-bind="html: playerdebug"></span>-->
+<div class="player">
+    <div class="playersidepanel">
+        <div class="playersidepanelinner">
+            <div><button type="button" class="playerbackbtn"></button><button type="button" class="playerplaybtn" data-bind="click: playpause, css:{playerpausebtn:isplaying}"></button><button type="button" class="playerforwardbtn"></button></div>
+            <div class="playerpositiontext" data-bind="text: playerpositiontext"></div>
+            <div class="playerpositionlefttext" data-bind="text: playerpositionlefttext"></div>
+            <button type="button" class="playeraddannbtn" data-bind="click: annotationAddBtn, restext: 'newannotation'"></button>
         </div>
+
+        <!--<span data-bind="html: playerposition"></span> - <span data-bind="html: playerdebug"></span>-->
     </div>
+
     <div id="timelines" style="background-color:white;float:left"></div>
     <div id="timelinescroll" style="opacity: 0; width: 100%; overflow-x: scroll">
         <div id="timelinescrollcontent" style="width:1px;height:1px"></div>
@@ -59,7 +62,7 @@
         <li data-bind="css: {active: isActive}"><a data-bind="click: click" data-toggle="tab"><!--ko text: title--><!--/ko--></a></li>
         <!-- /ko -->
     </ul>
-</div> 
+</div>
 <div data-bind="foreach: metadataViews">
     <div data-bind="compose: view"></div>
 </div>
@@ -72,5 +75,4 @@
 <label>Description</label>
 <input type="text" style="width:100%;" data-bind="value: newdescription" />
 <button type="button" class="btn" data-bind="click: saveMetadata">OK</button>-->
-
 <!--<pre data-bind="text: JSON.stringify(ko.toJS($data), null, 2)"></pre>-->

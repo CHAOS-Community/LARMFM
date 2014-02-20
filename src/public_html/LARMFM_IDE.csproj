@@ -76,6 +76,8 @@
     <Content Include="app\views\metadata\annotation_comment.html" />
     <Content Include="app\views\metadata\annotation_comment.js" />
     <Content Include="app\views\metadata\annotation_comment_edit.js" />
+    <Content Include="app\views\metadata\annotation_jingles.html" />
+    <Content Include="app\views\metadata\annotation_jingles.js" />
     <Content Include="app\views\metadata\annotation_lydkilde.html" />
     <Content Include="app\views\metadata\annotation_lydkilde.js" />
     <Content Include="app\views\metadata\annotation_readonly.html" />
@@ -137,6 +139,7 @@
     <Content Include="img\IconTypes\indikator-3_white.png" />
     <Content Include="img\larm.png" />
     <Content Include="img\larm_logo.png" />
+    <Content Include="img\player.png" />
     <Content Include="index.html" />
     <Content Include="jsonform_test.html" />
     <Content Include="lib\chaos\PortalClient.min.js" />
