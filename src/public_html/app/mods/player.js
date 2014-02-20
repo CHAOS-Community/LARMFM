@@ -8,6 +8,7 @@
     var duration = ko.observable(0);
     var position = ko.observable(0);
     var positiontext = ko.observable("00:00:00");
+    var positionlefttext = ko.observable("");
 
     var STATE_INIT = 0;
     var STATE_GETDURATION = 1;
@@ -208,6 +209,7 @@
                 jwplayer().playlistItem(0);
             }
             duration(dur);
+            updatePositiontext();
             state = STATE_DURATIONOK;
         }
     }
@@ -251,7 +253,14 @@
     }
 
     function updatePositiontext() {
-        var sec_num = parseInt(position(), 10);
+        var s = parseInt(position());
+        var d = parseInt(duration());
+        positiontext(hhmmssFormat(s));
+        positionlefttext("-"+hhmmssFormat(d - s));
+    }
+
+    function hhmmssFormat(seconds) {
+        var sec_num = parseInt(seconds, 10);
         var hours = Math.floor(sec_num / 3600);
         var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
         var seconds = sec_num - (hours * 3600) - (minutes * 60);
@@ -259,7 +268,7 @@
         if (minutes < 10) { minutes = "0" + minutes; }
         if (seconds < 10) { seconds = "0" + seconds; }
         var time = hours + ':' + minutes + ':' + seconds;
-        positiontext(time);
+        return time;
     }
 
     /*
@@ -303,6 +312,7 @@
         duration: duration,
         position: position,
         positiontext: positiontext,
+        positionlefttext: positionlefttext,
         mediaUrl: mediaUrl,
         isplaying: isplaying,
         init: function (objectdata) {

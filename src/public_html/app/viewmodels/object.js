@@ -605,6 +605,7 @@ define([
                 isplaying: player.isplaying,
                 playerposition: player.position,
                 playerpositiontext: player.positiontext,
+                playerpositionlefttext: player.positionlefttext,
 
                 title: title,
                 channel: channel,
