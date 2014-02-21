@@ -106,6 +106,8 @@
     <Content Include="app\views\metadata\test.html" />
     <Content Include="app\views\objectvideo.html" />
     <Content Include="app\views\object.html" />
+    <Content Include="app\views\topbar - Copy.html" />
+    <Content Include="app\views\topbar.html" />
     <Content Include="app\views\wayflogin.html" />
     <Content Include="app\widgets\Readme.md" />
     <Content Include="css\default.css">
@@ -252,7 +254,6 @@
     <Content Include="app\views\search\searchbox.html" />
     <Content Include="app\views\search_org.html" />
     <Content Include="app\views\search_sendeplan.html" />
-    <Content Include="app\views\topbar.html" />
     <Content Include="app\views\___detail.html" />
     <Content Include="app\views\___flickr.html" />
     <Content Include="app\views\___shell.html" />

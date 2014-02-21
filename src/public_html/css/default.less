@@ -1,5 +1,23 @@
 ﻿// === Defaults ==========================================
 
+/*@media (min-width: 768px) and (max-width: 979px) {
+
+    .container{
+        margin: 0;
+    }
+}*/
+
+/*@media (max-width: 979px) {
+
+    .navbar-inner {
+    }
+
+    .navbar-fixed-top {
+        position: relative;
+        margin-bottom: 20px;
+    }
+}*/
+
 body {
     font-family: Arial, Verdana;
     color: #000000;
@@ -39,6 +57,37 @@ h5 {
     border-bottom-color: #D6D6D6;
     border-bottom-width: 1px;
     border-bottom-style: dotted;
+}
+
+/// === navbar ============================================
+.ws-navbar-inner {
+  min-height: 40px;
+  padding-right: 20px;
+  padding-left: 20px;
+  background-color: #fafafa;
+  background-image: -moz-linear-gradient(top, #ffffff, #f2f2f2);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f2f2f2));
+  background-image: -webkit-linear-gradient(top, #ffffff, #f2f2f2);
+  background-image: -o-linear-gradient(top, #ffffff, #f2f2f2);
+  background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
+  background-repeat: repeat-x;
+  border: 1px solid #d4d4d4;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff2f2f2', GradientType=0);
+  *zoom: 1;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+     -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+}
+
+.ws-navbar-inner:before,
+.ws-navbar-inner:after {
+  display: table;
+  line-height: 0;
+  content: "";
+}
+
+.ws-navbar-inner:after {
+  clear: both;
 }
 
 // === Metadata ===========================================
@@ -191,9 +240,9 @@ h5 {
 }
 
 // === starter kits ========================================
-.page-host {
+/*.page-host {
     top: 61px;
-}
+}*/
 
 .loader {
     margin: 6px 8px 4px 8px;
@@ -207,7 +256,7 @@ h5 {
 // === bootstraps ==========================================
 
 // Topbar
-.navbar {
+/*.navbar {
     height: 61px;
 }
 .navbar-inner {
@@ -215,7 +264,7 @@ h5 {
 }
 .navbar-contenttopmargin {
     margin-top:11px;
-}
+}*/
 
 // Metadata tabs
 .nav-tabs {

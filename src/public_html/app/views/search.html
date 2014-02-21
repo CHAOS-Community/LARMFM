@@ -19,9 +19,9 @@
         <div class="span9">
             <div>
                 <div class='btn-toolbar' class="pull-left">
-                    <div class='btn-group pull-left'>
+                    <div class='pull-left'> <!-- WAS: class='btn-group pull-left' -->
                         <!-- ko foreach: objtpfilteritems -->
-                        <a class="btn" data-bind="css:{'btn-primary':isactive}, click: click">
+                        <a class="btn" style="margin-right:4px;margin-bottom:4px;" data-bind="css:{'btn-primary':isactive}, click: click">
                             <span class='pull-left' data-bind="html: title"></span>
                             <span class='badge pull-right wsobjecttypebatch' data-bind="text: count, css: {'badge-info': isactive}"></span>
                         </a>
