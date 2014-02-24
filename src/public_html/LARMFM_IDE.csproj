@@ -110,6 +110,14 @@
     <Content Include="app\views\topbar.html" />
     <Content Include="app\views\wayflogin.html" />
     <Content Include="app\widgets\Readme.md" />
+    <None Include="css\bootstrap-responsive.less" />
+    <Content Include="css\bootstrap-responsive.css">
+      <DependentUpon>bootstrap-responsive.less</DependentUpon>
+    </Content>
+    <None Include="css\bootstrap.less" />
+    <Content Include="css\bootstrap.css">
+      <DependentUpon>bootstrap.less</DependentUpon>
+    </Content>
     <Content Include="css\default.css">
       <DependentUpon>default.less</DependentUpon>
     </Content>
