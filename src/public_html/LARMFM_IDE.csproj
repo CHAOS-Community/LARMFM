@@ -142,6 +142,7 @@
     <Content Include="img\larm.png" />
     <Content Include="img\larm_logo.png" />
     <Content Include="img\player.png" />
+    <Content Include="img\tre_logo.png" />
     <Content Include="index.html" />
     <Content Include="jsonform_test.html" />
     <Content Include="lib\chaos\PortalClient.min.js" />

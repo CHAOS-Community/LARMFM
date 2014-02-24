@@ -1,3 +1,6 @@
-﻿<div>Annotation</div>
-<div data-bind="click: btnexpand"><span data-bind="html: starttime"></span> - <span data-bind="html: endtime"></span> : <span data-bind="html: title"></span></div>
-<button data-bind="click: btnedit">EDIT IT</button>
+﻿<div>
+    <div style="position:absolute; width:16px; height:16px; padding: 0; margin: 0; background-color:blue;"></div>
+    <div style="position:absolute; width:14px; height:14px; padding: 0; margin: 1px; background-color:green;"></div>
+    <div style="position:absolute; width:12px; height:12px; padding: 0; margin: 2px; background-color:red;"></div>
+</div>
+<div class="md-annotation" data-bind="click: btnexpand"><div class="md-annotation-text" data-bind="html: starttime"></div><div class="md-annotation-text">&nbsp;-&nbsp;</div><div class="md-annotation-text" data-bind="html: endtime"></div><div class="md-annotation-text">&nbsp;&nbsp;&nbsp;</div><div class="md-annotation-text md-annotation-title" data-bind="html: title"></div></div>
