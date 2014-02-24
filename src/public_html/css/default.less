@@ -119,9 +119,50 @@ h5 {
 
 // === Metadata ===========================================
 
+.md-annotation-firstcol {
+}
+.md-annotation-firstcol > div {
+    position: absolute;
+}
+.md-annotation-firstcol > .number {
+    visibility: visible;
+    margin-top: 5px;
+    text-align: center;
+    width: 27px;
+    height: 28px;
+    font-family: Arial, Verdana;
+    color: #5798f7;
+    font-size: 15px;
+    font-weight: bold;
+
+}
+.md-annotation-firstcol > .playbtn {
+    visibility: visible;
+    margin-top: 1px;
+    width: 27px;
+    height: 28px;
+    background-image: url(../img/player.png);
+    //background-position: -272px -57px;
+    background-position: -272px -0px;
+}
+.md-annotation-firstcol > .playbtn:hover {
+    background-position: -272px -28px;
+    cursor: pointer;
+}
+
+.md-annotation-timeicon {
+    margin-left: 8px;
+    margin-right: 5px;
+    width: 13px;
+    height: 13px;
+    padding-bottom: 4px;
+    background-image: url(../img/player.png);
+    background-position: -1px -98px;
+}
+
 .md-annotation {
     margin: 0 0 5px 0;
-    padding: 6px 0 5px 0;
+    padding: 6px 0 5px 32px;
     border-bottom: 1px solid #DDDDDD;
     font-family: Arial;
     font-size: 15px;
