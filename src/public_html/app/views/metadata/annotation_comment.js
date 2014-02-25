@@ -17,17 +17,14 @@
                 this.collapsed = ko.observable(true);
                 this.player = player;
                 this.timeline = timeline;
+                this.ismouseover = false;
+                this.isPlayBtnVisible = ko.observable(false);
 
                 this.mdhtml = ko.observableArray();
                 this.isLoading = ko.observable(false);
             };
 
             anncomment.prototype = (function () {
-
-                var private_stuff = function () {
-                    // Private code here
-                };
-
                 return {
 
                     compositionComplete: function (child, parent, settings) {
@@ -60,6 +57,9 @@
                             objectmanager.getByGuid(this.data.Id, this.metadataReceived, this);
 
                         }
+
+                        this.togglePlayBtnVisibility();
+
                     },
                     metadataReceived: function (param, self) {
                         var i = 0;
@@ -82,8 +82,21 @@
                             }
                         }
                         self.isLoading(false);
+                    },
+                    mouseover: function (e, c) {
+                        this.ismouseover = (c.type === "mouseover");
+                        this.togglePlayBtnVisibility();
+                    },
+                    togglePlayBtnVisibility: function () {
+                        if (this.collapsed() === false) {
+                            this.isPlayBtnVisible(true);
+                        }
+                        else {
+                            this.isPlayBtnVisible(this.ismouseover);
+                        }
                     }
 
+                    
 
                 };
             })();
