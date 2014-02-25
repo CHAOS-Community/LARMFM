@@ -10,5 +10,14 @@
 </div>
 <div class="md-annotation-authorline" data-bind="css:{wshide: collapsed}, click: btnexpand">
     <div class="md-annotation-text icon"></div><div class="md-annotation-text author" data-bind="text: author"></div><div class="md-annotation-text date" data-bind="text: date"></div>
+    <div class="md-annotation-text optionicon" data-bind="click: optionclick, clickBubble: false"></div><div class="dropdown">
+        <ul class="dropdown-menu">
+            <li><a tabindex="-1" href="#">Action</a></li>
+            <li><a tabindex="-1" href="#">Another action</a></li>
+            <li><a tabindex="-1" href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a tabindex="-1" href="#">Separated link</a></li>
+        </ul>
+    </div>
 </div>
 

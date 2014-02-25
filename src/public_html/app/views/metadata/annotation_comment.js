@@ -99,9 +99,10 @@
                         else {
                             this.isPlayBtnVisible(this.ismouseover);
                         }
+                    },
+                    optionclick: function (a, b, c, d) {
+                        var i = 0;
                     }
-
-                    
 
                 };
             })();
