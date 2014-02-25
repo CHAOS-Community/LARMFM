@@ -20,6 +20,7 @@
                 this.ismouseover = false;
                 this.isPlayBtnVisible = ko.observable(false);
                 this.author = ko.observable("");
+                this.date = ko.observable("");
 
                 this.mdhtml = ko.observableArray();
                 this.isLoading = ko.observable(false);
@@ -41,7 +42,8 @@
                         this.endtime(format.getTimeStringFromDate(tla[1].v));
 
                         this.author(this.data.EditingUser);
-
+                        this.date(new Date(this.data.DateModified).toLocaleString());
+                        
                     },
                     btnedit: function (data) {
                         this.collapsed(true);

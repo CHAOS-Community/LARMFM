@@ -1,10 +1,10 @@
 ﻿<div data-bind="compose: 'metadata/base/annotation.html'"></div>
 <div data-bind="css:{wshide: collapsed}">
-    <div data-bind="foreach: mdhtml">
+    <div style="margin-left: 14px;" data-bind="foreach: mdhtml">
         <div data-bind="html: $data"></div>
     </div>
-    <div style="margin-bottom:20px;"></div>
-    <button data-bind="click: btnedit">Edit</button>
     <span class="loader" data-bind="css: { active: isLoading }"><i class="icon-spinner icon-spin"></i></span>
     <div class="md-annotation-endline"></div>
 </div>
+<!--<div style="margin-bottom:20px;"></div>
+<button data-bind="click: btnedit">Edit</button>-->
