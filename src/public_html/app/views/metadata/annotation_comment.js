@@ -19,6 +19,7 @@
                 this.timeline = timeline;
                 this.ismouseover = false;
                 this.isPlayBtnVisible = ko.observable(false);
+                this.author = ko.observable("");
 
                 this.mdhtml = ko.observableArray();
                 this.isLoading = ko.observable(false);
@@ -38,6 +39,8 @@
                         var tla = timeline.getAnnotation(this.data.Id);
                         this.starttime(format.getTimeStringFromDate(tla[0].v));
                         this.endtime(format.getTimeStringFromDate(tla[1].v));
+
+                        this.author(this.data.EditingUser);
 
                     },
                     btnedit: function (data) {

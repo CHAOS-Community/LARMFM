@@ -186,6 +186,33 @@ h5 {
     background-position: -60px -145px;
 }
 
+.md-annotation-authorline {
+    height: 31px;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.md-annotation-authorline .icon {
+    background-image: url(../img/player.png);
+    background-position: -15px -145px;
+    width: 14px;
+    height: 11px;
+    margin: 7px 10px 0 9px;
+    padding: 0px;
+    vertical-align: top;
+}
+
+.md-annotation-authorline .author {
+    font-family: Arial;
+    font-size: 12px;
+    color: #5798F7;
+    font-weight: bold;
+    margin: 4px 0 0 0;
+    padding: 0px;
+}
+
 .md-text {
     width: 590px;
     font-size: 13px;
