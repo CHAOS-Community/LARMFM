@@ -9,6 +9,7 @@
 
             var anncomment = function () {
                 this.annotation = new mdannotationline.MDAnnotationLine();
+                this.annotation.editable(true);
             };
 
             anncomment.prototype = (function () {

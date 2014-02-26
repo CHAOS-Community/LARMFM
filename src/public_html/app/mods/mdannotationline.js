@@ -15,6 +15,7 @@
         this.isLoading = ko.observable(false);
         this.timeline = timeline;
         this.mdhtml = ko.observableArray();
+        this.editable = ko.observable(false);
     };
 
     MDAnnotationLine.prototype.init = function (compositionsettings, mainself, expandcallback) {
