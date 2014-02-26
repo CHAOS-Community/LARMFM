@@ -1,0 +1,14 @@
+﻿<div class="WayfLoginContainer">
+    <!-- ko if: CanUseIframe-->
+    <iframe class="LoginFrame"></iframe>
+    <!-- /ko -->
+    <!-- ko ifnot: CanUseIframe-->
+    <div style="border: 2px solid; border-color: #999999;">
+        <h3 style="margin-left: 10px; color:#333333;">Wayf log out</h3>
+        <div style="margin: 10px 10px 10px 10px;">
+            <p>Tryk på knappen for at åbne Wayf log out vinduet.</p>
+            <button class="btn" data-bind="click:OpenWindow">LogOut</button>
+        </div>
+    </div>
+    <!-- /ko -->
+</div>

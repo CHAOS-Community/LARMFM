@@ -1,4 +1,4 @@
-define(['plugins/router', 'durandal/app', 'viewmodels/wayflogin', 'mods/portal'], function (router, app, wayflogin, portal) {
+define(['plugins/router', 'durandal/app', 'viewmodels/wayflogin', 'viewmodels/wayfLogOut', 'mods/portal'], function (router, app, wayflogin, wayfLogOut, portal) {
     return {
     	router: router,
     	isAuthenticated: portal.isAuthenticated,
@@ -9,7 +9,14 @@ define(['plugins/router', 'durandal/app', 'viewmodels/wayflogin', 'mods/portal']
         	app.showDialog(new wayflogin());
         },
         LogOut: function () {
-	        app.showMessage("Log out not implmented", "Log out");
+
+        	if (portal.AuthenticationType() == CHAOS.Portal.Client.Wayf.AuthenticationType())
+		        app.showDialog(new wayfLogOut());
+	        else
+	        {
+        		CHAOS.Portal.Client.Session.Delete();
+        		window.location.assign(window.location.protocol + "//" + window.location.hostname + (window.location.port ? ":" + window.location.port : "") + window.location.pathname);
+	        }
         }
     };
 });
