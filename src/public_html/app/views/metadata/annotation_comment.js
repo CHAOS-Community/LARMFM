@@ -2,26 +2,27 @@
     'durandal/app', 'knockout', 'mods/player', 'mods/timeline',
     'mods/format', 'factory/metadata', 'mods/objectmanager',
     'mods/xmlmanager', 'mods/metadataschema', 'mods/metadataviewbuilder',
-    'bootstrap'
+    'bootstrap','mods/mdannotationline'
 ],
         function (
             app, ko, player, timeline,
             format, metadatafac, objectmanager,
-            xmlman, metadataschema, html, bootstrap
+            xmlman, metadataschema, html, bootstrap, mdannotationline
             ) {
 
             var anncomment = function () {
                 this.data = null;
-                this.title = ko.observable("");
-                this.starttime = ko.observable("");
-                this.endtime = ko.observable("");
-                this.collapsed = ko.observable(true);
+                this.annotation = new mdannotationline.MDAnnotationLine();
+                //this.title = ko.observable("");
+                //this.starttime = ko.observable("");
+                //this.endtime = ko.observable("");
+                //this.collapsed = ko.observable(true);
                 this.player = player;
                 this.timeline = timeline;
                 this.ismouseover = false;
                 this.isPlayBtnVisible = ko.observable(false);
-                this.author = ko.observable("");
-                this.date = ko.observable("");
+                //this.author = ko.observable("");
+                //this.date = ko.observable("");
 
                 this.mdhtml = ko.observableArray();
                 this.isLoading = ko.observable(false);
@@ -30,24 +31,31 @@
             anncomment.prototype = (function () {
                 return {
 
+                    annotation: this.annotation,
+
                     compositionComplete: function (child, parent, settings) {
-                        settings.bindingContext.$data.data["self"] = this;
-                        // settings.bindingContext.$data represents an
-                        // instance of MetadataEditor under factory.
-                        //settings.bindingContext.$data.data
-                        this.data = settings.bindingContext.$data.data;
+                        this.annotation.init(settings, this);
+                        //settings.bindingContext.$data.data["self"] = this;
+                        //// settings.bindingContext.$data represents an
+                        //// instance of MetadataEditor under factory.
+                        ////settings.bindingContext.$data.data
+                        //this.data = settings.bindingContext.$data.data;
 
-                        this.title(this.data.Title);
-                        var tla = timeline.getAnnotation(this.data.Id);
-                        this.starttime(format.getTimeStringFromDate(tla[0].v));
-                        this.endtime(format.getTimeStringFromDate(tla[1].v));
+                        //this.annotation.init(this.data);
 
-                        this.author(this.data.EditingUser);
-                        this.date(new Date(this.data.DateModified).toLocaleString());
+                        //this.title(this.data.Title);
+                        //this.annotation.title(this.data.Title);
+
+                        //var tla = timeline.getAnnotation(this.data.Id);
+                        //this.starttime(format.getTimeStringFromDate(tla[0].v));
+                        //this.endtime(format.getTimeStringFromDate(tla[1].v));
+
+                        //this.author(this.data.EditingUser);
+                        //this.date(new Date(this.data.DateModified).toLocaleString());
                         
                     },
                     btnedit: function (data) {
-                        this.collapsed(true);
+                        this.annotation.collapsed(true);
                         var i = 0;
                         //parentcontext.$data.entereditmode(this);
                         this.timeline.editItem(data.data.Id);
@@ -55,9 +63,9 @@
                         //app.trigger('metadata:changedinview', this);
                     },
                     btnexpand: function () {
-                        this.collapsed(!this.collapsed());
+                        this.annotation.collapsed(!this.annotation.collapsed());
 
-                        if (this.collapsed() === false) {
+                        if (this.annotation.collapsed() === false) {
 
                             this.isLoading(true);
                             objectmanager.getByGuid(this.data.Id, this.metadataReceived, this);
@@ -94,7 +102,7 @@
                         this.togglePlayBtnVisibility();
                     },
                     togglePlayBtnVisibility: function () {
-                        if (this.collapsed() === false) {
+                        if (this.annotation.collapsed() === false) {
                             this.isPlayBtnVisible(true);
                         }
                         else {

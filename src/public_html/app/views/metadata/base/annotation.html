@@ -4,13 +4,13 @@
         <div class="playbtn" data-bind="css:{mdannotationvisible: isPlayBtnVisible}"></div>
     </div>
     <div class="md-annotation" data-bind="click: btnexpand">
-        <div class="md-annotation-text" data-bind="html: starttime"></div><div class="md-annotation-text">&nbsp;-&nbsp;</div><div class="md-annotation-text" data-bind="html: endtime"></div><div class="md-annotation-text">&nbsp;&nbsp;&nbsp;</div><div class="md-annotation-text md-annotation-title" data-bind="html: title"></div>
-        <div class="md-annotation-text arrow" data-bind="css:{arrowdown: collapsed()==false}"></div>
+        <div class="md-annotation-text" data-bind="html: annotation.starttime"></div><div class="md-annotation-text">&nbsp;-&nbsp;</div><div class="md-annotation-text" data-bind="html: annotation.endtime"></div><div class="md-annotation-text">&nbsp;&nbsp;&nbsp;</div><div class="md-annotation-text md-annotation-title" data-bind="html: annotation.title"></div>
+        <div class="md-annotation-text arrow" data-bind="css:{arrowdown: annotation.collapsed()==false}"></div>
 
     </div>
 </div>
-<div class="md-annotation-authorline" data-bind="css:{wshide: collapsed}">
-    <div class="md-annotation-text icon"></div><div class="md-annotation-text author" data-bind="text: author"></div><div class="md-annotation-text date" data-bind="text: date"></div>
+<div class="md-annotation-authorline" data-bind="css:{wshide: annotation.collapsed}">
+    <div class="md-annotation-text icon"></div><div class="md-annotation-text author" data-bind="text: annotation.author"></div><div class="md-annotation-text date" data-bind="text: annotation.date"></div>
     <div class="md-annotation-text-overflow dropdown optioniconhost">
         <a class="dropdown-toggle optionicon" data-toggle="dropdown" href="#"></a>
         <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">

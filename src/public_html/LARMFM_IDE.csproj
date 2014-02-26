@@ -61,6 +61,7 @@
     <Content Include="app\factory\metadata.js" />
     <Content Include="app\mods\annotation.js" />
     <Content Include="app\mods\localization.js" />
+    <Content Include="app\mods\mdannotationline.js" />
     <Content Include="app\mods\metadataTab.js" />
     <Content Include="app\mods\metadataviewbuilder.js" />
     <Content Include="app\mods\store.js" />
