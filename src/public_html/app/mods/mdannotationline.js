@@ -2,6 +2,7 @@
 
     var MDAnnotationLine = function () {
         this.mainself = null;
+        this.data = null;
         this.title = ko.observable("");
         this.starttime = ko.observable("");
         this.endtime = ko.observable("");
@@ -20,7 +21,7 @@
         this.mainself = mainself;
         compositionsettings.bindingContext.$data.data["self"] = mainself;
         var data = compositionsettings.bindingContext.$data.data;
-        mainself.data = data;
+        this.data = data;
 
         this.title(data.Title);
 
@@ -67,7 +68,7 @@
     MDAnnotationLine.prototype.optionclick = function (param, data, context) {
         if (param === "Edit") {
             this.annotation.collapsed(true);
-            this.annotation.timeline.editItem(data.data.Id);
+            this.annotation.timeline.editItem(data.annotation.data.Id);
             app.trigger('metadata:edit', this);
         }
     };

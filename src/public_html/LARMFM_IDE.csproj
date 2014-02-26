@@ -87,7 +87,8 @@
     <Content Include="app\views\metadata\annotationedit.js" />
     <Content Include="app\views\metadata\annotation.html" />
     <Content Include="app\views\metadata\annotation.js" />
-    <Content Include="app\views\metadata\base\annotation.html" />
+    <Content Include="app\views\metadata\base\annotationline.html" />
+    <Content Include="app\views\metadata\base\annotationmetadata.html" />
     <Content Include="app\views\metadata\editor1.js" />
     <Content Include="app\viewmodels\object.js" />
     <Content Include="app\views\metadata\editor1.html" />
