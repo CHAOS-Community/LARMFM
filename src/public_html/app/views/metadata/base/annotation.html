@@ -1,9 +1,9 @@
-﻿<div data-bind="event: {mouseover: mouseover, mouseout: mouseover}">
+﻿<div data-bind="event: {mouseover: annotation.mouseover, mouseout: annotation.mouseover}">
     <div class="md-annotation-firstcol">
         <div class="timeicon"></div>
-        <div class="playbtn" data-bind="css:{mdannotationvisible: isPlayBtnVisible}"></div>
+        <div class="playbtn" data-bind="css:{mdannotationvisible: annotation.isPlayBtnVisible}"></div>
     </div>
-    <div class="md-annotation" data-bind="click: btnexpand">
+    <div class="md-annotation" data-bind="click: annotation.btnexpand">
         <div class="md-annotation-text" data-bind="html: annotation.starttime"></div><div class="md-annotation-text">&nbsp;-&nbsp;</div><div class="md-annotation-text" data-bind="html: annotation.endtime"></div><div class="md-annotation-text">&nbsp;&nbsp;&nbsp;</div><div class="md-annotation-text md-annotation-title" data-bind="html: annotation.title"></div>
         <div class="md-annotation-text arrow" data-bind="css:{arrowdown: annotation.collapsed()==false}"></div>
 

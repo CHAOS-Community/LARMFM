@@ -19,13 +19,13 @@
                 //this.collapsed = ko.observable(true);
                 this.player = player;
                 this.timeline = timeline;
-                this.ismouseover = false;
-                this.isPlayBtnVisible = ko.observable(false);
+                //this.ismouseover = false;
+                //this.isPlayBtnVisible = ko.observable(false);
                 //this.author = ko.observable("");
                 //this.date = ko.observable("");
 
                 this.mdhtml = ko.observableArray();
-                this.isLoading = ko.observable(false);
+                //this.isLoading = ko.observable(false);
             };
 
             anncomment.prototype = (function () {
@@ -33,8 +33,12 @@
 
                     annotation: this.annotation,
 
+                    expanded: function () {
+                        objectmanager.getByGuid(this.mainself.data.Id, this.mainself.metadataReceived, this.mainself);
+                    },
+
                     compositionComplete: function (child, parent, settings) {
-                        this.annotation.init(settings, this);
+                        this.annotation.init(settings, this, this.expanded);
                         //settings.bindingContext.$data.data["self"] = this;
                         //// settings.bindingContext.$data represents an
                         //// instance of MetadataEditor under factory.
@@ -62,19 +66,19 @@
                         app.trigger('metadata:edit', this);
                         //app.trigger('metadata:changedinview', this);
                     },
-                    btnexpand: function () {
-                        this.annotation.collapsed(!this.annotation.collapsed());
+                    //btnexpand: function () {
+                    //    this.annotation.collapsed(!this.annotation.collapsed());
 
-                        if (this.annotation.collapsed() === false) {
+                    //    if (this.annotation.collapsed() === false) {
 
-                            this.isLoading(true);
-                            objectmanager.getByGuid(this.data.Id, this.metadataReceived, this);
+                    //        this.isLoading(true);
+                    //        objectmanager.getByGuid(this.data.Id, this.metadataReceived, this);
 
-                        }
+                    //    }
 
-                        this.togglePlayBtnVisibility();
+                    //    this.togglePlayBtnVisibility();
 
-                    },
+                    //},
                     metadataReceived: function (param, self) {
                         var i = 0;
                         for (var i = 0; i < param.Metadatas.length; i++) {
@@ -95,20 +99,20 @@
                                 break;
                             }
                         }
-                        self.isLoading(false);
+                        self.annotation.expandDone();
                     },
-                    mouseover: function (e, c) {
-                        this.ismouseover = (c.type === "mouseover");
-                        this.togglePlayBtnVisibility();
-                    },
-                    togglePlayBtnVisibility: function () {
-                        if (this.annotation.collapsed() === false) {
-                            this.isPlayBtnVisible(true);
-                        }
-                        else {
-                            this.isPlayBtnVisible(this.ismouseover);
-                        }
-                    },
+                    //mouseover: function (e, c) {
+                    //    this.ismouseover = (c.type === "mouseover");
+                    //    this.togglePlayBtnVisibility();
+                    //},
+                    //togglePlayBtnVisibility: function () {
+                    //    if (this.annotation.collapsed() === false) {
+                    //        this.isPlayBtnVisible(true);
+                    //    }
+                    //    else {
+                    //        this.isPlayBtnVisible(this.ismouseover);
+                    //    }
+                    //},
                     optionclick: function (param, data, context) {
                         if (param === "Edit") {
                             this.btnedit(data);
