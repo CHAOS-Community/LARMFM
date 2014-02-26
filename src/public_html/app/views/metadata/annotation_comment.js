@@ -8,7 +8,6 @@
             ) {
 
             var anncomment = function () {
-                //this.data = null;
                 this.annotation = new mdannotationline.MDAnnotationLine();
             };
 
