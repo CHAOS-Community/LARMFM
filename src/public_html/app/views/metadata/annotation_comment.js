@@ -1,12 +1,13 @@
 ﻿define([
     'durandal/app', 'knockout', 'mods/player', 'mods/timeline',
     'mods/format', 'factory/metadata', 'mods/objectmanager',
-    'mods/xmlmanager', 'mods/metadataschema', 'mods/metadataviewbuilder'
+    'mods/xmlmanager', 'mods/metadataschema', 'mods/metadataviewbuilder',
+    'bootstrap'
 ],
         function (
             app, ko, player, timeline,
             format, metadatafac, objectmanager,
-            xmlman, metadataschema, html
+            xmlman, metadataschema, html, bootstrap
             ) {
 
             var anncomment = function () {
@@ -100,8 +101,10 @@
                             this.isPlayBtnVisible(this.ismouseover);
                         }
                     },
-                    optionclick: function (a, b, c, d) {
-                        var i = 0;
+                    optionclick: function (param, data, context) {
+                        if (param === "Edit") {
+                            this.btnedit(data);
+                        }
                     }
 
                 };

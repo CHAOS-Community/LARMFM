@@ -172,6 +172,12 @@ h5 {
     white-space: nowrap;
 }
 
+.md-annotation-text-overflow {
+    display:inline-block;
+    text-wrap:none;
+    white-space: nowrap;
+}
+
 .md-annotation-title {
     width: 400px;
     color: #333333;
@@ -193,7 +199,6 @@ h5 {
 
 .md-annotation-authorline {
     height: 31px;
-    overflow: hidden;
     margin: 0;
     padding: 0;
     border-bottom: 1px solid #EEEEEE;
@@ -226,16 +231,21 @@ h5 {
     padding: 0px;
 }
 
+.md-annotation-authorline .optioniconhost {
+    float:right;
+    clear:both;
+}
+
 .md-annotation-authorline .optionicon {
-    margin-top: 4px;
+    margin-top: 5px;
     margin-right: 14px;
     width: 15px;
     height: 15px;
     background-image: url(../img/player.png);
     background-position: -30px -98px;
-    float:right;
-    clear:both;
     cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
 }
 
 .md-text {
