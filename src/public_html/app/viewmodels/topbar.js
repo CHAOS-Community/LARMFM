@@ -1,4 +1,8 @@
-define(['plugins/router', 'durandal/app', 'viewmodels/wayflogin', 'viewmodels/wayfLogOut', 'mods/portal'], function (router, app, wayflogin, wayfLogOut, portal) {
+define(['plugins/router', 'durandal/app', 'viewmodels/wayflogin', 'viewmodels/wayfLogOut', 'mods/portal', 'knockout', 'mods/search'],
+    function (router, app, wayflogin, wayfLogOut, portal, ko, searchmod) {
+
+    var cansearch = ko.observable(true);
+
     return {
     	router: router,
     	isAuthenticated: portal.isAuthenticated,
@@ -17,6 +21,18 @@ define(['plugins/router', 'durandal/app', 'viewmodels/wayflogin', 'viewmodels/wa
         		CHAOS.Portal.Client.Session.Delete();
         		window.location.assign(window.location.protocol + "//" + window.location.hostname + (window.location.port ? ":" + window.location.port : "") + window.location.pathname);
 	        }
+        },
+        cansearch: cansearch,
+        searchtext: searchmod.freetext,
+        search: function () {
+            //searchmod.freetext(searchtext());
+            searchmod.navigate();
+            //router.navigate('!search/s=' + searchtext() + '&date=now');
+        },
+        searchKeyboardCmd: function (data, event) {
+            if (event.keyCode == 13)
+                searchmod.navigate();
+            return true;
         }
     };
-});
+    });
