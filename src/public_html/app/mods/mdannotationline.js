@@ -1,4 +1,4 @@
-﻿define(['knockout', 'mods/timeline', 'mods/format'], function (ko, timeline, format) {
+﻿define(['durandal/app', 'knockout', 'mods/timeline', 'mods/format', 'bootstrap'], function (app, ko, timeline, format, bootstrap) {
 
     var MDAnnotationLine = function () {
         this.mainself = null;
@@ -12,6 +12,8 @@
         this.isPlayBtnVisible = ko.observable(false);
         this.expandcallback = null;
         this.isLoading = ko.observable(false);
+        this.timeline = timeline;
+        this.mdhtml = ko.observableArray();
     };
 
     MDAnnotationLine.prototype.init = function (compositionsettings, mainself, expandcallback) {
@@ -48,23 +50,26 @@
 
     MDAnnotationLine.prototype.btnexpand = function () {
         this.annotation.collapsed(!this.annotation.collapsed());
-
         if (this.annotation.collapsed() === false) {
 
             if (this.annotation.expandcallback != null) {
                 this.annotation.isLoading(true);
                 this.annotation.expandcallback();
-                //objectmanager.getByGuid(this.data.Id, this.metadataReceived, this);
             }
-
         }
-
         this.annotation.togglePlayBtnVisibility();
-
     };
 
     MDAnnotationLine.prototype.expandDone = function () {
         this.isLoading(false);
+    };
+
+    MDAnnotationLine.prototype.optionclick = function (param, data, context) {
+        if (param === "Edit") {
+            this.annotation.collapsed(true);
+            this.annotation.timeline.editItem(data.data.Id);
+            app.trigger('metadata:edit', this);
+        }
     };
 
     return {
