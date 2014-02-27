@@ -1,7 +1,7 @@
 ﻿define(['plugins/dialog', 'mods/portal', 'jquery', 'mods/state'], function (dialog, portal, jquery, state) {
 	var wayfLogOut = function () {
 		this._wayfWindow = null;
-		this.CanUseIframe = window && window.navigator && window.navigator.userAgent && (window.navigator.userAgent.indexOf("Chrome") != -1 || window.navigator.userAgent.indexOf("Firefox") != -1);
+		this.CanUseIframe = false; // window && window.navigator && window.navigator.userAgent && (window.navigator.userAgent.indexOf("Chrome") != -1 || window.navigator.userAgent.indexOf("Firefox") != -1);
 	};
 
 	wayfLogOut.prototype.compositionComplete = function (child, parent, settings) {
@@ -23,9 +23,8 @@
 		if (this._wayfWindow != null)
 			this._wayfWindow.close();
 
-		window.location.assign(window.location.protocol + "//" + window.location.hostname + (window.location.port ? ":" + window.location.port : "") + window.location.pathname);
-
-		state.isAuthenticated(false);
+		portal.LoggedOut();
+		
 		dialog.close(this);
 	};
 
