@@ -19,7 +19,7 @@
 
     var onTimeCallback;
 
-    var loopbegin = null;
+    var loopstart = null;
     var loopend = null;
 
     function createPlaylist() {
@@ -95,18 +95,18 @@
 
         var mu = "";
         for (var i = 0; i < playlist.length; i++) {
-            if(i > 0)
+            if (i > 0)
                 mu += "<br/>" + playlist[i].file;
             else
                 mu += playlist[i].file;
         }
         mediaUrl(mu);
 
-        var w = 400; // 1; // 400
-        var h = 150; //1; // 150
+        var w = 1; // 400
+        var h = 1; // 150
         var hascontrols = true;
 
-        if (data == null){
+        if (data == null) {
             mediaImage = "";
             w = 533;
             h = 300;
@@ -115,37 +115,37 @@
 
         //setTimeout(function () {
         console.log("Player Setup");
-            jwplayer("larmplayer").setup({
-                playlist: playlist,
-                width: w,
-                height: h,
-                image: mediaImage,
-                controls: hascontrols
-            });
+        jwplayer("larmplayer").setup({
+            playlist: playlist,
+            width: w,
+            height: h,
+            image: mediaImage,
+            controls: hascontrols
+        });
 
-            jwplayer().onSetupError(function (e) {
-                console.log("Player Setup Error");
-            });
+        jwplayer().onSetupError(function (e) {
+            console.log("Player Setup Error");
+        });
 
-            jwplayer().onReady(function (e) {
-                console.log("Player Ready");
-            });
+        jwplayer().onReady(function (e) {
+            console.log("Player Ready");
+        });
 
-            jwplayer().getRenderingMode(function (e) {
-                console.log("Player getRenderingMode");
-            });
+        jwplayer().getRenderingMode(function (e) {
+            console.log("Player getRenderingMode");
+        });
 
-            jwplayer().onTime(onTime);
-            jwplayer().onPlay(onPlay);
-            jwplayer().onPause(onPause);
-            jwplayer().onBuffer(function (oldstate) {
-                console.log("Player Buffering + " + oldstate);
-            });
-            jwplayer().onError(function (message) {
-                console.log("Player onError = " + message);
-            });
+        jwplayer().onTime(onTime);
+        jwplayer().onPlay(onPlay);
+        jwplayer().onPause(onPause);
+        jwplayer().onBuffer(function (oldstate) {
+            console.log("Player Buffering + " + oldstate);
+        });
+        jwplayer().onError(function (message) {
+            console.log("Player onError = " + message);
+        });
 
-            jwplayer().play(true); // Play
+        jwplayer().play(true); // Play
         //}, 1);
 
     }
@@ -158,48 +158,16 @@
         console.log("Player Pause");
     }
 
-
-    var breakit = false;
-    function seekToProgramTime(programTimeInSeconds) {
-        var pt = programTimeInSeconds;
-        var ptacc = 0;
-        var ftacc = 0;
-        for (var i = 0; i < playlist.length; i++) {
-            var pl = playlist[i];
-            var programduration = pl.end - pl.start;
-            if (pt > programduration + ptacc) {
-                ptacc += programduration;
-                ftacc += pl.fileduration;
-            }
-            else {
-                var seekindex = i;
-                var seekpos = (pt - ptacc) + pl.start;
-                console.log("seekTo:" + seekindex + ", " + seekpos);
-                breakit = true;
-                jwplayer().playlistItem(seekindex);
-                jwplayer().seek(seekpos);
-                return;
-            }
-        }
-
-    }
-
     var endoffiledate = null;
     function onTime(e) {
         // e.duration, e.position
         if (state == STATE_READY) {
-
-            if (breakit)
-            {
-                var lkelker = 0;
-            }
-
             var s = jwplayer().getState();
             if (!isplaying() && s == "PLAYING")
                 jwplayer().play(false);
 
             var idx = jwplayer().getPlaylistIndex();
-            
+
             if (e.position < playlist[idx].start) {
                 jwplayer().seek(playlist[idx].start);
             }
@@ -231,6 +199,11 @@
                     pos += playlist[0].end - playlist[0].start;
                 position(pos);
                 updatePositiontext();
+
+                // Loop?
+                if (loopstart !== null && loopend !== null) {
+
+                }
             }
         }
         else if (state == STATE_DURATIONOK) {
@@ -240,7 +213,7 @@
         else if (state == STATE_GETDURATION) {
             var idx = jwplayer().getPlaylistIndex();
             var item = playlist[idx];
-            if(item.fileduration == 0)
+            if (item.fileduration == 0)
                 item.fileduration = e.duration;
 
             // Duration missing?
@@ -266,6 +239,35 @@
         }
     }
 
+    function getSeekInfoFromProgramTime(programTimeInSeconds) {
+        var pt = programTimeInSeconds;
+        var ptacc = 0;
+        var ftacc = 0;
+        for (var i = 0; i < playlist.length; i++) {
+            var pl = playlist[i];
+            var programduration = pl.end - pl.start;
+            if (pt > programduration + ptacc) {
+                ptacc += programduration;
+                ftacc += pl.fileduration;
+            }
+            else {
+                var seekindex = i;
+                var seekpos = (pt - ptacc) + pl.start;
+                return { index: seekindex, pos: seekpos };
+            }
+        }
+        return null;
+    }
+
+    function seekToProgramTime(programTimeInSeconds) {
+        var seek = getSeekInfoFromProgramTime(programTimeInSeconds);
+        if (seek !== null) {
+            console.log("seekTo:" + seek.index + ", " + seek.pos);
+            jwplayer().playlistItem(seek.index);
+            jwplayer().seek(seek.pos);
+        }
+    }
+
     // Returns program time in seconds.
     function getProgramTimeFromFileTime(fileTimeInSeconds) {
         var filetime = fileTimeInSeconds;
@@ -288,7 +290,7 @@
     function getFileTimeFromProgramTime(programTimeInSeconds) {
         var pt = programTimeInSeconds;
         var ptacc = 0;
-        var ftacc = 0; 
+        var ftacc = 0;
         for (var i = 0; i < playlist.length; i++) {
             var pl = playlist[i];
             var programduration = pl.end - pl.start;
@@ -308,7 +310,7 @@
         var s = parseInt(position());
         var d = parseInt(duration());
         positiontext(hhmmssFormat(s));
-        positionlefttext("-"+hhmmssFormat(d - s));
+        positionlefttext("-" + hhmmssFormat(d - s));
     }
 
     function hhmmssFormat(seconds) {
@@ -322,39 +324,6 @@
         var time = hours + ':' + minutes + ':' + seconds;
         return time;
     }
-
-    /*
-    public double GetGlobalFilePosition(double visualposition)
-		{
-			visualposition = System.Math.Max(0, visualposition);
-			visualposition = System.Math.Min(_uiwidth, visualposition);
-
-			double ratio = visualposition / _uiwidth;
-
-			double visualdurationacc = 0;
-			foreach (var f in _program.Files)
-				visualdurationacc += (f.OffsetEndMaximum - f.OffsetBeginMinimum);
-
-			double relativepos = visualdurationacc * ratio;
-			double fileduration = 0;
-			double filedurationacc = 0;
-			double visualduration = 0;
-			visualdurationacc = 0;
-			foreach (var f in _program.Files)
-			{
-				fileduration = f.Duration;
-				visualduration = f.OffsetEndMaximum - f.OffsetBeginMinimum;
-				if (relativepos <= (visualdurationacc + visualduration))
-				{
-					return filedurationacc + (relativepos - visualdurationacc) + f.OffsetBeginMinimum;
-				}
-				visualdurationacc += visualduration;
-				filedurationacc += fileduration;
-			}
-
-			return 0;
-		}
-    */
 
     function isReady() {
         return duration() !== 0;
@@ -391,14 +360,22 @@
         },
         getProgramTimeFromFileTime: getProgramTimeFromFileTime,
         getFileTimeFromProgramTime: getFileTimeFromProgramTime,
-        setProgramTimePos: function(pos) {
+        setProgramTimePos: function (pos) {
             // pos is in seconds
             seekToProgramTime(pos);
             //jwplayer().seek(pos);
         },
-        setProgramTimeLoop: function (start, end){
-            loopbegin = start;
-            loopend = end;
+        setProgramTimeLoop: function (start, end) {
+            loopstart = getSeekInfoFromProgramTime(start);
+            loopend = getSeekInfoFromProgramTime(end);
+        },
+        playLoop: function () {
+            if (loopstart !== null && loopend !== null) {
+                jwplayer().playlistItem(loopstart.index);
+                jwplayer().seek(loopstart.pos);
+                isplaying(true);
+                jwplayer().play(true);
+            }
         }
     };
 });

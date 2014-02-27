@@ -79,8 +79,11 @@
         }
     };
 
-    MDAnnotationLine.prototype.play = function (ann,ele) {
-        player.setProgramTimeLoop(ann.starttime(), ann.endtime());
+    MDAnnotationLine.prototype.play = function (ann, ele) {
+        var s = format.getSecondsFromString(ann.starttime());
+        var e = format.getSecondsFromString(ann.endtime());
+        player.setProgramTimeLoop(s, e);
+        player.playLoop();
     };
 
     return {
