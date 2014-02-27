@@ -1,4 +1,5 @@
-﻿define(['durandal/app', 'knockout', 'mods/timeline', 'mods/format', 'bootstrap'], function (app, ko, timeline, format, bootstrap) {
+﻿define(['durandal/app', 'knockout', 'mods/timeline', 'mods/format', 'bootstrap', 'mods/player'],
+    function (app, ko, timeline, format, bootstrap, player) {
 
     var MDAnnotationLine = function (mainself, expandcallback) {
         this.mainself = mainself;
@@ -76,6 +77,10 @@
             this.timeline.editItem(data.annotation.data.Id);
             app.trigger('metadata:edit', this);
         }
+    };
+
+    MDAnnotationLine.prototype.play = function (ann,ele) {
+        player.setProgramTimeLoop(ann.starttime(), ann.endtime());
     };
 
     return {

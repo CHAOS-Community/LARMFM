@@ -14,9 +14,13 @@
     var STATE_GETDURATION = 1;
     var STATE_DURATIONOK = 2;
     var STATE_READY = 3;
+    var STATE_SEEK = 4;
     var state = STATE_INIT;
 
     var onTimeCallback;
+
+    var loopbegin = null;
+    var loopend = null;
 
     function createPlaylist() {
 
@@ -98,8 +102,8 @@
         }
         mediaUrl(mu);
 
-        var w = 1; // 400
-        var h = 1; // 150
+        var w = 400; // 1; // 400
+        var h = 150; //1; // 150
         var hascontrols = true;
 
         if (data == null){
@@ -154,23 +158,71 @@
         console.log("Player Pause");
     }
 
+
+    var breakit = false;
+    function seekToProgramTime(programTimeInSeconds) {
+        var pt = programTimeInSeconds;
+        var ptacc = 0;
+        var ftacc = 0;
+        for (var i = 0; i < playlist.length; i++) {
+            var pl = playlist[i];
+            var programduration = pl.end - pl.start;
+            if (pt > programduration + ptacc) {
+                ptacc += programduration;
+                ftacc += pl.fileduration;
+            }
+            else {
+                var seekindex = i;
+                var seekpos = (pt - ptacc) + pl.start;
+                console.log("seekTo:" + seekindex + ", " + seekpos);
+                breakit = true;
+                jwplayer().playlistItem(seekindex);
+                jwplayer().seek(seekpos);
+                return;
+            }
+        }
+
+    }
+
+    var endoffiledate = null;
     function onTime(e) {
         // e.duration, e.position
         if (state == STATE_READY) {
+
+            if (breakit)
+            {
+                var lkelker = 0;
+            }
+
             var s = jwplayer().getState();
             if (!isplaying() && s == "PLAYING")
                 jwplayer().play(false);
 
             var idx = jwplayer().getPlaylistIndex();
+            
             if (e.position < playlist[idx].start) {
                 jwplayer().seek(playlist[idx].start);
             }
             else if (e.position > playlist[idx].end) {
 
-                if (idx + 1 == playlist.length)
-                    isplaying(false);
-                else
+                if (idx + 1 == playlist.length) {
+
+                    // Following is needed, because sometimes
+                    // the position is not updated when starting next
+                    // file. So only pause player if you get two end of files
+                    // in a row.
+                    var now = Date.now();
+                    if (endoffiledate !== null) {
+                        var diff = now - endoffiledate;
+                        if (diff < 200)
+                            isplaying(false);
+                    }
+                    endoffiledate = now;
+                }
+                else {
+
                     jwplayer().playlistItem(idx + 1);
+                }
             }
             else {
                 // Calculate position
@@ -338,6 +390,15 @@
             jwplayer().play(false);
         },
         getProgramTimeFromFileTime: getProgramTimeFromFileTime,
-        getFileTimeFromProgramTime: getFileTimeFromProgramTime
+        getFileTimeFromProgramTime: getFileTimeFromProgramTime,
+        setProgramTimePos: function(pos) {
+            // pos is in seconds
+            seekToProgramTime(pos);
+            //jwplayer().seek(pos);
+        },
+        setProgramTimeLoop: function (start, end){
+            loopbegin = start;
+            loopend = end;
+        }
     };
 });
