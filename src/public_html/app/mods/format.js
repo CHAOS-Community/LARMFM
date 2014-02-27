@@ -64,6 +64,10 @@ define(function() {
         return date.getFullYear() + '-' + getDigit2(date.getMonth() + 1) + '-' + getDigit2(date.getDate());
     }
 
+    function get1Digit(num) {
+        return (""+num).substring(0, 1);
+    }
+
     function getDigit2(num) {
         return ("0" + num).slice(-2);
     }
@@ -124,7 +128,7 @@ define(function() {
     }
 
     function getTimeStringFromDate(date) {
-        return getDigit2(date.getHours()) + ':' + getDigit2(date.getMinutes()) + ':' + getDigit2(date.getSeconds()) + '.' + date.getMilliseconds();
+        return getDigit2(date.getHours()) + ':' + getDigit2(date.getMinutes()) + ':' + getDigit2(date.getSeconds()) + '.' +  get1Digit(date.getMilliseconds());
     }
 
 

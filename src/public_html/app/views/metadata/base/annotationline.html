@@ -1,0 +1,22 @@
+﻿<div data-bind="event: {mouseover: annotation.mouseover, mouseout: annotation.mouseover}">
+    <div class="md-annotation-firstcol">
+        <div class="timeicon"></div>
+        <div class="playbtn" data-bind="css:{mdannotationvisible: isPlayBtnVisible}, click: annotation.play"></div>
+    </div>
+    <div class="md-annotation" data-bind="click: annotation.btnexpand">
+        <div class="md-annotation-text" data-bind="html: starttime"></div><div class="md-annotation-text">&nbsp;-&nbsp;</div><div class="md-annotation-text" data-bind="html: endtime"></div><div class="md-annotation-text">&nbsp;&nbsp;&nbsp;</div><div class="md-annotation-text md-annotation-title" data-bind="html: title"></div>
+        <div class="md-annotation-text arrow" data-bind="css:{arrowdown: collapsed()==false}"></div>
+    </div>
+</div>
+<div class="md-annotation-authorline" data-bind="css:{wshide: collapsed}">
+    <div class="md-annotation-text icon"></div><div class="md-annotation-text author" data-bind="text: author"></div><div class="md-annotation-text date" data-bind="text: date"></div>
+    <div class="md-annotation-text-overflow dropdown optioniconhost">
+        <a class="dropdown-toggle optionicon" data-toggle="dropdown" href="#"></a>
+        <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
+            <li role="presentation" data-bind="visible: editable"><a role="menuitem" tabindex="-1" data-bind="click: annotation.optionclick.bind($data, 'Edit')">Edit</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" data-bind="click: annotation.optionclick.bind($data, 'Play')">Play</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" data-bind="click: annotation.optionclick.bind($data, 'CopyLink')">Copy Link</a></li>
+        </ul>
+    </div>
+</div>

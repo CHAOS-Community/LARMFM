@@ -418,9 +418,9 @@ define([
 
                 var guid;
 
-                if (e.data) {
-                    if (e.data.Id)
-                        guid = e.data.Id;
+                if (e.annotation) {
+                    if (e.annotation.data.Id)
+                        guid = e.annotation.data.Id;
                 }
                 else if (e.id)
                     guid = e.id;

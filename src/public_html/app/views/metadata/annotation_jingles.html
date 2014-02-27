@@ -1,9 +1,2 @@
-﻿<div class="md-annotation" data-bind="click: btnexpand"><div class="md-annotation-text" data-bind="html: starttime"></div><div class="md-annotation-text">&nbsp;-&nbsp;</div><div class="md-annotation-text" data-bind="html: endtime"></div><div class="md-annotation-text">&nbsp;&nbsp;&nbsp;</div><div class="md-annotation-text md-annotation-title" data-bind="html: title"></div></div>
-<div data-bind="css:{wshide: collapsed}">
-    <div data-bind="foreach: mdhtml">
-        <div data-bind="html: $data"></div>
-    </div>
-    <div style="margin-bottom:20px;"></div>
-    <span class="loader" data-bind="css: { active: isLoading }"><i class="icon-spinner icon-spin"></i></span>
-    <div class="md-annotation-endline"></div>
-</div>
+﻿<div data-bind="compose: 'metadata/base/annotationline.html'"></div>
+<div data-bind="compose: 'metadata/base/annotationmetadata.html'"></div>

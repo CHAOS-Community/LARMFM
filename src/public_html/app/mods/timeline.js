@@ -1,4 +1,4 @@
-﻿define(['durandal/app', 'knockout'], function (app, ko) {
+﻿define(['durandal/app', 'knockout', 'mods/player'], function (app, ko, player) {
 
     var timeline = undefined;
     var state = ko.observable(0);
@@ -169,7 +169,7 @@
 
     function onTimeChanged(event) {
         var timediff = event.time - start();
-        jwplayer().seek(timediff / 1000);
+        player.setProgramTimePos(timediff / 1000);
         onTimeChangeActive = false;
     }
 

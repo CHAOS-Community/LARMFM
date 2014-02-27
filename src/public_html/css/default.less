@@ -1,5 +1,50 @@
 ﻿// === Defaults ==========================================
 
+@media (max-width: 979px) {
+    .page-host {
+    }
+
+    .navbar-inner {
+        min-height: 52px;
+    }
+    .navbar-contenttopmargin {
+        margin-top:6px;
+    }
+}
+
+@media (min-width: 980px) {
+    .page-host {
+        top: 61px;
+    }
+
+    // Topbar
+
+    .navbar-inner {
+        min-height: 61px;
+    }
+    .navbar-contenttopmargin {
+        margin-top:11px;
+    }
+}
+
+/*@media (min-width: 768px) and (max-width: 979px) {
+
+    .container{
+        margin: 0;
+    }
+}*/
+
+/*@media (max-width: 979px) {
+
+    .navbar-inner {
+    }
+
+    .navbar-fixed-top {
+        position: relative;
+        margin-bottom: 20px;
+    }
+}*/
+
 body {
     font-family: Arial, Verdana;
     color: #000000;
@@ -41,11 +86,72 @@ h5 {
     border-bottom-style: dotted;
 }
 
+/// === navbar ============================================
+.ws-navbar-inner {
+  min-height: 40px;
+  padding-right: 20px;
+  padding-left: 20px;
+  background-color: #fafafa;
+  background-image: -moz-linear-gradient(top, #ffffff, #f2f2f2);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f2f2f2));
+  background-image: -webkit-linear-gradient(top, #ffffff, #f2f2f2);
+  background-image: -o-linear-gradient(top, #ffffff, #f2f2f2);
+  background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
+  background-repeat: repeat-x;
+  border: 1px solid #d4d4d4;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff2f2f2', GradientType=0);
+  *zoom: 1;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+     -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+}
+
+.ws-navbar-inner:before,
+.ws-navbar-inner:after {
+  display: table;
+  line-height: 0;
+  content: "";
+}
+
+.ws-navbar-inner:after {
+  clear: both;
+}
+
 // === Metadata ===========================================
+.md-annotation-firstcol {
+}
+.md-annotation-firstcol > div {
+    position: absolute;
+}
+.md-annotation-firstcol > .timeicon {
+    visibility: visible;
+    margin-top: 9px;
+    margin-left: 12px;
+    margin-right: 5px;
+    width: 10px;
+    height: 12px;
+    padding-bottom: 4px;
+    background-image: url(../img/player.png);
+    background-position: -30px -145px;
+}
+.md-annotation-firstcol > .playbtn {
+    visibility: hidden;
+    margin-top: 7px;
+    margin-left: 7px;
+    width: 16px;
+    height: 16px;
+    background-image: url(../img/player.png);
+    background-position: -276px -86px;
+    cursor: pointer;
+}
+
+.md-annotation-firstcol > .mdannotationvisible {
+    visibility: visible;
+}
 
 .md-annotation {
     margin: 0 0 5px 0;
-    padding: 6px 0 5px 0;
+    padding: 6px 0 5px 32px;
     border-bottom: 1px solid #DDDDDD;
     font-family: Arial;
     font-size: 15px;
@@ -66,9 +172,80 @@ h5 {
     white-space: nowrap;
 }
 
+.md-annotation-text-overflow {
+    display:inline-block;
+    text-wrap:none;
+    white-space: nowrap;
+}
+
 .md-annotation-title {
     width: 400px;
     color: #333333;
+}
+
+.md-annotation > .arrow {
+    margin-top: 4px;
+    margin-right: 14px;
+    width: 8px;
+    height: 8px;
+    background-image: url(../img/player.png);
+    background-position: -45px -145px;
+    float:right;
+    clear:both;
+}
+.md-annotation > .arrowdown {
+    background-position: -60px -145px;
+}
+
+.md-annotation-authorline {
+    height: 31px;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #EEEEEE;
+}
+.md-annotation-authorline .icon {
+    background-image: url(../img/player.png);
+    background-position: -15px -145px;
+    width: 14px;
+    height: 11px;
+    margin: 7px 10px 0 9px;
+    padding: 0px;
+    vertical-align: top;
+}
+
+.md-annotation-authorline .author {
+    font-family: Arial;
+    font-size: 12px;
+    color: #5798F7;
+    font-weight: bold;
+    margin: 4px 0 0 0;
+    padding: 0px;
+}
+
+.md-annotation-authorline .date {
+    font-family: Arial;
+    font-size: 12px;
+    color: #333333;
+    font-weight: normal;
+    margin: 4px 0 0 10px;
+    padding: 0px;
+}
+
+.md-annotation-authorline .optioniconhost {
+    float:right;
+    clear:both;
+}
+
+.md-annotation-authorline .optionicon {
+    margin-top: 5px;
+    margin-right: 14px;
+    width: 15px;
+    height: 15px;
+    background-image: url(../img/player.png);
+    background-position: -30px -98px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
 }
 
 .md-text {
@@ -191,9 +368,6 @@ h5 {
 }
 
 // === starter kits ========================================
-.page-host {
-    top: 61px;
-}
 
 .loader {
     margin: 6px 8px 4px 8px;
@@ -205,17 +379,6 @@ h5 {
 }
 
 // === bootstraps ==========================================
-
-// Topbar
-.navbar {
-    height: 61px;
-}
-.navbar-inner {
-    min-height: 61px;
-}
-.navbar-contenttopmargin {
-    margin-top:11px;
-}
 
 // Metadata tabs
 .nav-tabs {
