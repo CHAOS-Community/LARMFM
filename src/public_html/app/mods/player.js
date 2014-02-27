@@ -205,11 +205,14 @@
                 // Loop?
                 if (loopstart !== null && loopend !== null) {
                     // before loop start?
-                    if (loopstart.index < idx || (loopstart.index === idx && e.position < loopstart.pos)) {
-                        playLoop();
+                    if (loopstart.index < idx || (loopstart.index === idx && (loopstart.pos-e.position) > .100 )) {
+                        //isplaying(false);
+                        //jwplayer().play(false);
+                        jwplayer().playlistItem(loopstart.index);
+                        jwplayer().seek(loopstart.pos);
                     }
 
-                    if (loopend.index > idx || (loopend.index === idx && e.position > loopend.pos)) {
+                    if (loopend.index > idx || (loopend.index === idx && (e.position - loopend.pos) >= .100)) {
                         isplaying(false);
                         jwplayer().play(false);
                         jwplayer().playlistItem(loopstart.index);
