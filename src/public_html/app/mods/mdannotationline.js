@@ -1,75 +1,79 @@
 ﻿define(['durandal/app', 'knockout', 'mods/timeline', 'mods/format', 'bootstrap'], function (app, ko, timeline, format, bootstrap) {
 
-    var MDAnnotationLine = function () {
-        this.mainself = null;
-        this.data = null;
-        this.title = ko.observable("");
-        this.starttime = ko.observable("");
-        this.endtime = ko.observable("");
-        this.collapsed = ko.observable(true);
-        this.author = ko.observable("");
-        this.date = ko.observable("");
-        this.ismouseover = false;
-        this.isPlayBtnVisible = ko.observable(false);
-        this.expandcallback = null;
-        this.isLoading = ko.observable(false);
-        this.timeline = timeline;
-        this.mdhtml = ko.observableArray();
-        this.editable = ko.observable(false);
+    var MDAnnotationLine = function (mainself, expandcallback) {
+        this.mainself = mainself;
+        this.expandcallback = expandcallback;
+        mainself.data = null;
+        mainself.title = ko.observable("");
+        mainself.starttime = ko.observable("");
+        mainself.endtime = ko.observable("");
+        mainself.collapsed = ko.observable(true);
+        mainself.author = ko.observable("");
+        mainself.date = ko.observable("");
+        mainself.ismouseover = false;
+        mainself.isPlayBtnVisible = ko.observable(false);
+        mainself.isLoading = ko.observable(false);
+        mainself.timeline = timeline;
+        mainself.mdhtml = ko.observableArray();
+        mainself.editable = ko.observable(false);
     };
 
-    MDAnnotationLine.prototype.init = function (compositionsettings, mainself, expandcallback) {
-        this.mainself = mainself;
-        compositionsettings.bindingContext.$data.data["self"] = mainself;
-        var data = compositionsettings.bindingContext.$data.data;
+    MDAnnotationLine.prototype.init = function (settings) {
+
+        var mainself = this.mainself;
+
+        settings.bindingContext.$data.data["self"] = mainself;
+        var data = settings.bindingContext.$data.data;
         this.data = data;
 
-        this.title(data.Title);
+        mainself.title(data.Title);
 
         var tla = timeline.getAnnotation(data.Id);
-        this.starttime(format.getTimeStringFromDate(tla[0].v));
-        this.endtime(format.getTimeStringFromDate(tla[1].v));
+        mainself.starttime(format.getTimeStringFromDate(tla[0].v));
+        mainself.endtime(format.getTimeStringFromDate(tla[1].v));
 
-        this.author(data.EditingUser);
-        this.date(new Date(data.DateModified).toLocaleString());
-
-        this.expandcallback = expandcallback;
+        mainself.author(data.EditingUser);
+        mainself.date(new Date(data.DateModified).toLocaleString());
     };
 
     MDAnnotationLine.prototype.togglePlayBtnVisibility = function () {
-        if (this.collapsed() === false) {
-            this.isPlayBtnVisible(true);
+        if (this.mainself.collapsed() === false) {
+            this.mainself.isPlayBtnVisible(true);
         }
         else {
-            this.isPlayBtnVisible(this.ismouseover);
+            this.mainself.isPlayBtnVisible(this.mainself.ismouseover);
         }
     };
 
     MDAnnotationLine.prototype.mouseover = function (e, c) {
-        this.annotation.ismouseover = (c.type === "mouseover");
+        this.ismouseover = (c.type === "mouseover");
         this.annotation.togglePlayBtnVisibility();
     };
 
     MDAnnotationLine.prototype.btnexpand = function () {
-        this.annotation.collapsed(!this.annotation.collapsed());
-        if (this.annotation.collapsed() === false) {
+        this.collapsed(!this.collapsed());
+        if (this.collapsed() === false) {
 
             if (this.annotation.expandcallback != null) {
-                this.annotation.isLoading(true);
+                this.isLoading(true);
                 this.annotation.expandcallback();
             }
+        } else {
+            this.ismouseover = false;
         }
         this.annotation.togglePlayBtnVisibility();
     };
 
     MDAnnotationLine.prototype.expandDone = function () {
-        this.isLoading(false);
+        this.mainself.isLoading(false);
     };
 
     MDAnnotationLine.prototype.optionclick = function (param, data, context) {
         if (param === "Edit") {
-            this.annotation.collapsed(true);
-            this.annotation.timeline.editItem(data.annotation.data.Id);
+            this.collapsed(true);
+            this.ismouseover = false;
+            this.annotation.togglePlayBtnVisibility();
+            this.timeline.editItem(data.annotation.data.Id);
             app.trigger('metadata:edit', this);
         }
     };

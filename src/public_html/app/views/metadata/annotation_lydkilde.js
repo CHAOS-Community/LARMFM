@@ -8,14 +8,14 @@
             ) {
 
             var anncomment = function () {
-                this.annotation = new mdannotationline.MDAnnotationLine();
+                this.annotation = new mdannotationline.MDAnnotationLine(this, this.expanded);
             };
 
             anncomment.prototype = (function () {
                 return {
                     annotation: this.annotation,
                     compositionComplete: function (child, parent, settings) {
-                        this.annotation.init(settings, this, this.expanded);
+                        this.annotation.init(settings);
                     },
                     expanded: function () {
                         objectmanager.getByGuid(this.data.Id, this.mainself.metadataReceived, this.mainself);
@@ -30,7 +30,7 @@
                                 var schema = metadataschema.getMetadataSchemaByGuid(d.MetadataSchemaGuid);
                                 var json = xmlman.toJson(schema.arraypaths, xml)
 
-                                var p = self.annotation.mdhtml;
+                                var p = self.mdhtml;
                                 var d = json["LARM.Annotation.WP5.8.1.LydkildeBeskrivelse"];
 
                                 p.removeAll();
