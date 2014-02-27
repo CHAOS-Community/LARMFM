@@ -182,8 +182,10 @@
                     var now = Date.now();
                     if (endoffiledate !== null) {
                         var diff = now - endoffiledate;
-                        if (diff < 200)
+                        if (diff < 200) {
                             isplaying(false);
+                            jwplayer().play(false);
+                        }
                     }
                     endoffiledate = now;
                 }
@@ -202,7 +204,17 @@
 
                 // Loop?
                 if (loopstart !== null && loopend !== null) {
+                    // before loop start?
+                    if (loopstart.index < idx || (loopstart.index === idx && e.position < loopstart.pos)) {
+                        playLoop();
+                    }
 
+                    if (loopend.index > idx || (loopend.index === idx && e.position > loopend.pos)) {
+                        isplaying(false);
+                        jwplayer().play(false);
+                        jwplayer().playlistItem(loopstart.index);
+                        jwplayer().seek(loopstart.pos);
+                    }
                 }
             }
         }
@@ -329,6 +341,15 @@
         return duration() !== 0;
     }
 
+    function playLoop() {
+        if (loopstart !== null && loopend !== null) {
+            jwplayer().playlistItem(loopstart.index);
+            jwplayer().seek(loopstart.pos);
+            isplaying(true);
+            jwplayer().play(true);
+        }
+    }
+
     return {
         duration: duration,
         position: position,
@@ -370,12 +391,7 @@
             loopend = getSeekInfoFromProgramTime(end);
         },
         playLoop: function () {
-            if (loopstart !== null && loopend !== null) {
-                jwplayer().playlistItem(loopstart.index);
-                jwplayer().seek(loopstart.pos);
-                isplaying(true);
-                jwplayer().play(true);
-            }
+            playLoop();
         }
     };
 });
