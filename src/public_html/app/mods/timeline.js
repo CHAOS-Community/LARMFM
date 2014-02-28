@@ -15,6 +15,15 @@
 
     var pos = 0;
 
+    (function ($) {
+        $.fn.goTo = function () {
+            $('html, body').animate({
+                scrollTop: $(this).offset().top + 'px'
+            }, 'fast');
+            return this; // for chaining...
+        }
+    })(jQuery);
+
     function initTimeline() {
         // Create and populate a data table.
         data = new google.visualization.DataTable();
@@ -51,7 +60,7 @@
             max: end()
         };
 
-        $("#timelinescroll").css("opacity","1");
+        $("#timelinescroll").css("opacity", "1");
         $("#timelinescroll").scroll(ontimelinescrolling);
 
         // Instantiate our timeline object.
@@ -85,7 +94,7 @@
         google.visualization.events.addListener(timeline, 'loop', onloop);
         google.visualization.events.addListener(timeline, 'viewmetadata', onviewmetadata);
         google.visualization.events.addListener(timeline, 'editmetadata', oneditmetadata);
-        
+
         ready = true;
         state(1);
     }
@@ -135,6 +144,14 @@
     }
 
     function onviewmetadata() {
+        var sel = timeline.getSelection();
+        if (sel.length) {
+            if (sel[0].row != undefined) {
+                var row = sel[0].row;
+                var dat = timeline.getItem(row);
+                app.trigger('annotation:metadataview', dat);
+            }
+        }
     }
 
     function oneditmetadata() {
@@ -221,7 +238,7 @@
             if (sel[0].row != undefined) {
                 var row = sel[0].row;
                 var dat = timeline.getItem(row);
-                app.trigger('metadata:changed_timeline', {data: dat});
+                app.trigger('metadata:changed_timeline', { data: dat });
             }
         }
     }
@@ -382,10 +399,10 @@
         isReady: isReady,
         addData: addData,
         redraw: function () {
-            if(timeline)
+            if (timeline)
                 timeline.redraw();
         },
-        clearData: function(){
+        clearData: function () {
             data.removeRows(0, data.getNumberOfRows());
             timeline.redraw();
         },
@@ -419,7 +436,7 @@
                 }
             }
         },
-        selectItemById: function(id) {
+        selectItemById: function (id) {
             timeline.selectItemById(id);
         },
         unselectItem: function () {

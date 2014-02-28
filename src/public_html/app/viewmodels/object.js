@@ -151,6 +151,11 @@ define([
                     addAnnotationsToMetadataViews();
             });
 
+            app.on('annotation:metadataview').then(function (e) {
+                var id = e.id;
+                // TODO: SCROLL TO VIEW:
+            });
+
             // Message: 
             app.on('annotation:add').then(function (e) {
                 // TODO: Choose metadataschema if more are activated
