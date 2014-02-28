@@ -1689,6 +1689,7 @@ links.Timeline.prototype.repaintItems = function() {
     });
 
     // redraw the delete button and dragareas of the selected item (if any)
+    this.repaintSelectActions();
     this.repaintDeleteButton();
     this.repaintDragAreas();
 
@@ -2818,6 +2819,7 @@ links.Timeline.prototype.onMouseMove = function (event) {
                 this.changeItem(index, {'group': this.getGroupName(group)});
             }
             else {
+                this.repaintSelectActions();
                 this.repaintDeleteButton();
                 this.repaintDragAreas();
             }
@@ -2965,7 +2967,16 @@ links.Timeline.prototype.onMouseUp = function (event) {
         if (!params.moved && !params.zoomed) {
             // mouse did not move -> user has selected an item
 
-            if (params.target === this.dom.items.deleteButton) {
+
+            if (params.target.id === "timelineitemselect_metadata") {
+                console.log("viewmetadata");
+                this.trigger('viewmetadata');
+            }
+            else if (params.target.id === "timelineitemselect_edit") {
+                console.log("editmetadata");
+                this.trigger('editmetadata');
+            }
+            else if (params.target === this.dom.items.deleteButton) {
                 // delete item
                 // if (this.selection) {
                 //    this.confirmDeleteItem(this.selection.index);
@@ -3685,6 +3696,7 @@ links.Timeline.ItemBox.prototype.select = function () {
     links.Timeline.addClassName(dom, 'timeline-event-selected');
     links.Timeline.addClassName(dom.line, 'timeline-event-selected');
     links.Timeline.addClassName(dom.dot, 'timeline-event-selected');
+
 };
 
 /**
@@ -4756,6 +4768,7 @@ links.Timeline.prototype.selectItem = function(index) {
             }
             item.select();
         }
+        this.repaintSelectActions();
         this.repaintDeleteButton();
         this.repaintDragAreas();
     }
@@ -6661,3 +6674,42 @@ links.Timeline.prototype.addItemAtCursor = function (id) {
     }
 }
 /* ================================= */
+links.Timeline.prototype.repaintSelectActions = function () {
+    var timeline = this,
+        dom = this.dom,
+        frame = dom.items.frame;
+
+    var selectActions = dom.items.selectActions;
+    if (!selectActions) {
+        // create a metadataButton button
+        selectActions = document.createElement("DIV");
+        selectActions.className = "timeline-navigation-selectactions";
+        selectActions.style.position = "absolute";
+
+        selectActions.innerHTML =
+            '<a id="timelineitemselect_play" class="timelineitemselect_btn"></a>' +
+            '<a id="timelineitemselect_metadata" class="timelineitemselect_btn"></a>' +
+            '<a id="timelineitemselect_edit" class="timelineitemselect_btn"></a>' +
+            '<a id="timelineitemselect_loop" class="timelineitemselect_btn"></a>'
+            ;
+
+        frame.appendChild(selectActions);
+        dom.items.selectActions = selectActions;
+    }
+
+    var index = this.selection ? this.selection.index : -1,
+        item = this.selection ? this.items[index] : undefined;
+    if (item && item.rendered) {
+        var right = item.getRight(this),
+            top = item.top;
+
+        selectActions.style.left = item.left + 'px'; //right + 'px';
+        selectActions.style.top = (top - 25) + 'px'; //top + 'px';
+        selectActions.style.display = '';
+        frame.removeChild(selectActions);
+        frame.appendChild(selectActions);
+    }
+    else {
+        selectActions.style.display = 'none';
+    }
+};

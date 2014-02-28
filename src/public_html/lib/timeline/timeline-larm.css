@@ -68,7 +68,24 @@ div.timeline-event-selected {
     border: 1px solid #68abf9;
 	font-weight: normal;
 	color: #212121;
+    /*New styles
+    height: 40px;
+    background-color: #F8F8F8;*/
 }
+
+div.timeline-navigation-selectactions {
+    z-index: 999;
+    text-decoration: none;
+    border: 1px solid #CCCCCC;
+    border-radius: 2px;
+    -moz-border-radius: 2px; /* For Firefox 3.6 and older */
+    
+    height: 21px;
+    padding-left: 2px;
+    padding-right: 1px;
+    background-color: #F8F8F8;
+}
+
 
 div.timeline-event-cluster {
     /* TODO: use another color or pattern? */
@@ -227,4 +244,41 @@ div.timeline-navigation-move-left {
 
 div.timeline-navigation-move-right {
     background: url('img/16/moveright.png') no-repeat center;
+}
+
+.timelineitemselect_btn {
+    cursor: pointer;
+    text-decoration: none;
+    border: 1px solid #CCCCCC;
+    border-radius: 2px;
+    -moz-border-radius: 2px; /* For Firefox 3.6 and older */
+    margin: 2px 2px 1px 1px;
+    width: 15px;
+    height: 15px;
+    background-color: #FFFFFF;
+    display:inline-block;
+    overflow: hidden;
+    text-wrap:none;
+    white-space: nowrap;
+}
+
+#timelineitemselect_play {
+    background-image: url(img/timeline_icons.png);
+    background-position: -17px -1px;    
+}
+#timelineitemselect_metadata {
+    background-image: url(img/timeline_icons.png);
+    background-position: -1px -1px;    
+}
+#timelineitemselect_edit {
+    background-image: url(img/timeline_icons.png);
+    background-position: -33px -1px;    
+}
+#timelineitemselect_loop {
+    background-image: url(img/timeline_icons.png);
+    background-position: -49px -1px;    
+}
+#timelineitemselect_loop .on {
+    background-image: url(img/timeline_icons.png);
+    background-position: -49px -33px;    
 }

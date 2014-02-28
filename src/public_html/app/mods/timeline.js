@@ -79,10 +79,15 @@
         google.visualization.events.addListener(timeline, 'dblclick', ondblclick);
         google.visualization.events.addListener(timeline, 'requestadd', onrequestadd);
 
-        
+        google.visualization.events.addListener(timeline, 'select', onselect);
+
 
         ready = true;
         state(1);
+    }
+
+    function onselect() {
+        var i = 0;
     }
 
     function onrequestadd() {
