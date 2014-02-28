@@ -262,6 +262,10 @@ div.timeline-navigation-move-right {
     white-space: nowrap;
 }
 
+.timelineitemselect_btn:hover {
+    border: 1px solid #6E94FF;
+}
+
 #timelineitemselect_play {
     background-image: url(img/timeline_icons.png);
     background-position: -17px -1px;    

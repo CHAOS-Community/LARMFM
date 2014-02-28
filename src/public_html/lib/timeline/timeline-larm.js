@@ -2967,13 +2967,16 @@ links.Timeline.prototype.onMouseUp = function (event) {
         if (!params.moved && !params.zoomed) {
             // mouse did not move -> user has selected an item
 
-
-            if (params.target.id === "timelineitemselect_metadata") {
-                console.log("viewmetadata");
+            if (params.target.id === "timelineitemselect_play") {
+                this.trigger('play');
+            }
+            else if (params.target.id === "timelineitemselect_loop") {
+                this.trigger('loop');
+            }
+            else if (params.target.id === "timelineitemselect_metadata") {
                 this.trigger('viewmetadata');
             }
             else if (params.target.id === "timelineitemselect_edit") {
-                console.log("editmetadata");
                 this.trigger('editmetadata');
             }
             else if (params.target === this.dom.items.deleteButton) {
@@ -6688,9 +6691,10 @@ links.Timeline.prototype.repaintSelectActions = function () {
 
         selectActions.innerHTML =
             '<a id="timelineitemselect_play" class="timelineitemselect_btn"></a>' +
+            '<a id="timelineitemselect_loop" class="timelineitemselect_btn"></a>' +
             '<a id="timelineitemselect_metadata" class="timelineitemselect_btn"></a>' +
             '<a id="timelineitemselect_edit" class="timelineitemselect_btn"></a>' +
-            '<a id="timelineitemselect_loop" class="timelineitemselect_btn"></a>'
+            ''
             ;
 
         frame.appendChild(selectActions);

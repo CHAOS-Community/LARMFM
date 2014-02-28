@@ -1,4 +1,4 @@
-﻿define(['durandal/app', 'knockout', 'mods/player'], function (app, ko, player) {
+﻿define(['durandal/app', 'knockout', 'mods/player', 'mods/format'], function (app, ko, player, format) {
 
     var timeline = undefined;
     var state = ko.observable(0);
@@ -81,20 +81,63 @@
 
         google.visualization.events.addListener(timeline, 'select', onselect);
 
-
+        google.visualization.events.addListener(timeline, 'play', onplay);
+        google.visualization.events.addListener(timeline, 'loop', onloop);
+        google.visualization.events.addListener(timeline, 'viewmetadata', onviewmetadata);
+        google.visualization.events.addListener(timeline, 'editmetadata', oneditmetadata);
+        
         ready = true;
         state(1);
     }
 
     function onselect() {
-        var i = 0;
     }
 
-    function onrequestadd() {
-        app.trigger("annotation:add", {});
+    function onplay() {
+        var sel = timeline.getSelection();
+        if (sel.length) {
+            if (sel[0].row != undefined) {
+                var row = sel[0].row;
+                var dat = timeline.getItem(row);
+
+                var s = format.getTimeStringFromDate(dat.start);
+                s = format.getSecondsFromString(s);
+                player.setProgramTimePos(s);
+                player.play();
+                //var e = format.getSecondsFromString(ann.endtime());
+                //player.setProgramTimeLoop(s, e);
+                //player.playLoop();
+            }
+        }
+
     }
 
-    function ondblclick() {
+    function onloop() {
+        var sel = timeline.getSelection();
+        if (sel.length) {
+            if (sel[0].row != undefined) {
+                var row = sel[0].row;
+                var dat = timeline.getItem(row);
+
+                var s = format.getTimeStringFromDate(dat.start);
+                s = format.getSecondsFromString(s);
+                var e = format.getTimeStringFromDate(dat.end);
+                e = format.getSecondsFromString(e);
+                player.setProgramTimeLoop(s, e);
+                player.playLoop();
+            }
+        }
+        //window.scrollTo(0, 0);
+        //var s = format.getSecondsFromString(ann.starttime());
+        //var e = format.getSecondsFromString(ann.endtime());
+        //player.setProgramTimeLoop(s, e);
+        //player.playLoop();
+    }
+
+    function onviewmetadata() {
+    }
+
+    function oneditmetadata() {
         var sel = timeline.getSelection();
         if (sel.length) {
             if (sel[0].row != undefined) {
@@ -103,6 +146,21 @@
                 app.trigger('metadata:edit', dat);
             }
         }
+    }
+
+    function onrequestadd() {
+        app.trigger("annotation:add", {});
+    }
+
+    function ondblclick() {
+        //var sel = timeline.getSelection();
+        //if (sel.length) {
+        //    if (sel[0].row != undefined) {
+        //        var row = sel[0].row;
+        //        var dat = timeline.getItem(row);
+        //        app.trigger('metadata:edit', dat);
+        //    }
+        //}
     }
 
     function onannotationadd() {
