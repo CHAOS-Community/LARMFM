@@ -419,6 +419,9 @@
                 }
             }
         },
+        selectItemById: function(id) {
+            timeline.selectItemById(id);
+        },
         unselectItem: function () {
             timeline.unselectItem();
         },

@@ -80,11 +80,16 @@
     };
 
     MDAnnotationLine.prototype.play = function (ann, ele) {
+
         window.scrollTo(0, 0);
         var s = format.getSecondsFromString(ann.starttime());
-        var e = format.getSecondsFromString(ann.endtime());
-        player.setProgramTimeLoop(s, e);
-        player.playLoop();
+        timeline.selectItemById(ann.annotation.data.Id);
+        player.setProgramTimePos(s);
+        player.play();
+
+        //var e = format.getSecondsFromString(ann.endtime());
+        //player.setProgramTimeLoop(s, e);
+        //player.playLoop();
     };
 
     return {

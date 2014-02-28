@@ -6579,6 +6579,18 @@ links.Timeline.prototype.centerTimeline = function () {
     }
 };
 
+links.Timeline.prototype.selectItemById = function (id) {
+    var r = this.getItemAndIndexByID(id);
+    var params = this.eventParams,
+    options = this.options,
+    dom = this.dom;
+
+    params.itemIndex = r.index;
+    var item = this.items[params.itemIndex];
+    this.selectItem(params.itemIndex);
+    this.trigger('select');
+}
+
 links.Timeline.prototype.editItem = function (id) {
     var r = this.getItemAndIndexByID(id);
     var params = this.eventParams,
