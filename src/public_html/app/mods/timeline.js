@@ -15,14 +15,7 @@
 
     var pos = 0;
 
-    (function ($) {
-        $.fn.goTo = function () {
-            $('html, body').animate({
-                scrollTop: $(this).offset().top + 'px'
-            }, 'fast');
-            return this; // for chaining...
-        }
-    })(jQuery);
+    var loop_annotation = null;
 
     function initTimeline() {
         // Create and populate a data table.
@@ -128,12 +121,23 @@
                 var row = sel[0].row;
                 var dat = timeline.getItem(row);
 
-                var s = format.getTimeStringFromDate(dat.start);
-                s = format.getSecondsFromString(s);
-                var e = format.getTimeStringFromDate(dat.end);
-                e = format.getSecondsFromString(e);
-                player.setProgramTimeLoop(s, e);
-                player.playLoop();
+                if (loop_annotation !== null && loop_annotation.Id === dat.Id) {
+                    // Cancel loop
+                    loop_annotation = null;
+                    player.clearLoop();
+                    timeline.setLoop(null);
+                } else {
+                    // Do loop
+                    loop_annotation = dat;
+                    var s = format.getTimeStringFromDate(dat.start);
+                    s = format.getSecondsFromString(s);
+                    var e = format.getTimeStringFromDate(dat.end);
+                    e = format.getSecondsFromString(e);
+                    player.setProgramTimeLoop(s, e);
+                    player.playLoop();
+                    timeline.setLoop(dat.id);
+                }
+
             }
         }
         //window.scrollTo(0, 0);

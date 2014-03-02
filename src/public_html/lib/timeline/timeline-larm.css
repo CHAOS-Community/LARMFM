@@ -282,7 +282,7 @@ div.timeline-navigation-move-right {
     background-image: url(img/timeline_icons.png);
     background-position: -49px -1px;    
 }
-#timelineitemselect_loop .on {
+#timelineitemselect_loop.on {
     background-image: url(img/timeline_icons.png);
     background-position: -49px -33px;    
 }

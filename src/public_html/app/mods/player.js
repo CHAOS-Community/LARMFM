@@ -389,6 +389,10 @@
             seekToProgramTime(pos);
             //jwplayer().seek(pos);
         },
+        clearLoop: function () {
+            loopstart = null;
+            loopend = null;
+        },
         setProgramTimeLoop: function (start, end) {
             loopstart = getSeekInfoFromProgramTime(start);
             loopend = getSeekInfoFromProgramTime(end);
