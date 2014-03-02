@@ -441,6 +441,7 @@
         },
         unselectItem: function () {
             timeline.unselectItem();
+            timeline.redraw();
         },
         addItemAtCursor: function (id) {
             timeline.addItemAtCursor(id);
