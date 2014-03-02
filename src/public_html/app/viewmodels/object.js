@@ -147,13 +147,25 @@ define([
 
                 timeline.addData(dataarray);
 
-                if (metadataViews().length==0)
+                if (metadataViews().length == 0)
                     addAnnotationsToMetadataViews();
             });
 
             app.on('annotation:metadataview').then(function (e) {
                 var id = e.id;
                 // TODO: SCROLL TO VIEW:
+                for (var i = 0; i < metadataViews().length; i++) {
+                    if (metadataViews()[i].data.Id === id) {
+                        var dat = metadataViews()[i].data;
+
+                        if (dat.self.collapsed() === true) {
+                            dat.self.annotation.btnexpand();
+                        }
+
+                        var ele = $('#ID' + id);
+                        $('html,body').animate({ scrollTop: ele.offset().top });
+                    }
+                }
             });
 
             // Message: 
@@ -180,7 +192,7 @@ define([
                 metadataEditors.removeAll();
                 // Add editor
                 var amd = createNewAmd({ guid: id, schemaguid: schema.guid });
-                
+
                 var editor = new metadatafac.MetadataView();
                 editor.setview(Settings.Schema[schema.guid].edit, { guid: amd.Id, metadata: amd });
                 metadataEditors.push(editor);
@@ -219,7 +231,7 @@ define([
 
                     var schemaItem = timelineschemaselector.getByGuid(schemaGuid);
                     if (schemaItem !== null) {
-                        schemaItem.count(schemaItem.count()+1);
+                        schemaItem.count(schemaItem.count() + 1);
                     }
 
                 } else {
@@ -234,7 +246,7 @@ define([
                     //if (anndata) {
                     //    if (ann && ann.id == anndata.Id) {
                     //        var dic = timelineschemaselector.activeSchemaItems();
-                            
+
                     //        if (anndata.MetadataSchemaGUID in dic) {
                     //            var schitem = dic[anndata.MetadataSchemaGUID];
                     //            var content = schitem.getContent(anndata.Title);
@@ -440,11 +452,14 @@ define([
 
                 objectmanager.getByGuid(g, function (r) {
 
-                    window.scrollTo(0, 0);
+                    //window.scrollTo(0, 0);
+                    var ele = $('#larmplayer');
+                    $('html,body').animate({ scrollTop: ele.offset().top });
+
                     metadataEditors.removeAll();
                     var mds = r.Metadatas;
                     for (var i = 0; i < mds.length; i++) {
-                        if (Settings.Schema[mds[i].MetadataSchemaGuid].edit !='') {
+                        if (Settings.Schema[mds[i].MetadataSchemaGuid].edit != '') {
                             timeline.editItem(guid);
                             var editor = new metadatafac.MetadataView();
                             editor.setview(Settings.Schema[mds[i].MetadataSchemaGuid].edit, { guid: r.Id, metadata: mds[i] });

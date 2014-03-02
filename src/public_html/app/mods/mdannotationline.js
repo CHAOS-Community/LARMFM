@@ -5,6 +5,7 @@
         this.mainself = mainself;
         this.expandcallback = expandcallback;
         mainself.data = null;
+        mainself.id = ko.observable("");
         mainself.title = ko.observable("");
         mainself.starttime = ko.observable("");
         mainself.endtime = ko.observable("");
@@ -27,6 +28,7 @@
         var data = settings.bindingContext.$data.data;
         this.data = data;
 
+        mainself.id(data.Id);
         mainself.title(data.Title);
 
         var tla = timeline.getAnnotation(data.Id);
@@ -52,17 +54,24 @@
     };
 
     MDAnnotationLine.prototype.btnexpand = function () {
-        this.collapsed(!this.collapsed());
-        if (this.collapsed() === false) {
+        var self = this;
+        if (this.mainself)
+            self = this.mainself;
+        self.collapsed(!self.collapsed());
+        if (self.collapsed() === false) {
 
-            if (this.annotation.expandcallback != null) {
-                this.isLoading(true);
-                this.annotation.expandcallback();
+            if (self.annotation.expandcallback != null) {
+                self.isLoading(true);
+                self.annotation.expandcallback();
             }
+
+            var ele = $('#ID' + self.id());
+            $('html,body').animate({ scrollTop: (ele.offset().top - 40) });
+
         } else {
-            this.ismouseover = false;
+            self.ismouseover = false;
         }
-        this.annotation.togglePlayBtnVisibility();
+        self.annotation.togglePlayBtnVisibility();
     };
 
     MDAnnotationLine.prototype.expandDone = function () {
