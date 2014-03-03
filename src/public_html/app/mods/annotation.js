@@ -49,6 +49,14 @@
                     return data()[i];
                 }
             }
+        },
+        getSchemaGuidFromAnnotationGuid: function (guid) {
+            for (var i = 0; i < data().length; i++)
+                if (data()[i].Id === guid)
+                    return data()[i].MetadataSchemaGUID;
+
+            return null;
         }
+
     };
 });

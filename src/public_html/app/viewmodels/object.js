@@ -20,6 +20,7 @@ define([
             jsonformfields, metadatafac, format, player, timeline, objectmanager,
             timelineschemaselector, annotation, metadataTab, locale) {
 
+            // FIELDS: --------------------------------------
             var obj = {};
             obj.guid;
             obj.data;
@@ -151,12 +152,25 @@ define([
                     addAnnotationsToMetadataViews();
             });
 
+
+            // MSG: annotation:metadataview -------------------------------
             app.on('annotation:metadataview').then(function (e) {
                 var id = e.id;
-                // TODO: SCROLL TO VIEW:
+                var schemaGuid = annotation.getSchemaGuidFromAnnotationGuid(id);
+                // Is tab open?
+                metadataTab.activateTabByGuid(schemaGuid);                
+                expandMetadataById(id);
+            });
+            
+            function expandMetadataById(id) {
                 for (var i = 0; i < metadataViews().length; i++) {
                     if (metadataViews()[i].data.Id === id) {
                         var dat = metadataViews()[i].data;
+
+                        if (!dat.self) {
+                            expandMetadataByIdRetry(id);
+                            return;
+                        }
 
                         if (dat.self.collapsed() === true) {
                             dat.self.annotation.btnexpand();
@@ -164,11 +178,23 @@ define([
 
                         var ele = $('#ID' + id);
                         $('html,body').animate({ scrollTop: ele.offset().top });
+                        return;
                     }
                 }
-            });
 
-            // Message: 
+                expandMetadataByIdRetry(id);
+            }
+
+            function expandMetadataByIdRetry(id) {
+                setTimeout(
+                    function () {
+                        expandMetadataById(id)
+                    }, 1000);
+            }
+
+            // -------------------------------------------------------
+
+            // MSG: annotation:add -----------------------------------
             app.on('annotation:add').then(function (e) {
                 // TODO: Choose metadataschema if more are activated
 
