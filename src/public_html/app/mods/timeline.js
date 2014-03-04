@@ -134,7 +134,9 @@
                     var e = format.getTimeStringFromDate(dat.end);
                     e = format.getSecondsFromString(e);
                     player.setProgramTimeLoop(s, e);
-                    player.playLoop();
+                    // Only play if cursor is outside annotation
+                    if(!player.isCursorInsideLoop())
+                        player.playLoop();
                     timeline.setLoop(dat.id);
                 }
 

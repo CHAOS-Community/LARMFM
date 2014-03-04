@@ -2976,7 +2976,7 @@ links.Timeline.prototype.onMouseUp = function (event) {
             }
             else if (params.target.id === "timelineitemselect_loop") {
                 this.trigger('loop');
-                //this.redraw();
+                this.repaintSelectActions();
             }
             else if (params.target.id === "timelineitemselect_metadata") {
                 this.trigger('viewmetadata');
