@@ -6,7 +6,7 @@
     var data = undefined;
     var timelines = [];
     var datas = [];
-    var timeline_centered = true;
+    var cursorCentered = ko.observable(false);
     var onTimeChangeActive = false;
 
     var duration = ko.observable(0);
@@ -360,7 +360,7 @@
         //var r = timeline.getVisibleChartRange();
         //playerdebug(timestr(r.start) + " - " + timestr(r.end));
 
-        if (timeline_centered) {
+        if (cursorCentered()) {
             timeline.centerTimeline();
         }
 
@@ -454,6 +454,7 @@
         },
         deleteItemByID: function (id) {
             timeline.deleteItemByID(id);
-        }
+        },
+        cursorCentered: cursorCentered
     };
 });

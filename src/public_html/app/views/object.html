@@ -28,12 +28,13 @@
             <div class="playerpositiontext" data-bind="text: playerpositiontext"></div>
             <div class="playerpositionlefttext" data-bind="text: playerpositionlefttext"></div>
             <button type="button" class="playeraddannbtn" data-bind="click: annotationAddBtn, restext: 'newannotation'"></button>
+            <div class="playerfixcursor" data-bind="click: cursorCenteredBtn, css:{playerfixcursor_on: isCursorCentered}"></div>
         </div>
         <!--<span data-bind="html: playerposition"></span> - <span data-bind="html: playerdebug"></span>-->
     </div>
 
     <div id="timelines" style="background-color:white;float:left"></div>
-    <div id="timelinescroll" style="opacity: 0; width: 100%; overflow-x: scroll">
+    <div id="timelinescroll" style="opacity: 0; width:100%; overflow-x: scroll">
         <div id="timelinescrollcontent" style="width:1px;height:1px"></div>
     </div>
 </div>

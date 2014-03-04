@@ -714,6 +714,10 @@ define([
                 },
                 annotationAddBtn: function () {
                     app.trigger("annotation:add", {});
+                },
+                isCursorCentered: timeline.cursorCentered,
+                cursorCenteredBtn: function () {
+                    timeline.cursorCentered(!timeline.cursorCentered());
                 }
             };
         });
