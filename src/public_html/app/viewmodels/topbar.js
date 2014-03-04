@@ -14,12 +14,12 @@ define(['plugins/router', 'durandal/app', 'viewmodels/wayflogin', 'viewmodels/wa
         },
         LogOut: function () {
 
-        	if (portal.AuthenticationType() == CHAOS.Portal.Client.Wayf.AuthenticationType())
+        	if (portal.client.AuthenticationType() == CHAOS.Portal.Client.Wayf.AuthenticationType())
 		        app.showDialog(new wayfLogOut());
 	        else
 	        {
         		CHAOS.Portal.Client.Session.Delete();
-        		window.location.assign(window.location.protocol + "//" + window.location.hostname + (window.location.port ? ":" + window.location.port : "") + window.location.pathname);
+		        portal.LoggedOut();
 	        }
         },
         cansearch: cansearch,

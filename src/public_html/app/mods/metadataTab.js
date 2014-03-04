@@ -45,6 +45,15 @@
             tabs.push(t);
             if (tabs().length == 1)
                 app.trigger("metadataTab:change", t);
+        },
+        activateTabByGuid: function (schemaGuid) {
+            for (var i = 0; i < tabs().length; i++) {
+                if (tabs()[i].schemaGuid === schemaGuid) {
+                    if (tabs()[i]!==activeTab())
+                        app.trigger('metadataTab:change', tabs()[i]);
+                }
+            }
         }
+
     }
 });

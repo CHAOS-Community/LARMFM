@@ -1,4 +1,4 @@
-﻿<div data-bind="event: {mouseover: annotation.mouseover, mouseout: annotation.mouseover}">
+﻿<div data-bind="attr:{id: 'ID' + id()}, event: {mouseover: annotation.mouseover, mouseout: annotation.mouseover}">
     <div class="md-annotation-firstcol">
         <div class="timeicon"></div>
         <div class="playbtn" data-bind="css:{mdannotationvisible: isPlayBtnVisible}, click: annotation.play"></div>

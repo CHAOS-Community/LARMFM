@@ -18,16 +18,13 @@ define(['knockout', 'mods/store', 'factory/authentication'], function (ko, store
 
     client.SessionAcquired().Add(function (session)
     {
-        var sessionGuid = session.Guid;
-        store.cookie("sessionGuid", sessionGuid, 1);
-
         // Autologin
         var auth = new authentication.Authenticate();
         auth.login("thfl@dr.dk", "1234", triggerAppReadyAfterLogin);
-        //triggerAppReady();
-
+		 //triggerAppReady();
     });
-	client.SessionAuthenticated().Add(function() {
+    client.SessionAuthenticated().Add(function () {
+    	store.cookie("sessionGuid", client.GetCurrentSession().Guid, 0);
 		isAuthenticatedObservable(true);
 	});
 
@@ -43,10 +40,19 @@ define(['knockout', 'mods/store', 'factory/authentication'], function (ko, store
 	    onAppReadyList = [];
 	}
 
+	function loggedOut()
+	{
+		store.cookieDelete("sessionGuid", null, 0);
+		isAuthenticatedObservable(false);
+
+		window.location.assign(window.location.protocol + "//" + window.location.hostname + (window.location.port ? ":" + window.location.port : "") + window.location.pathname);
+	}
+
     return {
     	client: client,
     	isAuthenticated: isAuthenticatedObservable,
-        isAppReady: isAppReady,
+    	isAppReady: isAppReady,
+    	LoggedOut: loggedOut,
         onAppReady: function (callback) {
             if (isAppReady)
                 callback();
