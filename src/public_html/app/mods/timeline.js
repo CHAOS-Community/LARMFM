@@ -6,7 +6,7 @@
     var data = undefined;
     var timelines = [];
     var datas = [];
-    var timeline_centered = true;
+    var cursorCentered = ko.observable(false);
     var onTimeChangeActive = false;
 
     var duration = ko.observable(0);
@@ -234,6 +234,7 @@
             if (sel[0].row != undefined) {
                 var row = sel[0].row;
                 var dat = timeline.getItem(row);
+                updateAnnotationLoop(dat);
             }
         }
     }
@@ -244,6 +245,7 @@
             if (sel[0].row != undefined) {
                 var row = sel[0].row;
                 var dat = timeline.getItem(row);
+                updateAnnotationLoop(dat);
                 app.trigger('metadata:changed_timeline', { data: dat });
             }
         }
@@ -345,6 +347,18 @@
         }
     }
 
+    function updateAnnotationLoop(ann) {
+        if (loop_annotation && ann) {
+            if (loop_annotation.Id === ann.Id) {
+                var s = format.getTimeStringFromDate(ann.start);
+                s = format.getSecondsFromString(s);
+                var e = format.getTimeStringFromDate(ann.end);
+                e = format.getSecondsFromString(e);
+                player.setProgramTimeLoop(s, e);
+            }
+        }
+    }
+
     var prepos = 0;
     var mainloop = function () {
 
@@ -360,7 +374,7 @@
         //var r = timeline.getVisibleChartRange();
         //playerdebug(timestr(r.start) + " - " + timestr(r.end));
 
-        if (timeline_centered) {
+        if (cursorCentered()) {
             timeline.centerTimeline();
         }
 
@@ -434,11 +448,12 @@
                     var row = sel[0].row;
                     var dat = timeline.getItem(row);
 
-                    var s = start;
-                    var e = end;
-                    var c = content;
+                    dat.start = start;
+                    dat.end = end;
+                    dat.content = content;
 
-                    timeline.changeItem(row, { start: s, end: e, content: c });
+                    timeline.changeItem(row, { start: dat.start, end: dat.end, content: dat.content });
+                    updateAnnotationLoop(dat);
                 }
             }
         },
@@ -454,6 +469,36 @@
         },
         deleteItemByID: function (id) {
             timeline.deleteItemByID(id);
+        },
+        cursorCentered: cursorCentered,
+        setAnnotationStartToCursor: function () {
+            var sel = timeline.getSelection();
+            if (sel.length) {
+                if (sel[0].row != undefined) {
+                    var row = sel[0].row;
+                    var dat = timeline.getItem(row);
+                    dat.start = timeline.customTime;
+                    updateAnnotationLoop(dat);
+                    if (dat.end > dat.start) {
+                        timeline.changeItem(row, { start: dat.start, end: dat.end, content: dat.content });
+                        updateAnnotationLoop(dat);
+                    }
+                }
+            }
+        },
+        setAnnotationEndToCursor: function () {
+            var sel = timeline.getSelection();
+            if (sel.length) {
+                if (sel[0].row != undefined) {
+                    var row = sel[0].row;
+                    var dat = timeline.getItem(row);
+                    dat.end = timeline.customTime;
+                    if (dat.end > dat.start) {
+                        timeline.changeItem(row, { start: dat.start, end: dat.end, content: dat.content });
+                        updateAnnotationLoop(dat);
+                    }
+                }
+            }
         }
     };
 });
