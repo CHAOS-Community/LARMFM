@@ -392,24 +392,39 @@ h5 {
     display: inline-block;
 }
 
-.md_player_btn_group > .pointbegin {
+.md_player_btn_group > .mdpbtn {
+    cursor: pointer;
     width: 35px;
     height: 26px;
-    background-image: url(../img/player_buttons.png);
-    background-position: -140px -1px;
-    margin: 5px 0 0 x;
+    margin: 5px 0 0 0;
     padding: 0;
     display: inline-block;
 }
 
+.md_player_btn_group > .pointbegin {
+    background-image: url(../img/player_buttons.png);
+    background-position: -140px -1px;
+}
+
+.md_player_btn_group > .pointbegin:hover {
+    background-position: -140px -28px;
+}
+
+.md_player_btn_group > .pointbegin:active {
+    background-position: -140px -55px;
+}
+
 .md_player_btn_group > .pointend {
-    width: 35px;
-    height: 26px;
     background-image: url(../img/player_buttons.png);
     background-position: -176px -1px;
-    margin: 5px 0 0 0;
-    padding: 0;
-    display: inline-block;
+}
+
+.md_player_btn_group > .pointend:hover {
+    background-position: -176px -28px;
+}
+
+.md_player_btn_group > .pointend:active {
+    background-position: -176px -55px;
 }
 
 // === starter kits ========================================

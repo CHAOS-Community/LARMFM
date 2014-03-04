@@ -724,7 +724,13 @@ define([
                 cursorCenteredBtn: function () {
                     timeline.cursorCentered(!timeline.cursorCentered());
                 },
-                metadataPlayerControlVisible: metadataPlayerControlVisible
+                metadataPlayerControlVisible: metadataPlayerControlVisible,
+                pointbeginbtn: function () {
+                    timeline.setAnnotationStartToCursor();
+                },
+                pointendbtn: function () {
+                    timeline.setAnnotationEndToCursor();
+                }
             };
         });
 

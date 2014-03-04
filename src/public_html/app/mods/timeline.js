@@ -455,6 +455,40 @@
         deleteItemByID: function (id) {
             timeline.deleteItemByID(id);
         },
-        cursorCentered: cursorCentered
+        cursorCentered: cursorCentered,
+        setAnnotationStartToCursor: function () {
+            var sel = timeline.getSelection();
+            if (sel.length) {
+                if (sel[0].row != undefined) {
+                    var row = sel[0].row;
+                    var dat = timeline.getItem(row);
+                    var s = dat.start;
+                    var e = dat.end;
+                    var c = dat.content;
+
+                    s = timeline.customTime;
+
+                    if( e > s)
+                        timeline.changeItem(row, { start: s, end: e, content: c });
+                }
+            }
+        },
+        setAnnotationEndToCursor: function () {
+            var sel = timeline.getSelection();
+            if (sel.length) {
+                if (sel[0].row != undefined) {
+                    var row = sel[0].row;
+                    var dat = timeline.getItem(row);
+                    var s = dat.start;
+                    var e = dat.end;
+                    var c = dat.content;
+
+                    e = timeline.customTime;
+
+                    if( e > s )
+                        timeline.changeItem(row, { start: s, end: e, content: c });
+                }
+            }
+        }
     };
 });

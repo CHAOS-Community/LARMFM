@@ -43,7 +43,7 @@
     </div>
 </div>
 <div data-bind="visible: metadataPlayerControlVisible">
-    <div class="md_player_btn_group"><div class="pointbegin"></div><div class="pointend"></div></div>
+    <div class="md_player_btn_group"><div class="mdpbtn pointbegin" data-bind="click: pointbeginbtn" ></div><div class="mdpbtn pointend" data-bind="click: pointendbtn"></div></div>
 </div>
 <div data-bind="foreach: metadataEditors">
     <div data-bind="compose: view"></div>
