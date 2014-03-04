@@ -177,7 +177,7 @@ define([
                         }
 
                         var ele = $('#ID' + id);
-                        $('html,body').animate({ scrollTop: ele.offset().top });
+                        $('html,body').animate({ scrollTop: ele.offset().top - 62 });
                         return;
                     }
                 }
@@ -480,7 +480,7 @@ define([
 
                     //window.scrollTo(0, 0);
                     var ele = $('#larmplayer');
-                    $('html,body').animate({ scrollTop: ele.offset().top });
+                    $('html,body').animate({ scrollTop: ele.offset().top - 62 });
 
                     metadataEditors.removeAll();
                     var mds = r.Metadatas;

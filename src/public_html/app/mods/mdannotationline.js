@@ -66,7 +66,7 @@
             }
 
             var ele = $('#ID' + self.id());
-            $('html,body').animate({ scrollTop: (ele.offset().top - 40) });
+            $('html,body').animate({ scrollTop: (ele.offset().top - 62) });
 
         } else {
             self.ismouseover = false;
