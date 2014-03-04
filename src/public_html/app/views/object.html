@@ -28,30 +28,23 @@
             <div class="playerpositiontext" data-bind="text: playerpositiontext"></div>
             <div class="playerpositionlefttext" data-bind="text: playerpositionlefttext"></div>
             <button type="button" class="playeraddannbtn" data-bind="click: annotationAddBtn, restext: 'newannotation'"></button>
-            <div class="playerfixcursor" data-bind="click: cursorCenteredBtn, css:{playerfixcursor_on: isCursorCentered}"></div>
         </div>
         <!--<span data-bind="html: playerposition"></span> - <span data-bind="html: playerdebug"></span>-->
     </div>
 
     <div id="timelines" style="background-color:white;float:left"></div>
-    <div id="timelinescroll" style="opacity: 0; width:100%; overflow-x: scroll">
-        <div id="timelinescrollcontent" style="width:1px;height:1px"></div>
-    </div>
-</div>
-<!--<div style="background-color: #f0f0f0;">
-    <div style="float:left; width:120px; overflow: hidden;">
-        <div style="text-align:center;margin-left:10px;margin-top:10px;">
-            <button type="button" class="btn" data-bind="click: play">Play</button>
-            <button type="button" class="btn" data-bind="click: pause">Pause</button>
-            <button type="button" class="btn" data-bind="click: annotationAddBtn">Tilføj annotation</button>
+    <div style="margin: 0 0 0 140px">
+        <div style="margin: 0 0 0 21px">
+            <div id="timelinescroll" style="opacity: 0; width: 100%; overflow-x: scroll">
+                <div id="timelinescrollcontent" style="width:1px;height:1px"></div>
+            </div>
+            <div class="playerfixcursor" data-bind="click: cursorCenteredBtn, css:{playerfixcursor_on: isCursorCentered}"></div>
         </div>
     </div>
-    <div id="timelines" style="background-color:white;float:right;"></div>
-    <div id="timelinescroll" style="opacity: 0; width: 100%; overflow-x: scroll">
-        <div id="timelinescrollcontent" style="width:1px;height:1px"></div>
-    </div>
-</div>-->
-
+</div>
+<div data-bind="visible: metadataPlayerControlVisible">
+    <div class="md_player_btn_group"><div class="pointbegin"></div><div class="pointend"></div></div>
+</div>
 <div data-bind="foreach: metadataEditors">
     <div data-bind="compose: view"></div>
 </div>

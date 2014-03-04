@@ -39,6 +39,8 @@ define([
             var metadataViews = ko.observableArray();
             var metadataEditors = ko.observableArray();
 
+            metadataPlayerControlVisible = ko.observable(false);
+
             var $window = $(window);
 
             // Message: metadataTab:changed
@@ -223,6 +225,7 @@ define([
                 editor.setview(Settings.Schema[schema.guid].edit, { guid: amd.Id, metadata: amd });
                 metadataEditors.push(editor);
                 timeline.editItem(amd.Id);
+                metadataPlayerControlVisible(true);
 
             });
 
@@ -237,6 +240,7 @@ define([
                     timeline.unselectItem();
 
                 metadataEditors.removeAll();
+                metadataPlayerControlVisible(false);
             });
 
             // Message: 
@@ -410,7 +414,7 @@ define([
 
             function annotationCreated() {
                 metadataEditors.removeAll();
-
+                metadataPlayerControlVisible(false);
             }
 
             // Message: 
@@ -490,6 +494,7 @@ define([
                             var editor = new metadatafac.MetadataView();
                             editor.setview(Settings.Schema[mds[i].MetadataSchemaGuid].edit, { guid: r.Id, metadata: mds[i] });
                             metadataEditors.push(editor);
+                            metadataPlayerControlVisible(true);
                             break;
                         }
                     }
@@ -718,7 +723,8 @@ define([
                 isCursorCentered: timeline.cursorCentered,
                 cursorCenteredBtn: function () {
                     timeline.cursorCentered(!timeline.cursorCentered());
-                }
+                },
+                metadataPlayerControlVisible: metadataPlayerControlVisible
             };
         });
 

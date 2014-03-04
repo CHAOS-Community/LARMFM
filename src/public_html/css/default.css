@@ -362,8 +362,10 @@ h5 {
 }
 
 .playerfixcursor {
+    position: absolute;
     cursor: pointer;
-    margin: 20px auto;
+    margin: -15px 0 0 -24px;
+    padding: 0;
     width: 21px;
     height: 15px;
     background-image: url(../img/player_buttons.png);
@@ -376,6 +378,32 @@ h5 {
 */
 .playerfixcursor_on {
     background-position: -1px -141px;
+}
+
+.md_player_btn_group {
+    padding: 0px 8px 0 8px;
+    margin: 8px 0 0 0;
+    display: inline-block;
+}
+
+.md_player_btn_group > .pointbegin {
+    width: 35px;
+    height: 26px;
+    background-image: url(../img/player_buttons.png);
+    background-position: -140px -1px;
+    margin: 5px 0 0 x;
+    padding: 0;
+    display: inline-block;
+}
+
+.md_player_btn_group > .pointend {
+    width: 35px;
+    height: 26px;
+    background-image: url(../img/player_buttons.png);
+    background-position: -176px -1px;
+    margin: 5px 0 0 0;
+    padding: 0;
+    display: inline-block;
 }
 
 .loader {
