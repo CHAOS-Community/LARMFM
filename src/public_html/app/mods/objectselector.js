@@ -1,42 +1,46 @@
 define(['knockout'], function(ko) {
 
-    var items = [];
+    var items = ko.observableArray();
     var count = ko.observable(0);
 
     function clear() {
-        items = [];
+        items.removeAll();
         count(0);
     }
-
-    function add(itemid) {
-        var i = indexof(itemid);
+    function getItems(){
+        return items;
+    }
+    function add(object) {
+        var i = indexof(object);
         if (i == -1) {
-            items.push(itemid);
-            count(items.length);
+            items.push(object);
+            count(items().length);
         }
     }
 
-    function remove(itemid) {
-        var i = indexof(itemid);
+    function remove(object) {
+        var i = indexof(object);
         if (i > -1) {
             items.splice(i, 1);
-            count(items.length);
+            count(items().length);
         }
     }
 
-    function indexof(itemid) {
-        for (var i = 0; i < items.length; i++) {
-            if (items[i] == itemid)
+    function indexof(object) {
+        for (var i = 0; i < items().length; i++) {
+            if (items()[i] == object)
                 return i;
         }
         return -1;
     }
     
-    function contains(itemid){
-        return indexof(itemid) > -1;
+    function contains(object){
+        return indexof(object) > -1;
     }
 
     return {
+        items:items,
+        getItems:getItems,
         clear: clear,
         add: add,
         remove: remove,

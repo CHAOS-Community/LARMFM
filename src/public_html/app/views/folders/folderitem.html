@@ -6,6 +6,7 @@
         <input class="input input-medium" type="text" data-bind="event: { change: function(){setTimeout(function(){$data.saveFolderName()},1)}}, visible: isInEditMode(),hasFocus:isInEditMode,value: title"/>
         <a data-bind=" click: toggleeditmode"><i class="icon-edit"></i></a>
         <a data-bind=" click: addNewFolder"><i class="icon-plus"></i></a>
+        <a data-bind=" visible:hasobjectsbeenselected,click: addSelectedObjectsToFolder"><i class="icon-download-alt"></i></a>
         
     </div>
 </div>

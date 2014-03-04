@@ -1,4 +1,4 @@
-define(['knockout', 'mods/portal'], function(ko, portal) {
+define(['knockout', 'mods/portal','mods/objectselector'], function(ko, portal,objectselector) {
 
     var FolderItem = function() {
         this.folderID = ko.observable();
@@ -9,6 +9,7 @@ define(['knockout', 'mods/portal'], function(ko, portal) {
         this.isexpanded = ko.observable(false);
         this.children = ko.observableArray();
         this.isInEditMode = ko.observable(false);
+        
     };
 
     FolderItem.prototype = function() {
@@ -47,6 +48,18 @@ define(['knockout', 'mods/portal'], function(ko, portal) {
             
         }
         
+        var addSelectedObjectsToFolder = function(){
+            for(var i=0; i<objectselector.items().length; i++){
+                CHAOS.Portal.Client.Link.Update
+            }
+            alert("add " + objectselector.items() + " to " + this.folderID());
+        }
+        
+        
+        var hasobjectsbeenselected = ko.computed(function(){
+            return objectselector.items().length > 0;
+        })
+        
         var loadSubFolders = function(){
             CHAOS.Portal.Client.Folder.Get(null, null, this.folderID()).WithCallback(childfolderReceived, this);
         }
@@ -66,22 +79,20 @@ define(['knockout', 'mods/portal'], function(ko, portal) {
                 $(event.currentTarget).toggleClass('folderitemover');
         }
         
-        
-
-
         return {
             init: init,
+            hasobjectsbeenselected:hasobjectsbeenselected,
             addNewFolder:addNewFolder,
             mouseevent: mouseevent,
             loadSubFolders:loadSubFolders,
             saveFolderName:saveFolderName,
+            addSelectedObjectsToFolder:addSelectedObjectsToFolder,
             toggleexpand: function() {
                 this.isexpanded(!this.isexpanded());
             },
-             toggleeditmode: function() {
+            toggleeditmode: function() {
                 this.isInEditMode(!this.isInEditMode());
             }
-
         };
     }();
 

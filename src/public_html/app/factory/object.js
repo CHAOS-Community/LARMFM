@@ -12,22 +12,27 @@ define(['knockout', 'mods/objectselector'], function(ko, objectselector) {
         this.typetext = ko.observable();
         this.channel = ko.observable("");
         this.annotationCount = ko.observable(0);
-
+        
+        
+        this.addToFolder = function(folderID){
+            alert("add " + this.id() + " to folder with id: " + folderID);
+        }
+        
         this.isselected = ko.observable(false);
 
         this.isselected.subscribe(function(val){
            if (this.id() != "") {
                 if (val)
-                    objectselector.add(this.id());
+                    objectselector.add(this);
                 else
-                    objectselector.remove(this.id());
+                    objectselector.remove(this);
             } 
         }, this);
         
     };
 
     ObjectItem.prototype = function() {
-
+        
         var titleclick = function(item) {
             window.open(item.hash());
         };

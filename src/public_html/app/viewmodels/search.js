@@ -1,6 +1,6 @@
 // Search View
-define(['durandal/app', 'knockout', 'mods/search', 'mods/state'],
-        function(app, ko, search, state) {
+define(['durandal/app', 'knockout', 'mods/search', 'mods/state','viewmodels/addObjectsToFolderTool'],
+        function(app, ko, search, state,addObjectsToFolderTool) {
 
             var name = ko.observable();
 
@@ -50,6 +50,10 @@ define(['durandal/app', 'knockout', 'mods/search', 'mods/state'],
                 sortitems: search.sortitems,
                 sortvalue: search.sortvalue,
                 sortchanged: search.sortchanged,
-                objectsselectcount: search.objectsselectcount
+                objectsselectcount: search.objectsselectcount,
+                putSelectedObjectsInFolder: function(){
+           
+                    app.showDialog(new addObjectsToFolderTool());
+                }
             };
         });
