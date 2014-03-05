@@ -217,6 +217,7 @@ define([
                 var dat = timeline.getSelection();
 
                 var content = timelineschemaselector.getContent(schema.guid, "");
+
                 timeline.changeItem(dat.start, dat.end, content);
 
                 metadataEditors.removeAll();
