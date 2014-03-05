@@ -641,6 +641,39 @@ define([
                 // Choose Comments annotation as default.
                 timelineschemaselector.schemaItems()[0].click();
 
+                doDeepLinkAnnotation();
+            }
+
+            function doDeepLinkAnnotation() {
+                // Annotation Deeplink?
+                if (!deepLinkAnnotationId)
+                    return;
+
+                // Get schema for the chosen annotation
+                var schemaGuid = annotation.getSchemaGuidFromAnnotationGuid(deepLinkAnnotationId);
+
+                // Is schema visible on the timeline?
+                var schemaItem = timelineschemaselector.getByGuid(schemaGuid);
+                if (schemaItem.isactive() === false) {
+                    schemaItem.click();
+                }
+                doDeepLinkAnnotation_FindAnnInTimeline();
+            }
+
+            function doDeepLinkAnnotation_FindAnnInTimeline() {
+                if (!deepLinkAnnotationId)
+                    return;
+
+                var ann = timeline.getAnnotation(deepLinkAnnotationId);
+
+                if (ann) {
+
+                    timeline.cursorCentered(true);
+                    timeline.loopAnnotation(deepLinkAnnotationId);
+
+                } else {
+                    setTimeout(doDeepLinkAnnotation_FindAnnInTimeline, 100);
+                }
             }
 
             function windowSizeChangeBegin() {
