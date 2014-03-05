@@ -43,6 +43,8 @@ define([
 
             var $window = $(window);
 
+            var deepLinkAnnotationId = '';
+
             // Message: metadataTab:changed
             app.on('metadataTab:changed').then(function (tab) {
 
@@ -692,6 +694,9 @@ define([
                         obj.guid = id;
                         var objguids = [];
                         objguids.push(id);
+
+                        // Annotation deeplink?
+                        deepLinkAnnotationId = format.getParamByName('aid', param);
 
                         // Object Get
                         CHAOS.Portal.Client.Object.Get(
