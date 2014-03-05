@@ -43,6 +43,8 @@ define([
 
             var $window = $(window);
 
+            var deepLinkAnnotationId = '';
+
             // Message: metadataTab:changed
             app.on('metadataTab:changed').then(function (tab) {
 
@@ -215,6 +217,7 @@ define([
                 var dat = timeline.getSelection();
 
                 var content = timelineschemaselector.getContent(schema.guid, "");
+
                 timeline.changeItem(dat.start, dat.end, content);
 
                 metadataEditors.removeAll();
@@ -639,6 +642,39 @@ define([
                 // Choose Comments annotation as default.
                 timelineschemaselector.schemaItems()[0].click();
 
+                doDeepLinkAnnotation();
+            }
+
+            function doDeepLinkAnnotation() {
+                // Annotation Deeplink?
+                if (!deepLinkAnnotationId)
+                    return;
+
+                // Get schema for the chosen annotation
+                var schemaGuid = annotation.getSchemaGuidFromAnnotationGuid(deepLinkAnnotationId);
+
+                // Is schema visible on the timeline?
+                var schemaItem = timelineschemaselector.getByGuid(schemaGuid);
+                if (schemaItem.isactive() === false) {
+                    schemaItem.click();
+                }
+                doDeepLinkAnnotation_FindAnnInTimeline();
+            }
+
+            function doDeepLinkAnnotation_FindAnnInTimeline() {
+                if (!deepLinkAnnotationId)
+                    return;
+
+                var ann = timeline.getAnnotation(deepLinkAnnotationId);
+
+                if (ann) {
+
+                    timeline.cursorCentered(true);
+                    timeline.loopAnnotation(deepLinkAnnotationId);
+
+                } else {
+                    setTimeout(doDeepLinkAnnotation_FindAnnInTimeline, 100);
+                }
             }
 
             function windowSizeChangeBegin() {
@@ -692,6 +728,9 @@ define([
                         obj.guid = id;
                         var objguids = [];
                         objguids.push(id);
+
+                        // Annotation deeplink?
+                        deepLinkAnnotationId = format.getParamByName('aid', param);
 
                         // Object Get
                         CHAOS.Portal.Client.Object.Get(

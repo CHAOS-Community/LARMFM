@@ -345,6 +345,8 @@
                 return r[i].c;
             }
         }
+
+        return null;
     }
 
     function updateAnnotationLoop(ann) {
@@ -499,6 +501,11 @@
                     }
                 }
             }
+        },
+        loopAnnotation: function (guid) {
+            timeline.selectItemById(guid);
+            onloop();
+            timeline.selectItemById(guid);
         }
     };
 });

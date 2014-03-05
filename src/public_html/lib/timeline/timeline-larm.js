@@ -6656,6 +6656,9 @@ links.Timeline.prototype.addItemAtCursor = function (id) {
     //data.addColumn('boolean', 'editable');
     //data.addColumn('string', 'id');
 
+    if (xend > params.end)
+        xend = params.end;
+
     timeline.addItem({
         'start': xstart,
         'end': xend,
