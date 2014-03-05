@@ -108,10 +108,10 @@
             var text = "THOMAS";
             //var objectId = format.getParamByName('id', window.location);
             var params = getQSParameters();
-            var loc = window.location;
+            //var loc = window.location;
             // TODO: Could be a problem with newly created annotations where the id starts with 'n'. Test for n and remove it.
-            var url = loc.protocol + "//" + loc.host + "#!object/id=" + params["id"] + "&aid=" + this.id()
-
+            //var url = loc.protocol + "//" + loc.host + "#!object/id=" + params["id"] + "&aid=" + this.id()
+            var url = Settings.annotationDeepLinkUrl.replace('{0}', params["id"]).replace('{1}', this.id());
             window.prompt("Link URL for " + this.title(), url);
         }
     };

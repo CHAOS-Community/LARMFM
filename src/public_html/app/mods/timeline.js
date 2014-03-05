@@ -505,7 +505,10 @@
         loopAnnotation: function (guid) {
             timeline.selectItemById(guid);
             onloop();
-            timeline.selectItemById(guid);
+            setTimeout(function () {
+                timeline.selectItemById(guid);
+            }, 100);
+
         }
     };
 });
