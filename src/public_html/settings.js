@@ -31,6 +31,8 @@ Settings.password = "1234";
 Settings.startPath = "!search";
 Settings.publicPaths = ['AppLoader', 'Login'];
 
+Settings.annotationDeepLinkUrl = 'http://chaos-community.github.io/LARMFM/src/public_html/index.html#!object/id={0}&aid={1}';
+
 Settings.Search = {
     //filter: "(Type:Schedule OR Type:ScheduleNote)",
     filter: "",
