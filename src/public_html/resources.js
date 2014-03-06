@@ -73,8 +73,54 @@ var resources = {
     newannotation: {
         en: "New Annotation",
         da: "Ny annotation"
-    }
-    
-    
+    },
+
+    /* ------------------------------------- */
+    SearchSort: {
+        en: "sort...",
+        da: "sorter..."
+    },
+
+    SortPubStartDateAsc: {
+        en: "Broadcast date (oldest first)",
+        da: "Sendetidspunkt (ældste først)"
+    },
+       SortPubStartDateDesc : {
+           en: "Broadcast date (newest first)",
+           da: "Sendetidspunkt (nyeste først)"
+    },
+    SortTitleAsc: {
+        en: "Title (a til z)",
+        da: "Titel (a til z"
+    },
+    SortTitleDesc: {
+        en: "Title (z til a)",
+        da: "Titel (z til a)"
+    },
+   SortAnnotationCountDesc: {
+       en: "Annotation count (greatest first)",
+       da: "Antal annotationer (flest først)"
+    },
+   ObjectTypeAllFilter : {
+        en: "All",
+        da: "Alle"
+    },
+   ObjectTypeRadio : {
+        en: "Radio",
+        da: "Radio"
+    },
+   ObjectTypeSchedule: {
+       en: "Program schedules",
+       da: "Programoversigter"
+    },
+   ObjectTypeScheduleSup: {
+       en: "Program corrections",
+       da: "Rettelser til programoversigter"
+    },
+    T : {
+        en: "",
+        da: ""
+    },    
+    /* ------------------------------------- */
 
 };

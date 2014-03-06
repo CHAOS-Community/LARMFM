@@ -34,7 +34,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 objtpfilteritems.removeAll();
                 for (var i = 0; i < Settings.Search.objecttypefilter.length; i++) {
                     var item = Settings.Search.objecttypefilter[i];
-                    var fall = createObjectTypeFilterItem(item.fid, item.title, item.value);
+                    var fall = createObjectTypeFilterItem(item.fid, locale.text(item.title), item.value);
                     fall.isactive(i == 0);
                 }
             }
@@ -93,7 +93,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                 sortdic = [];
                 for (var i = 0; i < Settings.Search.sortitems.length; i++) {
                     var item = Settings.Search.sortitems[i]
-                    sortitems.push({title: item.title, id: item.id, value: item.value});
+                    sortitems.push({title: locale.text(item.title), id: item.id, value: item.value});
                     sortdic[item.id] = item.value;
                 }
             }
