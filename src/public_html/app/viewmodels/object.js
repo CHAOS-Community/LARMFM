@@ -720,7 +720,7 @@ define([
 
                     setTimeout(windowSizeChange, 500);
 
-                    metadataTab.add("Beskrivelse", "1", "");
+                    metadataTab.add(locale.text("MetadataSchemaTab_Description"), "1", "");
                 },
                 activate: function (param) {
                     if (param !== undefined) {

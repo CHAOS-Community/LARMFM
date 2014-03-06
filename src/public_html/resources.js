@@ -117,10 +117,6 @@ var resources = {
        en: "Program corrections",
        da: "Rettelser til programoversigter"
     },
-    T : {
-        en: "",
-        da: ""
-    },    
     /* ------------------------------------- */
     SearchTableHeadChoose: {
         en: "Choose",
@@ -149,5 +145,35 @@ var resources = {
     SearchTableHeadContent: {
         en: "Content",
         da: "Brugerindhold"
-    }  
+    },  
+    /* ------------------------------------- */
+    MetadataSchemaTab_Description: {
+        en: "Description",
+        da: "Beskrivelse"
+    },
+    /* ------------------------------------- */
+    AnnCommentEdit_StartTime: {
+        en: "Start time",
+        da: "Starttid"
+    },
+    AnnCommentEdit_EndTime: {
+        en: "End time",
+        da: "Sluttid"
+    },
+    AnnCommentEdit_Title: {
+        en: "Title",
+        da: "Titel"
+    },
+    AnnCommentEdit_Description: {
+        en: "Description",
+        da: "Beskrivelse"
+    },
+    AnnCommentEdit_Save: {
+        en: "Save",
+        da: "Gem"
+    },
+    AnnCommentEdit_Cancel: {
+        en: "Cancel",
+        da: "Annuller"
+    }
 };
