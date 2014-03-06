@@ -122,5 +122,32 @@ var resources = {
         da: ""
     },    
     /* ------------------------------------- */
-
+    SearchTableHeadChoose: {
+        en: "Choose",
+        da: "Vælg"
+    },
+    SearchTableHeadType: {
+        en: "Type",
+        da: "Type"
+    },
+    SearchTableHeadTitle: {
+        en: "Title",
+        da: "Titel"
+    },
+    SearchTableHeadDate: {
+        en: "Date",
+        da: "Dato"
+    },
+    SearchTableHeadDuration: {
+        en: "Duration",
+        da: "Varighed"
+    },
+    SearchTableHeadChannel: {
+        en: "Channel",
+        da: "Kanal"
+    },
+    SearchTableHeadContent: {
+        en: "Content",
+        da: "Brugerindhold"
+    }  
 };

@@ -353,7 +353,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                     var d = r.PubStartDate;
 
                     if (d.length < 4 || d.substring(0, 4) == "1900" || d.substring(0, 4) == "0101") {
-                        oi.datetimepretty("ukendt dato");
+                        oi.datetimepretty(locale.text("unknowndate"));
                     }
                     else {
                         if (d.length >= 4 && d.substring(0, 4) != "1900")
