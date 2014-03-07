@@ -268,6 +268,8 @@
             return;
         }
 
+        cursorCentered(false);
+
         var totalpixel = $("#timelinescrollcontent").width();
         var rangeobj = timeline.getVisibleChartRange();
         var rangevalue = rangeobj.end - rangeobj.start;
@@ -282,6 +284,7 @@
     }
 
     function onRangeChange(event) {
+        cursorCentered(false);
         var totalvalue = end() - start();
         var rangevalue = event.end - event.start;
         var totalpixel = $("#timelinescroll").width();
