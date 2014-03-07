@@ -511,7 +511,7 @@
             onloop();
             setTimeout(function () {
                 timeline.selectItemById(guid);
-            }, 100);
+            }, 500);
 
         }
     };
