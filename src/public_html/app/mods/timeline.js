@@ -488,6 +488,7 @@
                     if (dat.end > dat.start) {
                         timeline.changeItem(row, { start: dat.start, end: dat.end, content: dat.content });
                         updateAnnotationLoop(dat);
+                        app.trigger('metadata:changed_timeline', { data: dat });
                     }
                 }
             }
@@ -502,6 +503,7 @@
                     if (dat.end > dat.start) {
                         timeline.changeItem(row, { start: dat.start, end: dat.end, content: dat.content });
                         updateAnnotationLoop(dat);
+                        app.trigger('metadata:changed_timeline', { data: dat });
                     }
                 }
             }
@@ -513,6 +515,9 @@
                 timeline.selectItemById(guid);
             }, 500);
 
+        },
+        editMode: function (isEditing) {
+            timeline.setEditMode(isEditing);
         }
     };
 });

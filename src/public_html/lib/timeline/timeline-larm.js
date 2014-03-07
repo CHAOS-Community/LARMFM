@@ -228,6 +228,7 @@ links.Timeline = function (container) {
 
     this.loopId = null;
     this.loopBtnElm = null;
+    this.editMode = false;
 
     var dom = this.dom;
 
@@ -2993,26 +2994,29 @@ links.Timeline.prototype.onMouseUp = function (event) {
             else if (options.selectable) {
                 // select/unselect item
                 if (params.itemIndex != undefined) {
-                    if (!this.isSelected(params.itemIndex)) {
-                        this.selectItem(params.itemIndex);
-                        this.trigger('select');
+                    if (!this.editMode) {
+                        if (!this.isSelected(params.itemIndex)) {
+                            this.selectItem(params.itemIndex);
+                            this.trigger('select');
+                        }
                     }
                 }
                 else {
                     if (options.unselectable) {
-                        // TODO: Only deselect if not editing.
-                        if (1 === 1) {
+                        // Only deselect if not editing.
+                        if (!this.editMode) {
                             this.unselectItem();
                             this.redraw();
                             this.trigger('select');
-                            //TODO: place play cursor here?
-                            this.trigger('timechange');
-                            var x = params.mouseX - params.frameLeft;
-                            var y = params.mouseY - params.frameTop;
-                            var xstart = this.screenToTime(x);
-                            this.setCustomTime(xstart);
-                            this.trigger('timechanged');
                         }
+                        // Place play cursor here
+                        this.trigger('timechange');
+                        var x = params.mouseX - params.frameLeft;
+                        var y = params.mouseY - params.frameTop;
+                        var xstart = this.screenToTime(x);
+                        this.setCustomTime(xstart);
+                        this.trigger('timechanged');
+
                     }
                 }
             }
@@ -6712,6 +6716,10 @@ links.Timeline.prototype.setLoop = function (id) {
     this.loopId = id;
 }
 
+links.Timeline.prototype.setEditMode = function (isEditing) {
+    this.editMode = isEditing;
+}
+
 /* ================================= */
 links.Timeline.prototype.repaintSelectActions = function () {
     var timeline = this,
@@ -6735,7 +6743,7 @@ links.Timeline.prototype.repaintSelectActions = function () {
         frame.appendChild(selectActions);
         dom.items.selectActions = selectActions;
 
-        
+
     }
 
     var index = this.selection ? this.selection.index : -1,
