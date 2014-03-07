@@ -123,7 +123,7 @@
         timeline.selectItemById(ann.annotation.data.Id);
         player.setProgramTimePos(s);
         player.play();
-
+        timeline.cursorCentered(true);
         //var e = format.getSecondsFromString(ann.endtime());
         //player.setProgramTimeLoop(s, e);
         //player.playLoop();
