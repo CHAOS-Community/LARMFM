@@ -204,10 +204,12 @@ define([
             app.on('annotation:add').then(function (e) {
                 // TODO: Choose metadataschema if more are activated
 
+                timeline.editMode(true);
+
                 // Only comments for now!
                 if (timelineschemaselector.schemaItems().length < 1 ||
                     timelineschemaselector.schemaItems()[0].isactive() == false) {
-                    app.showMessage("Vaelg Comments ark for at annotere.");
+                    app.showMessage("Please choose comments schema first.");
                     return;
                 }
 
@@ -236,6 +238,9 @@ define([
 
             // Message: 
             app.on('metadata:cancel').then(function (e) {
+
+                timeline.editMode(false);
+
                 var item = timeline.getSelection();
 
                 if (item && item.id.substring(0, 1) == "n") {
@@ -250,6 +255,8 @@ define([
 
             // Message: 
             app.on('metadata:save').then(function (e) {
+
+                timeline.editMode(false);
 
                 if (!e.guid || e.guid.substring(0, 1) == "n") {
 
@@ -415,6 +422,7 @@ define([
                 }
 
                 metadataEditors.removeAll();
+                metadataPlayerControlVisible(false);
             }
 
             function annotationCreated() {
@@ -467,6 +475,8 @@ define([
 
             // Message: 
             app.on('metadata:edit').then(function (e) {
+
+                timeline.editMode(true);
 
                 var guid;
 
