@@ -370,7 +370,8 @@
         if (!ready)
             return;
 
-        var position = Math.round(pos * 100) / 100;
+        //var position = Math.round(pos * 100) / 100;
+        var position = pos; //Math.round(pos);
         if (prepos == position)
             return;
 

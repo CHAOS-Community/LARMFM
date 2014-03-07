@@ -6580,6 +6580,9 @@ links.Timeline.prototype.centerTimeline = function () {
         re -= sd;
     }
 
+    rs = Math.round(rs);
+    re = Math.round(re);
+
     if (rs >= this.options.min && re <= this.options.max) {
         this.setVisibleChartRange(new Date(rs), new Date(re));
     }
