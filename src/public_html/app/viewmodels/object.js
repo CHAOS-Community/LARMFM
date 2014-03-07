@@ -670,19 +670,10 @@ define([
                 }
             }
 
-            function windowSizeChangeBegin() {
-                var w = $window.width() / 2;
-                var h = $window.height();
-                //$("#timelines").width(w - 180);
-                $("#timelines").width(w - 177);
-                timeline.redraw();
-            }
-
-
             function windowSizeChange() {
-                var w = $window.width();
+                var w = $window.width(); // substract enough to get free of scrollbar.
                 var h = $window.height();
-                //$("#timelines").width(w - 180);
+                $(".player").width(w - 42);
                 $("#timelines").width(w - 177);
                 timeline.redraw();
             }
@@ -728,15 +719,11 @@ define([
                 schemaItems: timelineschemaselector.schemaItems,
                 compositionComplete: function (child, parent, settings) {
                     compositionCompleted = true;
-                    windowSizeChangeBegin();
+                    windowSizeChange();
                     $window.resize(windowSizeChange);
-
-                    setTimeout(windowSizeChange, 500);
-
                     metadataTab.add(locale.text("MetadataSchemaTab_Description"), "1", "");
 
                     initPlayer();
-
                 },
                 activate: function (param) {
                     if (param !== undefined) {
