@@ -3006,6 +3006,12 @@ links.Timeline.prototype.onMouseUp = function (event) {
                             this.redraw();
                             this.trigger('select');
                             //TODO: place play cursor here?
+                            this.trigger('timechange');
+                            var x = params.mouseX - params.frameLeft;
+                            var y = params.mouseY - params.frameTop;
+                            var xstart = this.screenToTime(x);
+                            this.setCustomTime(xstart);
+                            this.trigger('timechanged');
                         }
                     }
                 }
@@ -6579,6 +6585,9 @@ links.Timeline.prototype.centerTimeline = function () {
         rs -= sd;
         re -= sd;
     }
+
+    rs = Math.round(rs);
+    re = Math.round(re);
 
     if (rs >= this.options.min && re <= this.options.max) {
         this.setVisibleChartRange(new Date(rs), new Date(re));

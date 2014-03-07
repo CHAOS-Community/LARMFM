@@ -25,6 +25,8 @@ define([
             obj.guid;
             obj.data;
 
+            var compositionCompleted = false;
+            var playerInitiated = false;
             var isPlayerLoading = ko.observable(true);
 
             var title = ko.observable();
@@ -535,17 +537,6 @@ define([
                     insertAnnotations();
                 });
 
-                // Initiate Player and callback functions
-                player.init(r);
-                player.position.subscribe(function (position) {
-                    playerposition(position);
-                    timeline.setPosition(playerposition());
-                });
-                player.duration.subscribe(function (duration) {
-                    timeline.init(duration);
-                    insertAnnotations();
-                });
-
                 // Get common metadata for the object
                 for (var j = 0; j < r.Metadatas.length; j++) {
                     if (r.Metadatas[j].MetadataSchemaGuid == mdsguid) {
@@ -577,6 +568,8 @@ define([
                 }
 
                 showMainMetadata();
+
+                initPlayer();
             }
 
             function loadAnnotations() {
@@ -677,21 +670,31 @@ define([
                 }
             }
 
-            function windowSizeChangeBegin() {
-                var w = $window.width() / 2;
+            function windowSizeChange() {
+                var w = $window.width(); // substract enough to get free of scrollbar.
                 var h = $window.height();
-                //$("#timelines").width(w - 180);
+                $(".player").width(w - 42);
                 $("#timelines").width(w - 177);
                 timeline.redraw();
             }
 
+            function initPlayer() {
 
-            function windowSizeChange() {
-                var w = $window.width();
-                var h = $window.height();
-                //$("#timelines").width(w - 180);
-                $("#timelines").width(w - 177);
-                timeline.redraw();
+                if (playerInitiated || !compositionCompleted || !obj.data)
+                    return;
+
+                playerInitiated = true;
+
+                // Initiate Player and callback functions
+                player.init(obj.data);
+                player.position.subscribe(function (position) {
+                    playerposition(position);
+                    timeline.setPosition(playerposition());
+                });
+                player.duration.subscribe(function (duration) {
+                    timeline.init(duration);
+                    insertAnnotations();
+                });
             }
 
             return {
@@ -715,12 +718,12 @@ define([
                 metadataTabs: metadataTab.tabs,
                 schemaItems: timelineschemaselector.schemaItems,
                 compositionComplete: function (child, parent, settings) {
-                    windowSizeChangeBegin();
+                    compositionCompleted = true;
+                    windowSizeChange();
                     $window.resize(windowSizeChange);
+                    metadataTab.add(locale.text("MetadataSchemaTab_Description"), "1", "");
 
-                    setTimeout(windowSizeChange, 500);
-
-                    metadataTab.add("Beskrivelse", "1", "");
+                    initPlayer();
                 },
                 activate: function (param) {
                     if (param !== undefined) {

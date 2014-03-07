@@ -268,6 +268,8 @@
             return;
         }
 
+        cursorCentered(false);
+
         var totalpixel = $("#timelinescrollcontent").width();
         var rangeobj = timeline.getVisibleChartRange();
         var rangevalue = rangeobj.end - rangeobj.start;
@@ -282,6 +284,7 @@
     }
 
     function onRangeChange(event) {
+        cursorCentered(false);
         var totalvalue = end() - start();
         var rangevalue = event.end - event.start;
         var totalpixel = $("#timelinescroll").width();
@@ -367,7 +370,8 @@
         if (!ready)
             return;
 
-        var position = Math.round(pos * 100) / 100;
+        //var position = Math.round(pos * 100) / 100;
+        var position = pos; //Math.round(pos);
         if (prepos == position)
             return;
 
@@ -507,7 +511,7 @@
             onloop();
             setTimeout(function () {
                 timeline.selectItemById(guid);
-            }, 100);
+            }, 500);
 
         }
     };

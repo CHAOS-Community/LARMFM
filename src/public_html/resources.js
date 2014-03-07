@@ -73,8 +73,107 @@ var resources = {
     newannotation: {
         en: "New Annotation",
         da: "Ny annotation"
-    }
-    
-    
+    },
 
+    /* ------------------------------------- */
+    SearchSort: {
+        en: "sort...",
+        da: "sorter..."
+    },
+
+    SortPubStartDateAsc: {
+        en: "Broadcast date (oldest first)",
+        da: "Sendetidspunkt (ældste først)"
+    },
+       SortPubStartDateDesc : {
+           en: "Broadcast date (newest first)",
+           da: "Sendetidspunkt (nyeste først)"
+    },
+    SortTitleAsc: {
+        en: "Title (a til z)",
+        da: "Titel (a til z"
+    },
+    SortTitleDesc: {
+        en: "Title (z til a)",
+        da: "Titel (z til a)"
+    },
+   SortAnnotationCountDesc: {
+       en: "Annotation count (greatest first)",
+       da: "Antal annotationer (flest først)"
+    },
+   ObjectTypeAllFilter : {
+        en: "All",
+        da: "Alle"
+    },
+   ObjectTypeRadio : {
+        en: "Radio",
+        da: "Radio"
+    },
+   ObjectTypeSchedule: {
+       en: "Program schedules",
+       da: "Programoversigter"
+    },
+   ObjectTypeScheduleSup: {
+       en: "Program corrections",
+       da: "Rettelser til programoversigter"
+    },
+    /* ------------------------------------- */
+    SearchTableHeadChoose: {
+        en: "Choose",
+        da: "Vælg"
+    },
+    SearchTableHeadType: {
+        en: "Type",
+        da: "Type"
+    },
+    SearchTableHeadTitle: {
+        en: "Title",
+        da: "Titel"
+    },
+    SearchTableHeadDate: {
+        en: "Date",
+        da: "Dato"
+    },
+    SearchTableHeadDuration: {
+        en: "Duration",
+        da: "Varighed"
+    },
+    SearchTableHeadChannel: {
+        en: "Channel",
+        da: "Kanal"
+    },
+    SearchTableHeadContent: {
+        en: "Content",
+        da: "Brugerindhold"
+    },  
+    /* ------------------------------------- */
+    MetadataSchemaTab_Description: {
+        en: "Description",
+        da: "Beskrivelse"
+    },
+    /* ------------------------------------- */
+    AnnCommentEdit_StartTime: {
+        en: "Start time",
+        da: "Starttid"
+    },
+    AnnCommentEdit_EndTime: {
+        en: "End time",
+        da: "Sluttid"
+    },
+    AnnCommentEdit_Title: {
+        en: "Title",
+        da: "Titel"
+    },
+    AnnCommentEdit_Description: {
+        en: "Description",
+        da: "Beskrivelse"
+    },
+    AnnCommentEdit_Save: {
+        en: "Save",
+        da: "Gem"
+    },
+    AnnCommentEdit_Cancel: {
+        en: "Cancel",
+        da: "Annuller"
+    }
 };

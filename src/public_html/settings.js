@@ -6,7 +6,8 @@
 // filtering af skemaer
 // ----------------------
 
-Settings.title = "LARM.fm";
+Settings.title = "TRE";
+//Settings.title = "LARM.fm";
 //Settings.title = "Sendeplanen";
 
 Settings.brandName = "larm";
@@ -37,20 +38,20 @@ Settings.Search = {
     //filter: "(Type:Schedule OR Type:ScheduleNote)",
     filter: "",
     sortitems: [
-        { title: "sorter...", id: "", value: "PubStartDate+asc" },
-        { title: "Sendetidspunkt (ældst først)", id: "1", value: "PubStartDate+asc" },
-        { title: "Sendetidspunkt (nyeste først)", id: "2", value: "PubStartDate+desc" },
-        { title: "Titel (a til z)", id: "3", value: "Title+asc" },
-        { title: "Title (z til a)", id: "4", value: "Title+desc" },
-        { title: "Antal annotationer (flest først)", id: "5", value: "AnnotationCount+desc" }//,
+        { title: "SearchSort", id: "", value: "PubStartDate+asc" },
+        { title: "SortPubStartDateAsc", id: "1", value: "PubStartDate+asc" },
+        { title: "SortPubStartDateDesc", id: "2", value: "PubStartDate+desc" },
+        { title: "SortTitleAsc", id: "3", value: "Title+asc" },
+        { title: "SortTitleDesc", id: "4", value: "Title+desc" },
+        { title: "SortAnnotationCountDesc", id: "5", value: "AnnotationCount+desc" }//,
         //{ title: "LARM OCR Parsing (mindst først)", id: "6", value: "OCR-Report_float+asc" },
         //{ title: "LARM OCR Parsing (højest først)", id: "7", value: "OCR-Report_float+desc" }
     ],
     objecttypefilter: [
-        { fid: "0", title: "Alt", value: "" },
-        { fid: "1", title: "Radio", value: "Radio" },
-        { fid: "2", title: "Programoversigter", value: "Schedule" },
-        { fid: "3", title: "Rettelser til programoversigter", value: "ScheduleNote" }
+        { fid: "0", title: "ObjectTypeAllFilter", value: "" },
+        { fid: "1", title: "ObjectTypeRadio", value: "Radio" },
+        { fid: "2", title: "ObjectTypeSchedule", value: "Schedule" },
+        { fid: "3", title: "ObjectTypeScheduleSup", value: "ScheduleNote" }
     ],
     UIViews:
     {

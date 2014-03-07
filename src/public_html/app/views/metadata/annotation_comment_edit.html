@@ -4,8 +4,8 @@
             <td colspan="2">
                 <table>
                     <tr>
-                        <td>Start time:</td>
-                        <td>End time:</td>
+                        <td data-bind="restext:'AnnCommentEdit_StartTime'">Start time:</td>
+                        <td data-bind="restext:'AnnCommentEdit_EndTime'">End time:</td>
                     </tr>
                     <tr>
                         <td><input type="text" data-bind="value: starttime" /></td>
@@ -15,13 +15,13 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2">Title: </td>
+            <td colspan="2" data-bind="restext:'AnnCommentEdit_Title'">Title: </td>
         </tr>
         <tr>
             <td colspan="2"><input type="text" data-bind="value: title" style="width:100%" /></td>
         </tr>
         <tr>
-            <td colspan="2">Beskrivelse: </td>
+            <td colspan="2" data-bind="restext:'AnnCommentEdit_Description'">Beskrivelse: </td>
         </tr>
         <tr>
             <td colspan="2"><textarea data-bind="value: description" rows="5" style="width:100%"></textarea></td>
@@ -31,10 +31,10 @@
                 <table>
                     <tr>
                         <td>
-                            <button data-bind="click: btnsave">Gem</button>
+                            <button data-bind="click: btnsave,restext:'AnnCommentEdit_Save'">Gem</button>
                         </td>
                         <td>
-                            <button data-bind="click: btncancel">Annuller</button>
+                            <button data-bind="click: btncancel,restext:'AnnCommentEdit_Cancel'">Annuller</button>
                         </td>
                     </tr>
                 </table>
