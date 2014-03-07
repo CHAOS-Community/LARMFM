@@ -25,6 +25,8 @@ define([
             obj.guid;
             obj.data;
 
+            var compositionCompleted = false;
+            var playerInitiated = false;
             var isPlayerLoading = ko.observable(true);
 
             var title = ko.observable();
@@ -535,17 +537,6 @@ define([
                     insertAnnotations();
                 });
 
-                // Initiate Player and callback functions
-                player.init(r);
-                player.position.subscribe(function (position) {
-                    playerposition(position);
-                    timeline.setPosition(playerposition());
-                });
-                player.duration.subscribe(function (duration) {
-                    timeline.init(duration);
-                    insertAnnotations();
-                });
-
                 // Get common metadata for the object
                 for (var j = 0; j < r.Metadatas.length; j++) {
                     if (r.Metadatas[j].MetadataSchemaGuid == mdsguid) {
@@ -577,6 +568,8 @@ define([
                 }
 
                 showMainMetadata();
+
+                initPlayer();
             }
 
             function loadAnnotations() {
@@ -694,6 +687,25 @@ define([
                 timeline.redraw();
             }
 
+            function initPlayer() {
+
+                if (playerInitiated || !compositionCompleted || !obj.data)
+                    return;
+
+                playerInitiated = true;
+
+                // Initiate Player and callback functions
+                player.init(obj.data);
+                player.position.subscribe(function (position) {
+                    playerposition(position);
+                    timeline.setPosition(playerposition());
+                });
+                player.duration.subscribe(function (duration) {
+                    timeline.init(duration);
+                    insertAnnotations();
+                });
+            }
+
             return {
                 isPlayerLoading: isPlayerLoading,
 
@@ -715,12 +727,16 @@ define([
                 metadataTabs: metadataTab.tabs,
                 schemaItems: timelineschemaselector.schemaItems,
                 compositionComplete: function (child, parent, settings) {
+                    compositionCompleted = true;
                     windowSizeChangeBegin();
                     $window.resize(windowSizeChange);
 
                     setTimeout(windowSizeChange, 500);
 
                     metadataTab.add(locale.text("MetadataSchemaTab_Description"), "1", "");
+
+                    initPlayer();
+
                 },
                 activate: function (param) {
                     if (param !== undefined) {
