@@ -3006,6 +3006,12 @@ links.Timeline.prototype.onMouseUp = function (event) {
                             this.redraw();
                             this.trigger('select');
                             //TODO: place play cursor here?
+                            this.trigger('timechange');
+                            var x = params.mouseX - params.frameLeft;
+                            var y = params.mouseY - params.frameTop;
+                            var xstart = this.screenToTime(x);
+                            this.setCustomTime(xstart);
+                            this.trigger('timechanged');
                         }
                     }
                 }
