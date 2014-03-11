@@ -128,7 +128,12 @@
         //-------------------------------------------------
         getByGuid: function (guid, callback, context) {
 
-            pushCallback(guid, callback, context);
+            var g = guid;
+            if (g.substring(0, 1) == "n") {
+                g = g.substring(1);
+            }
+
+            pushCallback(g, callback, context);
 
             // Object.Get
             // ---------------------------------------------------------
@@ -137,17 +142,12 @@
             // includeFolders, includeAccessPoints, pageSize, pageIndex, 
             // serviceCaller
             var guids = [];
-            guids.push(guid);
+            guids.push(g);
             CHAOS.Portal.Client.Object.Get(
                 guids, Settings.accessPointGuid,
                 true, true, true,
                 false, false, 1, 0,
                 null).WithCallback(metadataReceived);
-            //CHAOS.Portal.Client.Object.Get(
-            //    guids, null,
-            //    true, true, true,
-            //    false, false, 1, 0,
-            //    null).WithCallback(metadataReceived);
         },
         //-------------------------------------------------
         createObject: function (callback) {

@@ -25,6 +25,8 @@ define([
             obj.guid;
             obj.data;
 
+            var compositionCompleted = false;
+            var playerInitiated = false;
             var isPlayerLoading = ko.observable(true);
 
             var title = ko.observable();
@@ -39,7 +41,11 @@ define([
             var metadataViews = ko.observableArray();
             var metadataEditors = ko.observableArray();
 
+            metadataPlayerControlVisible = ko.observable(false);
+
             var $window = $(window);
+
+            var deepLinkAnnotationId = '';
 
             // Message: metadataTab:changed
             app.on('metadataTab:changed').then(function (tab) {
@@ -198,10 +204,12 @@ define([
             app.on('annotation:add').then(function (e) {
                 // TODO: Choose metadataschema if more are activated
 
+                timeline.editMode(true);
+
                 // Only comments for now!
                 if (timelineschemaselector.schemaItems().length < 1 ||
                     timelineschemaselector.schemaItems()[0].isactive() == false) {
-                    app.showMessage("Vaelg Comments ark for at annotere.");
+                    app.showMessage("Please choose comments schema first.");
                     return;
                 }
 
@@ -213,6 +221,7 @@ define([
                 var dat = timeline.getSelection();
 
                 var content = timelineschemaselector.getContent(schema.guid, "");
+
                 timeline.changeItem(dat.start, dat.end, content);
 
                 metadataEditors.removeAll();
@@ -223,11 +232,15 @@ define([
                 editor.setview(Settings.Schema[schema.guid].edit, { guid: amd.Id, metadata: amd });
                 metadataEditors.push(editor);
                 timeline.editItem(amd.Id);
+                metadataPlayerControlVisible(true);
 
             });
 
             // Message: 
             app.on('metadata:cancel').then(function (e) {
+
+                timeline.editMode(false);
+
                 var item = timeline.getSelection();
 
                 if (item && item.id.substring(0, 1) == "n") {
@@ -237,10 +250,13 @@ define([
                     timeline.unselectItem();
 
                 metadataEditors.removeAll();
+                metadataPlayerControlVisible(false);
             });
 
             // Message: 
             app.on('metadata:save').then(function (e) {
+
+                timeline.editMode(false);
 
                 if (!e.guid || e.guid.substring(0, 1) == "n") {
 
@@ -406,11 +422,12 @@ define([
                 }
 
                 metadataEditors.removeAll();
+                metadataPlayerControlVisible(false);
             }
 
             function annotationCreated() {
                 metadataEditors.removeAll();
-
+                metadataPlayerControlVisible(false);
             }
 
             // Message: 
@@ -459,6 +476,8 @@ define([
             // Message: 
             app.on('metadata:edit').then(function (e) {
 
+                timeline.editMode(true);
+
                 var guid;
 
                 if (e.annotation) {
@@ -490,6 +509,7 @@ define([
                             var editor = new metadatafac.MetadataView();
                             editor.setview(Settings.Schema[mds[i].MetadataSchemaGuid].edit, { guid: r.Id, metadata: mds[i] });
                             metadataEditors.push(editor);
+                            metadataPlayerControlVisible(true);
                             break;
                         }
                     }
@@ -527,17 +547,6 @@ define([
                     insertAnnotations();
                 });
 
-                // Initiate Player and callback functions
-                player.init(r);
-                player.position.subscribe(function (position) {
-                    playerposition(position);
-                    timeline.setPosition(playerposition());
-                });
-                player.duration.subscribe(function (duration) {
-                    timeline.init(duration);
-                    insertAnnotations();
-                });
-
                 // Get common metadata for the object
                 for (var j = 0; j < r.Metadatas.length; j++) {
                     if (r.Metadatas[j].MetadataSchemaGuid == mdsguid) {
@@ -569,6 +578,8 @@ define([
                 }
 
                 showMainMetadata();
+
+                initPlayer();
             }
 
             function loadAnnotations() {
@@ -634,23 +645,66 @@ define([
                 // Choose Comments annotation as default.
                 timelineschemaselector.schemaItems()[0].click();
 
+                doDeepLinkAnnotation();
             }
 
-            function windowSizeChangeBegin() {
-                var w = $window.width() / 2;
-                var h = $window.height();
-                //$("#timelines").width(w - 180);
-                $("#timelines").width(w - 177);
-                timeline.redraw();
+            function doDeepLinkAnnotation() {
+                // Annotation Deeplink?
+                if (!deepLinkAnnotationId)
+                    return;
+
+                // Get schema for the chosen annotation
+                var schemaGuid = annotation.getSchemaGuidFromAnnotationGuid(deepLinkAnnotationId);
+
+                // Is schema visible on the timeline?
+                var schemaItem = timelineschemaselector.getByGuid(schemaGuid);
+                if (schemaItem.isactive() === false) {
+                    schemaItem.click();
+                }
+                doDeepLinkAnnotation_FindAnnInTimeline();
             }
 
+            function doDeepLinkAnnotation_FindAnnInTimeline() {
+                if (!deepLinkAnnotationId)
+                    return;
+
+                var ann = timeline.getAnnotation(deepLinkAnnotationId);
+
+                if (ann) {
+
+                    timeline.cursorCentered(true);
+                    timeline.loopAnnotation(deepLinkAnnotationId);
+
+                } else {
+                    setTimeout(doDeepLinkAnnotation_FindAnnInTimeline, 100);
+                }
+            }
 
             function windowSizeChange() {
-                var w = $window.width();
+                var w = $window.width(); // substract enough to get free of scrollbar.
                 var h = $window.height();
-                //$("#timelines").width(w - 180);
+                $(".player").width(w - 42);
                 $("#timelines").width(w - 177);
                 timeline.redraw();
+            }
+
+            function initPlayer() {
+
+                if (playerInitiated || !compositionCompleted || !obj.data)
+                    return;
+
+                playerInitiated = true;
+
+                // Initiate Player and callback functions
+                player.init(obj.data);
+                player.position.subscribe(function (position) {
+                    playerposition(position);
+                    timeline.setPosition(playerposition());
+                });
+                player.duration.subscribe(function (duration) {
+                    timeline.init(duration);
+                    insertAnnotations();
+                });
             }
 
             return {
@@ -674,12 +728,12 @@ define([
                 metadataTabs: metadataTab.tabs,
                 schemaItems: timelineschemaselector.schemaItems,
                 compositionComplete: function (child, parent, settings) {
-                    windowSizeChangeBegin();
+                    compositionCompleted = true;
+                    windowSizeChange();
                     $window.resize(windowSizeChange);
+                    metadataTab.add(locale.text("MetadataSchemaTab_Description"), "1", "");
 
-                    setTimeout(windowSizeChange, 500);
-
-                    metadataTab.add("Beskrivelse", "1", "");
+                    initPlayer();
                 },
                 activate: function (param) {
                     if (param !== undefined) {
@@ -687,6 +741,9 @@ define([
                         obj.guid = id;
                         var objguids = [];
                         objguids.push(id);
+
+                        // Annotation deeplink?
+                        deepLinkAnnotationId = format.getParamByName('aid', param);
 
                         // Object Get
                         CHAOS.Portal.Client.Object.Get(
@@ -714,6 +771,17 @@ define([
                 },
                 annotationAddBtn: function () {
                     app.trigger("annotation:add", {});
+                },
+                isCursorCentered: timeline.cursorCentered,
+                cursorCenteredBtn: function () {
+                    timeline.cursorCentered(!timeline.cursorCentered());
+                },
+                metadataPlayerControlVisible: metadataPlayerControlVisible,
+                pointbeginbtn: function () {
+                    timeline.setAnnotationStartToCursor();
+                },
+                pointendbtn: function () {
+                    timeline.setAnnotationEndToCursor();
                 }
             };
         });

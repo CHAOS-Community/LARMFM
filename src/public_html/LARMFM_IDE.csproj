@@ -148,6 +148,7 @@
     <Content Include="img\larm.png" />
     <Content Include="img\larm_logo.png" />
     <Content Include="img\player.png" />
+    <Content Include="img\player_buttons.png" />
     <Content Include="img\tre_logo.png" />
     <Content Include="index.html" />
     <Content Include="jsonform_test.html" />

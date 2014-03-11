@@ -399,6 +399,18 @@
         },
         playLoop: function () {
             playLoop();
+        },
+        isCursorInsideLoop: function () {
+            if (loopstart === null || loopend === null)
+                return false;
+
+            var pos = jwplayer().getPosition();
+            var idx = jwplayer().getPlaylistIndex();
+            if (idx >= loopstart.index && pos >= loopstart.pos &&
+                idx <= loopend.index && pos <= loopend.pos)
+                return true;
+
+            return false;
         }
     };
 });

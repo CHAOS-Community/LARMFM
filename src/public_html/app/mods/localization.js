@@ -91,7 +91,8 @@
         var key = binding.key;
         var item = resources[key];
         if (!item) {
-            throw "ko.localationbinding.getLocalizedText: Could not find key '" + key + "'.";
+            return key;
+            //throw "ko.localationbinding.getLocalizedText: Could not find key '" + key + "'.";
         }
 
         // Get text for locale, fallback to 'default' key or return an empty string if not text is present.

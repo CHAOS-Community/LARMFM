@@ -78,6 +78,25 @@
         this.mainself.isLoading(false);
     };
 
+    function getQSParameters() {
+        var major = window.location.hash.split('/');
+        if (major.length < 2)
+            return [];
+        var params = major[1].split('&');
+
+        var result = [];
+        for (var i = 0; i < params.length; i++) {
+
+            var res = params[i].split('=');
+            if (res.length == 2)
+                result[res[0]] = res[1]; //({ key: res[0], value: res[1] });
+            else
+                result[res[0]] = ''; //result.push({ key: res[0], value: '' });
+        }
+
+        return result;
+    }
+
     MDAnnotationLine.prototype.optionclick = function (param, data, context) {
         if (param === "Edit") {
             this.collapsed(true);
@@ -85,6 +104,15 @@
             this.annotation.togglePlayBtnVisibility();
             this.timeline.editItem(data.annotation.data.Id);
             app.trigger('metadata:edit', this);
+        } else if (param === "CopyLink") {
+            var text = "THOMAS";
+            //var objectId = format.getParamByName('id', window.location);
+            var params = getQSParameters();
+            //var loc = window.location;
+            // TODO: Could be a problem with newly created annotations where the id starts with 'n'. Test for n and remove it.
+            //var url = loc.protocol + "//" + loc.host + "#!object/id=" + params["id"] + "&aid=" + this.id()
+            var url = Settings.annotationDeepLinkUrl.replace('{0}', params["id"]).replace('{1}', this.id());
+            window.prompt("Link URL for " + this.title(), url);
         }
     };
 
@@ -95,7 +123,7 @@
         timeline.selectItemById(ann.annotation.data.Id);
         player.setProgramTimePos(s);
         player.play();
-
+        timeline.cursorCentered(true);
         //var e = format.getSecondsFromString(ann.endtime());
         //player.setProgramTimeLoop(s, e);
         //player.playLoop();
