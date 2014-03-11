@@ -13,12 +13,14 @@ define([
     'mods/objectmanager',
     'mods/timelineschemaselector',
     'mods/annotation',
-    'mods/metadataTab'
+    'mods/metadataTab',
+    'mods/localization'
 ],
         function (app, ko, portal, state, objfac, xmlman,
             jsonformfields, metadatafac, format, player, timeline, objectmanager,
-            timelineschemaselector, annotation, metadataTab) {
+            timelineschemaselector, annotation, metadataTab, locale) {
 
+            // FIELDS: --------------------------------------
             var obj = {};
             obj.guid;
             obj.data;
@@ -30,6 +32,7 @@ define([
             var publication = ko.observable();
             var abstracttxt = ko.observable();
             var description = ko.observable();
+            var publishtext = ko.observable();
 
             var playerposition = ko.observable(0);
 
@@ -145,11 +148,53 @@ define([
 
                 timeline.addData(dataarray);
 
-                if (metadataViews().length==0)
+                if (metadataViews().length == 0)
                     addAnnotationsToMetadataViews();
             });
 
-            // Message: 
+
+            // MSG: annotation:metadataview -------------------------------
+            app.on('annotation:metadataview').then(function (e) {
+                var id = e.id;
+                var schemaGuid = annotation.getSchemaGuidFromAnnotationGuid(id);
+                // Is tab open?
+                metadataTab.activateTabByGuid(schemaGuid);                
+                expandMetadataById(id);
+            });
+            
+            function expandMetadataById(id) {
+                for (var i = 0; i < metadataViews().length; i++) {
+                    if (metadataViews()[i].data.Id === id) {
+                        var dat = metadataViews()[i].data;
+
+                        if (!dat.self) {
+                            expandMetadataByIdRetry(id);
+                            return;
+                        }
+
+                        if (dat.self.collapsed() === true) {
+                            dat.self.annotation.btnexpand();
+                        }
+
+                        var ele = $('#ID' + id);
+                        $('html,body').animate({ scrollTop: ele.offset().top - 62 });
+                        return;
+                    }
+                }
+
+                expandMetadataByIdRetry(id);
+            }
+
+            function expandMetadataByIdRetry(id) {
+                setTimeout(
+                    function () {
+                        expandMetadataById(id)
+                    }, 1000);
+            }
+
+            // -------------------------------------------------------
+
+            // MSG: annotation:add -----------------------------------
             app.on('annotation:add').then(function (e) {
                 // TODO: Choose metadataschema if more are activated
 
@@ -173,7 +218,7 @@ define([
                 metadataEditors.removeAll();
                 // Add editor
                 var amd = createNewAmd({ guid: id, schemaguid: schema.guid });
-                
+
                 var editor = new metadatafac.MetadataView();
                 editor.setview(Settings.Schema[schema.guid].edit, { guid: amd.Id, metadata: amd });
                 metadataEditors.push(editor);
@@ -212,7 +257,7 @@ define([
 
                     var schemaItem = timelineschemaselector.getByGuid(schemaGuid);
                     if (schemaItem !== null) {
-                        schemaItem.count(schemaItem.count()+1);
+                        schemaItem.count(schemaItem.count() + 1);
                     }
 
                 } else {
@@ -227,7 +272,7 @@ define([
                     //if (anndata) {
                     //    if (ann && ann.id == anndata.Id) {
                     //        var dic = timelineschemaselector.activeSchemaItems();
-                            
+
                     //        if (anndata.MetadataSchemaGUID in dic) {
                     //            var schitem = dic[anndata.MetadataSchemaGUID];
                     //            var content = schitem.getContent(anndata.Title);
@@ -416,9 +461,9 @@ define([
 
                 var guid;
 
-                if (e.data) {
-                    if (e.data.Id)
-                        guid = e.data.Id;
+                if (e.annotation) {
+                    if (e.annotation.data.Id)
+                        guid = e.annotation.data.Id;
                 }
                 else if (e.id)
                     guid = e.id;
@@ -433,11 +478,14 @@ define([
 
                 objectmanager.getByGuid(g, function (r) {
 
-                    window.scrollTo(0, 0);
+                    //window.scrollTo(0, 0);
+                    var ele = $('#larmplayer');
+                    $('html,body').animate({ scrollTop: ele.offset().top - 62 });
+
                     metadataEditors.removeAll();
                     var mds = r.Metadatas;
                     for (var i = 0; i < mds.length; i++) {
-                        if (Settings.Schema[mds[i].MetadataSchemaGuid].edit !='') {
+                        if (Settings.Schema[mds[i].MetadataSchemaGuid].edit != '') {
                             timeline.editItem(guid);
                             var editor = new metadatafac.MetadataView();
                             editor.setview(Settings.Schema[mds[i].MetadataSchemaGuid].edit, { guid: r.Id, metadata: mds[i] });
@@ -503,6 +551,20 @@ define([
                         publication($(x).find("PublicationDateTime").text());
                         abstracttxt($(x).find("Abstract").text());
                         description($(x).find("Description").text());
+
+                        var start = new Date(publication()).toLocaleString();
+                        var end = new Date($(x).find("PublicationEndDateTime").text()).toLocaleString();
+
+                        if (start === "Invalid Date") {
+                            start = locale.text("unknowndate");
+                        }
+
+                        if (end === "Invalid Date") {
+                            end = locale.text("unknowndate");
+                        }
+
+                        publishtext(", " + start + " - " + end);
+                        //publishtext(", sendt 19. april, 1973. Kl. 19:00 - 19:59 (59 min)");
                     }
                 }
 
@@ -574,11 +636,20 @@ define([
 
             }
 
+            function windowSizeChangeBegin() {
+                var w = $window.width() / 2;
+                var h = $window.height();
+                //$("#timelines").width(w - 180);
+                $("#timelines").width(w - 177);
+                timeline.redraw();
+            }
+
+
             function windowSizeChange() {
                 var w = $window.width();
                 var h = $window.height();
                 //$("#timelines").width(w - 180);
-                $("#timelines").width(w - 170);
+                $("#timelines").width(w - 177);
                 timeline.redraw();
             }
 
@@ -586,19 +657,27 @@ define([
                 isPlayerLoading: isPlayerLoading,
 
                 mediaUrl: player.mediaUrl,
+                isplaying: player.isplaying,
+                playerposition: player.position,
+                playerpositiontext: player.positiontext,
+                playerpositionlefttext: player.positionlefttext,
+
                 title: title,
                 channel: channel,
                 publication: publication,
                 abstracttxt: abstracttxt,
                 description: description,
+                publishtext: publishtext,
 
                 metadataViews: metadataViews,
                 metadataEditors: metadataEditors,
                 metadataTabs: metadataTab.tabs,
                 schemaItems: timelineschemaselector.schemaItems,
                 compositionComplete: function (child, parent, settings) {
-                    windowSizeChange();
+                    windowSizeChangeBegin();
                     $window.resize(windowSizeChange);
+
+                    setTimeout(windowSizeChange, 500);
 
                     metadataTab.add("Beskrivelse", "1", "");
                 },
@@ -626,6 +705,12 @@ define([
                 },
                 pause: function () {
                     player.pause();
+                },
+                playpause: function () {
+                    if (player.isplaying())
+                        player.pause();
+                    else
+                        player.play();
                 },
                 annotationAddBtn: function () {
                     app.trigger("annotation:add", {});

@@ -1,5 +1,5 @@
-﻿define(['durandal/app', 'knockout', 'mods/player', 'mods/timeline', 'mods/format'],
-        function (app, ko, player, timeline, format) {
+﻿define(['durandal/app', 'knockout', 'mods/player', 'mods/timeline', 'mods/format', 'factory/metadata'],
+        function (app, ko, player, timeline, format, metadatafac) {
 
             var annotation = function () {
                 this.data = null;
@@ -10,7 +10,6 @@
                 this.player = player;
                 this.timeline = timeline;
             };
-
 
             annotation.prototype = (function () {
 
@@ -42,6 +41,9 @@
                     },
                     btnexpand: function () {
                         this.collapsed(!this.collapsed());
+
+                        if (this.collapsed() === false) {
+                        }
                     }
 
                 };

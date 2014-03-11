@@ -1,4 +1,4 @@
-﻿define(['durandal/app', 'knockout'], function (app, ko) {
+﻿define(['durandal/app', 'knockout', 'mods/player', 'mods/format'], function (app, ko, player, format) {
 
     var timeline = undefined;
     var state = ko.observable(0);
@@ -14,6 +14,8 @@
     var end = ko.observable(0);
 
     var pos = 0;
+
+    var loop_annotation = null;
 
     function initTimeline() {
         // Create and populate a data table.
@@ -51,7 +53,7 @@
             max: end()
         };
 
-        $("#timelinescroll").css("opacity","1");
+        $("#timelinescroll").css("opacity", "1");
         $("#timelinescroll").scroll(ontimelinescrolling);
 
         // Instantiate our timeline object.
@@ -79,17 +81,84 @@
         google.visualization.events.addListener(timeline, 'dblclick', ondblclick);
         google.visualization.events.addListener(timeline, 'requestadd', onrequestadd);
 
-        
+        google.visualization.events.addListener(timeline, 'select', onselect);
+
+        google.visualization.events.addListener(timeline, 'play', onplay);
+        google.visualization.events.addListener(timeline, 'loop', onloop);
+        google.visualization.events.addListener(timeline, 'viewmetadata', onviewmetadata);
+        google.visualization.events.addListener(timeline, 'editmetadata', oneditmetadata);
 
         ready = true;
         state(1);
     }
 
-    function onrequestadd() {
-        app.trigger("annotation:add", {});
+    function onselect() {
     }
 
-    function ondblclick() {
+    function onplay() {
+        var sel = timeline.getSelection();
+        if (sel.length) {
+            if (sel[0].row != undefined) {
+                var row = sel[0].row;
+                var dat = timeline.getItem(row);
+
+                var s = format.getTimeStringFromDate(dat.start);
+                s = format.getSecondsFromString(s);
+                player.setProgramTimePos(s);
+                player.play();
+                //var e = format.getSecondsFromString(ann.endtime());
+                //player.setProgramTimeLoop(s, e);
+                //player.playLoop();
+            }
+        }
+
+    }
+
+    function onloop() {
+        var sel = timeline.getSelection();
+        if (sel.length) {
+            if (sel[0].row != undefined) {
+                var row = sel[0].row;
+                var dat = timeline.getItem(row);
+
+                if (loop_annotation !== null && loop_annotation.Id === dat.Id) {
+                    // Cancel loop
+                    loop_annotation = null;
+                    player.clearLoop();
+                    timeline.setLoop(null);
+                } else {
+                    // Do loop
+                    loop_annotation = dat;
+                    var s = format.getTimeStringFromDate(dat.start);
+                    s = format.getSecondsFromString(s);
+                    var e = format.getTimeStringFromDate(dat.end);
+                    e = format.getSecondsFromString(e);
+                    player.setProgramTimeLoop(s, e);
+                    player.playLoop();
+                    timeline.setLoop(dat.id);
+                }
+
+            }
+        }
+        //window.scrollTo(0, 0);
+        //var s = format.getSecondsFromString(ann.starttime());
+        //var e = format.getSecondsFromString(ann.endtime());
+        //player.setProgramTimeLoop(s, e);
+        //player.playLoop();
+    }
+
+    function onviewmetadata() {
+        var sel = timeline.getSelection();
+        if (sel.length) {
+            if (sel[0].row != undefined) {
+                var row = sel[0].row;
+                var dat = timeline.getItem(row);
+                app.trigger('annotation:metadataview', dat);
+            }
+        }
+    }
+
+    function oneditmetadata() {
         var sel = timeline.getSelection();
         if (sel.length) {
             if (sel[0].row != undefined) {
@@ -98,6 +167,21 @@
                 app.trigger('metadata:edit', dat);
             }
         }
+    }
+
+    function onrequestadd() {
+        app.trigger("annotation:add", {});
+    }
+
+    function ondblclick() {
+        //var sel = timeline.getSelection();
+        //if (sel.length) {
+        //    if (sel[0].row != undefined) {
+        //        var row = sel[0].row;
+        //        var dat = timeline.getItem(row);
+        //        app.trigger('metadata:edit', dat);
+        //    }
+        //}
     }
 
     function onannotationadd() {
@@ -158,7 +242,7 @@
             if (sel[0].row != undefined) {
                 var row = sel[0].row;
                 var dat = timeline.getItem(row);
-                app.trigger('metadata:changed_timeline', {data: dat});
+                app.trigger('metadata:changed_timeline', { data: dat });
             }
         }
     }
@@ -169,7 +253,7 @@
 
     function onTimeChanged(event) {
         var timediff = event.time - start();
-        jwplayer().seek(timediff / 1000);
+        player.setProgramTimePos(timediff / 1000);
         onTimeChangeActive = false;
     }
 
@@ -319,10 +403,10 @@
         isReady: isReady,
         addData: addData,
         redraw: function () {
-            if(timeline)
+            if (timeline)
                 timeline.redraw();
         },
-        clearData: function(){
+        clearData: function () {
             data.removeRows(0, data.getNumberOfRows());
             timeline.redraw();
         },
@@ -356,8 +440,12 @@
                 }
             }
         },
+        selectItemById: function (id) {
+            timeline.selectItemById(id);
+        },
         unselectItem: function () {
             timeline.unselectItem();
+            timeline.redraw();
         },
         addItemAtCursor: function (id) {
             timeline.addItemAtCursor(id);

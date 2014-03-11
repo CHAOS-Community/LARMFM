@@ -1,6 +1,7 @@
 define(['knockout'], function(ko) {
 
     var items = ko.observableArray();
+   
     var count = ko.observable(0);
 
     function clear() {
@@ -13,7 +14,7 @@ define(['knockout'], function(ko) {
     function add(object) {
         var i = indexof(object);
         if (i == -1) {
-            items.push(object);
+            items.push(object.id());
             count(items().length);
         }
     }
@@ -27,8 +28,9 @@ define(['knockout'], function(ko) {
     }
 
     function indexof(object) {
+        
         for (var i = 0; i < items().length; i++) {
-            if (items()[i] == object)
+            if (items()[i] == object.id())
                 return i;
         }
         return -1;

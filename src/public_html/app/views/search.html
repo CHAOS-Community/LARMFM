@@ -19,9 +19,9 @@
         <div class="span9">
             <div>
                 <div class='btn-toolbar' class="pull-left">
-                    <div class='btn-group pull-left'>
+                    <div class='pull-left'> <!-- WAS: class='btn-group pull-left' -->
                         <!-- ko foreach: objtpfilteritems -->
-                        <a class="btn" data-bind="css:{'btn-primary':isactive}, click: click">
+                        <a class="btn" style="margin-right:4px;margin-bottom:4px;" data-bind="css:{'btn-primary':isactive}, click: click">
                             <span class='pull-left' data-bind="html: title"></span>
                             <span class='badge pull-right wsobjecttypebatch' data-bind="text: count, css: {'badge-info': isactive}"></span>
                         </a>
@@ -29,20 +29,21 @@
                     </div>
                 </div>
                 <span class="clearfix"></span>
-                <div class="pull-right wssorting" style="margin-right:12px;">
-                    <select data-bind="options: sortitems,
-                            optionsText: 'title',
-                            optionsValue: 'id',
-                            value: sortvalue,
-                            event:{ change: sortchanged}"></select>
-                </div>
+               
                 <div class="pagination pagination-small pull-right wspagination">
                     <ul>
                         <!-- ko foreach: pagingitems -->
                         <li data-bind="css: { disabled: isdisabled, active: isactive }"><a href="#" data-bind="html: text, click: $parent.pagingclick"></a></li>
                         <!-- /ko -->
                     </ul>
-                </div>                
+                </div>  
+                 <div class="pull-right wssorting" style="margin-right:12px;">
+                    <select data-bind="options: sortitems,
+                            optionsText: 'title',
+                            optionsValue: 'id',
+                            value: sortvalue,
+                            event:{ change: sortchanged}"></select>
+                </div>
                 <div class="pull-left wsresulthits"><span data-bind="text:resulttext"></span><span data-bind="visible: (objectsselectcount()>0)"> - <span data-bind="text:objectsselectcount"></span> valgt</span> <button data-bind="visible: (objectsselectcount()>0),click:putSelectedObjectsInFolder" class="btn btn-small"><i class="icon-folder-close"></i></button></div>
                 
                 <div class="row" style="clear: both; margin:0"><div class="span9" style="margin:0"><hr style="margin:0" /></div></div>

@@ -1,0 +1,29 @@
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <div class="row">
+                <div class="span3">
+                    <img src="img/larm_logo.png" class="navbar-contenttopmargin" />
+                    <!--<a class="brand" data-bind="attr: { href: router.navigationModel()[0].hash }">
+                        <i class="icon-home"></i>
+                        <span data-bind="text: Settings.title"></span>
+                    </a>-->
+                </div>
+                <div class="span7 navbar-contenttopmargin">
+                    <!--ko compose: 'viewmodels/search/searchbox' -->
+                    <!--/ko-->
+                </div>
+                <div class="span2 navbar-contenttopmargin">
+                    <div class="nav loader pull-right" style="margin-top:5px;" data-bind="css: { active: router.isNavigating }">
+                        <i class="icon-spinner icon-2x icon-spin"></i>
+                    </div>
+                    <ul class="nav pull-right">
+                        <li class="divider-vertical"></li>
+                        <li data-bind="visible: !isAuthenticated()"><div style="overflow:hidden; margin-top:10px;"><a href="#" data-bind="click:loginbtnclick">L</a> - <a href="#" data-bind="click:WayfLogin">W</a></div></li>
+                        <li data-bind="visible: isAuthenticated"><a href="#" data-bind="click:LogOut">Log out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

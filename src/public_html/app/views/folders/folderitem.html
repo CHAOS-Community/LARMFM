@@ -5,9 +5,9 @@
         <a data-bind="visible: !isInEditMode(),attr: { href: hash}, text: title"></a>
         <input class="input input-medium" type="text" data-bind="event: { change: function(){setTimeout(function(){$data.saveFolderName()},1)}}, visible: isInEditMode(),hasFocus:isInEditMode,value: title"/>
         <a data-bind=" click: toggleeditmode"><i class="icon-edit"></i></a>
-        <a data-bind=" click: addNewFolder"><i class="icon-plus"></i></a>
+        <a data-bind=" click: addSubFolder"><i class="icon-plus"></i></a>
         <a data-bind=" visible:hasobjectsbeenselected,click: addSelectedObjectsToFolder"><i class="icon-download-alt"></i></a>
-        
+        <i data-bind="visible:isBusy" class="icon-refresh"></i>  
     </div>
 </div>
 <div data-bind="foreach: children, visible: isexpanded">

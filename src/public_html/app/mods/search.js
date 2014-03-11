@@ -237,8 +237,8 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
             }
 
             function dosearchcore(param) {
-                
-                if (param != undefined) {
+               
+                if (param !== undefined) {
                     // New search. Reset page index.
                     pageindex(0);
                     objectselector.clear();
@@ -334,7 +334,7 @@ define(['knockout', 'factory/object', 'plugins/router', 'mods/state', 'mods/form
                     var r = response.Body.Results[i];
                     var oi = new objfac.ObjectItem();
                     oi.id(r.Id);
-                    oi.isselected(objectselector.contains(oi));
+                    
                     oi.title(getValStr(r.Title));
                     oi.channel(getValStr(r.Channel));
                     oi.annotationCount(getValInt(r.AnnotationCount));

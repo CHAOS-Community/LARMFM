@@ -4,17 +4,23 @@
     var playlist;
     var mediaUrl = ko.observable();
     var mediaImage;
-    var isplaying = false;
+    var isplaying = ko.observable(false);
     var duration = ko.observable(0);
     var position = ko.observable(0);
+    var positiontext = ko.observable("00:00:00");
+    var positionlefttext = ko.observable("");
 
     var STATE_INIT = 0;
     var STATE_GETDURATION = 1;
     var STATE_DURATIONOK = 2;
     var STATE_READY = 3;
+    var STATE_SEEK = 4;
     var state = STATE_INIT;
 
     var onTimeCallback;
+
+    var loopstart = null;
+    var loopend = null;
 
     function createPlaylist() {
 
@@ -89,24 +95,26 @@
 
         var mu = "";
         for (var i = 0; i < playlist.length; i++) {
-            if(i > 0)
+            if (i > 0)
                 mu += "<br/>" + playlist[i].file;
             else
                 mu += playlist[i].file;
         }
         mediaUrl(mu);
 
-        var w = 1;
-        var h = 1;
+        var w = 1; // 400
+        var h = 1; // 150
         var hascontrols = true;
 
-        if (data == null){
+        if (data == null) {
             mediaImage = "";
             w = 533;
             h = 300;
             hascontrols = false;
         }
 
+        //setTimeout(function () {
+        console.log("Player Setup");
         jwplayer("larmplayer").setup({
             playlist: playlist,
             width: w,
@@ -115,37 +123,76 @@
             controls: hascontrols
         });
 
+        jwplayer().onSetupError(function (e) {
+            console.log("Player Setup Error");
+        });
+
+        jwplayer().onReady(function (e) {
+            console.log("Player Ready");
+        });
+
+        jwplayer().getRenderingMode(function (e) {
+            console.log("Player getRenderingMode");
+        });
 
         jwplayer().onTime(onTime);
         jwplayer().onPlay(onPlay);
         jwplayer().onPause(onPause);
+        jwplayer().onBuffer(function (oldstate) {
+            console.log("Player Buffering + " + oldstate);
+        });
+        jwplayer().onError(function (message) {
+            console.log("Player onError = " + message);
+        });
+
         jwplayer().play(true); // Play
+        //}, 1);
+
     }
 
     function onPlay() {
-
+        console.log("Player Play");
     }
 
     function onPause() {
+        console.log("Player Pause");
     }
 
+    var endoffiledate = null;
     function onTime(e) {
         // e.duration, e.position
         if (state == STATE_READY) {
             var s = jwplayer().getState();
-            if (!isplaying && s == "PLAYING")
+            if (!isplaying() && s == "PLAYING")
                 jwplayer().play(false);
 
             var idx = jwplayer().getPlaylistIndex();
+
             if (e.position < playlist[idx].start) {
                 jwplayer().seek(playlist[idx].start);
             }
             else if (e.position > playlist[idx].end) {
 
-                if (idx + 1 == playlist.length)
-                    isplaying = false;
-                else
+                if (idx + 1 == playlist.length) {
+
+                    // Following is needed, because sometimes
+                    // the position is not updated when starting next
+                    // file. So only pause player if you get two end of files
+                    // in a row.
+                    var now = Date.now();
+                    if (endoffiledate !== null) {
+                        var diff = now - endoffiledate;
+                        if (diff < 200) {
+                            isplaying(false);
+                            jwplayer().play(false);
+                        }
+                    }
+                    endoffiledate = now;
+                }
+                else {
+
                     jwplayer().playlistItem(idx + 1);
+                }
             }
             else {
                 // Calculate position
@@ -153,16 +200,35 @@
                 if (idx == 1)
                     pos += playlist[0].end - playlist[0].start;
                 position(pos);
+                updatePositiontext();
+
+                // Loop?
+                if (loopstart !== null && loopend !== null) {
+                    // before loop start?
+                    if (loopstart.index < idx || (loopstart.index === idx && (loopstart.pos-e.position) > .100 )) {
+                        //isplaying(false);
+                        //jwplayer().play(false);
+                        jwplayer().playlistItem(loopstart.index);
+                        jwplayer().seek(loopstart.pos);
+                    }
+
+                    if (loopend.index > idx || (loopend.index === idx && (e.position - loopend.pos) >= .100)) {
+                        isplaying(false);
+                        jwplayer().play(false);
+                        jwplayer().playlistItem(loopstart.index);
+                        jwplayer().seek(loopstart.pos);
+                    }
+                }
             }
         }
         else if (state == STATE_DURATIONOK) {
-            jwplayer().play(isplaying);
+            jwplayer().play(isplaying());
             state = STATE_READY;
         }
         else if (state == STATE_GETDURATION) {
             var idx = jwplayer().getPlaylistIndex();
             var item = playlist[idx];
-            if(item.fileduration == 0)
+            if (item.fileduration == 0)
                 item.fileduration = e.duration;
 
             // Duration missing?
@@ -183,7 +249,37 @@
                 jwplayer().playlistItem(0);
             }
             duration(dur);
+            updatePositiontext();
             state = STATE_DURATIONOK;
+        }
+    }
+
+    function getSeekInfoFromProgramTime(programTimeInSeconds) {
+        var pt = programTimeInSeconds;
+        var ptacc = 0;
+        var ftacc = 0;
+        for (var i = 0; i < playlist.length; i++) {
+            var pl = playlist[i];
+            var programduration = pl.end - pl.start;
+            if (pt > programduration + ptacc) {
+                ptacc += programduration;
+                ftacc += pl.fileduration;
+            }
+            else {
+                var seekindex = i;
+                var seekpos = (pt - ptacc) + pl.start;
+                return { index: seekindex, pos: seekpos };
+            }
+        }
+        return null;
+    }
+
+    function seekToProgramTime(programTimeInSeconds) {
+        var seek = getSeekInfoFromProgramTime(programTimeInSeconds);
+        if (seek !== null) {
+            console.log("seekTo:" + seek.index + ", " + seek.pos);
+            jwplayer().playlistItem(seek.index);
+            jwplayer().seek(seek.pos);
         }
     }
 
@@ -209,7 +305,7 @@
     function getFileTimeFromProgramTime(programTimeInSeconds) {
         var pt = programTimeInSeconds;
         var ptacc = 0;
-        var ftacc = 0; 
+        var ftacc = 0;
         for (var i = 0; i < playlist.length; i++) {
             var pl = playlist[i];
             var programduration = pl.end - pl.start;
@@ -225,47 +321,45 @@
         return 0;
     }
 
-    /*
-    public double GetGlobalFilePosition(double visualposition)
-		{
-			visualposition = System.Math.Max(0, visualposition);
-			visualposition = System.Math.Min(_uiwidth, visualposition);
+    function updatePositiontext() {
+        var s = parseInt(position());
+        var d = parseInt(duration());
+        positiontext(hhmmssFormat(s));
+        positionlefttext("-" + hhmmssFormat(d - s));
+    }
 
-			double ratio = visualposition / _uiwidth;
-
-			double visualdurationacc = 0;
-			foreach (var f in _program.Files)
-				visualdurationacc += (f.OffsetEndMaximum - f.OffsetBeginMinimum);
-
-			double relativepos = visualdurationacc * ratio;
-			double fileduration = 0;
-			double filedurationacc = 0;
-			double visualduration = 0;
-			visualdurationacc = 0;
-			foreach (var f in _program.Files)
-			{
-				fileduration = f.Duration;
-				visualduration = f.OffsetEndMaximum - f.OffsetBeginMinimum;
-				if (relativepos <= (visualdurationacc + visualduration))
-				{
-					return filedurationacc + (relativepos - visualdurationacc) + f.OffsetBeginMinimum;
-				}
-				visualdurationacc += visualduration;
-				filedurationacc += fileduration;
-			}
-
-			return 0;
-		}
-    */
+    function hhmmssFormat(seconds) {
+        var sec_num = parseInt(seconds, 10);
+        var hours = Math.floor(sec_num / 3600);
+        var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+        var seconds = sec_num - (hours * 3600) - (minutes * 60);
+        if (hours < 10) { hours = "0" + hours; }
+        if (minutes < 10) { minutes = "0" + minutes; }
+        if (seconds < 10) { seconds = "0" + seconds; }
+        var time = hours + ':' + minutes + ':' + seconds;
+        return time;
+    }
 
     function isReady() {
         return duration() !== 0;
     }
 
+    function playLoop() {
+        if (loopstart !== null && loopend !== null) {
+            jwplayer().playlistItem(loopstart.index);
+            jwplayer().seek(loopstart.pos);
+            isplaying(true);
+            jwplayer().play(true);
+        }
+    }
+
     return {
         duration: duration,
         position: position,
+        positiontext: positiontext,
+        positionlefttext: positionlefttext,
         mediaUrl: mediaUrl,
+        isplaying: isplaying,
         init: function (objectdata) {
             data = objectdata;
 
@@ -281,14 +375,30 @@
         },
         isReady: isReady,
         play: function () {
-            isplaying = true;
+            isplaying(true);
             jwplayer().play(true);
         },
         pause: function () {
-            isplaying = false;
+            isplaying(false);
             jwplayer().play(false);
         },
         getProgramTimeFromFileTime: getProgramTimeFromFileTime,
-        getFileTimeFromProgramTime: getFileTimeFromProgramTime
+        getFileTimeFromProgramTime: getFileTimeFromProgramTime,
+        setProgramTimePos: function (pos) {
+            // pos is in seconds
+            seekToProgramTime(pos);
+            //jwplayer().seek(pos);
+        },
+        clearLoop: function () {
+            loopstart = null;
+            loopend = null;
+        },
+        setProgramTimeLoop: function (start, end) {
+            loopstart = getSeekInfoFromProgramTime(start);
+            loopend = getSeekInfoFromProgramTime(end);
+        },
+        playLoop: function () {
+            playLoop();
+        }
     };
 });

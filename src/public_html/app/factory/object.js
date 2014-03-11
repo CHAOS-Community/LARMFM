@@ -18,17 +18,9 @@ define(['knockout', 'mods/objectselector'], function(ko, objectselector) {
             alert("add " + this.id() + " to folder with id: " + folderID);
         }
         
-        this.isselected = ko.observable(false);
-
-        this.isselected.subscribe(function(val){
-           if (this.id() != "") {
-                if (val)
-                    objectselector.add(this);
-                else
-                    objectselector.remove(this);
-            } 
-        }, this);
-        
+        this.isselected =  ko.computed(function() {
+            return objectselector.contains(this);
+        },this);  
     };
 
     ObjectItem.prototype = function() {
@@ -38,12 +30,14 @@ define(['knockout', 'mods/objectselector'], function(ko, objectselector) {
         };
 
         var checkclick = function(item) {
-            item.isselected(!item.isselected());
-            item.isselected(!item.isselected());            
+            objectselector.add(item);
+        //item.isselected(!item.isselected());
+        //item.isselected(!item.isselected());            
         };
 
         var rowclick = function(item, event) {
-            item.isselected(!item.isselected());
+            objectselector.add(item);
+        //item.isselected(!item.isselected());
         };
 
         var rowdblclick = function(item, event) {
@@ -61,8 +55,8 @@ define(['knockout', 'mods/objectselector'], function(ko, objectselector) {
         };
 
         var tdclick = function(item, event) {
-//            event.bubbles = false;
-//            event.originalEvent.cancelBubble = true;
+        //            event.bubbles = false;
+        //            event.originalEvent.cancelBubble = true;
         };
 
         return {
@@ -70,7 +64,19 @@ define(['knockout', 'mods/objectselector'], function(ko, objectselector) {
             rowdblclick: rowdblclick,
             titleclick: titleclick,
             checkclick: checkclick,
-            tdclick: tdclick
+            tdclick: tdclick,
+            checkboxClicked: function(val){
+                var self = this;
+                setTimeout(function(){
+                    if(self.isselected()){
+                        objectselector.remove(self); 
+                    }
+                    else{
+                        objectselector.add(self);  
+                   
+                    }
+                },1);
+            }
         };
 
     }();

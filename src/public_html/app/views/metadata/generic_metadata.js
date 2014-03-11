@@ -1,7 +1,7 @@
 ﻿define(['durandal/app', 'knockout', 'mods/xmlmanager', 'mods/metadataschema', 'mods/metadataviewbuilder'], function (app, ko, xmlman, metadataschema, html) {
 
 
-    var larmprogram = function () {
+    var generic_metadata = function () {
         this.data = null;
         this.mdTitle = ko.observable("");
         this.mdAbstract = ko.observable("");
@@ -30,8 +30,6 @@
             metadataschema.loadxmlschemas();
 
             var metadata = self.data.Metadatas;
-            // LARM.Metadata: 17d59e41-13fb-469a-a138-bb691f13f2ba
-            // Larm.Program: 00000000-0000-0000-0000-0000df820000
 
             var larm_program = metadataschema.getMetadataSchemaByName("Larm.Program");
             var larm_metadata = metadataschema.getMetadataSchemaByName("LARM.Metadata");
@@ -113,7 +111,7 @@
             html.mdtext(p, "!md_description", arkiv.Description);
             html.mdtext(p, "!md_publisher", arkiv.Publisher);
 
-            html.mdtags(p, "!md_subjects", arkiv.Subjects, "Subject");
+            html.mdtags(p, "!md_subjects", arkiv.Subjects);
 
             html.mdtable(p, "!md_contributors",
                 arkiv.Contributors,
@@ -125,7 +123,7 @@
                 ['Name', 'RoleName', 'RoleID'],
                 ['Name', 'RoleName', 'RoleID']);
 
-            html.mdtags(p, "!md_locations", arkiv.Locations, "Name");
+            html.mdtags(p, "!md_locations", arkiv.Locations[0], "Name");
 
             html.mdgrid(p, "!md_identifiers", [
             ["DR produktionsnr:", arkiv.Identifiers.DR_ProductionNumber],

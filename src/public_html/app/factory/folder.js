@@ -8,6 +8,7 @@ define(['knockout', 'mods/portal','mods/objectselector'], function(ko, portal,ob
         this.style = ko.observable();
         this.isexpanded = ko.observable(false);
         this.children = ko.observableArray();
+        this.isBusy = ko.observable(false);
         this.isInEditMode = ko.observable(false);
         
     };
@@ -18,6 +19,7 @@ define(['knockout', 'mods/portal','mods/objectselector'], function(ko, portal,ob
             if (response.Error != null) {
                 return;
             }
+            this.isBusy(false);
 
             //for (var i = 0; i < response.Result.Count; i++) {
             //    var data = response.Result.Results[i];
@@ -25,7 +27,7 @@ define(['knockout', 'mods/portal','mods/objectselector'], function(ko, portal,ob
             //    fi.init(data, this.level() + 1);
             //    this.children.push(fi);
             //}
-
+            this.children.removeAll();
             setTimeout($.proxy(function() {
                 for (var i = 0; i < response.Body.Count; i++) {
                     var data = response.Body.Results[i];
@@ -49,10 +51,13 @@ define(['knockout', 'mods/portal','mods/objectselector'], function(ko, portal,ob
         }
         
         var addSelectedObjectsToFolder = function(){
-            for(var i=0; i<objectselector.items().length; i++){
-                CHAOS.Portal.Client.Link.Update
-            }
             alert("add " + objectselector.items() + " to " + this.folderID());
+            for(var i=0; i<objectselector.items().length; i++){
+                
+                CHAOS.Portal.Client.Link.Create(objectselector.items()[i],this.folderID());
+            }
+           
+            
         }
         
         
@@ -61,11 +66,13 @@ define(['knockout', 'mods/portal','mods/objectselector'], function(ko, portal,ob
         })
         
         var loadSubFolders = function(){
+            this.isBusy(true);
             CHAOS.Portal.Client.Folder.Get(null, null, this.folderID()).WithCallback(childfolderReceived, this);
         }
         
-        var addNewFolder = function(){
-           
+        var addSubFolder = function(){
+            this.isBusy(true);
+            this.isexpanded(true);
             CHAOS.Portal.Client.Folder.Create(null,"New folder",this.folderID(),1).WithCallback(loadSubFolders, this);
         }
         
@@ -82,7 +89,7 @@ define(['knockout', 'mods/portal','mods/objectselector'], function(ko, portal,ob
         return {
             init: init,
             hasobjectsbeenselected:hasobjectsbeenselected,
-            addNewFolder:addNewFolder,
+            addSubFolder:addSubFolder,
             mouseevent: mouseevent,
             loadSubFolders:loadSubFolders,
             saveFolderName:saveFolderName,

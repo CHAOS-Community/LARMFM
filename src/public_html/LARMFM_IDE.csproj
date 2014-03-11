@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -19,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <TypeScriptToolsVersion>0.9</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -61,7 +63,9 @@
     <Content Include="app\factory\metadata.js" />
     <Content Include="app\mods\annotation.js" />
     <Content Include="app\mods\localization.js" />
+    <Content Include="app\mods\mdannotationline.js" />
     <Content Include="app\mods\metadataTab.js" />
+    <Content Include="app\mods\metadataviewbuilder.js" />
     <Content Include="app\mods\store.js" />
     <Content Include="app\mods\jsonformfields.js" />
     <Content Include="app\mods\objectmanager.js" />
@@ -72,13 +76,22 @@
     <Content Include="app\viewmodels\object_tmp.js" />
     <Content Include="app\viewmodels\object_20131207.js" />
     <Content Include="app\viewmodels\wayflogin.js" />
-    <Content Include="app\views\metadata\anncommentedit.js" />
+    <Content Include="app\viewmodels\wayfLogOut.js" />
+    <Content Include="app\views\metadata\annotation_comment.html" />
+    <Content Include="app\views\metadata\annotation_comment.js" />
+    <Content Include="app\views\metadata\annotation_comment_edit.js" />
+    <Content Include="app\views\metadata\annotation_jingles.html" />
+    <Content Include="app\views\metadata\annotation_jingles.js" />
+    <Content Include="app\views\metadata\annotation_lydkilde.html" />
+    <Content Include="app\views\metadata\annotation_lydkilde.js" />
     <Content Include="app\views\metadata\annotation_readonly.html" />
     <Content Include="app\views\metadata\annotation_readonly.js" />
     <Content Include="app\views\metadata\annotationedit.html" />
     <Content Include="app\views\metadata\annotationedit.js" />
     <Content Include="app\views\metadata\annotation.html" />
     <Content Include="app\views\metadata\annotation.js" />
+    <Content Include="app\views\metadata\base\annotationline.html" />
+    <Content Include="app\views\metadata\base\annotationmetadata.html" />
     <Content Include="app\views\metadata\editor1.js" />
     <Content Include="app\viewmodels\object.js" />
     <Content Include="app\views\metadata\editor1.html" />
@@ -86,23 +99,28 @@
     <Content Include="app\views\metadata\editor2.js" />
     <Content Include="app\views\metadata\generic.html" />
     <Content Include="app\views\metadata\generic.js" />
+    <Content Include="app\views\metadata\generic_metadata.html" />
+    <Content Include="app\views\metadata\generic_metadata.js" />
     <Content Include="app\views\metadata\larmprogram_org.js" />
     <Content Include="app\views\metadata\larmprogram_org.html" />
     <Content Include="app\views\metadata\larmprogram.html" />
     <Content Include="app\views\metadata\larmprogram.js" />
     <Content Include="app\views\metadata\larmprogramedit.html" />
     <Content Include="app\views\metadata\larmprogramedit.js" />
-    <Content Include="app\views\metadata\anncommentedit.html" />
+    <Content Include="app\views\metadata\annotation_comment_edit.html" />
     <Content Include="app\views\metadata\test.html" />
     <Content Include="app\views\objectvideo.html" />
     <Content Include="app\views\object.html" />
+    <Content Include="app\views\topbar - Copy.html" />
+    <Content Include="app\views\topbar.html" />
+    <Content Include="app\views\wayfLogOut.html" />
     <Content Include="app\views\wayflogin.html" />
     <Content Include="app\widgets\Readme.md" />
-    <Content Include="css\larm.css">
-      <DependentUpon>larm.less</DependentUpon>
+    <Content Include="css\default.css">
+      <DependentUpon>default.less</DependentUpon>
     </Content>
-    <Content Include="css\larm.min.css">
-      <DependentUpon>larm.less</DependentUpon>
+    <Content Include="css\default.min.css">
+      <DependentUpon>default.css</DependentUpon>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="img\FileTypes\_Schedule.png" />
@@ -129,6 +147,8 @@
     <Content Include="img\IconTypes\indikator-3_white.png" />
     <Content Include="img\larm.png" />
     <Content Include="img\larm_logo.png" />
+    <Content Include="img\player.png" />
+    <Content Include="img\tre_logo.png" />
     <Content Include="index.html" />
     <Content Include="jsonform_test.html" />
     <Content Include="lib\chaos\PortalClient.min.js" />
@@ -136,6 +156,7 @@
     <Content Include="lib\font-awesome\css\font\fontawesome-webfont.ttf" />
     <Content Include="lib\font-awesome\css\font\fontawesome-webfont.woff" />
     <Content Include="lib\font-awesome\css\font\FontAwesome.otf" />
+    <Content Include="lib\jquery\jquery-1.11.0.min.js" />
     <Content Include="lib\jquery\jquery-1.9.1.min.map" />
     <Content Include="lib\jquery\jquery.maskedinput.min.js" />
     <Content Include="lib\jquery\jquery.min.map" />
@@ -189,6 +210,7 @@
     <Content Include="lib\timeline\img\themeswitcher\theme_90_ui_dark.png" />
     <Content Include="lib\timeline\img\themeswitcher\theme_90_ui_light.png" />
     <Content Include="lib\timeline\img\themeswitcher\theme_90_windoze.png" />
+    <Content Include="lib\timeline\img\timeline_icons.png" />
     <Content Include="lib\timeline\timeline-larm.css" />
     <Content Include="lib\timeline\timeline-larm-ex.js" />
     <Content Include="lib\timeline\timeline.js" />
@@ -240,7 +262,6 @@
     <Content Include="app\views\search\searchbox.html" />
     <Content Include="app\views\search_org.html" />
     <Content Include="app\views\search_sendeplan.html" />
-    <Content Include="app\views\topbar.html" />
     <Content Include="app\views\___detail.html" />
     <Content Include="app\views\___flickr.html" />
     <Content Include="app\views\___shell.html" />
@@ -262,8 +283,6 @@
     <Content Include="lib\bootstrap\img\glyphicons-halflings.png" />
     <Content Include="lib\bootstrap\js\bootstrap.js" />
     <Content Include="lib\bootstrap\js\bootstrap.min.js" />
-    <Content Include="lib\chaos\CHAOS.Portal.Client.PortalClient.js" />
-    <Content Include="lib\chaos\PortalClient.min_ORG.js" />
     <Content Include="lib\durandal\css\durandal.css" />
     <Content Include="lib\durandal\images\icon.png" />
     <Content Include="lib\durandal\images\ios-startup-image-landscape.png" />
@@ -292,7 +311,10 @@
     <Content Include="lib\i18next\i18next-1.6.0.js" />
     <Content Include="lib\i18next\i18next-1.6.0.min.js" />
     <Content Include="lib\durandal\images\Thumbs.db" />
-    <Content Include="css\larm.less" />
+    <Content Include="css\default.less" />
+    <Content Include="css\default.css.map">
+      <DependentUpon>default.css</DependentUpon>
+    </Content>
     <None Include="lib\jquery\jquery-1.9.1.intellisense.js" />
     <Content Include="lib\jquery\jquery-1.9.1.js" />
     <Content Include="lib\jquery\jquery-1.9.1.min.js" />
@@ -332,12 +354,12 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>

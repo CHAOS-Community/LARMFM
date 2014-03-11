@@ -1,0 +1,7 @@
+﻿<div data-bind="css:{wshide: collapsed}">
+    <div style="margin-left: 8px;" data-bind="foreach: mdhtml">
+        <div data-bind="html: $data"></div>
+    </div>
+    <span class="loader" data-bind="css: { active: isLoading }"><i class="icon-spinner icon-spin"></i></span>
+    <div class="md-annotation-endline"></div>
+</div>
