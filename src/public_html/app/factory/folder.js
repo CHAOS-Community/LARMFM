@@ -1,4 +1,4 @@
-define(['knockout', 'mods/portal','mods/objectselector'], function(ko, portal,objectselector) {
+define(['durandal/app','knockout', 'mods/portal','mods/objectselector','viewmodels/folderEditor'], function(app,ko, portal,objectselector,folderEditor) {
 
     var FolderItem = function() {
         this.folderID = ko.observable();
@@ -10,10 +10,12 @@ define(['knockout', 'mods/portal','mods/objectselector'], function(ko, portal,ob
         this.children = ko.observableArray();
         this.isBusy = ko.observable(false);
         this.isInEditMode = ko.observable(false);
+        this.numObjects = ko.observable(0);
         
     };
 
     FolderItem.prototype = function() {
+        
         
         var childfolderReceived = function(response) {
             if (response.Error != null) {
@@ -32,33 +34,35 @@ define(['knockout', 'mods/portal','mods/objectselector'], function(ko, portal,ob
                 for (var i = 0; i < response.Body.Count; i++) {
                     var data = response.Body.Results[i];
                     var fi = new FolderItem();
-                    fi.init(data, this.level() + 1);
+                    fi.init(data, this.level() + 1,this);
                     this.children.push(fi);
                 }
             }, this), 0);
 
         }
 
-        var init = function(data, tlevel) {
+        var init = function(data, tlevel, parent) {
+            this.parent = parent;
             this.title(data.Name);
             this.hash = '#!search/fid=' + data.ID;
             this.level(tlevel);
-            
             this.style("margin: 0px 0px 0px " + (20 * tlevel) + "px");
             this.folderID(data.ID);
             this.loadSubFolders();
-            
+            this.updateCount();
         }
         
-        var addSelectedObjectsToFolder = function(){
-            alert("add " + objectselector.items() + " to " + this.folderID());
-            for(var i=0; i<objectselector.items().length; i++){
-                
-                CHAOS.Portal.Client.Link.Create(objectselector.items()[i],this.folderID());
-            }
-           
-            
+        
+        var editFolder = function(){
+            app.showDialog(new folderEditor(this));
         }
+        var addSelectedObjectsToFolder = function(){
+            for(var i=0; i<objectselector.items().length; i++){  
+                this.numObjects(this.numObjects()+1);
+                CHAOS.Portal.Client.Link.Create(objectselector.items()[i],this.folderID());
+            } 
+        }
+                
         
         
         var hasobjectsbeenselected = ko.computed(function(){
@@ -70,10 +74,25 @@ define(['knockout', 'mods/portal','mods/objectselector'], function(ko, portal,ob
             CHAOS.Portal.Client.Folder.Get(null, null, this.folderID()).WithCallback(childfolderReceived, this);
         }
         
+        var updateCount = function(){
+             CHAOS.Portal.Client.View.Get(Settings.Search.viewName, "", null, "(FolderID:" + this.folderID() +  ")", 0, 0).WithCallback(function(data){
+             
+                this.numObjects(data.Body.TotalCount);
+             },this);
+        }        
         var addSubFolder = function(){
             this.isBusy(true);
             this.isexpanded(true);
-            CHAOS.Portal.Client.Folder.Create(null,"New folder",this.folderID(),1).WithCallback(loadSubFolders, this);
+            var self = this;
+            
+            CHAOS.Portal.Client.Folder.Create(null,"untitled",this.folderID(),1).WithCallback(function(){
+                setTimeout(function(){self.loadSubFolders()},10000)
+            }, self);
+        }
+        
+        var deleteFolder = function(){
+
+            CHAOS.Portal.Client.Folder.Delete(this.folderID()).WithCallback(this.loadSubFolders, this.parent);
         }
         
         var saveFolderName = function(){
@@ -91,7 +110,10 @@ define(['knockout', 'mods/portal','mods/objectselector'], function(ko, portal,ob
             hasobjectsbeenselected:hasobjectsbeenselected,
             addSubFolder:addSubFolder,
             mouseevent: mouseevent,
+            editFolder:editFolder,
             loadSubFolders:loadSubFolders,
+            deleteFolder:deleteFolder,
+            updateCount:updateCount,
             saveFolderName:saveFolderName,
             addSelectedObjectsToFolder:addSelectedObjectsToFolder,
             toggleexpand: function() {

@@ -1,14 +1,23 @@
 <div data-bind="event: {mouseover: mouseevent, mouseout: mouseevent}" class="folderitem">
+     <div class="pull-right" data-bind="visible:!isBusy()">
+        <a data-bind="click: addSubFolder"><i class="icon-plus"></i></a>
+        <a data-bind="visible:hasobjectsbeenselected,click: addSelectedObjectsToFolder"><i class="icon-download-alt"></i></a>
+        <a data-bind="click:editFolder"><i class="icon-edit"></i></a>
+        
+       
+    </div>
+    <div data-bind="visible:isBusy" class="pull-right">
+        <a href="#"><i class="icon-refresh"></i></a>
+    </div>
+
     <div data-bind="attr: {style:style}">
         <a data-bind="visible:isexpanded, click: toggleexpand"><i class="icon-folder-open"></i></a>
         <a data-bind="visible:(!isexpanded()), click: toggleexpand"><i class="icon-folder-close"></i></a>
-        <a data-bind="visible: !isInEditMode(),attr: { href: hash}, text: title"></a>
-        <input class="input input-medium" type="text" data-bind="event: { change: function(){setTimeout(function(){$data.saveFolderName()},1)}}, visible: isInEditMode(),hasFocus:isInEditMode,value: title"/>
-        <a data-bind=" click: toggleeditmode"><i class="icon-edit"></i></a>
-        <a data-bind=" click: addSubFolder"><i class="icon-plus"></i></a>
-        <a data-bind=" visible:hasobjectsbeenselected,click: addSelectedObjectsToFolder"><i class="icon-download-alt"></i></a>
-        <i data-bind="visible:isBusy" class="icon-refresh"></i>  
+        <a data-bind="visible: !isInEditMode(),attr: { href: hash}, text: title() + ' (' + numObjects() + ')'"></a>
+        
     </div>
+    
+   
 </div>
 <div data-bind="foreach: children, visible: isexpanded">
     <div data-bind="compose: 'folders/folderitem.html'"></div>

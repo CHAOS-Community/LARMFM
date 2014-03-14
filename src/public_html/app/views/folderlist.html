@@ -1,6 +1,6 @@
-<div>Mapper</div>
-<div data-bind="text: userEmail"></div>
+<hr/>
+<div><p data-bind="text: 'Your folders (' +  userEmail() + ')'"></p></div>
+
 <div data-bind="foreach: items">
     <div data-bind="compose: 'folders/folderitem.html'"></div>
 </div>
-<div>&nbsp;</div>

@@ -3,10 +3,12 @@ define(['durandal/app', 'mods/portal', 'mods/state', 'factory/folder', 'knockout
 
         var items = ko.observableArray();
         var authsub = null;
+      
 
         if(state.isAuthenticated()){
             loadfolders();
         }
+        
         else{
             authsub = state.isAuthenticated.subscribe(function(val){
                 if(val===true){

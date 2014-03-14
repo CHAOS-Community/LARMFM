@@ -18,87 +18,88 @@
 });
 
 define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'mods/portal', 'mods/state', 'knockout', 'mods/localization'],
-        function(system, app, viewLocator, portal, state, ko, localization) {
-            //>>excludeStart("build", true);
-            system.debug(true);
-            //>>excludeEnd("build");
-            state.locale(Settings.locale);
+    function(system, app, viewLocator, portal, state, ko, localization) {
+        //>>excludeStart("build", true);
+        system.debug(false);
+        //>>excludeEnd("build");
+        state.locale(Settings.locale);
 
-            app.title = 'LARM.fm';
+        app.title = 'LARM.fm';
 
-            //specify which plugins to install and their configuration
-            app.configurePlugins({
-                router: true,
-                dialog: true,
-                widget: {
-                    kinds: ['expander']
-                }
-            });
+        //specify which plugins to install and their configuration
+        app.configurePlugins({
+            router: true,
+            dialog: true,
+            widget: {
+                kinds: ['expander']
+            }
+        });
 
-            // Knockout
-            //ko.bindingHandlers.wstext = {
-            //    init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
-            //        var i = 0;
-            //    },
-            //    update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
-            //        var i = 0;
-            //    }
-            //};
+        // Knockout
+        //ko.bindingHandlers.wstext = {
+        //    init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+        //        var i = 0;
+        //    },
+        //    update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+        //        var i = 0;
+        //    }
+        //};
 
-            // TODO: Setup the chaos portal client and login with anonymous before
-            // proceeding.
-            portal.onAppReady(onAppReady);
+        // TODO: Setup the chaos portal client and login with anonymous before
+        // proceeding.
+        portal.onAppReady(onAppReady);
 
-            function onAppReady() {
-
-                for (var i = 0; i < Settings.Search.objectTypes.length; i++)
-                {
-                    var ot = Settings.Search.objectTypes[i];
-                    state.searchMetadataSchemaGuids[ot.id] = ot.metadataSchemaGuid;
-                }
-
-                for (var i = 0; i < Settings.MetadataSchemas.length; i++) {
-                    var schema = Settings.MetadataSchemas[i];
-                    Settings.Schema[schema.guid] = {
-                        view: schema.view,
-                        edit: schema.edit
-                    }
-                }
-
-//    ko.bindingHandlers.loc = {
-//    init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-//        // This will be called when the binding is first applied to an element
-//        // Set up any initial state, event handlers, etc. here
-//        alert("Test");
-//    },
-//    update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-//        // This will be called once when the binding is first applied to an element,
-//        // and again whenever the associated observable changes value.
-//        // Update the DOM element based on the supplied values here.
-//        alert("Test2");
-//    }
-//    };
-
-                app.start().then(function() {
-                    //Replace 'viewmodels' in the moduleId with 'views' to locate the view.
-                    //Look for partial views in a 'views' folder in the root.
-                    viewLocator.useConvention();
-
-//          var option = {
-//              lng: 'en-US',
-//              fallbackLang: 'en',
-//              ns: { namespaces: ['app'], defaultNs: 'app' },
-//              resGetPath: 'locales/__lng__/__ns__.json'
-//          };
-//
-//          i18n.init(option, function () {
-//        //Show the app by setting the root view model for our application.
-//                  app.setRoot('shell');
-//          });
-
-                    app.setRoot('shell');
-
-                });
+        function onAppReady() {
+                
+          
+            for (var i = 0; i < Settings.Search.objectTypes.length; i++)
+            {
+                var ot = Settings.Search.objectTypes[i];
+                state.searchMetadataSchemaGuids[ot.id] = ot.metadataSchemaGuid;
             }
 
-        });
+            for (var i = 0; i < Settings.MetadataSchemas.length; i++) {
+                var schema = Settings.MetadataSchemas[i];
+                Settings.Schema[schema.guid] = {
+                    view: schema.view,
+                    edit: schema.edit
+                }
+            }
+
+            //    ko.bindingHandlers.loc = {
+            //    init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            //        // This will be called when the binding is first applied to an element
+            //        // Set up any initial state, event handlers, etc. here
+            //        alert("Test");
+            //    },
+            //    update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            //        // This will be called once when the binding is first applied to an element,
+            //        // and again whenever the associated observable changes value.
+            //        // Update the DOM element based on the supplied values here.
+            //        alert("Test2");
+            //    }
+            //    };
+
+            app.start().then(function() {
+                //Replace 'viewmodels' in the moduleId with 'views' to locate the view.
+                //Look for partial views in a 'views' folder in the root.
+                viewLocator.useConvention();
+
+                //          var option = {
+                //              lng: 'en-US',
+                //              fallbackLang: 'en',
+                //              ns: { namespaces: ['app'], defaultNs: 'app' },
+                //              resGetPath: 'locales/__lng__/__ns__.json'
+                //          };
+                //
+                //          i18n.init(option, function () {
+                //        //Show the app by setting the root view model for our application.
+                //                  app.setRoot('shell');
+                //          });
+
+                app.setRoot('shell');
+
+            });
+        }
+
+    });

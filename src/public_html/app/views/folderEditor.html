@@ -1,7 +1,18 @@
-﻿<div class="WayfLoginContainer">
-    <!--ko compose: {model:'viewmodels/folderlist', view: 'views/folderlist'} -->
-    <!--/ko-->
-
-    <button class="btn">Gem</button>
+﻿<div class="WayfLoginContainer" style="padding:6px">
+    <div data-bind="with:folderViewModel"> 
+        <a class="pull-right" data-bind="click:toggleeditmode"><i class="icon-edit"></i></a>
+        
+        <p data-bind="visible:!isInEditMode()"><strong  data-bind="text:title"></strong></p>
+        <input class="input input-medium" type="text" data-bind="event: { change: function(){setTimeout(function(){$data.saveFolderName()},1)}}, visible: isInEditMode(),hasFocus:isInEditMode,value: title"/>
+        
+        <hr/>  
+        <button class="btn pull-right" data-bind="click:deleteFolder">Delete folder</button>
+    </div>
+    <table class="table table-striped">
+        <thead><tr><td>Name</td><td>Read</td><td>Write</td><td>Admin</td></thead>
+        <tbody data-bind="foreach:users">
+            <tr><td data-bind="text:name"></td><td><input type="checkbox"/></td><td><input type="checkbox"/></td><td><input type="checkbox"/></td></tr>
+        </tbody>
+    </table>
     <button data-bind="click:close" class="btn">Luk</button>
 </div>
