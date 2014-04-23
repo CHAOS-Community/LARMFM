@@ -1,6 +1,12 @@
 <hr/>
-<div><p data-bind="text: 'Your folders (' +  userEmail() + ')'"></p></div>
 
-<div data-bind="foreach: items">
+<p data-bind="text: 'Your folders (' +  userEmail() + ')'"></p>
+<div data-bind="foreach: profileFolders">
+    <div data-bind="compose: 'folders/folderitem.html'"></div>
+</div>
+<hr/>
+<p>Folders shared with you</p>
+
+<div data-bind="foreach: sharedFolders">
     <div data-bind="compose: 'folders/folderitem.html'"></div>
 </div>

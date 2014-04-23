@@ -58,12 +58,9 @@ define(['durandal/app','knockout', 'mods/portal','mods/objectselector','viewmode
         }
         var addSelectedObjectsToFolder = function(){
             for(var i=0; i<objectselector.items().length; i++){  
-                this.numObjects(this.numObjects()+1);
-                CHAOS.Portal.Client.Link.Create(objectselector.items()[i],this.folderID());
+                CHAOS.Portal.Client.Link.Create(objectselector.items()[i],this.folderID()).WithCallback(this.updateCount, this);
             } 
         }
-                
-        
         
         var hasobjectsbeenselected = ko.computed(function(){
             return objectselector.items().length > 0;
@@ -75,18 +72,21 @@ define(['durandal/app','knockout', 'mods/portal','mods/objectselector','viewmode
         }
         
         var updateCount = function(){
-             CHAOS.Portal.Client.View.Get(Settings.Search.viewName, "", null, "(FolderID:" + this.folderID() +  ")", 0, 0).WithCallback(function(data){
-             
+            CHAOS.Portal.Client.View.Get(Settings.Search.viewName, "", null, "(FolderID:" + this.folderID() +  ")", 0, 0).WithCallback(function(data){
                 this.numObjects(data.Body.TotalCount);
-             },this);
+            },this);
         }        
+        
+        
         var addSubFolder = function(){
             this.isBusy(true);
             this.isexpanded(true);
             var self = this;
             
             CHAOS.Portal.Client.Folder.Create(null,"untitled",this.folderID(),1).WithCallback(function(){
-                setTimeout(function(){self.loadSubFolders()},10000)
+                setTimeout(function(){
+                    self.loadSubFolders()
+                    },10000)
             }, self);
         }
         

@@ -3,7 +3,9 @@ define(['durandal/app', 'mods/portal', 'mods/state', 'factory/folder', 'knockout
 
         var items = ko.observableArray();
         var authsub = null;
-      
+        var sharedFolders = ko.observableArray();
+        var profileFolders = ko.observableArray();
+        var publicFolders = ko.observableArray();
 
         if(state.isAuthenticated()){
             loadfolders();
@@ -34,10 +36,23 @@ define(['durandal/app', 'mods/portal', 'mods/state', 'factory/folder', 'knockout
                 for (var i = 0; i < response.Body.Count; i++)
                 {
                     var data = response.Body.Results[i];
+                    
                     var fi = new ffac.FolderItem();
             
                     fi.init(data,0);
-                    items.push(fi);
+                        
+                    switch(data.Name){
+                        case "Public":
+                        break;
+                        
+                        case "profile":
+                        profileFolders.push(fi);
+                        break;
+                        
+                        default:
+                        sharedFolders.push(fi);                        
+                    }
+                    
                 }
             }, this), 0);
         }
@@ -45,6 +60,8 @@ define(['durandal/app', 'mods/portal', 'mods/state', 'factory/folder', 'knockout
         return {
             title: 'Folders',
             items: items,
+            profileFolders:profileFolders,
+            sharedFolders:sharedFolders,
             userEmail: state.userEmail,
             attached: function () {
             }
